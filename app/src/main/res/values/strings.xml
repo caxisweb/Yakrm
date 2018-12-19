@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Yakrm</string>
+    <string name="startadventure">Start the adventure</string>
+    <string name="Signup">Sign up</string>
+    <string name="skip_i_tnow">Skip it now</string>
+    <string name="buying_gift_cards">Buying gifts cards</string>
+    <string name="buying_gift_cards_with_competitive_prices">Buy gift cards with competitive prices and discounts and from international brands</string>
+    <string name="new_account">New account</string>
+    <string name="step_1_verify_your_mobile_number">step 1: verify your mobile number</string>
+    <string name="Choose_the_country">Choose the country:</string>
+    <string name="Can_you_enter_your_mobile_number_please">Can you enter your mobile number, please?</string>
+    <string name="When_you_register_a_new_account_you_are_accepting_usage_agreement_and_the_application_privacy_policy">When you register a new account, you are accepting usage agreement and the application privacy policy</string>
+    <string name="Send">Send</string>
+    <string name="If_you_have_already_an_account_long_in">If you have already an account, log in</string>
+    <string name="Enter_the_secret_code_which_is_sent_to_you">Enter the secret code which is sent to you</string>
+    <string name="Verify">Verify</string>
+    <string name="You_do_not_own_this_mobile_change_the_number">You do not own this mobile, change the number</string>
+    <string name="Step_2_Complete_your_personal_data">Step 2: Complete your personal data</string>
+    <string name="name">name:</string>
+    <string name="enter_your_full_name_please">enter your full name, please</string>
+    <string name="email">Email:</string>
+    <string name="password">Password:</string>
+    <string name="Sign_up_a_new_account">Sign up a new account</string>
+    <string name="log_in">log in</string>
+    <string name="Step_1_Enter_your_login_data">Step 1: Enter your login data</string>
+    <string name="email_address">email address</string>
+    <string name="Log_in">Log in</string>
+    <string name="Do_not_have_an_account">Do not have an account?</string>
+    <string name="Forget_password">Forget password?</string>
+    <string name="Step_2_verifying_mobile_number">Step 2: verifying mobile number</string>
+    <string name="Return">Return</string>
+    <string name="Personal_data">Personal data</string>
+    <string name="AhmedSaidAbdelRahman">Ahmed Said Abdel Rahman</string>
+    <string name="Country">Country:</string>
+    <string name="Saudi_Arabia">Saudi Arabia</string>
+    <string name="Mobile_number">Mobile number:</string>
+    <string name="Modify_data">Modify data</string>
+
+    <string-array name="selectcountry">
+        <item>Saudi Arabia</item>
+    </string-array>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+</resources>

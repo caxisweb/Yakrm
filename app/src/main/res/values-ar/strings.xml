@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Yakrm</string>
+    <string name="startadventure">ابدأ المغامرة</string>
+    <string name="Signup">تسجيل الدخول </string>
+    <string name="skip_i_tnow">تخطي الأن </string>
+    <string name="buying_gift_cards">شراء كروت الهدايا </string>
+    <string name="buying_gift_cards_with_competitive_prices">اشتري كروت الهدايا بأسعار وخصومات مميزة ومن ماركات عالمية </string>
+    <string name="new_account">حساب جديد</string>
+    <string name="step_1_verify_your_mobile_number">خطوة 1: التحقق من رقم الجوال </string>
+    <string name="Choose_the_country">اختر الدولة :</string>
+    <string name="Can_you_enter_your_mobile_number_please">من فضلك أدخل رقم الجوال الخاص بك ?</string>
+    <string name="When_you_register_a_new_account_you_are_accepting_usage_agreement_and_the_application_privacy_policy">بتسجيلك حساب جديد تكون موافق على اتفاقية الإستخدام وكذلك سياسة الإستخدام الخاصة بالتطبيق </string>
+    <string name="Send">ارسال </string>
+    <string name="If_you_have_already_an_account_long_in">لديك حساب بالفعل؟ تسجيل الدخول</string>
+    <string name="Enter_the_secret_code_which_is_sent_to_you">أدخل الكود السري المرسل إليك </string>
+    <string name="Verify">تحقق </string>
+    <string name="You_do_not_own_this_mobile_change_the_number">لا تملك هذا الجوال؟ تغيير رقم الجوال </string>
+    <string name="Step_2_Complete_your_personal_data">خطوة 2: إكمال البيانات الشخصية </string>
+    <string name="name">الإسم </string>
+    <string name="enter_your_full_name_please">أدخل الإسم كاملا من فضلك </string>
+    <string name="email">البريد الإلكتروني </string>
+    <string name="password">كلمة المرور </string>
+    <string name="Sign_up_a_new_account">تسجيل حساب جديد </string>
+    <string name="log_in">تسجيل الدخول</string>
+    <string name="Step_1_Enter_your_login_data">خطوة 1: أدخل بيانات الدخول</string>
+    <string name="email_address">البريد الإلكتروني </string>
+    <string name="Log_in">تسجيل الدخول</string>
+    <string name="Do_not_have_an_account">ليس لديك حساب ؟</string>
+    <string name="Forget_password">نسيت كلمة المرور ؟</string>
+    <string name="Step_2_verifying_mobile_number">خطوة 2: التحقق من رقم الجوال </string>
+    <string name="Return">رجوع </string>
+    <string name="Personal_data">البيانات الشخصية</string>
+    <string name="AhmedSaidAbdelRahman">أحمد سعيد عبد الرحمن </string>
+    <string name="Country">الدولة </string>
+    <string name="Saudi_Arabia">السعودية </string>
+    <string name="Mobile_number">رقم الجوال </string>
+    <string name="Modify_data">تعديل البيانات </string>
+
+
+    <string-array name="selectcountry">
+        <item>السعودية </item>
+    </string-array>
+</resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#EE4158</color>
+    <color name="colorPrimaryDark">#D63A4F</color>
+    <color name="colorAccent">#000</color>
+
+
+    <color name="button_color">#59C2DA</color>
+    <color name="dark_button_color">#59b1da</color>
+    <color name="black">#000</color>
+    <color name="text_color">#C5C5C5</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_light_intro">#C5C5C5</color>
+    <!-- dots active colors -->
+    <color name="dot_dark_intro">#EE4158</color>
+    <color name="white">#fff</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_light_intro1">#C5C5C5</color>
+    <color name="dot_light_intro2">#C5C5C5</color>
+    <color name="dot_light_intro3">#C5C5C5</color>
+    <color name="dot_light_intro4">#C5C5C5</color>
+    <color name="dot_light_intro5">#C5C5C5</color>
+    <color name="dot_light_intro6">#C5C5C5</color>
+
+    <!-- dots active colors -->
+    <color name="dot_dark_intro1">#EE4158</color>
+    <color name="dot_dark_intro2">#EE4158</color>
+    <color name="dot_dark_intro3">#EE4158</color>
+    <color name="dot_dark_intro4">#EE4158</color>
+    <color name="dot_dark_intro5">#EE4158</color>
+    <color name="dot_dark_intro6">#EE4158</color>
+
+
+    <array name="array_dot_active">
+        <item>@color/dot_dark_intro1</item>
+        <item>@color/dot_dark_intro2</item>
+        <item>@color/dot_dark_intro3</item>
+        <item>@color/dot_dark_intro4</item>
+        <item>@color/dot_dark_intro5</item>
+        <item>@color/dot_dark_intro6</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_light_intro1</item>
+        <item>@color/dot_light_intro2</item>
+        <item>@color/dot_light_intro3</item>
+        <item>@color/dot_light_intro4</item>
+        <item>@color/dot_light_intro5</item>
+        <item>@color/dot_light_intro6</item>
+    </array>
+
+</resources>
