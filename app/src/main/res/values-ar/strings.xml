@@ -37,6 +37,67 @@
     <string name="Mobile_number">رقم الجوال </string>
     <string name="Modify_data">تعديل البيانات </string>
 
+    <string name="Buy">شراء</string>
+    <string name="Received">مستلمة</string>
+    <string name="Replace">استبدال</string>
+    <string name="Auction">مزاد</string>
+    <string name="My_Wallet">محفظتي</string>
+
+
+    <string name="filter_the_results">تصفية النتائج </string>
+    <string name="The_most_popular_gifts">الهدايا الأكثر شعبية </string>
+    <string name="brand_address_is_here_discount_till_4">عنوان البراند هنا، توفير حتى 4%</string>
+
+
+    <string name="Filter_search_results">تصفية نتائج البحث</string>
+    <string name="Gifts_classification">تصنيف الهدايا </string>
+    <string name="Cuisine">مأكولات </string>
+    <string name="books_and_magazines">كتب ومجلات </string>
+    <string name="coffee">قهوة </string>
+    <string name="Stores_and_groceries">متاجر وتموينات </string>
+    <string name="children_toys">ألعاب أطفال </string>
+    <string name="fashion_and_uniforms">موضة وأزياء </string>
+    <string name="Care_and_makeup_centers">مراكز تجميل وعناية </string>
+    <string name="Hotels_and_tourism">فنادق وسياحة </string>
+    <string name="Sport_clothes">ملابس رياضية </string>
+    <string name="phones_and_electronics">هواتف وإلكترونيات </string>
+    <string name="sport_tools">أدوات رياضية </string>
+    <string name="Clothes">ملابس</string>
+    <string name="jewelries_and_golden">مجوهرات وذهب </string>
+    <string name="others">أخرى </string>
+
+
+    <string name="Gift_type">نوع الهدايا </string>
+    <string name="Electronic_gift">هدايا إلكترونية </string>
+    <string name="Paper_gift">هدايا ورقية </string>
+
+
+    <string name="Gift_order">ترتيب الهدايا </string>
+    <string name="Most_popular">الأكثر شعبية </string>
+    <string name="High_discounted">الأكثر خصما </string>
+    <string name="Brand_names">اسم البراند </string>
+    <string name="Filter">تصفية </string>
+    <string name="Delete">مسح </string>
+
+
+    <string name="Gift_details">تفاصيل الهدية </string>
+    <string name="Saudi_Arabic_airlines">الخطوط العربية السعودية </string>
+    <string name="Electronic_and_paper_gifts">هدايا إلكترونية وورقية </string>
+    <string name="Information_about_the_gift_giver">معلومات عن مقدم الهدية </string>
+
+
+    <string name="Value">القيمة </string>
+    <string name="discount">توفير </string>
+    <string name="pay">ادفع </string>
+
+
+    <string name="SR">مائة ريال </string>
+    <string name="SR2">200 ريال</string>
+    <string name="SR3">250 ريال</string>
+    <string name="SR4">486 ريال</string>
+    <string name="S5">5%</string>
+    <string name="Compete_the_purchase">Compete the purchase</string>
+
 
     <string-array name="selectcountry">
         <item>السعودية </item>

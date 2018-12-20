@@ -36,6 +36,13 @@
     <string name="Mobile_number">Mobile number:</string>
     <string name="Modify_data">Modify data</string>
 
+    <string name="Buy">Buy</string>
+    <string name="Received">Received</string>
+    <string name="Replace">Replace</string>
+    <string name="Auction">Auction</string>
+    <string name="My_Wallet">My Wallet</string>
+
+
     <string-array name="selectcountry">
         <item>Saudi Arabia</item>
     </string-array>
@@ -46,4 +53,58 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="filter_the_results">Filter the results</string>
+    <string name="The_most_popular_gifts">The most popular gifts</string>
+    <string name="brand_address_is_here_discount_till_4">(brand address is here, discount till 4%)</string>
+    <string name="Gifts_classification">Gifts classification</string>
+    <string name="Filter_search_results">Filter search results</string>
+    <string name="Cuisine">Cuisine</string>
+    <string name="books_and_magazines">Books and Magazines</string>
+    <string name="coffee">coffee</string>
+    <string name="Stores_and_groceries">Stores and  groceries</string>
+    <string name="children_toys">children toys</string>
+    <string name="fashion_and_uniforms">fashion and uniforms</string>
+    <string name="Care_and_makeup_centers">Care and makeup centers</string>
+    <string name="Hotels_and_tourism">Hotels and tourism</string>
+    <string name="Sport_clothes">Sport clothes</string>
+    <string name="phones_and_electronics">phones and electronics</string>
+    <string name="sport_tools">sport tools</string>
+    <string name="Clothes">Clothes</string>
+    <string name="jewelries_and_golden">jewelries and golden</string>
+    <string name="others">others</string>
+
+    <string name="Gift_type">Gift type</string>
+    <string name="Electronic_gift">Electronic gift</string>
+    <string name="Paper_gift">Paper gift</string>
+
+    <string name="Gift_order">Gift order</string>
+    <string name="Most_popular">Most popular</string>
+    <string name="High_discounted">High discounted</string>
+    <string name="Brand_names">Brand names</string>
+
+    <string name="Filter">Filter</string>
+    <string name="Delete">Delete</string>
+
+    <string name="Gift_details">Gift details</string>
+    <string name="Saudi_Arabic_airlines">Saudi Arabic airlines</string>
+    <string name="Electronic_and_paper_gifts">Electronic and paper gifts</string>
+    <string name="Information_about_the_gift_giver">Information about the gift giver</string>
+
+    <string name="Value">Value</string>
+    <string name="discount">discount</string>
+    <string name="pay">pay</string>
+
+
+    <string name="SR">100SR</string>
+    <string name="SR2">200SR</string>
+    <string name="SR3">250SR</string>
+    <string name="SR4">486SR</string>
+    <string name="S5">5%</string>
+    <string name="Compete_the_purchase">Compete the purchase</string>
+
+
 </resources>

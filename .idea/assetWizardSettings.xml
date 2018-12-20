@@ -16,27 +16,12 @@
                             <entry key="launcherLegacy">
                               <value>
                                 <PersistentState>
-                                  <option name="children">
-                                    <map>
-                                      <entry key="image">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="paddingPercent" value="40" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
-                                    </map>
-                                  </option>
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="C:\Users\Codeclinic\Desktop\Yakrm\Images\menu-bars.png" />
-                                      <entry key="outputName" value="ic_small_menu_icon" />
+                                      <entry key="imageAsset" value="C:\Users\Codeclinic\Desktop\ic_fillcart.png" />
+                                      <entry key="outputName" value="ic_fillcart_icon" />
                                     </map>
                                   </option>
                                 </PersistentState>

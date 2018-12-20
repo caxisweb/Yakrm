@@ -40,7 +40,10 @@
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/No_action_bar"></activity>
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.GiftDetailsActivity"
+            android:theme="@style/No_action_bar" />
     </application>
 
 </manifest>
