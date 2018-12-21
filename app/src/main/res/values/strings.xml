@@ -105,6 +105,9 @@
     <string name="SR4">486SR</string>
     <string name="S5">5%</string>
     <string name="Compete_the_purchase">Compete the purchase</string>
+    <string name="Research">Research</string>
+    <string name="Enter_the_brand_name">Enter the brand name</string>
+    <string name="Sharing">Sharing</string>
 
 
 </resources>

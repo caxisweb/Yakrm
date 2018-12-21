@@ -96,7 +96,13 @@
     <string name="SR3">250 ريال</string>
     <string name="SR4">486 ريال</string>
     <string name="S5">5%</string>
-    <string name="Compete_the_purchase">Compete the purchase</string>
+    <string name="Compete_the_purchase">إتمام الشراء </string>
+
+    <string name="Research">بحث </string>
+    <string name="Enter_the_brand_name">أدخل اسم البراند أو الماركة </string>
+
+
+    <string name="Sharing">مشاركة </string>
 
 
     <string-array name="selectcountry">

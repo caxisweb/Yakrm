@@ -55,4 +55,7 @@
         <item>@color/dot_light_intro6</item>
     </array>
 
+    <color name="default_background_color">#555555</color>
+    <color name="default_text_color">#ffffff</color>
+
 </resources>

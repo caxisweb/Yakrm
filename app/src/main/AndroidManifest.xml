@@ -44,6 +44,7 @@
         <activity
             android:name=".Activities.GiftDetailsActivity"
             android:theme="@style/No_action_bar" />
+        <activity android:name=".Activities.FavouritesActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.yakrm.codeclinic.yakrm.Activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,16 +13,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -51,6 +56,9 @@ public class MainActivity extends AppCompatActivity
     private Button lastChecked = null;
     private int selectedPosition = -1;
 
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog alertDialog;
+
     @SuppressLint({"ClickableViewAccessibility", "ResourceType", "NewApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +77,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         drawer = findViewById(R.id.drawer_layout);
+
 
         viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -148,6 +157,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
+
     }
 
     private void createTabIcons() {
@@ -212,6 +222,27 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
+            final LayoutInflater inflater = getLayoutInflater();
+            dialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            final View dialogView = inflater.inflate(R.layout.custom_search_layout, null);
+            dialogBuilder.setView(dialogView);
+            dialogBuilder.setCancelable(true);
+
+            final ImageView img_cancel = dialogView.findViewById(R.id.img_search);
+
+            alertDialog = dialogBuilder.create();
+            WindowManager.LayoutParams wmlp = alertDialog.getWindow().getAttributes();
+            wmlp.gravity = Gravity.TOP | Gravity.CENTER;
+            wmlp.y = 200;
+            alertDialog.show();
+            return true;
+        } else if (id == R.id.action_fav) {
+            return true;
+        } else if (id == R.id.action_notification) {
+            return true;
+        } else if (id == R.id.action_basket) {
+            return true;
+        } else if (id == R.id.action_user) {
             return true;
         }
 
@@ -222,6 +253,58 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        try {
+            final MenuItem menuItem1 = menu.findItem(R.id.action_search);
+            final MenuItem menuItem2 = menu.findItem(R.id.action_fav);
+            final MenuItem menuItem3 = menu.findItem(R.id.action_notification);
+            final MenuItem menuItem4 = menu.findItem(R.id.action_basket);
+            final MenuItem menuItem5 = menu.findItem(R.id.action_user);
+
+            View actionView1 = MenuItemCompat.getActionView(menuItem1);
+            View actionView2 = MenuItemCompat.getActionView(menuItem2);
+            View actionView3 = MenuItemCompat.getActionView(menuItem3);
+            View actionView4 = MenuItemCompat.getActionView(menuItem4);
+            View actionView5 = MenuItemCompat.getActionView(menuItem5);
+
+            actionView1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onOptionsItemSelected(menuItem1);
+                }
+            });
+
+            actionView2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onOptionsItemSelected(menuItem2);
+                }
+            });
+
+            actionView3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onOptionsItemSelected(menuItem3);
+                }
+            });
+
+            actionView4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onOptionsItemSelected(menuItem4);
+                }
+            });
+            actionView5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onOptionsItemSelected(menuItem5);
+                }
+            });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
