@@ -45,20 +45,19 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    DrawerLayout drawer;
+    public static DrawerLayout drawer;
     private static int lastCheckedPos = -1;
     ListView filter_recyclerview;
     ArrayList<String> arrayList = new ArrayList<>();
     Button btn[];
     int i;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog alertDialog;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Button lastChecked = null;
     private int selectedPosition = -1;
-
-    AlertDialog.Builder dialogBuilder;
-    AlertDialog alertDialog;
 
     @SuppressLint({"ClickableViewAccessibility", "ResourceType", "NewApi"})
     @Override
@@ -105,6 +104,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView2 = findViewById(R.id.nav_view2);
         View header = navigationView.getHeaderView(0);
         FlowLayout flowLayout = header.findViewById(R.id.main_flow_layout);
         arrayList.add(getResources().getString(R.string.Cuisine));
@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity
 
 
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView2.setNavigationItemSelectedListener(this);
 
 
     }
