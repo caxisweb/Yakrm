@@ -2,6 +2,7 @@ package com.yakrm.codeclinic.yakrm.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -241,6 +242,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.action_notification) {
             return true;
         } else if (id == R.id.action_basket) {
+            startActivity(new Intent(MainActivity.this, CartActivity.class));
             return true;
         } else if (id == R.id.action_user) {
             return true;

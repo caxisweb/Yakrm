@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/img_back"
-            android:text="@string/Favorites"
+            android:text="@string/Received"
             android:textColor="@color/white"
             android:textSize="16dp"
             android:textStyle="bold" />
@@ -42,17 +42,12 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rl_action_bar">
+        android:layout_below="@+id/rl_action_bar">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-
-    </LinearLayout>
-
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

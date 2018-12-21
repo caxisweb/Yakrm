@@ -7,25 +7,32 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.yakrm.codeclinic.yakrm.Adapter.FavListAdapter;
+import com.yakrm.codeclinic.yakrm.Adapter.RecievedListAdapter;
 import com.yakrm.codeclinic.yakrm.R;
 
 import java.util.ArrayList;
 
-public class FavouritesActivity extends AppCompatActivity {
+public class RecievedActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ImageView img_back;
-    FavListAdapter favListAdapter;
     ArrayList<String> arrayList = new ArrayList<>();
+    ImageView imageView;
+    RecievedListAdapter recievedListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourites);
+        setContentView(R.layout.activity_recieved);
+
 
         recyclerView = findViewById(R.id.recyclerView);
-        img_back = findViewById(R.id.img_back);
+        imageView = findViewById(R.id.img_back);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -33,18 +40,10 @@ public class FavouritesActivity extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
 
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        arrayList.add("");
+        arrayList.add("");
 
-        arrayList.add("STABUCKSCARD");
-        arrayList.add("Coca cola");
-        arrayList.add("H&M ");
-
-        favListAdapter = new FavListAdapter(arrayList, this);
-        recyclerView.setAdapter(favListAdapter);
+        recievedListAdapter = new RecievedListAdapter(arrayList, this);
+        recyclerView.setAdapter(recievedListAdapter);
     }
 }

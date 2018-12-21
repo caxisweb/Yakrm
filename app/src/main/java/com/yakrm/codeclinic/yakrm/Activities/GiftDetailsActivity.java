@@ -1,6 +1,7 @@
 package com.yakrm.codeclinic.yakrm.Activities;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,8 @@ import com.yakrm.codeclinic.yakrm.R;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 public class GiftDetailsActivity extends AppCompatActivity {
 
@@ -99,6 +102,8 @@ public class GiftDetailsActivity extends AppCompatActivity {
         btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toasty.custom(GiftDetailsActivity.this, getResources().getString(R.string.Added_to_the_buying_basket_successfully), getResources().getDrawable(R.mipmap.ic_tick_inside), getResources().getColor(R.color.toast_color), 2000, true, true).show();
+                startActivity(new Intent(GiftDetailsActivity.this, FavouritesActivity.class));
             }
         });
 

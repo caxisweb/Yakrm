@@ -89,7 +89,7 @@
     <string name="Value">القيمة </string>
     <string name="discount">توفير </string>
     <string name="pay">ادفع </string>
-
+    <string name="Added_to_the_buying_basket_successfully">تمت الإضافة لسلة الشراء بنجاح</string>
 
     <string name="SR">مائة ريال </string>
     <string name="SR2">200 ريال</string>
@@ -103,9 +103,50 @@
 
 
     <string name="Sharing">مشاركة </string>
+    <string name="Favorites">الفضلة </string>
+    <string name="Cart_empty">السلة (فارغة)</string>
+    <string name="Cart">السلة</string>
+    <string name="The_basket_is_empty">السلة (فارغة)</string>
+    <string name="There_is_no_Purchases_in_the_buying_basket">لا يوجد مشتريات في سلة الشراء </string>
+    <string name="Start_Purchasing">إبدأ الشراء </string>
 
+    <string name="four_elements_the_basket">السلة (4 عناصر)</string>
+    <string name="STABUCKSCARD_electronic_and_paper_gifts">STABUCKSCARD  (electronic and paper gifts)</string>
+    <string name="Ended_in_12_12_2018">Ended in 12/12/2018</string>
+    <string name="The_value">The value :</string>
+    <string name="sr"> 2500 ريال </string>
+    <string name="Discount">الخصم:</string>
+    <string name="The_price"> 2420 ريال </string>
+    <string name="s_r">2420 ريال </string>
+    <string name="pay_now">دفع الأن </string>
+    <string name="Total">المجموع </string>
+    <string name="new_sr"> 8150 ريال </string>
+
+
+    <string name="Completing_Purchasing">اتمام الشراء </string>
+    <string name="Your_Amount">رصيدك </string>
+    <string name="amount_sr"> 155 ر.س</string>
+    <string name="Total_Amount">المبلغ الإجمالي هو </string>
+    <string name="Sr">ريال </string>
+    <string name="The_Amount_Will_Be_Deduced_From_Your_Current_Account">سيتم خصم المبلغ من رصيدك الحالي </string>
+    <string name="Completing_Payment">إتمام الدفع </string>
+    <string name="The_Process_Is_Carried_Out_Successfully">تمت العملية بنجاح</string>
+    <string name="Something_Wrong_Occur_AndProcess_Is_Not_Finished_Yet">حدث خطأ ما ولم تتم العملية </string>
+    <string name="Your_Current_Amount_Is_Not_Enough_To_Carry_Out_Purchasing_Process">رصيدك الحالي غير كافي لإتمام علية الشراء </string>
+    <string name="Charge_Your_Account_Balance">شحن رصيد لحسابك </string>
+    <string name="By_Using_Pay_Pal">By Using Pay Pal</string>
+    <string name="By_Using_Mada_Card">بواسطة بطاقة مدى </string>
+    <string name="digits">**** **** **** 5678</string>
+    <string name="By_Using_Credit_Card">بواسطة بطاقة الدفع</string>
+    <string name="Sent_By_Your_Friend_Mahmoud_Abd_El_Rahman">مرسلة من صديقك: محمود عبد الرحمن </string>
+    <string name="Hello_Friend_I_Am_SendingThis_Voucher_To_Express_My_Love">هلا حبيبي، بأرسلك هذه الهدية لأعبر عن اعتزازي بك كصديق عزيز</string>
+    <string name="I_Hope_That_You_Will_Be_Happy_During_Every">وتمني لك السعادة والتميز في حياتك كلها </string>
+    <string name="Attached_Video">Attached Video</string>
+    <string name="Press_To_Watch">اضغط للمشاهدة </string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>
+
+
 </resources>

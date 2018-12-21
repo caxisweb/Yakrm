@@ -97,6 +97,7 @@
     <string name="Value">Value</string>
     <string name="discount">discount</string>
     <string name="pay">pay</string>
+    <string name="Added_to_the_buying_basket_successfully">Added to the buying basket successfully </string>
 
 
     <string name="SR">100SR</string>
@@ -108,6 +109,45 @@
     <string name="Research">Research</string>
     <string name="Enter_the_brand_name">Enter the brand name</string>
     <string name="Sharing">Sharing</string>
+    <string name="Favorites">Favorites</string>
+
+    <string name="Cart_empty">The basket(empty)</string>
+    <string name="Cart">The basket</string>
+    <string name="The_basket_is_empty">The basket is empty</string>
+    <string name="There_is_no_Purchases_in_the_buying_basket">There is no Purchases in the buying basket</string>
+    <string name="Start_Purchasing">Start Purchasing</string>
+
+    <string name="four_elements_the_basket">(four elements) the basket</string>
+    <string name="STABUCKSCARD_electronic_and_paper_gifts">STABUCKSCARD  (electronic and paper gifts)</string>
+    <string name="Ended_in_12_12_2018">Ended in 12/12/2018</string>
+    <string name="The_value">The value :</string>
+    <string name="sr">2500 SR</string>
+    <string name="Discount">Discount :</string>
+    <string name="The_price">The price :</string>
+    <string name="s_r">2420 SR</string>
+    <string name="pay_now">Pay now</string>
+    <string name="Total">Total</string>
+    <string name="new_sr">8150 SR</string>
+    <string name="Completing_Purchasing">Purchase</string>
+    <string name="Your_Amount">Your Amount</string>
+    <string name="amount_sr">155 Sr</string>
+    <string name="Total_Amount">Total Amount</string>
+    <string name="Sr">Sr</string>
+    <string name="The_Amount_Will_Be_Deduced_From_Your_Current_Account">The Amount Will Be Deduced From Your Current Account</string>
+    <string name="Completing_Payment">Completing Payment</string>
+    <string name="The_Process_Is_Carried_Out_Successfully">The Process Is Carried Out Successfully</string>
+    <string name="Something_Wrong_Occur_AndProcess_Is_Not_Finished_Yet">Something Wrong Occur And The Process Is Not Finished Yet</string>
+    <string name="Your_Current_Amount_Is_Not_Enough_To_Carry_Out_Purchasing_Process">Your Current Amount Is Not Enough To Carry Out Purchasing Process</string>
+    <string name="Charge_Your_Account_Balance">Charge Your Account Balance</string>
+    <string name="By_Using_Pay_Pal">By Using Pay Pal</string>
+    <string name="By_Using_Mada_Card">By Using Mada Card</string>
+    <string name="digits">**** **** **** 5678</string>
+    <string name="By_Using_Credit_Card">By Using Credit Card</string>
+    <string name="Sent_By_Your_Friend_Mahmoud_Abd_El_Rahman">Sent By Your Friend: Mahmoud Abd El-Rahman</string>
+    <string name="Hello_Friend_I_Am_SendingThis_Voucher_To_Express_My_Love">Hello Friend. I Am Sending You This Voucher To Express My Love And Gratitude For You As A Friend</string>
+    <string name="I_Hope_That_You_Will_Be_Happy_During_Every">I Hope That You Will Be Happy During Every Single Moment Of Your Life</string>
+    <string name="Attached_Video">Attached Video</string>
+    <string name="Press_To_Watch">Press To Watch</string>
 
 
 </resources>
