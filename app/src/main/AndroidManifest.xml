@@ -56,6 +56,27 @@
         <activity
             android:name=".Activities.RecievedActivity"
             android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.MyWalletActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.VoucherDetailActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.UploadVouchersActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.UploadVoucherDataActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.ExchangeVoucherActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.SendToFriendActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.ExchangeAddBalanceActivity"
+            android:theme="@style/No_action_bar" />
     </application>
 
 </manifest>

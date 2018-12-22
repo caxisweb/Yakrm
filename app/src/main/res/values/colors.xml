@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#EE4158</color>
     <color name="colorPrimaryDark">#D63A4F</color>
-    <color name="colorAccent">#000</color>
+    <color name="colorAccent">#59C2DA</color>
 
 
     <color name="button_color">#59C2DA</color>
@@ -11,6 +11,11 @@
     <color name="text_color">#C5C5C5</color>
     <color name="layout">#4bc5c5c5</color>
     <color name="toast_color">#aa4dbc5c</color>
+
+    <color name="digit_color">#4dbc5c</color>
+    <color name="digit_color2">#e243ea</color>
+    <color name="digit_color3">#ffa229</color>
+
     <color name="transparent_red">#64ee4158</color>
     <color name="icon_color">#b1b0b0</color>
 

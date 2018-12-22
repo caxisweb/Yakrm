@@ -46,7 +46,7 @@
     <string-array name="selectcountry">
         <item>Saudi Arabia</item>
     </string-array>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Main</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -148,6 +148,71 @@
     <string name="I_Hope_That_You_Will_Be_Happy_During_Every">I Hope That You Will Be Happy During Every Single Moment Of Your Life</string>
     <string name="Attached_Video">Attached Video</string>
     <string name="Press_To_Watch">Press To Watch</string>
+    <string name="Upload_Voucher">Upload Voucher</string>
+    <string name="Your_current_balance">Your current balance</string>
+    <string name="Discount_vouchers">Discount vouchers</string>
+    <string name="Active">Active</string>
+    <string name="Vendors_of_vouchers">Vendors of vouchers</string>
+    <string name="Favorite">Favorite</string>
+    <string name="Vouchers_ended">Vouchers ended</string>
+    <string name="Already_valid">Already valid</string>
+    <string name="Vouchers_That_Have_Already_Ended">Vouchers That Have Already Ended</string>
+    <string name="Done">Done</string>
+    <string name="Active_coupons">Active coupons</string>
+    <string name="Sr_Stabuckscard">25 Sr</string>
+    <string name="Voucher_Number">Voucher Number 1</string>
+    <string name="Active_Till">Active Till 23/12/2018</string>
+    <string name="Voucher_Till">Voucher Till 25 January 2019</string>
+    <string name="New_Sr">25 Sr</string>
+
+    <string name="Voucher_number">Voucher Number </string>
+    <string name="Pin_Number">Pin Number </string>
+    <string name="General_Instructions">General Instructions</string>
+    <string name="Here_You_Find_Vouchers_For_Discount_Send_By_Your_Friends">Here, You Find Vouchers For Discount, Send By Your Friends</string>
+    <string name="You_Can_Transform_It_Into_Voucher_Cards">You Can Transform It Into Voucher Cards And Using It In Purchasing And Discounts</string>
+    <string name="Discount_Voucher">3 Discount Voucher</string>
+    <string name="Upload_Vouchers_Choose_The_Brand">Upload Vouchers- Choose The Brand</string>
+    <string name="Upload_Voucher_Voucher_Data">Upload Voucher- Voucher Data</string>
+    <string name="Scan_The_Card_To_Bring_The_Data_Automatically">Scan The Card To Bring The Data Automatically</string>
+    <string name="Scan_The_Photo">Scan The Photo</string>
+    <string name="Enter_Data_Manually_In_Case_Scanning_Is_Failed">Enter Data Manually In Case Scanning Is Failed</string>
+    <string name="Voucher_Value">Voucher Value </string>
+    <string name="Available_Till">Available Till </string>
+    <string name="January">25 January 2019</string>
+    <string name="Adding_To_My_Notecase">Adding To My Notecase</string>
+    <string name="Exchange_A_Discount_Voucher">Exchange A Discount Voucher</string>
+    <string name="Send_For_A_Friend_As_A_Gift">Send For A Friend As A Gift</string>
+    <string name="Exchange_And_Add_The_Amount_On_Your_Balance">Exchange And Add The Amount On Your Balance</string>
+    <string name="Display_The_Voucher_On_An_Auction">Display The Voucher On An Auction</string>
+    <string name="Send_to_a_friend">Send to a friend</string>
+    <string name="Friend_mobile_number">Friend mobile number</string>
+    <string name="Friend_information">Friend information</string>
+    <string name="Name">Name :</string>
+    <string name="Mahmoud_Abd_El_Mot_al">Mahmoud Abd El-Mot\'al</string>
+    <string name="Email_Address">Email Address :</string>
+    <string name="Sending_Date">Sending Date</string>
+    <string name="Hello_Friend_I_Am_Sending_You_This_Voucher_To_Express_My_Love_And_Gratitude">Hello Friend. I Am Sending You This Voucher To Express My Love And Gratitude For You As A Friend</string>
+    <string name="I_Hope_That_You_Will_Be_Happy">I Hope That You Will Be Happy During Every Single Moment Of Your Life</string>
+    <string name="Completing_The_Sending_Process">Completing The Sending Process</string>
+    <string name="Exchanging_And_add_to_my_balance">Exchanging And Add to my balance</string>
+    <string name="How_Much_You_Will_Exchange_The_Amount">How Much You Will Exchange The Amount?</string>
+    <string name="You_Will_Get_The_Amount_Of">You Will Get The Amount Of</string>
+    <string name="SR_only">8.5 SR only</string>
+    <string name="Completing_Exchange_Process">Completing Exchange Process</string>
+    <string name="Main_Page">Main Page</string>
+    <string name="My_Personal_Account">My Personal Account</string>
+    <string name="Active_Vouchers">Active Vouchers</string>
+    <string name="Favorite_Vouchers">Favorite Vouchers</string>
+    <string name="Best_Brands">Best Brands</string>
+    <string name="Transactions_Record">Transactions Record</string>
+    <string name="Auctions">Auctions</string>
+    <string name="Payment_Methods">Payment Methods</string>
+    <string name="Support_And_Contact">Support And Contact</string>
+    <string name="About_The_Application">About The Application</string>
+    <string name="Instructions_And_Conditions">Instructions And Conditions</string>
+    <string name="Sign_Out">Sign Out</string>
+    <string name="English_Version">English Version</string>
+    <string name="Share_With_Your_Friends">Share With Your Friends</string>
 
 
 </resources>

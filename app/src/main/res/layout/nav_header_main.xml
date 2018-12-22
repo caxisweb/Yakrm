@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="15dp"
-    android:background="@color/layout"
+    android:layout_marginTop="30dp"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <ScrollView
@@ -15,310 +14,475 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:orientation="vertical">
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="2dp"
-                    android:padding="10dp"
-                    android:translationZ="2dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="@string/Filter_search_results"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="18dp"
-                android:paddingRight="18dp"
-                android:text="@string/Gifts_classification"
-                android:textColor="@color/black"
-                android:textSize="14dp"
-                android:textStyle="bold" />
-
-
-            <com.nex3z.flowlayout.FlowLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/main_flow_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:padding="5dp"
-                app:flChildSpacing="5dp"
-                app:flChildSpacingForLastRow="align"
-                app:flRowSpacing="5dp">
-
-
-                <!--  <Button
-                      android:id="@+id/button_1"
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/Cuisine"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/books_and_magazines"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/coffee"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/Stores_and_groceries"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/children_toys"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/fashion_and_uniforms"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/Care_and_makeup_centers"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/Hotels_and_tourism"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/Sport_clothes"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/phones_and_electronics"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/sport_tools"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/Clothes"
-                      android:textColor="@drawable/button_text_color" />
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/jewelries_and_golden"
-                      android:textColor="@drawable/button_text_color" />
-
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="25dp"
-                      android:layout_margin="3dp"
-                      android:background="@drawable/flow_layout_text_background"
-                      android:paddingLeft="10dp"
-                      android:paddingRight="10dp"
-                      android:text="@string/others"
-                      android:textColor="@drawable/button_text_color" />
-  -->
-            </com.nex3z.flowlayout.FlowLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/dot_light_intro" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="18dp"
-                android:paddingRight="18dp"
-                android:text="@string/Gift_type"
-                android:textColor="@color/black"
-                android:textSize="14dp"
-                android:textStyle="bold" />
-
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="14dp"
-                android:text="@string/Electronic_gift" />
-
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="14dp"
-                android:text="@string/Paper_gift" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/dot_light_intro" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="18dp"
-                android:paddingRight="18dp"
-                android:text="@string/Gift_order"
-                android:textColor="@color/black"
-                android:textSize="14dp"
-                android:textStyle="bold" />
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="14dp"
-                    android:text="@string/Most_popular" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="14dp"
-                    android:text="@string/High_discounted" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="14dp"
-                    android:text="@string/Brand_names" />
-
-            </RadioGroup>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/dot_light_intro" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_background"
-                    android:text="@string/Filter"
-                    android:textColor="@color/white" />
+                    android:src="@mipmap/ic_home_icon" />
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:text="@string/Delete"
-                    android:textColor="@color/colorPrimary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Main_Page"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/My_Personal_Account"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Active_Vouchers"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Favorite_Vouchers"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Best_Brands"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Transactions_Record"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Auctions"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Payment_Methods"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Support_And_Contact"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/About_The_Application"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Instructions_And_Conditions"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Sign_Out"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/English_Version"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/white_share_icon_background"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:src="@mipmap/ic_mail_icon" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/white_share_icon_background"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:src="@mipmap/ic_sms_icon" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/white_share_icon_background"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:src="@mipmap/ic_usershare_icon" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/white_share_icon_background"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:src="@mipmap/ic_call_icon"
+                    android:tint="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/white_share_icon_background"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:src="@mipmap/ic_twitter_icon"
+                    android:tint="@color/colorPrimary" />
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/white_share_icon_background"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:src="@mipmap/ic_facebook_icon"
+                    android:tint="@color/colorPrimary" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="@string/Share_With_Your_Friends"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
 
         </LinearLayout>
 

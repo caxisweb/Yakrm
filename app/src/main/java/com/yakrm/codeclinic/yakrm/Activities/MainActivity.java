@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     private static int lastCheckedPos = -1;
     ListView filter_recyclerview;
     ArrayList<String> arrayList = new ArrayList<>();
-    Button btn[];
+    TextView tv[];
     int i;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         NavigationView navigationView2 = findViewById(R.id.nav_view2);
-        View header = navigationView.getHeaderView(0);
+        View header = navigationView2.getHeaderView(0);
         FlowLayout flowLayout = header.findViewById(R.id.main_flow_layout);
         arrayList.add(getResources().getString(R.string.Cuisine));
         arrayList.add(getResources().getString(R.string.books_and_magazines));
@@ -123,32 +124,32 @@ public class MainActivity extends AppCompatActivity
         arrayList.add(getResources().getString(R.string.others));
 
 
-        btn = new Button[arrayList.size()];
+        tv = new TextView[arrayList.size()];
         for (i = 0; i < arrayList.size(); i++) {
-            btn[i] = new Button(this);
-            btn[i].setText(arrayList.get(i));
-            btn[i].setLayoutParams(new FlowLayout.LayoutParams(FlowLayout.LayoutParams.WRAP_CONTENT, 110));
-            btn[i].setId(i);
-            btn[i].setPadding(50, 0, 50, 0);
-            btn[i].setGravity(Gravity.CENTER);
-            btn[i].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
-            btn[i].setTextColor(getResources().getColor(R.color.white));
-            flowLayout.addView(btn[i]);
+            tv[i] = new Button(this);
+            tv[i].setText(arrayList.get(i));
+            tv[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 30));
+            tv[i].setId(i);
+            tv[i].setPadding(25, 0, 25, 0);
+            tv[i].setGravity(Gravity.CENTER);
+            tv[i].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
+            tv[i].setTextColor(getResources().getColor(R.color.white));
+            flowLayout.addView(tv[i]);
 
-            if (selectedPosition == i) {
-                btn[i].setPressed(true);
+         /*   if (selectedPosition == i) {
+                tv[i].setPressed(true);
             } else {
                 btn[i].setPressed(false);
-            }
-            btn[i].setOnClickListener(new View.OnClickListener() {
+            }*/
+            tv[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int pos = v.getId();
                     if (pos == selectedPosition) {
                         selectedPosition = -1;
-                        btn[pos].setPressed(false);
+                        tv[pos].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
                     } else {
-                        btn[pos].setPressed(true);
+                        tv[pos].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
                         selectedPosition = pos;
                     }
                 }
@@ -239,6 +240,7 @@ public class MainActivity extends AppCompatActivity
             alertDialog.show();
             return true;
         } else if (id == R.id.action_fav) {
+            startActivity(new Intent(MainActivity.this, FavouritesActivity.class));
             return true;
         } else if (id == R.id.action_notification) {
             return true;

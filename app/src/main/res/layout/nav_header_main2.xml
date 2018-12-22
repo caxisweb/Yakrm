@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="15dp"
+    android:background="@color/layout"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="2dp"
+                    android:padding="10dp"
+                    android:translationZ="2dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/Filter_search_results"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:text="@string/Gifts_classification"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+
+            <com.nex3z.flowlayout.FlowLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/main_flow_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:flChildSpacing="5dp"
+                app:flChildSpacingForLastRow="align"
+                app:flRowSpacing="5dp">
+
+
+                <!--  <Button
+                      android:id="@+id/button_1"
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/Cuisine"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/books_and_magazines"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/coffee"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/Stores_and_groceries"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/children_toys"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/fashion_and_uniforms"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/Care_and_makeup_centers"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/Hotels_and_tourism"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/Sport_clothes"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/phones_and_electronics"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/sport_tools"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/Clothes"
+                      android:textColor="@drawable/button_text_color" />
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/jewelries_and_golden"
+                      android:textColor="@drawable/button_text_color" />
+
+
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="25dp"
+                      android:layout_margin="3dp"
+                      android:background="@drawable/flow_layout_text_background"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp"
+                      android:text="@string/others"
+                      android:textColor="@drawable/button_text_color" />
+  -->
+            </com.nex3z.flowlayout.FlowLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dot_light_intro" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:text="@string/Gift_type"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="14dp"
+                android:text="@string/Electronic_gift" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="14dp"
+                android:text="@string/Paper_gift" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/dot_light_intro" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:text="@string/Gift_order"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="14dp"
+                    android:text="@string/Most_popular" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="14dp"
+                    android:text="@string/High_discounted" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="14dp"
+                    android:text="@string/Brand_names" />
+
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/dot_light_intro" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:text="@string/Filter"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:text="@string/Delete"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

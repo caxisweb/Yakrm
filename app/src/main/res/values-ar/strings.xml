@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Yakrm</string>
+    <string name="title_activity_main">الأساسية</string>
     <string name="startadventure">ابدأ المغامرة</string>
     <string name="Signup">تسجيل الدخول </string>
     <string name="skip_i_tnow">تخطي الأن </string>
@@ -143,6 +144,80 @@
     <string name="I_Hope_That_You_Will_Be_Happy_During_Every">وتمني لك السعادة والتميز في حياتك كلها </string>
     <string name="Attached_Video">Attached Video</string>
     <string name="Press_To_Watch">اضغط للمشاهدة </string>
+
+
+    <string name="Upload_Voucher">رفع قسيمة </string>
+    <string name="Your_current_balance">رصيدك الحالي</string>
+    <string name="Discount_vouchers">قسائم الخصم</string>
+    <string name="Active">النشطة</string>
+    <string name="Vendors_of_vouchers">بائعي القسائم</string>
+    <string name="Favorite">المفضلين</string>
+    <string name="Vouchers_ended">قسائم انتهت</string>
+    <string name="Already_valid">بالفعل صلاحيتها</string>
+    <string name="Vouchers_That_Have_Already_Ended"> قسائم بالفعل انتهت تاريخ صلاحيتها </string>
+    <string name="Done">إنتهاءها</string>
+    <string name="Active_coupons">القسائم النشطة</string>
+    <string name="Sr_Stabuckscard"> 25 ر.س</string>
+    <string name="Voucher_Number">1 قسيمة خصم </string>
+    <string name="Active_Till">صالحة حتي 23/12/2018</string>
+
+    <string name="Voucher_Till">صالحة حتى 25 يناير 2019</string>
+    <string name="New_Sr">25 ر.س</string>
+    <string name="Voucher_number">رقم القسيمة:</string>
+    <string name="Pin_Number">رقم pin : </string>
+    <string name="General_Instructions">تعليمات عامة </string>
+    <string name="Here_You_Find_Vouchers_For_Discount_Send_By_Your_Friends">هنا تجد قسائم الخصم المرسلة من أصدقائك </string>
+    <string name="You_Can_Transform_It_Into_Voucher_Cards">ويمكنك نقلها إلى محفظة الكروت واستغلالها في الشراء والخصومات</string>
+    <string name="Discount_Voucher">3 قسيمة خصم </string>
+    <string name="Upload_Vouchers_Choose_The_Brand">رفع قسيمة خصم- اختر البراند</string>
+
+
+    <string name="Upload_Voucher_Voucher_Data">رفع قسيمة خصم- بيانات القسيمة </string>
+    <string name="Scan_The_Card_To_Bring_The_Data_Automatically">قم بعمل ماسح ضوئي للبطاقة لجلب بيانات البطاقة تلقائيا </string>
+    <string name="Scan_The_Photo">مسح  </string>
+    <string name="Enter_Data_Manually_In_Case_Scanning_Is_Failed">إدخال البيانات يدويا في حالة فشل المسح الضوئي </string>
+    <string name="Voucher_Value">قيمة القسيمة : </string>
+    <string name="Available_Till">صالح حتى: </string>
+    <string name="January">صالح حتى </string>
+    <string name="Adding_To_My_Notecase">إضافة إلى محفظتي </string>
+
+    <string name="Exchange_A_Discount_Voucher">استبدال قسيمة خصم </string>
+    <string name="Send_For_A_Friend_As_A_Gift">ارسال إلى صديق كهدية </string>
+    <string name="Exchange_And_Add_The_Amount_On_Your_Balance">استبدال وإضافة المبلغ إلى رصيدك</string>
+    <string name="Display_The_Voucher_On_An_Auction">عرض القسيمة إلى المزاد </string>
+
+    <string name="Send_to_a_friend">إرسال لصديق</string>
+    <string name="Friend_mobile_number">أدخل رقم جوال صديقك </string>
+    <string name="Friend_information">Friend information</string>
+    <string name="Name">الإسم:  </string>
+    <string name="Mahmoud_Abd_El_Mot_al"> محمود عبد المتعال </string>
+    <string name="Email_Address">البريد الإلكتروني :</string>
+    <string name="Sending_Date">تاريخ الإرسال </string>
+    <string name="Hello_Friend_I_Am_Sending_You_This_Voucher_To_Express_My_Love_And_Gratitude">هلا حبيبي، بأرسلك هذه الهدية لأعبر عن مدى اعتزازي بك كصديق عزيز</string>
+    <string name="I_Hope_That_You_Will_Be_Happy">وأنتمى لك السعادة والتميز في حياتك كلها. </string>
+    <string name="Completing_The_Sending_Process">اتمام الإرسال </string>
+
+
+    <string name="Exchanging_And_add_to_my_balance">استبدال وإضافة المبلغ إلى رصيدك</string>
+    <string name="How_Much_You_Will_Exchange_The_Amount">بكم تستبدل القيمة؟</string>
+    <string name="You_Will_Get_The_Amount_Of">ستحصل على مبلغ </string>
+    <string name="SR_only"> 8.5 ر.س فقط </string>
+    <string name="Completing_Exchange_Process">اتمام الإستبدال </string>
+
+    <string name="Main_Page">الرئيسية </string>
+    <string name="My_Personal_Account">حسابي الشخصي </string>
+    <string name="Active_Vouchers">القسائم النشطة </string>
+    <string name="Favorite_Vouchers">القسائم المفضلة </string>
+    <string name="Best_Brands">البائعين المفضلين  </string>
+    <string name="Transactions_Record">سجل العمليات </string>
+    <string name="Auctions">المزادات </string>
+    <string name="Payment_Methods">طرق الدفع </string>
+    <string name="Support_And_Contact">الدعم والتواصل </string>
+    <string name="About_The_Application">عن التطبيق </string>
+    <string name="Instructions_And_Conditions">التعليمات والشروط </string>
+    <string name="Sign_Out">تسجيل الخروج </string>
+    <string name="English_Version">English Version </string>
+    <string name="Share_With_Your_Friends">Share With Your Friends</string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>
