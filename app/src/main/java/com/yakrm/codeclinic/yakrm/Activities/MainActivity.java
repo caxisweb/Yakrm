@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -38,6 +39,7 @@ import com.yakrm.codeclinic.yakrm.Fragments.BuyTabFragment;
 import com.yakrm.codeclinic.yakrm.Fragments.MyWalletTabFragment;
 import com.yakrm.codeclinic.yakrm.Fragments.RecievedTabFragment;
 import com.yakrm.codeclinic.yakrm.Fragments.ReplaceTabFragment;
+import com.yakrm.codeclinic.yakrm.Models.FilterPressedStateModel;
 import com.yakrm.codeclinic.yakrm.R;
 
 import java.util.ArrayList;
@@ -50,10 +52,12 @@ public class MainActivity extends AppCompatActivity
     private static int lastCheckedPos = -1;
     ListView filter_recyclerview;
     ArrayList<String> arrayList = new ArrayList<>();
-    TextView tv[];
+    Button btn[];
     int i;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
+    ArrayList<FilterPressedStateModel> ar_pressed = new ArrayList<>();
+    FilterPressedStateModel filterPressedStateModel;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -123,37 +127,50 @@ public class MainActivity extends AppCompatActivity
         arrayList.add(getResources().getString(R.string.jewelries_and_golden));
         arrayList.add(getResources().getString(R.string.others));
 
-
-        tv = new TextView[arrayList.size()];
+        for (int i = 0; i < arrayList.size(); i++) {
+            ar_pressed.add(new FilterPressedStateModel(false));
+        }
+        btn = new Button[arrayList.size()];
         for (i = 0; i < arrayList.size(); i++) {
-            tv[i] = new Button(this);
-            tv[i].setText(arrayList.get(i));
-            tv[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 30));
-            tv[i].setId(i);
-            tv[i].setPadding(25, 0, 25, 0);
-            tv[i].setGravity(Gravity.CENTER);
-            tv[i].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
-            tv[i].setTextColor(getResources().getColor(R.color.white));
-            flowLayout.addView(tv[i]);
-
-         /*   if (selectedPosition == i) {
-                tv[i].setPressed(true);
+            btn[i] = new Button(this);
+            btn[i].setText(arrayList.get(i));
+            btn[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 100));
+            btn[i].setId(i);
+            btn[i].setPadding(25, 0, 25, 0);
+            btn[i].setGravity(Gravity.CENTER);
+            btn[i].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
+            btn[i].setTextColor(getResources().getColor(R.color.white));
+            btn[i].setPressed(ar_pressed.get(i).isPressed());
+            btn[i].setTag(ar_pressed.get(i));
+            if (selectedPosition == i) {
+                btn[i].setPressed(true);
             } else {
                 btn[i].setPressed(false);
-            }*/
-            tv[i].setOnClickListener(new View.OnClickListener() {
+            }
+
+            final Handler mHandler = new Handler();
+            btn[i].setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    int pos = v.getId();
-                    if (pos == selectedPosition) {
-                        selectedPosition = -1;
-                        tv[pos].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
-                    } else {
-                        tv[pos].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
-                        selectedPosition = pos;
-                    }
+                public void onClick(View view) {
+                    boolean pressed = false;
+                    if (view.getTag() instanceof Boolean)
+                        pressed = (boolean) view.getTag();
+                    final boolean newPressed = !pressed;
+                    // setTag to store state
+                    view.setTag(newPressed);
+                    final View vRun = view;
+                    Runnable run = new Runnable() {
+                        @Override
+                        public void run() {
+                            vRun.setPressed(newPressed);
+                        }
+                    };
+                    mHandler.post(run);
+                    mHandler.postDelayed(run, 100);
+
                 }
             });
+            flowLayout.addView(btn[i]);
         }
 
 
