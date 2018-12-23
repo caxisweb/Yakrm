@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity
             btn[i].setTextColor(getResources().getColor(R.color.white));
             btn[i].setTextSize(10);
             btn[i].setText(arrayList.get(i));
+            btn[i].setTextColor(getResources().getColor(R.color.black));
             btn[i].setPressed(ar_pressed.get(i).isPressed());
             btn[i].setTag(ar_pressed.get(i));
             if (selectedPosition == i) {
@@ -159,11 +160,18 @@ public class MainActivity extends AppCompatActivity
             btn[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Button button = (Button) view;
                     boolean pressed = false;
                     if (view.getTag() instanceof Boolean) {
                         pressed = (boolean) view.getTag();
                     }
                     final boolean newPressed = !pressed;
+
+                    if (newPressed) {
+                        button.setTextColor(getResources().getColor(R.color.white));
+                    } else {
+                        button.setTextColor(getResources().getColor(R.color.black));
+                    }
                     // setTag to store state
                     view.setTag(newPressed);
                     final View vRun = view;

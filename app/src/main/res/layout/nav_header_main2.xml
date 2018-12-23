@@ -299,14 +299,6 @@
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_background"
-                    android:text="@string/Filter"
-                    android:textColor="@color/white" />
 
                 <Button
                     android:layout_width="match_parent"
@@ -316,6 +308,15 @@
                     android:background="@android:color/transparent"
                     android:text="@string/Delete"
                     android:textColor="@color/colorPrimary" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:text="@string/Filter"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
