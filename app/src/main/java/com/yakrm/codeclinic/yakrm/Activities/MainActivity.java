@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         NavigationView navigationView2 = findViewById(R.id.nav_view2);
         View header = navigationView2.getHeaderView(0);
+
         FlowLayout flowLayout = header.findViewById(R.id.main_flow_layout);
         arrayList.add(getResources().getString(R.string.Cuisine));
         arrayList.add(getResources().getString(R.string.books_and_magazines));
@@ -133,13 +134,19 @@ public class MainActivity extends AppCompatActivity
         btn = new Button[arrayList.size()];
         for (i = 0; i < arrayList.size(); i++) {
             btn[i] = new Button(this);
-            btn[i].setText(arrayList.get(i));
-            btn[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 100));
+            // btn[i].setHei
+            //btn[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 35));
+            final float scale = getResources().getDisplayMetrics().density;
+            int pixels_height = (int) (30 * scale + 0.5f);
+            int pixels_padding = (int) (10 * scale + 0.5f);
+            btn[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, pixels_height));
             btn[i].setId(i);
-            btn[i].setPadding(25, 0, 25, 0);
+            btn[i].setPadding(pixels_padding, 0, pixels_padding, 0);
             btn[i].setGravity(Gravity.CENTER);
             btn[i].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
             btn[i].setTextColor(getResources().getColor(R.color.white));
+            btn[i].setTextSize(10);
+            btn[i].setText(arrayList.get(i));
             btn[i].setPressed(ar_pressed.get(i).isPressed());
             btn[i].setTag(ar_pressed.get(i));
             if (selectedPosition == i) {
@@ -153,8 +160,9 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(View view) {
                     boolean pressed = false;
-                    if (view.getTag() instanceof Boolean)
+                    if (view.getTag() instanceof Boolean) {
                         pressed = (boolean) view.getTag();
+                    }
                     final boolean newPressed = !pressed;
                     // setTag to store state
                     view.setTag(newPressed);
