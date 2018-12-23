@@ -81,39 +81,41 @@
                             android:background="@color/cardview_shadow_end_color"
                             android:src="@drawable/demo_img_1" />
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
 
-                            <LinearLayout
+                        <LinearLayout
+                            android:layout_width="170dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_margin="5dp"
+                            android:layout_toLeftOf="@+id/img_logo"
+                            android:orientation="vertical">
+
+                            <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:text="STARBUCKSCARD"
+                                android:textColor="@color/black"
+                                android:textSize="14dp" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
                                 android:layout_margin="5dp"
-                                android:layout_toLeftOf="@+id/img_logo"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:text="STARBUCKSCARD"
-                                    android:textColor="@color/black"
-                                    android:textSize="14dp" />
+                                android:text="@string/Sr_Stabuckscard"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="14dp" />
 
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_margin="5dp"
-                                    android:text="@string/Sr_Stabuckscard"
-                                    android:textColor="@color/colorPrimary"
-                                    android:textSize="14dp" />
+                        </LinearLayout>
 
-
-                            </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end">
 
 
                             <ImageView
@@ -125,8 +127,8 @@
                                 android:layout_margin="5dp"
                                 android:src="@drawable/app_logo" />
 
+                        </LinearLayout>
 
-                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -147,7 +149,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:orientation="horizontal">
 
                         <EditText

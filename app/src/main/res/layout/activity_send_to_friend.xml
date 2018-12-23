@@ -76,40 +76,42 @@
                         android:background="@color/cardview_shadow_end_color"
                         android:src="@drawable/demo_img_1" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
 
-                        <LinearLayout
+                    <LinearLayout
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="5dp"
+                        android:layout_toLeftOf="@+id/img_logo"
+                        android:orientation="vertical">
+
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="STARBUCKSCARD"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
                             android:layout_margin="5dp"
-                            android:layout_toLeftOf="@+id/img_logo"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginRight="5dp"
-                                android:text="STARBUCKSCARD"
-                                android:textColor="@color/black"
-                                android:textSize="14dp" />
+                            android:text="@string/Sr_Stabuckscard"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="14dp" />
 
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_margin="5dp"
-                                android:text="@string/Sr_Stabuckscard"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="14dp" />
+                    </LinearLayout>
 
 
-                        </LinearLayout>
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end">
 
                         <ImageView
                             android:id="@+id/img_logo"
@@ -120,8 +122,8 @@
                             android:layout_margin="5dp"
                             android:src="@drawable/app_logo" />
 
+                    </LinearLayout>
 
-                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -131,7 +133,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@color/dot_light_intro" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -139,27 +141,32 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="35dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/img_search"
                         android:background="@color/white"
-                        android:hint="@string/Friend_mobile_number"
-                        android:textColorHint="@color/black" />
+                        android:hint="@string/Enter_the_brand_name" />
 
-                    <ImageView
-                        android:id="@+id/img_search"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:padding="5dp"
-                        android:src="@mipmap/ic_search_icon"
-                        android:tint="@color/colorPrimary" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end">
+
+                        <ImageView
+                            android:id="@+id/img_search"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/ic_search_icon"
+                            android:tint="@color/colorPrimary" />
+
+                    </LinearLayout>
 
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

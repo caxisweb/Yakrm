@@ -19,12 +19,44 @@
 
             <ImageView
                 android:id="@+id/main_images"
-                android:layout_width="170dp"
+                android:layout_width="160dp"
                 android:layout_height="110dp"
                 android:layout_gravity="center_horizontal"
                 android:adjustViewBounds="true"
                 android:background="@color/cardview_shadow_end_color"
                 android:src="@drawable/demo_img_1" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:text="brand address is here, discount till"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3%"
+                    android:textColor="@color/colorPrimary" />
+
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -33,63 +65,36 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_margin="5dp"
-                    android:layout_toLeftOf="@+id/img_fav"
-                    android:orientation="vertical">
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="end|top"
+                    android:gravity="end">
 
-                    <TextView
-                        android:id="@+id/tv_item_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:textColor="@color/black"
-                        android:textSize="12dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="brand address is here, discount till"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="3%"
-                            android:textColor="@color/colorPrimary" />
-
-                    </LinearLayout>
-
+                    <ImageView
+                        android:id="@+id/img_fav"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/fav_filled" />
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/img_fav"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/fav_filled" />
-
-                <ImageView
-
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentRight="true"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/app_logo" />
+                    android:layout_gravity="end|bottom"
+                    android:gravity="end">
 
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/app_logo" />
+
+                </LinearLayout>
 
             </RelativeLayout>
+
 
         </LinearLayout>
 
