@@ -11,6 +11,7 @@
     <color name="text_color">#C5C5C5</color>
     <color name="layout">#4bc5c5c5</color>
     <color name="toast_color">#aa4dbc5c</color>
+    <color name="yellow">#aaccbb3f</color>
 
     <color name="digit_color">#4dbc5c</color>
     <color name="digit_color2">#e243ea</color>

@@ -110,9 +110,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         NavigationView navigationView2 = findViewById(R.id.nav_view2);
-        View header = navigationView2.getHeaderView(0);
+        View header2 = navigationView2.getHeaderView(0);
+        View header1 = navigationView.getHeaderView(0);
+        FlowLayout flowLayout = header2.findViewById(R.id.main_flow_layout);
+        LinearLayout llayout_fav_voucher = header1.findViewById(R.id.llayout_fav_voucher);
+        LinearLayout llayout_active_voucher = header1.findViewById(R.id.llayout_active_voucher);
+        LinearLayout llayout_best_brands = header1.findViewById(R.id.llayout_best_brands);
 
-        FlowLayout flowLayout = header.findViewById(R.id.main_flow_layout);
         arrayList.add(getResources().getString(R.string.Cuisine));
         arrayList.add(getResources().getString(R.string.books_and_magazines));
         arrayList.add(getResources().getString(R.string.coffee));
@@ -189,9 +193,22 @@ public class MainActivity extends AppCompatActivity
             flowLayout.addView(btn[i]);
         }
 
-
         navigationView.setNavigationItemSelectedListener(this);
         navigationView2.setNavigationItemSelectedListener(this);
+
+        llayout_fav_voucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, FavouriteVouchersActivity.class));
+            }
+        });
+
+        llayout_active_voucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, VoucherWillEndActivity.class));
+            }
+        });
 
 
     }

@@ -77,6 +77,16 @@
         <activity
             android:name=".Activities.ExchangeAddBalanceActivity"
             android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.FavouriteVouchersActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.VoucherWillEndActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.VoucherEndedActivity"
+            android:theme="@style/No_action_bar" />
+        <activity android:name=".Activities.NotificationsActivity"></activity>
     </application>
 
 </manifest>

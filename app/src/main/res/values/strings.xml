@@ -106,7 +106,7 @@
     <string name="SR4">486SR</string>
     <string name="S5">5%</string>
     <string name="Compete_the_purchase">Compete the purchase</string>
-    <string name="Research">Research</string>
+    <string name="Research">Search</string>
     <string name="Enter_the_brand_name">Enter the brand name</string>
     <string name="Sharing">Sharing</string>
     <string name="Favorites">Favorites</string>
@@ -213,6 +213,18 @@
     <string name="Sign_Out">Sign Out</string>
     <string name="English_Version">English Version</string>
     <string name="Share_With_Your_Friends">Share With Your Friends</string>
+    <string name="Favorite_Brands_Of_Vouchers">Favorite Brands Of Vouchers</string>
+    <string name="Vouchers_Will_end_Very_Soon">Vouchers Will end Very Soon</string>
+    <string name="Available_till_date">Available till 13/12/2018</string>
+    <string name="For_The_Coming_Days_Only">(For The Coming 2 Days Only)</string>
+    <string name="Vouchers_That_Have_Ended">Vouchers That Have Already Ended</string>
+    <string name="Notifications">Notifications</string>
+    <string name="New">New</string>
+    <string name="System_Administrator">System Administrator: My Dear, We Hope That Your Complete Your Personal Information To Compete Registration Process</string>
+    <string name="Minutes_ago">8 Minutes ago</string>
+
+    <string name="Yesterday">Yesterday</string>
+    <string name="Dec_18">B110-Dec-18</string>
 
 
 </resources>

@@ -219,6 +219,21 @@
     <string name="English_Version">English Version </string>
     <string name="Share_With_Your_Friends">Share With Your Friends</string>
 
+
+    <string name="Favorite_Brands_Of_Vouchers">بائعي القسائم المفضلين </string>
+
+    <string name="Vouchers_Will_end_Very_Soon">قسائم قرب إنتهاءها </string>
+    <string name="Available_till_date">صالحة حتى 13/13/2018</string>
+    <string name="For_The_Coming_Days_Only">(For The Coming 2 Days Only)</string>
+    <string name="Vouchers_That_Have_Ended">قسائم انتهت بالفعل صلاحيتها </string>
+
+    <string name="Notifications">الإشعارات </string>
+    <string name="New">جديد</string>
+    <string name="System_Administrator">مدير النظام: عزيزنرجو منك تعبئة البيانات الشخصية الخاصة بك لإتمام التسجيل</string>
+    <string name="Minutes_ago">8 Minutes ago</string>
+    <string name="Yesterday">يوم أمس </string>
+    <string name="Dec_18">10/ديسمبر /2018</string>
+
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>
