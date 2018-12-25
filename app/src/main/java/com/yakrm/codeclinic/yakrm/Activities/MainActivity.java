@@ -39,6 +39,7 @@ import com.yakrm.codeclinic.yakrm.Fragments.BuyTabFragment;
 import com.yakrm.codeclinic.yakrm.Fragments.MyWalletTabFragment;
 import com.yakrm.codeclinic.yakrm.Fragments.RecievedTabFragment;
 import com.yakrm.codeclinic.yakrm.Fragments.ReplaceTabFragment;
+import com.yakrm.codeclinic.yakrm.Fragments.SupportContactFragment;
 import com.yakrm.codeclinic.yakrm.Models.FilterPressedStateModel;
 import com.yakrm.codeclinic.yakrm.R;
 
@@ -63,13 +64,15 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private Button lastChecked = null;
     private int selectedPosition = -1;
+    public static int back_flag = 0;
+    LinearLayout llayout_tab;
 
     @SuppressLint({"ClickableViewAccessibility", "ResourceType", "NewApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         drawer = findViewById(R.id.drawer_layout);
+        llayout_tab = findViewById(R.id.llayout_tab);
 
 
         viewPager = findViewById(R.id.viewpager);
@@ -116,6 +120,10 @@ public class MainActivity extends AppCompatActivity
         LinearLayout llayout_fav_voucher = header1.findViewById(R.id.llayout_fav_voucher);
         LinearLayout llayout_active_voucher = header1.findViewById(R.id.llayout_active_voucher);
         LinearLayout llayout_best_brands = header1.findViewById(R.id.llayout_best_brands);
+        LinearLayout llayout_finance_records = header1.findViewById(R.id.llayout_finance_records);
+        LinearLayout llayout_support_contact = header1.findViewById(R.id.llayout_support_contact);
+        LinearLayout llayout_about_app = header1.findViewById(R.id.llayout_about_app);
+        LinearLayout llayout_instruction_conditions = header1.findViewById(R.id.llayout_instruction_conditions);
 
         arrayList.add(getResources().getString(R.string.Cuisine));
         arrayList.add(getResources().getString(R.string.books_and_magazines));
@@ -199,6 +207,9 @@ public class MainActivity extends AppCompatActivity
         llayout_fav_voucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                 startActivity(new Intent(MainActivity.this, FavouriteVouchersActivity.class));
             }
         });
@@ -206,12 +217,61 @@ public class MainActivity extends AppCompatActivity
         llayout_active_voucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                 startActivity(new Intent(MainActivity.this, VoucherWillEndActivity.class));
+            }
+        });
+
+        llayout_finance_records.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                startActivity(new Intent(MainActivity.this, FinancialTransactionsRecordActivity.class));
+            }
+        });
+
+
+        llayout_support_contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.GONE);
+                findViewById(R.id.frame_contaner).setVisibility(View.VISIBLE);
+                toolbar.setTitle(getResources().getString(R.string.Support_And_Contact));
+                SupportContactFragment fragment = null;
+                fragment = new SupportContactFragment();
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
+            }
+        });
+
+        llayout_about_app.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                startActivity(new Intent(MainActivity.this, AboutApplicationActivity.class));
+            }
+        });
+
+        llayout_instruction_conditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                startActivity(new Intent(MainActivity.this, ExcahangeInstructionsActivity.class));
             }
         });
 
 
     }
+
 
     private void createTabIcons() {
 
@@ -262,7 +322,13 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (back_flag == 0) {
+                super.onBackPressed();
+                finish();
+            } else {
+                llayout_tab.setVisibility(View.VISIBLE);
+                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+            }
         }
     }
 
@@ -293,6 +359,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, FavouritesActivity.class));
             return true;
         } else if (id == R.id.action_notification) {
+            startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
             return true;
         } else if (id == R.id.action_basket) {
             startActivity(new Intent(MainActivity.this, CartActivity.class));

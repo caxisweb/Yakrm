@@ -1,9 +1,12 @@
 package com.yakrm.codeclinic.yakrm.Activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +19,8 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
     ImageView img_back;
 
     LinearLayout llayout_send_friend, llayout_add_balance, llayout_display_voucher;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,29 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ExchangeVoucherActivity.this, ExchangeAddBalanceActivity.class));
+            }
+        });
+
+        llayout_display_voucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final LayoutInflater inflater = getLayoutInflater();
+                dialogBuilder = new AlertDialog.Builder(ExchangeVoucherActivity.this);
+                final View dialogView = inflater.inflate(R.layout.custom_voucher_display_view, null);
+                dialogBuilder.setView(dialogView);
+                dialogBuilder.setCancelable(true);
+
+                final Button btn_accept = dialogView.findViewById(R.id.btn_accept);
+
+                alertDialog = dialogBuilder.create();
+                alertDialog.show();
+
+                btn_accept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
             }
         });
 

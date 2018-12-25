@@ -86,7 +86,18 @@
         <activity
             android:name=".Activities.VoucherEndedActivity"
             android:theme="@style/No_action_bar" />
-        <activity android:name=".Activities.NotificationsActivity"></activity>
+        <activity
+            android:name=".Activities.NotificationsActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.FinancialTransactionsRecordActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.ExcahangeInstructionsActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.AboutApplicationActivity"
+            android:theme="@style/No_action_bar" />
     </application>
 
 </manifest>

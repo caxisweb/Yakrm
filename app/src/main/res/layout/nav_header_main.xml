@@ -175,6 +175,7 @@
                 android:background="@color/layout" />
 
             <LinearLayout
+                android:id="@+id/llayout_finance_records"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
@@ -268,6 +269,7 @@
                 android:background="@color/layout" />
 
             <LinearLayout
+                android:id="@+id/llayout_support_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
@@ -299,6 +301,7 @@
                 android:background="@color/layout" />
 
             <LinearLayout
+                android:id="@+id/llayout_about_app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
@@ -330,6 +333,7 @@
                 android:background="@color/layout" />
 
             <LinearLayout
+                android:id="@+id/llayout_instruction_conditions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"

@@ -234,6 +234,52 @@
     <string name="Yesterday">يوم أمس </string>
     <string name="Dec_18">10/ديسمبر /2018</string>
 
+    <string name="Financial_Transactions_Record">سجل العمليات المالية </string>
+
+    <string name="Contact_And_Support">التواصل والدعم </string>
+    <string name="Any_Questions_Ideas_Or_Evaluations">هل لديك أسئلة أو أفكار أو تقييم؟</string>
+    <string name="Contact_With_And_Send_To_Us">تواصل معنا وأرسل لنا </string>
+    <string name="Message_Title">موضوع الرسالة </string>
+    <string name="Message_Details">Message Details</string>
+
+    <string name="Exchange_Instructions">تعليمات الإستبدال </string>
+    <string name="Received_Vouchers">هنا تجد كروت الهدايا المرسلة من أصدقائك </string>
+    <string name="You_Can_Transform_It_Ito_Walet_Cards_And_Use_It_In_purchasing_And_Discount_Process">You Can Transform It Into Wallet Cards And Use It In purchasing And Discount Process</string>
+    <string name="Auctions_Instructions">تعليمات المزادات </string>
+    <string name="Here_You_Find_Voucher_Cards_Friend">هنا تجد كروت الهدايا المرسلة من أصدقائك </string>
+    <string name="Other_Instructions">تعليمات أخرى </string>
+
+    <string name="About_Yakrm">عن التطبيق </string>
+    <string name="Idea_of_Yakrm">فكرة التطبيق </string>
+    <string name="Version_Number">رقم الإصدار: 1.0.0</string>
+
+    <string name="Auctions_Of_Other">مزادات الأخرين </string>
+    <string name="Auction_On_My_Vouchers">مزاد على قسائمي </string>
+    <string name="Active_Now">جارية الأن </string>
+    <string name="Win">فازت بها </string>
+    <string name="Lost">خسرتها </string>
+    <string name="Valid_Till"> صالحة حتى 13/12/2018</string>
+    <string name="SR_discount_voucher">قسيمة خصم بقيمة 25 ر.س- المالك: محمود عبدالله  </string>
+
+    <string name="Introduce_Your_Auction_With_Value">Introduce Your Auction With Value:</string>
+    <string name="Auction_With_Value">مزايدة بقيمة 30 ر.س</string>
+    <string name="Auction_Number">عدد المزايدات: 18</string>
+    <string name="Remaining">المتبقي: 15س: 25 د</string>
+    <string name="Abed_El_Rahman_Fawzi_Wins_The_Auction">فاز بالمزاد عبدالرحمن فوزي بقيمة 75 ر.س </string>
+    <string name="Your_Auction_Value">Your Auction\'s Value Was 65 SR</string>
+
+    <string name="View_Auction_Voucher">عرض قسيمة المزاد </string>
+    <string name="Your_Voucher_Will_Be_Uploaded_For_Auction_Other_Will_Compete_To_Win_It">Your Voucher Will Be Uploaded For Auction. Other Will Compete To Win It</string>
+    <string name="Auction_Duration">مدة المزاد هي 3 أيام كاملة </string>
+    <string name="The_Lowest_Value_for_Increase_Is">أقل قيمة للزيادة هي 5 ريال </string>
+    <string name="Terms_and_Condition">شروط وقواعد المزادات كاملة  ></string>
+    <string name="Accept">موافق </string>
+
+    <string name="Last_Auction">Last Auction: 25 SR</string>
+
+    <string name="Ended">منتهية </string>
+    <string name="The_Number_Of_The_Auctions">عدد المزايدات: 18</string>
+
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>

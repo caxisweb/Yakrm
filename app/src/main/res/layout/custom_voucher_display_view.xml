@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/View_Auction_Voucher"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/Your_Voucher_Will_Be_Uploaded_For_Auction_Other_Will_Compete_To_Win_It"
+        android:textColor="@color/black"
+        android:textSize="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/Auction_Duration"
+        android:textColor="@color/colorPrimary"
+        android:textSize="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/The_Lowest_Value_for_Increase_Is"
+        android:textColor="@color/black"
+        android:textSize="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/Terms_and_Condition"
+        android:textColor="@color/button_color"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/btn_accept"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_background"
+        android:text="@string/Accept"
+        android:textColor="@color/white"
+        android:textSize="12dp" />
+
+</LinearLayout>

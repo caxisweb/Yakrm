@@ -2,23 +2,25 @@ package com.yakrm.codeclinic.yakrm.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.yakrm.codeclinic.yakrm.Adapter.SimpleSectionedRecyclerViewAdapter;
 import com.yakrm.codeclinic.yakrm.R;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
-import org.zakariya.stickyheaders.StickyHeaderLayoutManager;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ImageView img_back;
-    ArrayList<String> arrayList = new ArrayList<>();
+    String[] arrayList = new String[12];
     ArrayList<String> title_arrayList = new ArrayList<>();
+    com.yakrm.codeclinic.yakrm.Adapter.SimpleAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,7 @@ public class NotificationsActivity extends AppCompatActivity {
             }
         });
 
-
-        recyclerView.setLayoutManager(new StickyHeaderLayoutManager());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this)
@@ -43,19 +44,40 @@ public class NotificationsActivity extends AppCompatActivity {
                 .sizeResId(R.dimen.divider)
                 .build());
 
-        arrayList.add(getResources().getString(R.string.Yesterday));
-        arrayList.add(getResources().getString(R.string.Yesterday));
-        arrayList.add(getResources().getString(R.string.Yesterday));
-        arrayList.add(getResources().getString(R.string.Dec_18));
-        arrayList.add(getResources().getString(R.string.Dec_18));
-        arrayList.add(getResources().getString(R.string.Dec_18));
-        arrayList.add(getResources().getString(R.string.Dec_18));
-        arrayList.add(getResources().getString(R.string.Dec_18));
+        arrayList[0] = getResources().getString(R.string.System_Administrator);
+        arrayList[1] = getResources().getString(R.string.System_Administrator);
+        arrayList[2] = getResources().getString(R.string.System_Administrator);
+        arrayList[3] = getResources().getString(R.string.System_Administrator);
+        arrayList[4] = getResources().getString(R.string.System_Administrator);
+        arrayList[5] = getResources().getString(R.string.System_Administrator);
+        arrayList[6] = getResources().getString(R.string.System_Administrator);
+        arrayList[7] = getResources().getString(R.string.System_Administrator);
+        arrayList[8] = getResources().getString(R.string.System_Administrator);
+        arrayList[9] = getResources().getString(R.string.System_Administrator);
+        arrayList[10] = getResources().getString(R.string.System_Administrator);
+        arrayList[11] = getResources().getString(R.string.System_Administrator);
 
-        title_arrayList.add(getResources().getString(R.string.Yesterday));
-        title_arrayList.add(getResources().getString(R.string.Dec_18));
-/*
-        NotificationAdapter notificationAdapter = new NotificationAdapter(arrayList,title_arrayList);
-        recyclerView.setAdapter(notificationAdapter);*/
+        mAdapter = new com.yakrm.codeclinic.yakrm.Adapter.SimpleAdapter(this, arrayList);
+
+
+        //This is the code to provide a sectioned list
+        List<SimpleSectionedRecyclerViewAdapter.Section> sections =
+                new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+
+        //Sections
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, getResources().getString(R.string.Yesterday)));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(5, getResources().getString(R.string.Dec_18)));
+
+
+        //Add your adapter to the sectionAdapter
+        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+        SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new
+                SimpleSectionedRecyclerViewAdapter(this, R.layout.custom_notification_header_view, R.id.tv_header, mAdapter);
+        mSectionedAdapter.setSections(sections.toArray(dummy));
+
+        //Apply this adapter to the RecyclerView
+        recyclerView.setAdapter(mSectionedAdapter);
+
+
     }
 }

@@ -17,6 +17,7 @@
     <color name="digit_color2">#e243ea</color>
     <color name="digit_color3">#ffa229</color>
 
+    <color name="transparent">#00000000</color>
     <color name="transparent_red">#64ee4158</color>
     <color name="icon_color">#b1b0b0</color>
 
