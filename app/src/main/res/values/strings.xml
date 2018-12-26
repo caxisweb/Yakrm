@@ -267,6 +267,10 @@
 
     <string name="Last_Auction">Last Auction: 25 SR</string>
     <string name="The_Number_Of_The_Auctions">The Number Of The Auctions: 18</string>
+    <string name="Abed_El_Rahman_Fawzi_Wins_The_Auction_The_Value_Is">Abed El-Rahman Fawzi Wins The Auction. The Value Is 75 SR</string>
+    <string name="User_Agreement_And_Privacy_Policy">User Agreement And Privacy Policy</string>
+    <string name="User_Agreement">User Agreement</string>
+    <string name="Privacy_Policy">Privacy Policy</string>
 
 
 </resources>

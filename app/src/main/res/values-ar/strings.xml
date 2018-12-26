@@ -279,6 +279,10 @@
 
     <string name="Ended">منتهية </string>
     <string name="The_Number_Of_The_Auctions">عدد المزايدات: 18</string>
+    <string name="Abed_El_Rahman_Fawzi_Wins_The_Auction_The_Value_Is">فاز بالمزاد عبدالرحمن فوزي بقيمة 75 ر.س </string>
+    <string name="User_Agreement_And_Privacy_Policy">اتفاقية الإستخدام وسياسة الخصوصية </string>
+    <string name="User_Agreement">User Agreement</string>
+    <string name="Privacy_Policy">Privacy Policy</string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>

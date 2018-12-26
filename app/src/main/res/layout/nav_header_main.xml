@@ -48,6 +48,7 @@
                 android:background="@color/layout" />
 
             <LinearLayout
+                android:id="@+id/layout_personal_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
@@ -365,6 +366,7 @@
                 android:background="@color/layout" />
 
             <LinearLayout
+                android:id="@+id/llayout_signout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"

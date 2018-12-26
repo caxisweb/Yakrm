@@ -70,7 +70,7 @@ public class NewAccountActivity extends AppCompatActivity {
         tv_user_agree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(NewAccountActivity.this, ExcahangeInstructionsActivity.class));
+                startActivity(new Intent(NewAccountActivity.this, PrivayPolicyActivity.class));
             }
         });
     }

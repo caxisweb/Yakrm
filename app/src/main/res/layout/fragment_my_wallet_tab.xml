@@ -112,6 +112,7 @@
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
+                        android:id="@+id/llayout_fav_vouchers"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
@@ -123,6 +124,7 @@
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/doller_img"
                             android:text="12"
+                            android:gravity="center"
                             android:textColor="@color/digit_color2"
                             android:textSize="32dp"
                             android:textStyle="bold" />
@@ -158,7 +160,6 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rl_action_bar"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
@@ -168,9 +169,11 @@
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
+                        android:id="@+id/llayout_active_vouchers"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
+                        android:gravity="center"
                         android:padding="5dp">
 
                         <TextView
@@ -231,9 +234,11 @@
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
+                        android:id="@+id/llayout_voucher_ended_valid"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
+                        android:gravity="center"
                         android:padding="5dp">
 
                         <TextView
@@ -287,9 +292,11 @@
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
+                        android:id="@+id/llayout_voucher_ended_done"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
+                        android:gravity="center"
                         android:padding="5dp">
 
                         <TextView
@@ -342,8 +349,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp" />
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 

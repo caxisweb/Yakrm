@@ -98,6 +98,9 @@
         <activity
             android:name=".Activities.AboutApplicationActivity"
             android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.PrivayPolicyActivity"
+            android:theme="@style/No_action_bar" />
     </application>
 
 </manifest>

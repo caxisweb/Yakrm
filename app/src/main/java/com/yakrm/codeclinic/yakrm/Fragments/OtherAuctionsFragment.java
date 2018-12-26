@@ -55,16 +55,19 @@ public class OtherAuctionsFragment extends Fragment {
         recyclerView_active.setLayoutManager(layoutManager);
         recyclerView_active.setHasFixedSize(true);
         recyclerView_active.setNestedScrollingEnabled(false);
+        recyclerView_active.smoothScrollToPosition(0);
 
         RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_win.setLayoutManager(layoutManager2);
         recyclerView_win.setHasFixedSize(true);
         recyclerView_win.setNestedScrollingEnabled(false);
+        recyclerView_win.smoothScrollToPosition(0);
 
         RecyclerView.LayoutManager layoutManager3 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_lost.setLayoutManager(layoutManager3);
         recyclerView_lost.setHasFixedSize(true);
         recyclerView_lost.setNestedScrollingEnabled(false);
+        recyclerView_win.smoothScrollToPosition(0);
 
 
         tv_active.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +83,7 @@ public class OtherAuctionsFragment extends Fragment {
                 recyclerView_active.setVisibility(View.VISIBLE);
                 recyclerView_win.setVisibility(View.GONE);
                 recyclerView_lost.setVisibility(View.GONE);
+
 
             }
         });
@@ -99,6 +103,7 @@ public class OtherAuctionsFragment extends Fragment {
                 recyclerView_lost.setVisibility(View.GONE);
                 auctionWinAdapter = new AuctionWinAdapter(arrayList_win, getActivity());
                 recyclerView_win.setAdapter(auctionWinAdapter);
+
             }
         });
 
@@ -116,7 +121,8 @@ public class OtherAuctionsFragment extends Fragment {
                 recyclerView_win.setVisibility(View.GONE);
                 recyclerView_lost.setVisibility(View.VISIBLE);
                 auctionWinAdapter = new AuctionWinAdapter(arrayList_win, getActivity());
-                recyclerView_win.setAdapter(auctionWinAdapter);
+                recyclerView_lost.setAdapter(auctionWinAdapter);
+
 
             }
         });

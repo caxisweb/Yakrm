@@ -1,13 +1,16 @@
 package com.yakrm.codeclinic.yakrm.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.yakrm.codeclinic.yakrm.Activities.VoucherDetailActivity;
 import com.yakrm.codeclinic.yakrm.R;
 
 import java.util.ArrayList;
@@ -30,8 +33,16 @@ public class VoucherWillEndAdapter extends RecyclerView.Adapter<VoucherWillEndAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VoucherWillEndAdapter.Holder holder, int i) {
+    public void onBindViewHolder(@NonNull VoucherWillEndAdapter.Holder holder, final int i) {
         holder.tv_item_name.setText(arrayList.get(i));
+        holder.card_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, VoucherDetailActivity.class);
+                intent.putExtra("name", arrayList.get(i));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -41,10 +52,12 @@ public class VoucherWillEndAdapter extends RecyclerView.Adapter<VoucherWillEndAd
 
     public class Holder extends RecyclerView.ViewHolder {
         TextView tv_item_name;
+        CardView card_view;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
             tv_item_name = itemView.findViewById(R.id.tv_item_name);
+            card_view = itemView.findViewById(R.id.card_view);
         }
     }
 }

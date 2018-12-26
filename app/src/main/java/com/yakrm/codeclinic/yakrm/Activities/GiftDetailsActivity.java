@@ -30,7 +30,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
     ArrayList<String> ar_pay = new ArrayList<>();
 
     Button btn_complete;
-    ImageView img_back, img_fav;
+    ImageView img_back, img_fav, img_share;
 
 
     AlertDialog.Builder dialogBuilder;
@@ -44,6 +44,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         img_back = findViewById(R.id.img_back);
         img_fav = findViewById(R.id.img_fav);
+        img_share = findViewById(R.id.img_share);
         btn_complete = findViewById(R.id.btn_complete);
 
         img_back.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +86,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
         giftDetailListAdapter = new GiftDetailListAdapter(arrayList, this);
         recyclerView.setAdapter(giftDetailListAdapter);
 
-        img_fav.setOnClickListener(new View.OnClickListener() {
+        img_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final LayoutInflater inflater = getLayoutInflater();
@@ -99,11 +100,18 @@ public class GiftDetailsActivity extends AppCompatActivity {
             }
         });
 
+        img_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(GiftDetailsActivity.this, FavouritesActivity.class));
+            }
+        });
+
         btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toasty.custom(GiftDetailsActivity.this, getResources().getString(R.string.Added_to_the_buying_basket_successfully), getResources().getDrawable(R.mipmap.ic_tick_inside), getResources().getColor(R.color.toast_color), 2000, true, true).show();
-                startActivity(new Intent(GiftDetailsActivity.this, FavouritesActivity.class));
+
             }
         });
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yakrm.codeclinic.yakrm.Adapter.AuctionOtherAcceptAdapter;
+import com.yakrm.codeclinic.yakrm.Adapter.MyVoucherAuctionAdapter;
 import com.yakrm.codeclinic.yakrm.R;
 
 import java.util.ArrayList;
@@ -26,9 +27,9 @@ public class MyVouchersAuctionFragment extends Fragment {
 
     RecyclerView recyclerView_active, recyclerView_ended;
     AuctionOtherAcceptAdapter auctionOtherAcceptAdapter;
+    MyVoucherAuctionAdapter myVoucherAuctionAdapter;
     ArrayList<String> arrayList = new ArrayList<>();
     ArrayList<String> arrayList_ended = new ArrayList<>();
-    ArrayList<String> arrayList_lost = new ArrayList<>();
 
     public MyVouchersAuctionFragment() {
         // Required empty public constructor
@@ -52,11 +53,13 @@ public class MyVouchersAuctionFragment extends Fragment {
         recyclerView_active.setLayoutManager(layoutManager);
         recyclerView_active.setHasFixedSize(true);
         recyclerView_active.setNestedScrollingEnabled(false);
+        recyclerView_active.smoothScrollToPosition(0);
 
         RecyclerView.LayoutManager layoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_ended.setLayoutManager(layoutManager2);
         recyclerView_ended.setHasFixedSize(true);
         recyclerView_ended.setNestedScrollingEnabled(false);
+        recyclerView_ended.smoothScrollToPosition(0);
 
         tv_active.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
@@ -84,6 +87,8 @@ public class MyVouchersAuctionFragment extends Fragment {
 
                 recyclerView_active.setVisibility(View.GONE);
                 recyclerView_ended.setVisibility(View.VISIBLE);
+                myVoucherAuctionAdapter = new MyVoucherAuctionAdapter(arrayList_ended, getActivity());
+                recyclerView_ended.setAdapter(myVoucherAuctionAdapter);
             }
         });
 
@@ -93,6 +98,13 @@ public class MyVouchersAuctionFragment extends Fragment {
         arrayList.add("");
         arrayList.add("");
         arrayList.add("");
+
+        arrayList_ended.add("");
+        arrayList_ended.add("");
+        arrayList_ended.add("");
+        arrayList_ended.add("");
+        arrayList_ended.add("");
+        arrayList_ended.add("");
 
         auctionOtherAcceptAdapter = new AuctionOtherAcceptAdapter(arrayList, getActivity());
         recyclerView_active.setAdapter(auctionOtherAcceptAdapter);

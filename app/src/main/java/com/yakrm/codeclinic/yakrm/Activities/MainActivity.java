@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity
         View header2 = navigationView2.getHeaderView(0);
         View header1 = navigationView.getHeaderView(0);
         FlowLayout flowLayout = header2.findViewById(R.id.main_flow_layout);
+        LinearLayout layout_personal_account = header1.findViewById(R.id.layout_personal_account);
         LinearLayout llayout_fav_voucher = header1.findViewById(R.id.llayout_fav_voucher);
         LinearLayout llayout_active_voucher = header1.findViewById(R.id.llayout_active_voucher);
         LinearLayout llayout_best_brands = header1.findViewById(R.id.llayout_best_brands);
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity
         LinearLayout llayout_support_contact = header1.findViewById(R.id.llayout_support_contact);
         LinearLayout llayout_about_app = header1.findViewById(R.id.llayout_about_app);
         LinearLayout llayout_instruction_conditions = header1.findViewById(R.id.llayout_instruction_conditions);
+        LinearLayout llayout_signout = header1.findViewById(R.id.llayout_signout);
 
         arrayList.add(getResources().getString(R.string.Cuisine));
         arrayList.add(getResources().getString(R.string.books_and_magazines));
@@ -204,13 +206,23 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView2.setNavigationItemSelectedListener(this);
 
+        layout_personal_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                startActivity(new Intent(MainActivity.this, PersonalDataActivity.class));
+            }
+        });
+
         llayout_fav_voucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
                 findViewById(R.id.frame_contaner).setVisibility(View.GONE);
-                startActivity(new Intent(MainActivity.this, FavouriteVouchersActivity.class));
+                startActivity(new Intent(MainActivity.this, FavouritesActivity.class));
             }
         });
 
@@ -220,7 +232,17 @@ public class MainActivity extends AppCompatActivity
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
                 findViewById(R.id.frame_contaner).setVisibility(View.GONE);
-                startActivity(new Intent(MainActivity.this, VoucherWillEndActivity.class));
+                viewPager.setCurrentItem(3);
+            }
+        });
+
+        llayout_best_brands.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                startActivity(new Intent(MainActivity.this, FavouriteVouchersActivity.class));
             }
         });
 
@@ -266,6 +288,16 @@ public class MainActivity extends AppCompatActivity
                 llayout_tab.setVisibility(View.VISIBLE);
                 findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                 startActivity(new Intent(MainActivity.this, ExcahangeInstructionsActivity.class));
+            }
+        });
+
+        llayout_signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
 
@@ -326,6 +358,7 @@ public class MainActivity extends AppCompatActivity
                 super.onBackPressed();
                 finish();
             } else {
+                toolbar.setTitle(getResources().getString(R.string.title_activity_main));
                 llayout_tab.setVisibility(View.VISIBLE);
                 findViewById(R.id.frame_contaner).setVisibility(View.GONE);
             }
