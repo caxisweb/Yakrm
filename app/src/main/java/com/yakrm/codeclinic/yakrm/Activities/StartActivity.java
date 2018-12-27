@@ -2,10 +2,10 @@ package com.yakrm.codeclinic.yakrm.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,8 +60,8 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        view_pager = (ViewPager) findViewById(R.id.vi_pager);
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
+        view_pager = findViewById(R.id.vi_pager);
+        dotsLayout = findViewById(R.id.layoutDots);
         btn_sign_up = findViewById(R.id.btn_sign_up);
         tv_skip = findViewById(R.id.tv_skip);
 
@@ -89,6 +89,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(StartActivity.this, MainActivity.class));
+                finish();
             }
         });
     }

@@ -14,7 +14,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-    /*    Locale locale = new Locale("ar");
+      /*  Locale locale = new Locale("en");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;

@@ -74,7 +74,9 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
                 btn_accept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent = new Intent(ExchangeVoucherActivity.this, MainActivity.class);
+                        intent.putExtra("view_pos", "3");
+                        startActivity(intent);
                     }
                 });
             }

@@ -9,6 +9,12 @@
     tools:context=".Activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/app_main_background_img" />
+
     <LinearLayout
         android:id="@+id/llayout_tab"
         android:layout_width="match_parent"

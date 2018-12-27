@@ -111,7 +111,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toasty.custom(GiftDetailsActivity.this, getResources().getString(R.string.Added_to_the_buying_basket_successfully), getResources().getDrawable(R.mipmap.ic_tick_inside), getResources().getColor(R.color.toast_color), 2000, true, true).show();
-
+                startActivity(new Intent(GiftDetailsActivity.this, CartActivity.class));
             }
         });
 

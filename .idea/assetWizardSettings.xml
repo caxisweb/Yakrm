@@ -16,12 +16,27 @@
                             <entry key="launcherLegacy">
                               <value>
                                 <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="50" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="C:\Users\Codeclinic\Desktop\house.png" />
-                                      <entry key="outputName" value="ic_home_icon" />
+                                      <entry key="imageAsset" value="C:\Users\Codeclinic\Desktop\jay_icon-01.png" />
+                                      <entry key="outputName" value="ic_english_menu_icon" />
                                     </map>
                                   </option>
                                 </PersistentState>

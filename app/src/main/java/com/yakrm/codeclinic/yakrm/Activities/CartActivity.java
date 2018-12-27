@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yakrm.codeclinic.yakrm.Adapter.CartlistAdapter;
@@ -23,6 +24,7 @@ public class CartActivity extends AppCompatActivity {
     CartlistAdapter cartlistAdapter;
 
     TextView tv_header_name;
+    RelativeLayout rl_cart_filled, rl_empty_layout;
 
     Button btn_pay;
 
@@ -34,6 +36,8 @@ public class CartActivity extends AppCompatActivity {
         img_back = findViewById(R.id.img_back);
         tv_header_name = findViewById(R.id.tv_header_name);
         recyclerView = findViewById(R.id.recyclerView);
+        rl_cart_filled = findViewById(R.id.rl_cart_filled);
+        rl_empty_layout = findViewById(R.id.rl_empty_layout);
         btn_pay = findViewById(R.id.btn_pay);
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +59,14 @@ public class CartActivity extends AppCompatActivity {
         arrayList.add("");
 
         tv_header_name.setText("(Five Elements) the basket");
+
+        if (arrayList.size() == 0) {
+            rl_cart_filled.setVisibility(View.GONE);
+            rl_empty_layout.setVisibility(View.VISIBLE);
+        } else {
+            rl_cart_filled.setVisibility(View.VISIBLE);
+            rl_empty_layout.setVisibility(View.GONE);
+        }
 
         cartlistAdapter = new CartlistAdapter(arrayList, this);
         recyclerView.setAdapter(cartlistAdapter);

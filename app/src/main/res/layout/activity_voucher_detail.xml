@@ -27,6 +27,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:padding="10dp"
+            android:background="?android:selectableItemBackground"
             android:src="@drawable/back_img" />
 
         <TextView
@@ -165,6 +166,16 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/barcode_demo_img" />
+
+                    <Button
+                        android:id="@+id/btn_done"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/button_background"
+                        android:text="Done"
+                        android:textColor="@color/white"
+                        android:textSize="12dp" />
 
                 </LinearLayout>
 

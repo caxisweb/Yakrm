@@ -11,7 +11,7 @@
         android:gravity="center"
         android:text="@string/View_Auction_Voucher"
         android:textColor="@color/colorPrimary"
-        android:textSize="12dp" />
+        android:textSize="14dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:gravity="center"
         android:text="@string/Your_Voucher_Will_Be_Uploaded_For_Auction_Other_Will_Compete_To_Win_It"
         android:textColor="@color/black"
-        android:textSize="10dp" />
+        android:textSize="14dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
         android:gravity="center"
         android:text="@string/Auction_Duration"
         android:textColor="@color/colorPrimary"
-        android:textSize="10dp" />
+        android:textSize="14dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
         android:gravity="center"
         android:text="@string/The_Lowest_Value_for_Increase_Is"
         android:textColor="@color/black"
-        android:textSize="10dp" />
+        android:textSize="14dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
         android:gravity="center"
         android:text="@string/Terms_and_Condition"
         android:textColor="@color/button_color"
-        android:textSize="10dp" />
+        android:textSize="14dp" />
 
     <Button
         android:id="@+id/btn_accept"

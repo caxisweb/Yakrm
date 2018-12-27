@@ -27,6 +27,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:padding="10dp"
+            android:background="?android:selectableItemBackground"
             android:src="@drawable/back_img" />
 
         <TextView
@@ -70,6 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:text="STARBUCKS"
                 android:textColor="@color/black"
                 android:textSize="16dp"
                 android:textStyle="bold" />

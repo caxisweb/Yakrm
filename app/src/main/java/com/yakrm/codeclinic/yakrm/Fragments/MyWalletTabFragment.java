@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yakrm.codeclinic.yakrm.Activities.FavouriteVouchersActivity;
+import com.yakrm.codeclinic.yakrm.Activities.MainActivity;
 import com.yakrm.codeclinic.yakrm.Activities.UploadVouchersActivity;
 import com.yakrm.codeclinic.yakrm.Activities.VoucherEndedActivity;
 import com.yakrm.codeclinic.yakrm.Activities.VoucherWillEndActivity;
@@ -94,7 +95,7 @@ public class MyWalletTabFragment extends Fragment {
         llayout_voucher_ended_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), VoucherEndedActivity.class));
+                MainActivity.viewPager.setCurrentItem(2);
             }
         });
 

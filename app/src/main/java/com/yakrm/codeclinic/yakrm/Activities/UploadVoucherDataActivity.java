@@ -13,9 +13,9 @@ import com.yakrm.codeclinic.yakrm.R;
 
 public class UploadVoucherDataActivity extends AppCompatActivity {
 
-    LinearLayout layout_scan_img, llayout_scan, llayout_scan_detail, llayout_voucher_details;
+    LinearLayout layout_scan_img, llayout_scan, llayout_scan_detail, llayout_manual_voucher_details;
     Button btn_add_note1, btn_add_note2;
-    TextView tv_item_name;
+    TextView tv_item_name, tv_enter_manualy;
     ImageView img_back;
     String name;
 
@@ -25,8 +25,9 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload_voucher_data);
 
         tv_item_name = findViewById(R.id.tv_item_name);
+        tv_enter_manualy = findViewById(R.id.tv_enter_manualy);
 
-        llayout_voucher_details = findViewById(R.id.llayout_voucher_details);
+        llayout_manual_voucher_details = findViewById(R.id.llayout_manual_voucher_details);
         llayout_scan_detail = findViewById(R.id.llayout_scan_detail);
         llayout_scan = findViewById(R.id.llayout_scan);
         layout_scan_img = findViewById(R.id.layout_scan_img);
@@ -58,21 +59,30 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 llayout_scan_detail.setVisibility(View.GONE);
-                llayout_voucher_details.setVisibility(View.VISIBLE);
+                llayout_manual_voucher_details.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(UploadVoucherDataActivity.this, MainActivity.class);
+                intent.putExtra("view_pos", "4");
+                startActivity(intent);
             }
         });
 
         btn_add_note2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                llayout_voucher_details.setVisibility(View.GONE);
+                llayout_manual_voucher_details.setVisibility(View.GONE);
                 llayout_scan.setVisibility(View.VISIBLE);
-                Intent intent = new Intent(UploadVoucherDataActivity.this, ExchangeVoucherActivity.class);
-                intent.putExtra("name", name);
+                Intent intent = new Intent(UploadVoucherDataActivity.this, MainActivity.class);
+                intent.putExtra("view_pos", "4");
                 startActivity(intent);
             }
         });
 
-
+        tv_enter_manualy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                llayout_scan.setVisibility(View.GONE);
+                llayout_manual_voucher_details.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

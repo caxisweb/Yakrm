@@ -3,12 +3,12 @@ package com.yakrm.codeclinic.yakrm.Activities;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,7 +30,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nex3z.flowlayout.FlowLayout;
@@ -40,32 +39,30 @@ import com.yakrm.codeclinic.yakrm.Fragments.MyWalletTabFragment;
 import com.yakrm.codeclinic.yakrm.Fragments.RecievedTabFragment;
 import com.yakrm.codeclinic.yakrm.Fragments.ReplaceTabFragment;
 import com.yakrm.codeclinic.yakrm.Fragments.SupportContactFragment;
-import com.yakrm.codeclinic.yakrm.Models.FilterPressedStateModel;
 import com.yakrm.codeclinic.yakrm.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static DrawerLayout drawer;
-    private static int lastCheckedPos = -1;
-    ListView filter_recyclerview;
+    public static ViewPager viewPager;
+
     ArrayList<String> arrayList = new ArrayList<>();
     Button btn[];
     int i;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
-    ArrayList<FilterPressedStateModel> ar_pressed = new ArrayList<>();
-    FilterPressedStateModel filterPressedStateModel;
-    private Toolbar toolbar;
+
     private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private Button lastChecked = null;
-    private int selectedPosition = -1;
+    Drawable drawable;
+
     public static int back_flag = 0;
     LinearLayout llayout_tab;
+    CoordinatorLayout main_content;
 
     @SuppressLint({"ClickableViewAccessibility", "ResourceType", "NewApi"})
     @Override
@@ -75,30 +72,61 @@ public class MainActivity extends AppCompatActivity
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         drawer = findViewById(R.id.drawer_layout);
+        main_content = findViewById(R.id.main_content);
         llayout_tab = findViewById(R.id.llayout_tab);
 
 
         viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
+        if (getIntent().hasExtra("view_pos")) {
+            viewPager.setCurrentItem(Integer.parseInt(getIntent().getStringExtra("view_pos")));
+        }
 
         tabLayout = findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
         createTabIcons();
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                float slideX = drawerView.getWidth() * slideOffset;
+                Locale locale = getResources().getConfiguration().locale;
+                String language = String.valueOf(getResources().getConfiguration().locale);
+                if (language.equals("en")) {
+                    if (drawer.isDrawerVisible(GravityCompat.START)) {
+                        main_content.setTranslationX(slideX);
+                    } else {
+                        main_content.setTranslationX(-slideX);
+                    }
+                } else if (language.equals("en_GB")) {
+                    if (drawer.isDrawerVisible(GravityCompat.START)) {
+                        main_content.setTranslationX(slideX);
+                    } else {
+                        main_content.setTranslationX(-slideX);
+                    }
+                } else {
+                    if (drawer.isDrawerVisible(GravityCompat.START)) {
+                        main_content.setTranslationX(-slideX);
+                    } else {
+                        main_content.setTranslationX(slideX);
+                    }
+                }
+            }
+        };
         drawer.addDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(false);
-        Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_small_menu_icon, getTheme());
+
+        String language = String.valueOf(getResources().getConfiguration().locale);
+        if (language.equals("en")) {
+            drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_english_menu_icon, getTheme());
+        } else if (language.equals("en_GB")) {
+            drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_english_menu_icon, getTheme());
+        } else {
+            drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_small_menu_icon, getTheme());
+        }
+
         toggle.setHomeAsUpIndicator(drawable);
         toggle.syncState();
         toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
@@ -112,20 +140,24 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         NavigationView navigationView2 = findViewById(R.id.nav_view2);
         View header2 = navigationView2.getHeaderView(0);
         View header1 = navigationView.getHeaderView(0);
         FlowLayout flowLayout = header2.findViewById(R.id.main_flow_layout);
+        LinearLayout llayout_main_page = header1.findViewById(R.id.llayout_main_page);
         LinearLayout layout_personal_account = header1.findViewById(R.id.layout_personal_account);
         LinearLayout llayout_fav_voucher = header1.findViewById(R.id.llayout_fav_voucher);
         LinearLayout llayout_active_voucher = header1.findViewById(R.id.llayout_active_voucher);
         LinearLayout llayout_best_brands = header1.findViewById(R.id.llayout_best_brands);
         LinearLayout llayout_finance_records = header1.findViewById(R.id.llayout_finance_records);
+        LinearLayout llayout_auctions = header1.findViewById(R.id.llayout_auctions);
         LinearLayout llayout_support_contact = header1.findViewById(R.id.llayout_support_contact);
         LinearLayout llayout_about_app = header1.findViewById(R.id.llayout_about_app);
         LinearLayout llayout_instruction_conditions = header1.findViewById(R.id.llayout_instruction_conditions);
         LinearLayout llayout_signout = header1.findViewById(R.id.llayout_signout);
+        LinearLayout llayout_english = header1.findViewById(R.id.llayout_english);
 
         arrayList.add(getResources().getString(R.string.Cuisine));
         arrayList.add(getResources().getString(R.string.books_and_magazines));
@@ -142,14 +174,9 @@ public class MainActivity extends AppCompatActivity
         arrayList.add(getResources().getString(R.string.jewelries_and_golden));
         arrayList.add(getResources().getString(R.string.others));
 
-        for (int i = 0; i < arrayList.size(); i++) {
-            ar_pressed.add(new FilterPressedStateModel(false));
-        }
         btn = new Button[arrayList.size()];
         for (i = 0; i < arrayList.size(); i++) {
             btn[i] = new Button(this);
-            // btn[i].setHei
-            //btn[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 35));
             final float scale = getResources().getDisplayMetrics().density;
             int pixels_height = (int) (30 * scale + 0.5f);
             int pixels_padding = (int) (10 * scale + 0.5f);
@@ -162,13 +189,6 @@ public class MainActivity extends AppCompatActivity
             btn[i].setTextSize(10);
             btn[i].setText(arrayList.get(i));
             btn[i].setTextColor(getResources().getColor(R.color.black));
-            btn[i].setPressed(ar_pressed.get(i).isPressed());
-            btn[i].setTag(ar_pressed.get(i));
-            if (selectedPosition == i) {
-                btn[i].setPressed(true);
-            } else {
-                btn[i].setPressed(false);
-            }
 
             final Handler mHandler = new Handler();
             btn[i].setOnClickListener(new View.OnClickListener() {
@@ -206,12 +226,29 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView2.setNavigationItemSelectedListener(this);
 
+        llayout_main_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
+
+
+            }
+        });
+
         layout_personal_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
-                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
                 startActivity(new Intent(MainActivity.this, PersonalDataActivity.class));
             }
         });
@@ -221,7 +258,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
-                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
                 startActivity(new Intent(MainActivity.this, FavouritesActivity.class));
             }
         });
@@ -231,8 +271,11 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
-                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
-                viewPager.setCurrentItem(3);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
+                viewPager.setCurrentItem(2);
             }
         });
 
@@ -241,7 +284,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
-                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
                 startActivity(new Intent(MainActivity.this, FavouriteVouchersActivity.class));
             }
         });
@@ -251,8 +297,24 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
-                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
                 startActivity(new Intent(MainActivity.this, FinancialTransactionsRecordActivity.class));
+            }
+        });
+
+        llayout_auctions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
+                viewPager.setCurrentItem(3);
             }
         });
 
@@ -276,7 +338,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
-                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
                 startActivity(new Intent(MainActivity.this, AboutApplicationActivity.class));
             }
         });
@@ -286,7 +351,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
-                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
                 startActivity(new Intent(MainActivity.this, ExcahangeInstructionsActivity.class));
             }
         });
@@ -296,8 +364,31 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
-                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
+
+        llayout_english.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
+                Locale locale = new Locale("en");
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                setTitle(getResources().getString(R.string.title_activity_main));
             }
         });
 
@@ -350,7 +441,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -358,7 +449,8 @@ public class MainActivity extends AppCompatActivity
                 super.onBackPressed();
                 finish();
             } else {
-                toolbar.setTitle(getResources().getString(R.string.title_activity_main));
+                back_flag = 0;
+                setTitle(getResources().getString(R.string.title_activity_main));
                 llayout_tab.setVisibility(View.VISIBLE);
                 findViewById(R.id.frame_contaner).setVisibility(View.GONE);
             }
@@ -398,6 +490,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, CartActivity.class));
             return true;
         } else if (id == R.id.action_user) {
+            startActivity(new Intent(MainActivity.this, PersonalDataActivity.class));
             return true;
         }
 
@@ -482,8 +575,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -516,5 +607,6 @@ public class MainActivity extends AppCompatActivity
             return mFragmentTitleList.get(position);
         }
     }
+
 
 }
