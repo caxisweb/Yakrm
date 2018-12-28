@@ -444,6 +444,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
                     android:src="@mipmap/nav_mail_icon" />
 
                 <ImageView
@@ -451,6 +452,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
                     android:src="@mipmap/nav_sms_icon" />
 
                 <ImageView
@@ -458,6 +460,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
                     android:src="@mipmap/nav_share_icon" />
 
                 <ImageView
@@ -465,6 +468,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
                     android:src="@mipmap/nav_call_icon" />
 
                 <ImageView
@@ -472,6 +476,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
                     android:src="@mipmap/nav_twitter_icon" />
 
                 <ImageView
@@ -479,6 +484,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
                     android:src="@mipmap/nav_fb_icon" />
 
 

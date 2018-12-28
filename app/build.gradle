@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.yakrm.codeclinic.yakrm"
+        applicationId "com.yakrm.codeclinic"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
@@ -36,4 +36,8 @@ dependencies {
     implementation 'com.nex3z:flow-layout:1.2.4'
     implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'
     implementation 'com.github.GrenderG:Toasty:1.3.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
 }

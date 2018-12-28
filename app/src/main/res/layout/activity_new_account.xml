@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.NewAccountActivity">
+    tools:context="com.yakrm.codeclinic.Activities.NewAccountActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -26,8 +26,8 @@
             android:layout_height="45dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:padding="10dp"
             android:background="?android:selectableItemBackground"
+            android:padding="10dp"
             android:src="@drawable/back_img" />
 
         <TextView
@@ -82,6 +82,7 @@
                 android:padding="5dp">
 
                 <Spinner
+                    android:id="@+id/sp_country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/selectcountry">
@@ -100,6 +101,7 @@
                 android:textSize="14dp" />
 
             <EditText
+                android:id="@+id/edt_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -107,7 +109,6 @@
                 android:inputType="number"
                 android:maxLength="10"
                 android:padding="6dp"
-                android:text="966596479033"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
 
@@ -130,6 +131,7 @@
                 android:textSize="16dp" />
 
             <TextView
+                android:id="@+id/tv_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -180,24 +182,28 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:id="@+id/edt_1"
                     android:layout_width="25dp"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="1" />
 
                 <EditText
+                    android:id="@+id/edt_2"
                     android:layout_width="25dp"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="1" />
 
                 <EditText
+                    android:id="@+id/edt_3"
                     android:layout_width="25dp"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="1" />
 
                 <EditText
+                    android:id="@+id/edt_4"
                     android:layout_width="25dp"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -258,6 +264,7 @@
                 android:textSize="14dp" />
 
             <EditText
+                android:id="@+id/edt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -276,6 +283,7 @@
                 android:textSize="14dp" />
 
             <EditText
+                android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -294,6 +302,7 @@
                 android:textSize="14dp" />
 
             <EditText
+                android:id="@+id/edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

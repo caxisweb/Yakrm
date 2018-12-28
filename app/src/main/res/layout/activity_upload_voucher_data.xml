@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.UploadVoucherDataActivity">
+    tools:context="com.yakrm.codeclinic.Activities.UploadVoucherDataActivity">
 
     <ImageView
         android:layout_width="match_parent"

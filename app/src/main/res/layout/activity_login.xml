@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.LoginActivity">
+    tools:context="com.yakrm.codeclinic.Activities.LoginActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -26,9 +26,9 @@
             android:layout_height="45dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:padding="10dp"
-
             android:background="?android:selectableItemBackground"
+
+            android:padding="10dp"
             android:src="@drawable/back_img" />
 
         <TextView
@@ -76,6 +76,7 @@
                 android:textSize="14dp" />
 
             <EditText
+                android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -94,6 +95,7 @@
                 android:textSize="14dp" />
 
             <EditText
+                android:id="@+id/edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -120,6 +122,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_signup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
