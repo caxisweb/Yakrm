@@ -59,7 +59,6 @@ public class SessionManager {
             editor.commit();
 
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
     }

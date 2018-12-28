@@ -173,7 +173,7 @@
                         android:layout_height="35dp"
                         android:layout_margin="10dp"
                         android:background="@drawable/button_background"
-                        android:text="Done"
+                        android:text="@string/replace_voucher"
                         android:textColor="@color/white"
                         android:textSize="12dp" />
 

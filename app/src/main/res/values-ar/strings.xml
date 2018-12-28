@@ -284,6 +284,8 @@
     <string name="User_Agreement">User Agreement</string>
     <string name="Privacy_Policy">Privacy Policy</string>
 
+    <string name="replace_voucher">استبدل القسيمة</string>
+
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>

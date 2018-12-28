@@ -271,6 +271,7 @@
     <string name="User_Agreement_And_Privacy_Policy">User Agreement And Privacy Policy</string>
     <string name="User_Agreement">User Agreement</string>
     <string name="Privacy_Policy">Privacy Policy</string>
+    <string name="replace_voucher">Replace voucher</string>
 
 
 </resources>
