@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
-      /*  Locale locale = new Locale("en");
+   /*     Locale locale = new Locale("ar");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;

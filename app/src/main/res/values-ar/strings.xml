@@ -26,6 +26,7 @@
     <string name="log_in">تسجيل الدخول</string>
     <string name="Step_1_Enter_your_login_data">خطوة 1: أدخل بيانات الدخول</string>
     <string name="email_address">البريد الإلكتروني </string>
+
     <string name="Log_in">تسجيل الدخول</string>
     <string name="Do_not_have_an_account">ليس لديك حساب ؟</string>
     <string name="Forget_password">نسيت كلمة المرور ؟</string>
@@ -111,6 +112,7 @@
     <string name="There_is_no_Purchases_in_the_buying_basket">لا يوجد مشتريات في سلة الشراء </string>
     <string name="Start_Purchasing">إبدأ الشراء </string>
 
+
     <string name="four_elements_the_basket">السلة (4 عناصر)</string>
     <string name="STABUCKSCARD_electronic_and_paper_gifts">STABUCKSCARD  (electronic and paper gifts)</string>
     <string name="Ended_in_12_12_2018">Ended in 12/12/2018</string>
@@ -161,6 +163,8 @@
     <string name="Voucher_Number">1 قسيمة خصم </string>
     <string name="Active_Till">صالحة حتي 23/12/2018</string>
 
+
+    <string name="replace_voucher">استبدل القسيمة</string>
     <string name="Voucher_Till">صالحة حتى 25 يناير 2019</string>
     <string name="New_Sr">25 ر.س</string>
     <string name="Voucher_number">رقم القسيمة:</string>
@@ -284,7 +288,6 @@
     <string name="User_Agreement">User Agreement</string>
     <string name="Privacy_Policy">Privacy Policy</string>
 
-    <string name="replace_voucher">استبدل القسيمة</string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>

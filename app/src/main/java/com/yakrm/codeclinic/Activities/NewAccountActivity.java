@@ -93,6 +93,8 @@ public class NewAccountActivity extends AppCompatActivity {
                 str_number = edt_number.getText().toString();
                 if (isEmpty(str_number)) {
                     Toast.makeText(NewAccountActivity.this, "Enter Number", Toast.LENGTH_SHORT).show();
+                } else if (str_number.length() < 10) {
+                    Toast.makeText(NewAccountActivity.this, "Minimum character required is 10", Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.setMessage("Please Wait");
                     progressDialog.setIndeterminate(true);
