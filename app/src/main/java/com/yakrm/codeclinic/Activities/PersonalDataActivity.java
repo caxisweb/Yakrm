@@ -13,7 +13,7 @@ import com.yakrm.codeclinic.Utils.SessionManager;
 public class PersonalDataActivity extends AppCompatActivity {
     ImageView img_back;
     Button btn_modify_data;
-    TextView tv_mobile, tv_email;
+    TextView tv_mobile, tv_email, tv_username;
     String str_mobile, str_email;
 
     SessionManager sessionManager;
@@ -31,7 +31,9 @@ public class PersonalDataActivity extends AppCompatActivity {
 
         tv_mobile = findViewById(R.id.tv_mobile);
         tv_email = findViewById(R.id.tv_email);
+        tv_username = findViewById(R.id.tv_username);
 
+        tv_username.setText(sessionManager.getUserDetails().get(SessionManager.User_Name));
         tv_mobile.setText(sessionManager.getUserDetails().get(SessionManager.USER_MOBILE));
         tv_email.setText(sessionManager.getUserDetails().get(SessionManager.User_Email));
 

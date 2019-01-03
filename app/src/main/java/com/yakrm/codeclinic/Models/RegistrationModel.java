@@ -10,9 +10,9 @@ public class RegistrationModel {
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("user_id")
+    @SerializedName("token")
     @Expose
-    private Integer userId;
+    private String token;
 
     public String getStatus() {
         return status;
@@ -30,11 +30,11 @@ public class RegistrationModel {
         this.message = message;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getToken() {
+        return token;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

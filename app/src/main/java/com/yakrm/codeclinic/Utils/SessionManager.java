@@ -16,10 +16,11 @@ import java.util.HashMap;
 public class SessionManager {
 
     public static final String User_ID = "user_id";
+    public static final String User_Token = "user_token";
     public static final String User_Name = "user_name";
     public static final String User_Email = "user_email";
     public static final String USER_MOBILE = "user_mobile";
-    public static final String USER_IMG = "USER_IMG";
+    public static final String USER_COUNTRY_ID = "user_country_id";
 
 
     // Sharedpref file name
@@ -44,16 +45,17 @@ public class SessionManager {
     }
 
 
-    public void createLoginSession(String id, String name, String email, String number, String user_img) {
+    public void createLoginSession(String token, String id, String name, String email, String number, String user_country_id) {
         // Storing login value as TRUE
         try {
             editor.putBoolean(IS_LOGIN, true);
             // Storing name in pref
             editor.putString(User_ID, id);
             editor.putString(User_Name, name);
+            editor.putString(User_Token, token);
             editor.putString(User_Email, email);
             editor.putString(USER_MOBILE, number);
-            editor.putString(USER_IMG, user_img);
+            editor.putString(USER_COUNTRY_ID, user_country_id);
 
             // commit changes
             editor.commit();
@@ -69,10 +71,11 @@ public class SessionManager {
         HashMap<String, String> user = new HashMap<>();
 
         user.put(User_ID, pref.getString(User_ID, null));
+        user.put(User_Token, pref.getString(User_Token, null));
         user.put(User_Name, pref.getString(User_Name, null));
         user.put(User_Email, pref.getString(User_Email, null));
         user.put(USER_MOBILE, pref.getString(USER_MOBILE, null));
-        user.put(USER_IMG, pref.getString(USER_IMG, null));
+        user.put(USER_COUNTRY_ID, pref.getString(USER_COUNTRY_ID, null));
 
         return user;
     }

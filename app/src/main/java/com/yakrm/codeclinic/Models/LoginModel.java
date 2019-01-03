@@ -10,18 +10,24 @@ public class LoginModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("token")
+    @Expose
+    private String token;
     @SerializedName("user_id")
     @Expose
-    private Integer userId;
-    @SerializedName("user_name")
+    private String userId;
+    @SerializedName("name")
     @Expose
-    private String userName;
-    @SerializedName("user_email")
+    private String name;
+    @SerializedName("email")
     @Expose
-    private String userEmail;
-    @SerializedName("user_mobile")
+    private String email;
+    @SerializedName("phone")
     @Expose
-    private String userMobile;
+    private String phone;
+    @SerializedName("country_id")
+    @Expose
+    private String countryId;
 
     public String getStatus() {
         return status;
@@ -39,35 +45,51 @@ public class LoginModel {
         this.message = message;
     }
 
-    public Integer getUserId() {
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUserMobile() {
-        return userMobile;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUserMobile(String userMobile) {
-        this.userMobile = userMobile;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(String countryId) {
+        this.countryId = countryId;
     }
 }

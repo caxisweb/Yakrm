@@ -7,22 +7,23 @@ import com.yakrm.codeclinic.Models.VerifyOTPModel;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface API {
 
     @Headers("Content-Type: application/json")
-    @POST("registration_step1")
+    @POST("registration_step_1")
     Call<RegistrationModel> REGISTRATION_MODEL_CALL(@Body String Body);
 
     @Headers("Content-Type: application/json")
     @POST("verify_otp")
-    Call<VerifyOTPModel> VERIFY_OTP_MODEL_CALL(@Body String Body);
+    Call<VerifyOTPModel> VERIFY_OTP_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
     @Headers("Content-Type: application/json")
-    @POST("registration_step2")
-    Call<RegistrationStep2Model> REGISTRATION_STEP_2_MODEL_CALL(@Body String Body);
+    @POST("registration_step_2")
+    Call<RegistrationStep2Model> REGISTRATION_STEP_2_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
     @Headers("Content-Type: application/json")
     @POST("login")

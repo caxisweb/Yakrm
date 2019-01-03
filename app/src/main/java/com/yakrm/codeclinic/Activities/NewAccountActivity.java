@@ -41,7 +41,9 @@ public class NewAccountActivity extends AppCompatActivity {
     JSONObject jsonObject_verify = new JSONObject();
     JSONObject jsonObject_signup = new JSONObject();
 
-    String str_user_id, str_number, str_edt_1, str_edt_2, str_edt_3, str_edt_4, str_name, str_email, str_password;
+    String str_email_regex = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
+
+    String str_user_token, str_number, str_edt_1, str_edt_2, str_edt_3, str_edt_4, str_name, str_email, str_password;
 
 
     public boolean isEmpty(CharSequence character) {
@@ -103,7 +105,7 @@ public class NewAccountActivity extends AppCompatActivity {
 
                     try {
                         jsonObject_register.put("country_id", "1");
-                        jsonObject_register.put("mobile", str_number);
+                        jsonObject_register.put("phone", str_number);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -113,7 +115,7 @@ public class NewAccountActivity extends AppCompatActivity {
                         public void onResponse(Call<RegistrationModel> call, Response<RegistrationModel> response) {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
-                                str_user_id = String.valueOf(response.body().getUserId());
+                                str_user_token = String.valueOf(response.body().getToken());
                                 main_detail_cardview.setVisibility(View.GONE);
                                 number_verify_cardview.setVisibility(View.VISIBLE);
                             } else {
@@ -240,20 +242,20 @@ public class NewAccountActivity extends AppCompatActivity {
                     progressDialog.show();
 
                     try {
-                        jsonObject_verify.put("user_id", str_user_id);
                         jsonObject_verify.put("otp", str_edt_1 + str_edt_2 + str_edt_3 + str_edt_4);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    Call<VerifyOTPModel> verifyOTPModelCall = apiService.VERIFY_OTP_MODEL_CALL(jsonObject_verify.toString());
+                    Call<VerifyOTPModel> verifyOTPModelCall = apiService.VERIFY_OTP_MODEL_CALL(str_user_token, jsonObject_verify.toString());
                     verifyOTPModelCall.enqueue(new Callback<VerifyOTPModel>() {
                         @Override
                         public void onResponse(Call<VerifyOTPModel> call, Response<VerifyOTPModel> response) {
                             progressDialog.dismiss();
-                            if (response.body().getStatus().equals("1")) {
-                                str_user_id = response.body().getUserId();
+                            if (response.body().getStatus().equals("2")) {
+                                str_user_token = response.body().getToken();
                                 number_verify_cardview.setVisibility(View.GONE);
                                 personal_detail_cardview.setVisibility(View.VISIBLE);
+                                Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -280,6 +282,8 @@ public class NewAccountActivity extends AppCompatActivity {
                     Toast.makeText(NewAccountActivity.this, "Enter Name", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_email)) {
                     Toast.makeText(NewAccountActivity.this, "Enter Email", Toast.LENGTH_SHORT).show();
+                } else if (!str_email.matches(str_email_regex)) {
+                    Toast.makeText(NewAccountActivity.this, "Enter Valid Email", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_password)) {
                     Toast.makeText(NewAccountActivity.this, "Enter Password", Toast.LENGTH_SHORT).show();
                 } else {
@@ -289,7 +293,6 @@ public class NewAccountActivity extends AppCompatActivity {
                     progressDialog.show();
 
                     try {
-                        jsonObject_signup.put("user_id", str_user_id);
                         jsonObject_signup.put("name", str_name);
                         jsonObject_signup.put("email", str_email);
                         jsonObject_signup.put("password", str_password);
@@ -297,7 +300,7 @@ public class NewAccountActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Call<RegistrationStep2Model> registrationStep2ModelCall = apiService.REGISTRATION_STEP_2_MODEL_CALL(jsonObject_signup.toString());
+                    Call<RegistrationStep2Model> registrationStep2ModelCall = apiService.REGISTRATION_STEP_2_MODEL_CALL(str_user_token, jsonObject_signup.toString());
                     registrationStep2ModelCall.enqueue(new Callback<RegistrationStep2Model>() {
                         @Override
                         public void onResponse(Call<RegistrationStep2Model> call, Response<RegistrationStep2Model> response) {
@@ -306,6 +309,7 @@ public class NewAccountActivity extends AppCompatActivity {
                                 Intent intent = new Intent(NewAccountActivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 finish();
+                                Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Yakrm</string>
     <string name="startadventure">Start the adventure</string>
-    <string name="Signup">Sign in</string>
+    <string name="Signup">Sign Up</string>
     <string name="skip_i_tnow">Skip it now</string>
     <string name="buying_gift_cards">Buying gifts cards</string>
     <string name="buying_gift_cards_with_competitive_prices">Buy gift cards with competitive prices and discounts and from international brands</string>
