@@ -22,9 +22,10 @@
     <string name="enter_your_full_name_please">أدخل الإسم كاملا من فضلك </string>
     <string name="email">البريد الإلكتروني </string>
     <string name="password">كلمة المرور </string>
+    <string name="Save">حفظ</string>
     <string name="Sign_up_a_new_account">تسجيل حساب جديد </string>
     <string name="log_in">تسجيل الدخول</string>
-    <string name="Step_1_Enter_your_login_data">خطوة 1: أدخل بيانات الدخول</string>
+    <string name="Step_1_Enter_your_login_data">أدخل بيانات الدخول</string>
     <string name="email_address">البريد الإلكتروني </string>
 
     <string name="Log_in">تسجيل الدخول</string>

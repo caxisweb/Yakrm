@@ -2,6 +2,7 @@ package com.yakrm.codeclinic.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 
 import com.yakrm.codeclinic.R;
 
+import java.util.Locale;
+
 
 public class StartActivity extends AppCompatActivity {
 
@@ -26,7 +29,7 @@ public class StartActivity extends AppCompatActivity {
     private int[] layouts;
 
     Button btn_sign_in, btn_start;
-    TextView tv_skip;
+    TextView tv_skip, tv_login, tv_language;
 
 
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -66,12 +69,14 @@ public class StartActivity extends AppCompatActivity {
         btn_sign_in = findViewById(R.id.btn_sign_in);
         btn_start = findViewById(R.id.btn_start);
         tv_skip = findViewById(R.id.tv_skip);
+        tv_login = findViewById(R.id.tv_login);
+        tv_language = findViewById(R.id.tv_language);
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StartActivity.this, NewAccountActivity.class));
-                finish();
+                //startActivity(new Intent(StartActivity.this, NewAccountActivity.class));
+                //finish();
             }
         });
 
@@ -97,6 +102,37 @@ public class StartActivity extends AppCompatActivity {
                 finish();
             }
         });
+        tv_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            }
+        });
+
+        if (SplashActivity.language_name.equals("en")) {
+            tv_language.setText("English Language");
+        } else {
+            tv_language.setText("Aabic Language");
+        }
+
+        tv_language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Locale locale = new Locale(SplashActivity.language_name);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+                if (SplashActivity.language_name.equals("ar")) {
+                    SplashActivity.language_name = "en";
+                } else {
+                    SplashActivity.language_name = "ar";
+                }
+                recreate();
+            }
+        });
+
     }
 
 

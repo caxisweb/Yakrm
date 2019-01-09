@@ -33,7 +33,7 @@ public class NewAccountActivity extends AppCompatActivity {
     CardView main_detail_cardview, number_verify_cardview, personal_detail_cardview;
     Button btn_send, btn_sign_up_new, btn_verify;
     ImageView img_back;
-    TextView tv_user_agree, tv_login;
+    TextView tv_user_agree;
     EditText edt_number, edt_1, edt_2, edt_3, edt_4, edt_name, edt_email, edt_password;
     API apiService;
     ProgressDialog progressDialog;
@@ -66,7 +66,6 @@ public class NewAccountActivity extends AppCompatActivity {
         apiService = RestClass.getClient().create(API.class);
 
         tv_user_agree = findViewById(R.id.tv_user_agree);
-        tv_login = findViewById(R.id.tv_login);
 
         edt_number = findViewById(R.id.edt_number);
         edt_1 = findViewById(R.id.edt_1);
@@ -280,6 +279,9 @@ public class NewAccountActivity extends AppCompatActivity {
                 str_password = edt_password.getText().toString();
                 if (isEmpty(str_name)) {
                     Toast.makeText(NewAccountActivity.this, "Enter Name", Toast.LENGTH_SHORT).show();
+                }
+                if (str_name.length() < 3) {
+                    Toast.makeText(NewAccountActivity.this, "Enter Valid Name", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_email)) {
                     Toast.makeText(NewAccountActivity.this, "Enter Email", Toast.LENGTH_SHORT).show();
                 } else if (!str_email.matches(str_email_regex)) {
@@ -332,11 +334,5 @@ public class NewAccountActivity extends AppCompatActivity {
             }
         });
 
-        tv_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(NewAccountActivity.this, LoginActivity.class));
-            }
-        });
     }
 }

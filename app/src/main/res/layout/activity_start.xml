@@ -6,11 +6,13 @@
     android:orientation="vertical"
     tools:context="com.yakrm.codeclinic.Activities.StartActivity">
 
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/app_main_background_img" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -62,6 +64,14 @@
             android:textColor="@color/colorPrimary" />
 
         <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/If_you_have_already_an_account_long_in" />
+
+        <TextView
             android:id="@+id/tv_skip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,5 +83,16 @@
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:text="Arabic Language"
+        android:textColor="@color/colorPrimary" />
 
 </RelativeLayout>

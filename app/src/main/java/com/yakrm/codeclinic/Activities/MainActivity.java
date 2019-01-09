@@ -92,12 +92,12 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
         createTabIcons();
 
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
                 float slideX = drawerView.getWidth() * slideOffset;
-                Locale locale = getResources().getConfiguration().locale;
                 String language = String.valueOf(getResources().getConfiguration().locale);
                 if (language.equals("en")) {
                     if (drawer.isDrawerVisible(GravityCompat.START)) {
@@ -106,6 +106,36 @@ public class MainActivity extends AppCompatActivity
                         main_content.setTranslationX(-slideX);
                     }
                 } else if (language.equals("en_GB")) {
+                    if (drawer.isDrawerVisible(GravityCompat.START)) {
+                        main_content.setTranslationX(slideX);
+                    } else {
+                        main_content.setTranslationX(-slideX);
+                    }
+                } else if (language.equals("en_")) {
+                    if (drawer.isDrawerVisible(GravityCompat.START)) {
+                        main_content.setTranslationX(slideX);
+                    } else {
+                        main_content.setTranslationX(-slideX);
+                    }
+                } else if (language.equals("en_001")) {
+                    if (drawer.isDrawerVisible(GravityCompat.START)) {
+                        main_content.setTranslationX(slideX);
+                    } else {
+                        main_content.setTranslationX(-slideX);
+                    }
+                } else if (language.equals("en_IN")) {
+                    if (drawer.isDrawerVisible(GravityCompat.START)) {
+                        main_content.setTranslationX(slideX);
+                    } else {
+                        main_content.setTranslationX(-slideX);
+                    }
+                } else if (language.equals("en_US")) {
+                    if (drawer.isDrawerVisible(GravityCompat.START)) {
+                        main_content.setTranslationX(slideX);
+                    } else {
+                        main_content.setTranslationX(-slideX);
+                    }
+                } else if (language.equals("en_150")) {
                     if (drawer.isDrawerVisible(GravityCompat.START)) {
                         main_content.setTranslationX(slideX);
                     } else {

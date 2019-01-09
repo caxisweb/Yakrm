@@ -11,6 +11,7 @@ import com.yakrm.codeclinic.Utils.SessionManager;
 public class SplashActivity extends AppCompatActivity {
 
     SessionManager sessionManager;
+    public static String language_name = "ar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,11 +20,6 @@ public class SplashActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
-   /*     Locale locale = new Locale("ar");
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());*/
 
         new Handler().postDelayed(new Runnable() {
             @Override
