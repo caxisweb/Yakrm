@@ -118,7 +118,6 @@ public class StartActivity extends AppCompatActivity {
         tv_language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Locale locale = new Locale(SplashActivity.language_name);
                 Locale.setDefault(locale);
                 Configuration config = new Configuration();

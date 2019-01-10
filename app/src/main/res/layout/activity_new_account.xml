@@ -50,7 +50,7 @@
         android:layout_below="@+id/rl_action_bar"
         android:layout_margin="20dp"
         android:background="@color/white"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -232,7 +232,7 @@
         android:layout_below="@+id/rl_action_bar"
         android:layout_margin="20dp"
         android:background="@color/white"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -315,12 +315,6 @@
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="@string/If_you_have_already_an_account_long_in" />
 
         </LinearLayout>
 
