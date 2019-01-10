@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -66,6 +67,15 @@ public class NewAccountActivity extends AppCompatActivity {
         apiService = RestClass.getClient().create(API.class);
 
         tv_user_agree = findViewById(R.id.tv_user_agree);
+        String textToHighlight = getResources().getString(R.string.Usage_Agreememnt);
+        String replacedWith = "<font color='red'>" + textToHighlight + "</font>";
+        String originalString = tv_user_agree.getText().toString();
+        String modifiedString = originalString.replaceAll(textToHighlight, replacedWith);
+        tv_user_agree.setText(Html.fromHtml(modifiedString));
+        String textToHighlight2 = getResources().getString(R.string.privacy_policy);
+        String replacedWith2 = "<font color='red'>" + textToHighlight2 + "</font>";
+        String modifiedString2 = modifiedString.replaceAll(textToHighlight2, replacedWith2);
+        tv_user_agree.setText(Html.fromHtml(modifiedString2));
 
         edt_number = findViewById(R.id.edt_number);
         edt_1 = findViewById(R.id.edt_1);

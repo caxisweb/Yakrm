@@ -29,7 +29,7 @@ public class StartActivity extends AppCompatActivity {
     private int[] layouts;
 
     Button btn_sign_in, btn_start;
-    TextView tv_skip, tv_login, tv_language;
+    TextView tv_skip, tv_login, tv_language, tv_user_agree;
 
 
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -71,14 +71,18 @@ public class StartActivity extends AppCompatActivity {
         tv_skip = findViewById(R.id.tv_skip);
         tv_login = findViewById(R.id.tv_login);
         tv_language = findViewById(R.id.tv_language);
+        tv_language = findViewById(R.id.tv_language);
+        String textToHighlight = getResources().getString(R.string.log_in);
 
-        btn_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startActivity(new Intent(StartActivity.this, NewAccountActivity.class));
-                //finish();
-            }
-        });
+        // Construct the formatted text
+        String replacedWith = "<font color='red'>" + textToHighlight + "</font>";
+        // Get the text from TextView
+        String originalString = tv_login.getText().toString();
+        // Replace the specified text/word with formatted text/word
+        String modifiedString = originalString.replaceAll(textToHighlight, replacedWith);
+        // Update the TextView text
+        tv_login.setText(Html.fromHtml(modifiedString));
+
 
         btn_sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +99,7 @@ public class StartActivity extends AppCompatActivity {
         myViewPagerAdapter = new MyViewPagerAdapter();
         view_pager.setAdapter(myViewPagerAdapter);
         view_pager.addOnPageChangeListener(viewPagerPageChangeListener);
-        tv_skip.setOnClickListener(new View.OnClickListener() {
+        btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(StartActivity.this, MainActivity.class));
@@ -112,7 +116,7 @@ public class StartActivity extends AppCompatActivity {
         if (SplashActivity.language_name.equals("en")) {
             tv_language.setText("English Language");
         } else {
-            tv_language.setText("Aabic Language");
+            tv_language.setText("اللغة العربية");
         }
 
         tv_language.setOnClickListener(new View.OnClickListener() {
