@@ -21,6 +21,7 @@ public class SessionManager {
     public static final String User_Email = "user_email";
     public static final String USER_MOBILE = "user_mobile";
     public static final String USER_COUNTRY_ID = "user_country_id";
+    public static final String USER_Profile = "user_profile";
 
 
     // Sharedpref file name
@@ -44,8 +45,19 @@ public class SessionManager {
         editor = pref.edit();
     }
 
+    public Editor getEditor() {
+        return this.pref.edit();
+    }
 
-    public void createLoginSession(String token, String id, String name, String email, String number, String user_country_id) {
+    public void putLanguage(String key, String value) {
+        getEditor().putString(key, value).commit();
+    }
+
+    public String getLanguage(String key, String defValue) {
+        return this.pref.getString(key, defValue);
+    }
+
+    public void createLoginSession(String token, String id, String name, String email, String number, String user_country_id, String user_profile) {
         // Storing login value as TRUE
         try {
             editor.putBoolean(IS_LOGIN, true);
@@ -56,6 +68,7 @@ public class SessionManager {
             editor.putString(User_Email, email);
             editor.putString(USER_MOBILE, number);
             editor.putString(USER_COUNTRY_ID, user_country_id);
+            editor.putString(USER_Profile, user_profile);
 
             // commit changes
             editor.commit();
@@ -76,6 +89,7 @@ public class SessionManager {
         user.put(User_Email, pref.getString(User_Email, null));
         user.put(USER_MOBILE, pref.getString(USER_MOBILE, null));
         user.put(USER_COUNTRY_ID, pref.getString(USER_COUNTRY_ID, null));
+        user.put(USER_Profile, pref.getString(USER_Profile, null));
 
         return user;
     }

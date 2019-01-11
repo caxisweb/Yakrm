@@ -158,6 +158,16 @@ public class MainActivity extends AppCompatActivity
             drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_english_menu_icon, getTheme());
         } else if (language.equals("en_GB")) {
             drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_english_menu_icon, getTheme());
+        } else if (language.equals("en_")) {
+            drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_english_menu_icon, getTheme());
+        } else if (language.equals("en_001")) {
+            drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_english_menu_icon, getTheme());
+        } else if (language.equals("en_IN")) {
+            drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_english_menu_icon, getTheme());
+        } else if (language.equals("en_US")) {
+            drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_english_menu_icon, getTheme());
+        } else if (language.equals("en_150")) {
+            drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_english_menu_icon, getTheme());
         } else {
             drawable = ResourcesCompat.getDrawable(getResources(), R.mipmap.ic_small_menu_icon, getTheme());
         }
@@ -193,6 +203,7 @@ public class MainActivity extends AppCompatActivity
         LinearLayout llayout_instruction_conditions = header1.findViewById(R.id.llayout_instruction_conditions);
         LinearLayout llayout_signout = header1.findViewById(R.id.llayout_signout);
         LinearLayout llayout_english = header1.findViewById(R.id.llayout_english);
+        final TextView tv_language_version = header1.findViewById(R.id.tv_language_version);
 
         arrayList.add(getResources().getString(R.string.Cuisine));
         arrayList.add(getResources().getString(R.string.books_and_magazines));
@@ -417,7 +428,14 @@ public class MainActivity extends AppCompatActivity
                     findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                     setTitle(getResources().getString(R.string.title_activity_main));
                 }
-                Locale locale = new Locale("en");
+                String language_name = "";
+                if (tv_language_version.getText().equals("النسخة العربية")) {
+                    language_name = "ar";
+                } else {
+                    language_name = "en";
+                }
+                sessionManager.putLanguage("Language", language_name);
+                Locale locale = new Locale(language_name);
                 Locale.setDefault(locale);
                 Configuration config = new Configuration();
                 config.locale = locale;

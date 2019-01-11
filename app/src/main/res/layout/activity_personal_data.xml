@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,8 +27,8 @@
             android:layout_height="45dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:padding="10dp"
             android:background="?android:selectableItemBackground"
+            android:padding="10dp"
             android:src="@drawable/back_img" />
 
         <TextView
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/img_back"
-            android:text="@string/Personal_data"
+            android:text="@string/My_Personal_Account"
             android:textColor="@color/white"
             android:textSize="16dp"
             android:textStyle="bold" />
@@ -58,18 +59,39 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <ImageView
+
+            <RelativeLayout
+                android:id="@+id/rl_imgprofile"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/user_img" />
+                android:layout_gravity="center">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user_img"
+                    app:riv_corner_radius="50dp" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:src="@mipmap/ic_camera_profile_icon" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="16dp"
@@ -96,6 +118,45 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginRight="5dp"
+                        android:src="@mipmap/ic_user_icon" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/name"
+                        android:textSize="16dp" />
+
+                    <EditText
+                        android:id="@+id/tv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:textSize="16dp" />
+
+                </TableRow>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/dot_light_intro" />
+
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -157,12 +218,12 @@
                         android:text="@string/Mobile_number"
                         android:textSize="16dp" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/tv_mobile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="966596479033"
+                        android:background="@color/white"
                         android:textSize="16dp" />
 
                 </TableRow>
@@ -195,12 +256,12 @@
                         android:text="@string/email"
                         android:textSize="16dp" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/tv_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text=" email@domain.com "
+                        android:background="@color/white"
                         android:textSize="16dp" />
 
                 </TableRow>
@@ -232,10 +293,11 @@
                         android:text="@string/password"
                         android:textSize="16dp" />
 
-                    <TextView
+                    <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:background="@color/white"
                         android:text="*********"
                         android:textSize="16dp" />
 

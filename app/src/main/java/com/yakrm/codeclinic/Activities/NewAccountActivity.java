@@ -21,6 +21,7 @@ import com.yakrm.codeclinic.Models.VerifyOTPModel;
 import com.yakrm.codeclinic.R;
 import com.yakrm.codeclinic.Retrofit.API;
 import com.yakrm.codeclinic.Retrofit.RestClass;
+import com.yakrm.codeclinic.Utils.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +47,8 @@ public class NewAccountActivity extends AppCompatActivity {
 
     String str_user_token, str_number, str_edt_1, str_edt_2, str_edt_3, str_edt_4, str_name, str_email, str_password;
 
+    SessionManager sessionManager;
+
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;
@@ -62,6 +65,7 @@ public class NewAccountActivity extends AppCompatActivity {
         personal_detail_cardview = findViewById(R.id.personal_detail_cardview);
 
         progressDialog = new ProgressDialog(NewAccountActivity.this);
+        sessionManager = new SessionManager(this);
 
         img_back = findViewById(R.id.img_back);
         apiService = RestClass.getClient().create(API.class);
@@ -318,8 +322,8 @@ public class NewAccountActivity extends AppCompatActivity {
                         public void onResponse(Call<RegistrationStep2Model> call, Response<RegistrationStep2Model> response) {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
-                                Intent intent = new Intent(NewAccountActivity.this, LoginActivity.class);
-                                startActivity(intent);
+                                sessionManager.createLoginSession(response.body().getToken(), response.body().getUserId(), response.body().getName(), response.body().getEmail(), response.body().getPhone(), response.body().getCountryId(), response.body().getUserProfile());
+                                startActivity(new Intent(NewAccountActivity.this, MainActivity.class));
                                 finish();
                                 Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             } else {

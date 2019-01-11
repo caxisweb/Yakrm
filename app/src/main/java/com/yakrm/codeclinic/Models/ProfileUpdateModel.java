@@ -3,19 +3,14 @@ package com.yakrm.codeclinic.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RegistrationStep2Model {
+public class ProfileUpdateModel {
+
     @SerializedName("status")
     @Expose
     private String status;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("token")
-    @Expose
-    private String token;
-    @SerializedName("user_id")
-    @Expose
-    private String userId;
     @SerializedName("name")
     @Expose
     private String name;
@@ -28,9 +23,6 @@ public class RegistrationStep2Model {
     @SerializedName("country_id")
     @Expose
     private String countryId;
-    @SerializedName("user_profile")
-    @Expose
-    private String userProfile;
 
     public String getStatus() {
         return status;
@@ -46,22 +38,6 @@ public class RegistrationStep2Model {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getName() {
@@ -96,11 +72,4 @@ public class RegistrationStep2Model {
         this.countryId = countryId;
     }
 
-    public String getUserProfile() {
-        return userProfile;
-    }
-
-    public void setUserProfile(String userProfile) {
-        this.userProfile = userProfile;
-    }
 }

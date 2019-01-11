@@ -28,9 +28,20 @@ public class LoginModel {
     @SerializedName("country_id")
     @Expose
     private String countryId;
+    @SerializedName("user_profile")
+    @Expose
+    private String user_profile;
 
     public String getStatus() {
         return status;
+    }
+
+    public String getUser_profile() {
+        return user_profile;
+    }
+
+    public void setUser_profile(String user_profile) {
+        this.user_profile = user_profile;
     }
 
     public void setStatus(String status) {

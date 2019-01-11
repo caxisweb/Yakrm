@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yakrm.codeclinic.R;
+import com.yakrm.codeclinic.Utils.SessionManager;
 
 import java.util.Locale;
 
@@ -30,6 +31,11 @@ public class StartActivity extends AppCompatActivity {
 
     Button btn_sign_in, btn_start;
     TextView tv_skip, tv_login, tv_language, tv_user_agree;
+    SessionManager sessionManager;
+
+    public boolean isEmpty(CharSequence character) {
+        return character == null || character.length() == 0;
+    }
 
 
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -74,6 +80,8 @@ public class StartActivity extends AppCompatActivity {
         tv_language = findViewById(R.id.tv_language);
         String textToHighlight = getResources().getString(R.string.log_in);
 
+        sessionManager = new SessionManager(this);
+
         // Construct the formatted text
         String replacedWith = "<font color='red'>" + textToHighlight + "</font>";
         // Get the text from TextView
@@ -113,25 +121,23 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        if (SplashActivity.language_name.equals("en")) {
-            tv_language.setText("English Language");
-        } else {
-            tv_language.setText("اللغة العربية");
-        }
 
         tv_language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Locale locale = new Locale(SplashActivity.language_name);
+                String language_name = "";
+                if (tv_language.getText().equals("النسخة العربية")) {
+                    language_name = "ar";
+                } else {
+                    language_name = "en";
+                }
+                sessionManager.putLanguage("Language", language_name);
+                Locale locale = new Locale(language_name);
                 Locale.setDefault(locale);
                 Configuration config = new Configuration();
                 config.locale = locale;
                 getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-                if (SplashActivity.language_name.equals("ar")) {
-                    SplashActivity.language_name = "en";
-                } else {
-                    SplashActivity.language_name = "ar";
-                }
+
                 recreate();
             }
         });

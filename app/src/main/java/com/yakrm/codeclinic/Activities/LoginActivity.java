@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
-                                sessionManager.createLoginSession(response.body().getToken(), response.body().getUserId(), response.body().getName(), response.body().getEmail(), response.body().getPhone(), response.body().getCountryId());
+                                sessionManager.createLoginSession(response.body().getToken(), response.body().getUserId(), response.body().getName(), response.body().getEmail(), response.body().getPhone(), response.body().getCountryId(), response.body().getUser_profile());
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             } else {

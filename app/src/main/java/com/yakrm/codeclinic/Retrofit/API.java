@@ -1,15 +1,20 @@
 package com.yakrm.codeclinic.Retrofit;
 
 import com.yakrm.codeclinic.Models.LoginModel;
+import com.yakrm.codeclinic.Models.ProfileImageUpload;
+import com.yakrm.codeclinic.Models.ProfileUpdateModel;
 import com.yakrm.codeclinic.Models.RegistrationModel;
 import com.yakrm.codeclinic.Models.RegistrationStep2Model;
 import com.yakrm.codeclinic.Models.VerifyOTPModel;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface API {
 
@@ -28,4 +33,12 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("login")
     Call<LoginModel> LOGIN_MODEL_CALL(@Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("update_user_profile")
+    Call<ProfileUpdateModel> PROFILE_UPDATE_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Multipart
+    @POST("profile_image_upload")
+    Call<ProfileImageUpload> PROFILE_IMAGE_UPLOAD_CALL(@Header("Authorization") String header, @Part MultipartBody.Part image);
 }
