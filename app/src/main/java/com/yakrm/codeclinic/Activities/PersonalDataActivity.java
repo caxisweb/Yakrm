@@ -128,6 +128,7 @@ public class PersonalDataActivity extends AppCompatActivity {
         btn_modify_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String u_name = tv_name.getText().toString();
                 String u_email = tv_email.getText().toString();
                 String u_mobile = tv_mobile.getText().toString();

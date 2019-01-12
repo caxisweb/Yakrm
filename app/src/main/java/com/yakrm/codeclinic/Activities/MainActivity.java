@@ -291,11 +291,15 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
-                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
-                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
-                    setTitle(getResources().getString(R.string.title_activity_main));
+                if (sessionManager.isLoggedIn()) {
+                    if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                        findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                        setTitle(getResources().getString(R.string.title_activity_main));
+                    }
+                    startActivity(new Intent(MainActivity.this, PersonalDataActivity.class));
+                } else {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 }
-                startActivity(new Intent(MainActivity.this, PersonalDataActivity.class));
             }
         });
 
@@ -513,11 +517,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
             final LayoutInflater inflater = getLayoutInflater();
@@ -544,7 +544,11 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, CartActivity.class));
             return true;
         } else if (id == R.id.action_user) {
-            startActivity(new Intent(MainActivity.this, PersonalDataActivity.class));
+            if (sessionManager.isLoggedIn()) {
+                startActivity(new Intent(MainActivity.this, PersonalDataActivity.class));
+            } else {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
             return true;
         }
 
