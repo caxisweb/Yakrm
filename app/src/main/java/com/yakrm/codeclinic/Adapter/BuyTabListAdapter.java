@@ -11,16 +11,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.yakrm.codeclinic.Activities.GiftDetailsActivity;
+import com.yakrm.codeclinic.Models.AllVoucherListItemModel;
 import com.yakrm.codeclinic.R;
+import com.yakrm.codeclinic.Utils.ImageURL;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class BuyTabListAdapter extends RecyclerView.Adapter<BuyTabListAdapter.CustomViewHolder> {
-    ArrayList<String> arrayList;
+    List<AllVoucherListItemModel> arrayList;
     Context context;
 
-    public BuyTabListAdapter(ArrayList<String> arrayList, Context context) {
+    public BuyTabListAdapter(List<AllVoucherListItemModel> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
     }
@@ -33,25 +36,18 @@ public class BuyTabListAdapter extends RecyclerView.Adapter<BuyTabListAdapter.Cu
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BuyTabListAdapter.CustomViewHolder customViewHolder, int i) {
-        customViewHolder.tv_item_name.setText(arrayList.get(i));
+    public void onBindViewHolder(@NonNull BuyTabListAdapter.CustomViewHolder customViewHolder, final int i) {
 
-        if (i == 1) {
-            customViewHolder.main_images.setImageResource(R.drawable.demo_img_2);
-        } else if (i == 2) {
-            customViewHolder.main_images.setImageResource(R.drawable.demo_img_1);
-        } else if (i == 3) {
-            customViewHolder.main_images.setImageResource(R.drawable.demo_img_2);
-        } else if (i == 4) {
-            customViewHolder.main_images.setImageResource(R.drawable.demo_img_1);
-        } else if (i == 5) {
-            customViewHolder.main_images.setImageResource(R.drawable.demo_img_2);
-        }
+        customViewHolder.tv_item_name.setText(arrayList.get(i).getBrandName());
+        customViewHolder.tv_discount_percent.setText(arrayList.get(i).getDiscount() + "%");
+        Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage()).into(customViewHolder.brand_image);
 
         customViewHolder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, GiftDetailsActivity.class));
+                Intent intent = new Intent(context, GiftDetailsActivity.class);
+                intent.putExtra("vendor_id", arrayList.get(i).getVendorId());
+                context.startActivity(intent);
             }
         });
 
@@ -63,14 +59,15 @@ public class BuyTabListAdapter extends RecyclerView.Adapter<BuyTabListAdapter.Cu
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
-        ImageView main_images;
-        TextView tv_item_name;
+        ImageView brand_image;
+        TextView tv_item_name, tv_discount_percent;
         CardView card_view;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
-            main_images = itemView.findViewById(R.id.main_images);
+            brand_image = itemView.findViewById(R.id.brand_image);
             tv_item_name = itemView.findViewById(R.id.tv_item_name);
+            tv_discount_percent = itemView.findViewById(R.id.tv_discount_percent);
             card_view = itemView.findViewById(R.id.card_view);
         }
     }

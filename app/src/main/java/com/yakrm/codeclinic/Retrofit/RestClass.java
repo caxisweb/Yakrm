@@ -15,7 +15,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RestClass {
 
-    private static final String BASE_URL = "http://www.codeclinic.in/demo/yakrm/api/";
+    private static final String BASE_URL = "http://yakrm.com/api/";//http://www.codeclinic.in/demo/yakrm/api/
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {

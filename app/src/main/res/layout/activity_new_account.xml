@@ -52,7 +52,7 @@
         android:layout_below="@+id/rl_action_bar"
         android:layout_margin="20dp"
         android:background="@color/white"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,7 +63,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/step_1_verify_your_mobile_number"
+                android:text="@string/step_1_verify_your_mobile"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16dp"
                 android:textStyle="bold" />
@@ -74,7 +74,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/Choose_the_country"
                 android:textColor="@color/text_color"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/Can_you_enter_your_mobile_number_please"
                 android:textColor="@color/text_color"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <EditText
                 android:id="@+id/edt_number"
@@ -144,7 +144,7 @@
         android:layout_below="@+id/rl_action_bar"
         android:layout_margin="20dp"
         android:background="@color/white"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -217,6 +217,7 @@
                 android:textSize="16dp" />
 
             <TextView
+                android:id="@+id/tv_change_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -256,7 +257,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/name"
                 android:textColor="@color/text_color"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <EditText
                 android:id="@+id/edt_name"
@@ -275,7 +276,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/email"
                 android:textColor="@color/text_color"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <EditText
                 android:id="@+id/edt_email"
@@ -294,7 +295,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/password"
                 android:textColor="@color/text_color"
-                android:textSize="14dp" />
+                android:textSize="16dp" />
 
             <EditText
                 android:id="@+id/edt_password"

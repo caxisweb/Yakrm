@@ -75,6 +75,7 @@ public class PersonalDataActivity extends AppCompatActivity {
     String status1 = "0", message1 = "Try Again";
     boolean value;
     Compressor compressedImage;
+    String str_email_regex = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;
@@ -135,15 +136,17 @@ public class PersonalDataActivity extends AppCompatActivity {
 
                 if (isEmpty(u_name)) {
                     Toast.makeText(PersonalDataActivity.this, "Please Enter Name", Toast.LENGTH_SHORT).show();
+                } else if (u_name.length() < 3) {
+                    Toast.makeText(PersonalDataActivity.this, "Name should be  minimum of 3 characters", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(u_email)) {
                     Toast.makeText(PersonalDataActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+                } else if (!u_email.matches(str_email_regex)) {
+                    Toast.makeText(PersonalDataActivity.this, "Please Enter Valid Email", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(u_mobile)) {
                     Toast.makeText(PersonalDataActivity.this, "Please Enter Mobile Number", Toast.LENGTH_SHORT).show();
+                } else if (u_mobile.length() < 10) {
+                    Toast.makeText(PersonalDataActivity.this, "Mobile Number should be minimum of 10 characters ", Toast.LENGTH_SHORT).show();
                 } else {
-                    progressDialog.setMessage("Please Wait");
-                    progressDialog.setIndeterminate(true);
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
                     progressDialog.setMessage("Please Wait");
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);

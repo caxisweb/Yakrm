@@ -1,5 +1,6 @@
 package com.yakrm.codeclinic.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,22 +11,40 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yakrm.codeclinic.Adapter.CartlistAdapter;
+import com.yakrm.codeclinic.Models.CartListItemModel;
+import com.yakrm.codeclinic.Models.CartListModel;
 import com.yakrm.codeclinic.R;
+import com.yakrm.codeclinic.Retrofit.API;
+import com.yakrm.codeclinic.Retrofit.RestClass;
+import com.yakrm.codeclinic.Utils.Connection_Detector;
+import com.yakrm.codeclinic.Utils.SessionManager;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ImageView img_back;
-    ArrayList<String> arrayList = new ArrayList<>();
+    List<CartListItemModel> arrayList = new ArrayList<>();
     CartlistAdapter cartlistAdapter;
+    API apiService;
+    ProgressDialog progressDialog;
+    SessionManager sessionManager;
 
     TextView tv_header_name;
     RelativeLayout rl_cart_filled, rl_empty_layout;
-
+    TextView tv_total_price;
+    JSONObject jsonObject = new JSONObject();
     Button btn_pay;
 
     @Override
@@ -35,10 +54,16 @@ public class CartActivity extends AppCompatActivity {
 
         img_back = findViewById(R.id.img_back);
         tv_header_name = findViewById(R.id.tv_header_name);
+        tv_total_price = findViewById(R.id.tv_total_price);
         recyclerView = findViewById(R.id.recyclerView);
         rl_cart_filled = findViewById(R.id.rl_cart_filled);
         rl_empty_layout = findViewById(R.id.rl_empty_layout);
         btn_pay = findViewById(R.id.btn_pay);
+
+        apiService = RestClass.getClient().create(API.class);
+        progressDialog = new ProgressDialog(this);
+        sessionManager = new SessionManager(this);
+
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,24 +77,39 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
 
 
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
-        arrayList.add("");
+        if (Connection_Detector.isInternetAvailable(this)) {
+            progressDialog.setMessage("Please Wait");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            Call<CartListModel> cartListModelCall = apiService.CART_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+            cartListModelCall.enqueue(new Callback<CartListModel>() {
+                @Override
+                public void onResponse(Call<CartListModel> call, Response<CartListModel> response) {
+                    progressDialog.dismiss();
+                    String status = response.body().getStatus();
+                    if (status.equals("1")) {
+                        tv_header_name.setText(getResources().getString(R.string.Cart));
+                        tv_total_price.setText(String.valueOf(response.body().getTotalPrice()) + getResources().getString(R.string.SR_currency));
+                        arrayList = response.body().getData();
+                        cartlistAdapter = new CartlistAdapter(arrayList, CartActivity.this, apiService, sessionManager);
+                        recyclerView.setAdapter(cartlistAdapter);
+                    } else {
+                        rl_cart_filled.setVisibility(View.GONE);
+                        rl_empty_layout.setVisibility(View.VISIBLE);
+                        Toast.makeText(CartActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
 
-        tv_header_name.setText("(Five Elements) the basket");
-
-        if (arrayList.size() == 0) {
-            rl_cart_filled.setVisibility(View.GONE);
-            rl_empty_layout.setVisibility(View.VISIBLE);
+                @Override
+                public void onFailure(Call<CartListModel> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(CartActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
-            rl_cart_filled.setVisibility(View.VISIBLE);
-            rl_empty_layout.setVisibility(View.GONE);
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
-
-        cartlistAdapter = new CartlistAdapter(arrayList, this);
-        recyclerView.setAdapter(cartlistAdapter);
 
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override

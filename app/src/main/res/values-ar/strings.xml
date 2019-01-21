@@ -8,9 +8,10 @@
     <string name="buying_gift_cards">شراء كروت الهدايا </string>
     <string name="buying_gift_cards_with_competitive_prices">اشتري كروت الهدايا بأسعار وخصومات مميزة ومن ماركات عالمية </string>
     <string name="new_account">حساب جديد</string>
-    <string name="step_1_verify_your_mobile_number">خطوة 1: التحقق من رقم الجوال </string>
+    <string name="step_1_verify_your_mobile">خطوة ١: التحقق من رقم الجوال</string>
+    <string name="step_1_verify_your_mobile_number">خطوة ٢: التحقق من رقم الجوال </string>
     <string name="Choose_the_country">اختر الدولة :</string>
-    <string name="Can_you_enter_your_mobile_number_please">من فضلك أدخل رقم الجوال الخاص بك ?</string>
+    <string name="Can_you_enter_your_mobile_number_please">من فضلك أدخل رقم الجوال الخاص بك </string>
     <string name="When_you_register_a_new_account_you_are_accepting_usage_agreement_and_the_application_privacy_policy">بتسجيلك حساب جديد تكون موافق على اتفاقية الإستخدام وكذلك سياسة الإستخدام الخاصة بالتطبيق </string>
     <string name="Usage_Agreememnt">موافق على اتفاقية</string>
     <string name="privacy_policy">سياسة الإستخدام</string>
@@ -19,8 +20,9 @@
     <string name="log_in"> تسجيل الدخول</string>
     <string name="Enter_the_secret_code_which_is_sent_to_you">أدخل الكود السري المرسل إليك </string>
     <string name="Verify">تحقق </string>
-    <string name="You_do_not_own_this_mobile_change_the_number">لا تملك هذا الجوال؟ تغيير رقم الجوال </string>
-    <string name="Step_2_Complete_your_personal_data">خطوة 2: إكمال البيانات الشخصية </string>
+    <string name="You_do_not_own_this_mobile_change_the_number">لا تملك هذا الجوال؟تغيير رقم الجوال </string>
+    <string name="change_the_number">تغيير رقم الجوال</string>
+    <string name="Step_2_Complete_your_personal_data">خطوة ٣: إكمال البيانات الشخصية </string>
     <string name="name">الإسم </string>
     <string name="enter_your_full_name_please">أدخل الإسم كاملا من فضلك </string>
     <string name="email">البريد الإلكتروني </string>
@@ -29,6 +31,7 @@
     <string name="Sign_up_a_new_account">تسجيل حساب جديد </string>
     <string name="Step_1_Enter_your_login_data">أدخل بيانات الدخول</string>
     <string name="email_address">البريد الإلكتروني </string>
+    <string name="SR_currency">ريال</string>
 
     <string name="Log_in">تسجيل الدخول</string>
     <string name="Do_not_have_an_account">ليس لديك حساب ؟</string>

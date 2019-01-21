@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String str_email, str_password;
     SessionManager sessionManager;
+    String str_email_regex = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;
@@ -82,11 +83,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 str_email = edt_email.getText().toString();
                 str_password = edt_password.getText().toString();
-
                 if (isEmpty(str_email)) {
-                    Toast.makeText(LoginActivity.this, "Enter Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+                } else if (!str_email.matches(str_email_regex)) {
+                    Toast.makeText(LoginActivity.this, "Please Enter Valid Email", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_password)) {
-                    Toast.makeText(LoginActivity.this, "Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.setMessage("Please Wait");
                     progressDialog.setIndeterminate(true);

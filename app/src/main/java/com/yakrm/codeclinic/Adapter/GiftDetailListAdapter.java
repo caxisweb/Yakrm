@@ -8,19 +8,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.yakrm.codeclinic.Models.GiftDetailListItemModel;
+import com.yakrm.codeclinic.Models.AddVoucherToCartModel;
+import com.yakrm.codeclinic.Models.VoucherDetailsListItemModel;
 import com.yakrm.codeclinic.R;
+import com.yakrm.codeclinic.Retrofit.API;
+import com.yakrm.codeclinic.Utils.SessionManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAdapter.CustomViewHolder> {
-    ArrayList<GiftDetailListItemModel> arrayList;
+    List<VoucherDetailsListItemModel> arrayList;
     Context context;
+    API apiService;
+    ArrayList<String> ar_add_cart_value;
+    JSONObject jsonObject = new JSONObject();
+    SessionManager sessionManager;
 
-    public GiftDetailListAdapter(ArrayList<GiftDetailListItemModel> arrayList, Context context) {
+
+    public GiftDetailListAdapter(List<VoucherDetailsListItemModel> arrayList, Context context, API apiService, ArrayList<String> ar_add_cart_value, SessionManager sessionManager) {
         this.arrayList = arrayList;
         this.context = context;
+        this.apiService = apiService;
+        this.ar_add_cart_value = ar_add_cart_value;
+        this.sessionManager = sessionManager;
     }
 
     @NonNull
@@ -31,13 +51,56 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GiftDetailListAdapter.CustomViewHolder customViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final GiftDetailListAdapter.CustomViewHolder customViewHolder, final int i) {
         if (i == 0) {
-            customViewHolder.img_view.setImageResource(R.mipmap.ic_fillcart_icon);
+
         }
-        customViewHolder.tv_value.setText(arrayList.get(i).getValu());
-        customViewHolder.tv_discount.setText(arrayList.get(i).getDiscount());
-        customViewHolder.tv_pay.setText(arrayList.get(i).getPay());
+
+        customViewHolder.tv_value.setText(arrayList.get(i).getVoucherPrice() + context.getResources().getString(R.string.SR_currency));
+        int voucher_price = Integer.parseInt(arrayList.get(i).getVoucherPrice());
+        customViewHolder.tv_discount.setText(arrayList.get(i).getDiscount() + "%");
+        float voucher_discount = Float.parseFloat(arrayList.get(i).getDiscount()) / 100;
+        float voucher_disount_price = Integer.parseInt(arrayList.get(i).getVoucherPrice()) * voucher_discount;
+        if (voucher_price != 0) {
+            float voucher_pay = Float.parseFloat(arrayList.get(i).getVoucherPrice()) - voucher_disount_price;
+            customViewHolder.tv_pay.setText(String.valueOf(voucher_pay) + context.getResources().getString(R.string.SR_currency));
+        } else {
+            customViewHolder.tv_pay.setText(arrayList.get(i).getVoucherPrice() + context.getResources().getString(R.string.SR_currency));
+        }
+
+        customViewHolder.img_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ar_add_cart_value.get(i).equals("0")) {
+                    ar_add_cart_value.set(i, "1");
+                    customViewHolder.img_view.setImageResource(R.mipmap.ic_fillcart_icon);
+                    try {
+                        jsonObject.put("voucher_id", arrayList.get(i).getVoucherId());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Call<AddVoucherToCartModel> addVoucherToCartModelCall = apiService.ADD_VOUCHER_TO_CART_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                    addVoucherToCartModelCall.enqueue(new Callback<AddVoucherToCartModel>() {
+                        @Override
+                        public void onResponse(Call<AddVoucherToCartModel> call, Response<AddVoucherToCartModel> response) {
+                            String status = response.body().getStatus();
+                            if (status.equals("1")) {
+                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<AddVoucherToCartModel> call, Throwable t) {
+                            Toast.makeText(context, "Server Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(context, "You have already added this voucher in your cart.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override

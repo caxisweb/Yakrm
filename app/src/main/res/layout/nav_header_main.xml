@@ -382,6 +382,7 @@
                     android:src="@mipmap/sign_out_navigation_icon" />
 
                 <TextView
+                    android:id="@+id/tv_signout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

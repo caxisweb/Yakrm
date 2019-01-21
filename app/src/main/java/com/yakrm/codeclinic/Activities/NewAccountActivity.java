@@ -35,7 +35,7 @@ public class NewAccountActivity extends AppCompatActivity {
     CardView main_detail_cardview, number_verify_cardview, personal_detail_cardview;
     Button btn_send, btn_sign_up_new, btn_verify;
     ImageView img_back;
-    TextView tv_user_agree;
+    TextView tv_user_agree, tv_change_number;
     EditText edt_number, edt_1, edt_2, edt_3, edt_4, edt_name, edt_email, edt_password;
     API apiService;
     ProgressDialog progressDialog;
@@ -71,6 +71,7 @@ public class NewAccountActivity extends AppCompatActivity {
         apiService = RestClass.getClient().create(API.class);
 
         tv_user_agree = findViewById(R.id.tv_user_agree);
+        tv_change_number = findViewById(R.id.tv_change_number);
         String textToHighlight = getResources().getString(R.string.Usage_Agreememnt);
         String replacedWith = "<font color='red'>" + textToHighlight + "</font>";
         String originalString = tv_user_agree.getText().toString();
@@ -80,6 +81,20 @@ public class NewAccountActivity extends AppCompatActivity {
         String replacedWith2 = "<font color='red'>" + textToHighlight2 + "</font>";
         String modifiedString2 = modifiedString.replaceAll(textToHighlight2, replacedWith2);
         tv_user_agree.setText(Html.fromHtml(modifiedString2));
+
+        String textHighlight = getResources().getString(R.string.change_the_number);
+        String replace = "<font color='red'>" + textHighlight + "</font>";
+        String main_string = tv_change_number.getText().toString();
+        String modifyString = main_string.replaceAll(textHighlight, replace);
+        tv_change_number.setText(Html.fromHtml(modifyString));
+
+        tv_change_number.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main_detail_cardview.setVisibility(View.VISIBLE);
+                number_verify_cardview.setVisibility(View.GONE);
+            }
+        });
 
         edt_number = findViewById(R.id.edt_number);
         edt_1 = findViewById(R.id.edt_1);
@@ -107,9 +122,9 @@ public class NewAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 str_number = edt_number.getText().toString();
                 if (isEmpty(str_number)) {
-                    Toast.makeText(NewAccountActivity.this, "Enter Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, "Please Enter Mobile Number", Toast.LENGTH_SHORT).show();
                 } else if (str_number.length() < 10) {
-                    Toast.makeText(NewAccountActivity.this, "Minimum character required is 10", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, "Mobile Number should be minimum of 10 characters ", Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.setMessage("Please Wait");
                     progressDialog.setIndeterminate(true);
@@ -240,14 +255,14 @@ public class NewAccountActivity extends AppCompatActivity {
                 str_edt_4 = edt_4.getText().toString();
 
                 if (isEmpty(str_edt_1)) {
-                    Toast.makeText(NewAccountActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
-                } else if (isEmpty(str_edt_2)) {
+                    Toast.makeText(NewAccountActivity.this, "Please Enter OTP", Toast.LENGTH_SHORT).show();
+                }/* else if (isEmpty(str_edt_2)) {
                     Toast.makeText(NewAccountActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_edt_3)) {
                     Toast.makeText(NewAccountActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_edt_4)) {
                     Toast.makeText(NewAccountActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
-                } else {
+                }*/ else {
 
                     progressDialog.setMessage("Please Wait");
                     progressDialog.setIndeterminate(true);
@@ -292,16 +307,17 @@ public class NewAccountActivity extends AppCompatActivity {
                 str_email = edt_email.getText().toString();
                 str_password = edt_password.getText().toString();
                 if (isEmpty(str_name)) {
-                    Toast.makeText(NewAccountActivity.this, "Enter Name", Toast.LENGTH_SHORT).show();
-                }
-                if (str_name.length() < 3) {
-                    Toast.makeText(NewAccountActivity.this, "Enter Valid Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, "Please Enter Name", Toast.LENGTH_SHORT).show();
+                } else if (str_name.length() < 3) {
+                    Toast.makeText(NewAccountActivity.this, "Name should be  minimum of 3 characters", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_email)) {
-                    Toast.makeText(NewAccountActivity.this, "Enter Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
                 } else if (!str_email.matches(str_email_regex)) {
-                    Toast.makeText(NewAccountActivity.this, "Enter Valid Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, "Please Enter Valid Email", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_password)) {
-                    Toast.makeText(NewAccountActivity.this, "Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                } else if (str_password.length() < 6) {
+                    Toast.makeText(NewAccountActivity.this, "Password should be  minimum of 6 characters", Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.setMessage("Please Wait");
                     progressDialog.setIndeterminate(true);

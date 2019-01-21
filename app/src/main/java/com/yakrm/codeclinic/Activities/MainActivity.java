@@ -202,6 +202,10 @@ public class MainActivity extends AppCompatActivity
         LinearLayout llayout_about_app = header1.findViewById(R.id.llayout_about_app);
         LinearLayout llayout_instruction_conditions = header1.findViewById(R.id.llayout_instruction_conditions);
         LinearLayout llayout_signout = header1.findViewById(R.id.llayout_signout);
+        TextView tv_signout = header1.findViewById(R.id.tv_signout);
+        if (!sessionManager.isLoggedIn()) {
+            tv_signout.setText(getResources().getString(R.string.Signup) + " / " + getResources().getString(R.string.Log_in));
+        }
         LinearLayout llayout_english = header1.findViewById(R.id.llayout_english);
         final TextView tv_language_version = header1.findViewById(R.id.tv_language_version);
 
