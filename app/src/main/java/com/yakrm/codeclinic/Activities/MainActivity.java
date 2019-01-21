@@ -2,6 +2,7 @@ package com.yakrm.codeclinic.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
@@ -416,14 +417,42 @@ public class MainActivity extends AppCompatActivity
         llayout_signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawer.closeDrawer(GravityCompat.START);
-                llayout_tab.setVisibility(View.VISIBLE);
-                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
-                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
-                    setTitle(getResources().getString(R.string.title_activity_main));
+                if (sessionManager.isLoggedIn()) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                    alert.setMessage("Are you Sure you want to logout?");
+                    alert.setCancelable(false);
+                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @SuppressLint("StaticFieldLeak")
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            drawer.closeDrawer(GravityCompat.START);
+                            llayout_tab.setVisibility(View.VISIBLE);
+                            if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                                findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                                setTitle(getResources().getString(R.string.title_activity_main));
+                            }
+                            sessionManager.logoutUser();
+                            finish();
+                        }
+                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = alert.create();
+                    alertDialog.show();
+                } else {
+                    drawer.closeDrawer(GravityCompat.START);
+                    llayout_tab.setVisibility(View.VISIBLE);
+                    if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                        findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                        setTitle(getResources().getString(R.string.title_activity_main));
+                    }
+
+                    sessionManager.logoutUser();
+                    finish();
                 }
-                sessionManager.logoutUser();
-                finish();
             }
         });
 

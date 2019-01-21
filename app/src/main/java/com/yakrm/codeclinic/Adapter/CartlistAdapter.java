@@ -69,7 +69,7 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
                 AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
                 alert.setMessage("Are you Sure?");
                 alert.setCancelable(false);
-                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @SuppressLint("StaticFieldLeak")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -108,7 +108,7 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
 
 
                     }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
