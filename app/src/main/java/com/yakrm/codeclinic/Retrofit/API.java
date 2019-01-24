@@ -1,8 +1,10 @@
 package com.yakrm.codeclinic.Retrofit;
 
+import com.yakrm.codeclinic.Models.AddToFavouritesModel;
 import com.yakrm.codeclinic.Models.AddVoucherToCartModel;
 import com.yakrm.codeclinic.Models.AllVouchersListModel;
 import com.yakrm.codeclinic.Models.CartListModel;
+import com.yakrm.codeclinic.Models.FavouritesListModel;
 import com.yakrm.codeclinic.Models.LoginModel;
 import com.yakrm.codeclinic.Models.ProfileImageUpload;
 import com.yakrm.codeclinic.Models.ProfileUpdateModel;
@@ -53,8 +55,16 @@ public interface API {
     Call<AllVouchersListModel> ALL_VOUCHERS_LIST_MODEL_CALL(@Header("Authorization") String header);
 
     @Headers("Content-Type: application/json")
-    @POST("getAllVoucherByVendorId")
+    @POST("getAllVoucherByBrandId")
     Call<VoucherDetailsListModel> VOUCHER_DETAILS_LIST_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("addremove_to_favourite")
+    Call<AddToFavouritesModel> ADD_TO_FAVOURITES_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @GET("getAllFavouritesList")
+    Call<FavouritesListModel> FAVOURITES_LIST_MODEL_CALL(@Header("Authorization") String header);
 
     @Headers("Content-Type: application/json")
     @POST("add_to_cart")

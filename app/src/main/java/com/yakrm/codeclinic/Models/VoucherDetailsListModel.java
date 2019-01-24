@@ -6,36 +6,31 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class VoucherDetailsListModel {
+
     @SerializedName("status")
     @Expose
     private String status;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("id")
+    @SerializedName("brand_id")
     @Expose
-    private String id;
+    private String brandId;
     @SerializedName("brand_name")
     @Expose
     private String brandName;
     @SerializedName("brand_image")
     @Expose
     private String brandImage;
-    @SerializedName("vendor_name")
-    @Expose
-    private String vendorName;
-    @SerializedName("vendor_email")
-    @Expose
-    private String vendorEmail;
-    @SerializedName("vendor_mobile")
-    @Expose
-    private String vendorMobile;
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("vouchers")
+    @SerializedName("is_favourite")
     @Expose
-    private List<VoucherDetailsListItemModel> vouchers = null;
+    private String isFavourite;
+    @SerializedName("data")
+    @Expose
+    private List<VoucherDetailsListItemModel> data = null;
 
     public String getStatus() {
         return status;
@@ -53,12 +48,12 @@ public class VoucherDetailsListModel {
         this.message = message;
     }
 
-    public String getId() {
-        return id;
+    public String getBrandId() {
+        return brandId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
     }
 
     public String getBrandName() {
@@ -77,30 +72,6 @@ public class VoucherDetailsListModel {
         this.brandImage = brandImage;
     }
 
-    public String getVendorName() {
-        return vendorName;
-    }
-
-    public void setVendorName(String vendorName) {
-        this.vendorName = vendorName;
-    }
-
-    public String getVendorEmail() {
-        return vendorEmail;
-    }
-
-    public void setVendorEmail(String vendorEmail) {
-        this.vendorEmail = vendorEmail;
-    }
-
-    public String getVendorMobile() {
-        return vendorMobile;
-    }
-
-    public void setVendorMobile(String vendorMobile) {
-        this.vendorMobile = vendorMobile;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -109,11 +80,20 @@ public class VoucherDetailsListModel {
         this.description = description;
     }
 
-    public List<VoucherDetailsListItemModel> getVouchers() {
-        return vouchers;
+    public String getIsFavourite() {
+        return isFavourite;
     }
 
-    public void setVouchers(List<VoucherDetailsListItemModel> vouchers) {
-        this.vouchers = vouchers;
+    public void setIsFavourite(String isFavourite) {
+        this.isFavourite = isFavourite;
     }
+
+    public List<VoucherDetailsListItemModel> getData() {
+        return data;
+    }
+
+    public void setData(List<VoucherDetailsListItemModel> data) {
+        this.data = data;
+    }
+
 }

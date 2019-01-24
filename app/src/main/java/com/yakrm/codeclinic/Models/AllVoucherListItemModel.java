@@ -28,6 +28,18 @@ public class AllVoucherListItemModel {
     @SerializedName("gift_category_name")
     @Expose
     private String giftCategoryName;
+    @SerializedName("brand_id")
+    @Expose
+    private String brand_id;
+
+    public String getBrand_id() {
+        return brand_id;
+    }
+
+    public void setBrand_id(String brand_id) {
+        this.brand_id = brand_id;
+    }
+
     @SerializedName("brand_name")
     @Expose
     private String brandName;

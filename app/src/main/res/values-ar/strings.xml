@@ -293,6 +293,7 @@
     <string name="User_Agreement_And_Privacy_Policy">اتفاقية الإستخدام وسياسة الخصوصية </string>
     <string name="User_Agreement">User Agreement</string>
     <string name="Privacy_Policy">Privacy Policy</string>
+    <string name="discount_till">Discount till</string>
 
 
     <string-array name="selectcountry">

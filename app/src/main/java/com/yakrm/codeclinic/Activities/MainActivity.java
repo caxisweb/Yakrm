@@ -317,7 +317,11 @@ public class MainActivity extends AppCompatActivity
                     findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                     setTitle(getResources().getString(R.string.title_activity_main));
                 }
-                startActivity(new Intent(MainActivity.this, FavouritesActivity.class));
+                if (sessionManager.isLoggedIn()) {
+                    startActivity(new Intent(MainActivity.this, FavouritesActivity.class));
+                } else {
+                    startActivity(new Intent(MainActivity.this, StartActivity.class));
+                }
             }
         });
 
@@ -568,13 +572,26 @@ public class MainActivity extends AppCompatActivity
             alertDialog.show();
             return true;
         } else if (id == R.id.action_fav) {
-            startActivity(new Intent(MainActivity.this, FavouritesActivity.class));
+            if (sessionManager.isLoggedIn()) {
+                startActivity(new Intent(MainActivity.this, FavouritesActivity.class));
+            } else {
+                startActivity(new Intent(MainActivity.this, StartActivity.class));
+            }
             return true;
         } else if (id == R.id.action_notification) {
             startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
+          /*  if (sessionManager.isLoggedIn()) {
+                startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
+            } else {
+                startActivity(new Intent(MainActivity.this, StartActivity.class));
+            }*/
             return true;
         } else if (id == R.id.action_basket) {
-            startActivity(new Intent(MainActivity.this, CartActivity.class));
+            if (sessionManager.isLoggedIn()) {
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
+            } else {
+                startActivity(new Intent(MainActivity.this, StartActivity.class));
+            }
             return true;
         } else if (id == R.id.action_user) {
             if (sessionManager.isLoggedIn()) {

@@ -46,7 +46,7 @@ public class BuyTabListAdapter extends RecyclerView.Adapter<BuyTabListAdapter.Cu
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, GiftDetailsActivity.class);
-                intent.putExtra("vendor_id", arrayList.get(i).getVendorId());
+                intent.putExtra("brand_id", arrayList.get(i).getBrand_id());
                 context.startActivity(intent);
             }
         });
