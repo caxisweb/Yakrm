@@ -45,6 +45,10 @@ public class FavouritesActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         img_back = findViewById(R.id.img_back);
+        String language = String.valueOf(getResources().getConfiguration().locale);
+        if (language.equals("ar")) {
+            img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
+        }
         sessionManager = new SessionManager(this);
         progressDialog = new ProgressDialog(this);
         apiService = RestClass.getClient().create(API.class);
@@ -54,14 +58,12 @@ public class FavouritesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
 
-
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
 
         if (Connection_Detector.isInternetAvailable(this)) {
             progressDialog.setMessage("Please Wait");

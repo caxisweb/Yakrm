@@ -29,6 +29,10 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exchange_voucher);
 
         img_back = findViewById(R.id.img_back);
+        String language = String.valueOf(getResources().getConfiguration().locale);
+        if (language.equals("ar")) {
+            img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
+        }
         tv_item_name = findViewById(R.id.tv_item_name);
 
         llayout_send_friend = findViewById(R.id.llayout_send_friend);

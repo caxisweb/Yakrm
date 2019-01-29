@@ -32,7 +32,10 @@ public class VoucherDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        String language = String.valueOf(getResources().getConfiguration().locale);
+        if (language.equals("ar")) {
+            img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
+        }
         tv_header_name.setText(getIntent().getStringExtra("name"));
 
         btn_done.setOnClickListener(new View.OnClickListener() {

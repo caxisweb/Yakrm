@@ -26,6 +26,9 @@ import com.yakrm.codeclinic.Utils.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,6 +42,7 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
     SessionManager sessionManager;
     JSONObject jsonObject = new JSONObject();
     ProgressDialog progressDialog;
+    String final_date;
 
     public CartlistAdapter(List<CartListItemModel> arrayList, Context context, API apiService, SessionManager sessionManager) {
         this.arrayList = arrayList;
@@ -58,7 +62,28 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
     public void onBindViewHolder(@NonNull CartlistAdapter.Holder holder, final int i) {
         Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage());
 
-        holder.tv_ex_date.setText(arrayList.get(i).getExpiredAt());
+        try {
+            String date = arrayList.get(i).getExpiredAt().substring(0, arrayList.get(i).getExpiredAt().indexOf(" "));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            final_date = date.trim();
+            Date strDate = sdf.parse(final_date);
+            if (System.currentTimeMillis() > strDate.getTime()) {
+                holder.tv_ends_on.setText(context.getResources().getString(R.string.Ended));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat spf = null;
+        Date newDate = null;
+        try {
+            spf = new SimpleDateFormat("yyyy-MM-dd");
+            newDate = spf.parse(final_date);
+            spf = new SimpleDateFormat("dd-MM-yyyy");
+            final_date = spf.format(newDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        holder.tv_ex_date.setText(final_date);
         holder.tv_item_name.setText(arrayList.get(i).getBrandName() + "(" + context.getResources().getString(R.string.Electronic_and_paper_gifts) + ")");
         holder.tv_value.setText(arrayList.get(i).getVoucherPrice() + context.getResources().getString(R.string.SR_currency));
         holder.tv_discount.setText(arrayList.get(i).getDiscount() + "%");
@@ -128,13 +153,14 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        TextView tv_item_name, tv_ex_date, tv_value, tv_discount, tv_price;
+        TextView tv_item_name, tv_ex_date, tv_ends_on, tv_value, tv_discount, tv_price;
         ImageView brand_images, img_delete;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
             tv_item_name = itemView.findViewById(R.id.tv_item_name);
             tv_ex_date = itemView.findViewById(R.id.tv_ex_date);
+            tv_ends_on = itemView.findViewById(R.id.tv_ends_on);
             tv_value = itemView.findViewById(R.id.tv_value);
             tv_discount = itemView.findViewById(R.id.tv_discount);
             tv_price = itemView.findViewById(R.id.tv_price);

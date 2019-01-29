@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.yakrm.codeclinic.Activities.GiftDetailsActivity;
 import com.yakrm.codeclinic.Models.AddToFavouritesModel;
 import com.yakrm.codeclinic.Models.FavouritesListItemModel;
 import com.yakrm.codeclinic.R;
@@ -57,7 +60,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.Holder> 
     public void onBindViewHolder(@NonNull final FavListAdapter.Holder holder, final int i) {
         holder.tv_item_name.setText(arrayList.get(i).getBrandName());
         holder.tv_discount.setText(arrayList.get(i).getDiscount() + "%");
-
+        Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage()).into(holder.brand_image);
 
         holder.img_fav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,8 +105,15 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.Holder> 
                 });
                 AlertDialog alertDialog = alert.create();
                 alertDialog.show();
+            }
+        });
 
-                Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage()).into(holder.brand_image);
+        holder.card_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, GiftDetailsActivity.class);
+                intent.putExtra("brand_id", arrayList.get(i).getId());
+                context.startActivity(intent);
             }
         });
     }
@@ -116,6 +126,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.Holder> 
     public class Holder extends RecyclerView.ViewHolder {
         TextView tv_item_name, tv_discount;
         ImageView img_fav, brand_image;
+        CardView card_view;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -124,6 +135,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.Holder> 
             img_fav = itemView.findViewById(R.id.img_fav);
             tv_item_name = itemView.findViewById(R.id.tv_item_name);
             tv_discount = itemView.findViewById(R.id.tv_discount);
+            card_view = itemView.findViewById(R.id.card_view);
         }
     }
 }

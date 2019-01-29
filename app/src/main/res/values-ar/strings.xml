@@ -99,6 +99,7 @@
     <string name="pay">ادفع </string>
     <string name="Added_to_the_buying_basket_successfully">تمت الإضافة لسلة الشراء بنجاح</string>
 
+    <string name="Zero_SR">0 ريال</string>
     <string name="SR">مائة ريال </string>
     <string name="SR2">200 ريال</string>
     <string name="SR3">250 ريال</string>
@@ -287,13 +288,14 @@
 
     <string name="Last_Auction">Last Auction: 25 SR</string>
 
-    <string name="Ended">منتهية </string>
+    <string name="Ended">منتهية في</string>
     <string name="The_Number_Of_The_Auctions">عدد المزايدات: 18</string>
     <string name="Abed_El_Rahman_Fawzi_Wins_The_Auction_The_Value_Is">فاز بالمزاد عبدالرحمن فوزي بقيمة 75 ر.س </string>
     <string name="User_Agreement_And_Privacy_Policy">اتفاقية الإستخدام وسياسة الخصوصية </string>
     <string name="User_Agreement">User Agreement</string>
     <string name="Privacy_Policy">Privacy Policy</string>
     <string name="discount_till">Discount till</string>
+    <string name="Endingon">تنتهي في</string>
 
 
     <string-array name="selectcountry">

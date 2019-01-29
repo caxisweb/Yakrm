@@ -11,12 +11,14 @@
         android:scaleType="centerCrop"
         android:src="@drawable/app_main_background_img" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_action_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingLeft="12dp"
         android:translationZ="2dp">
 
@@ -24,29 +26,25 @@
             android:id="@+id/img_back"
             android:layout_width="40dp"
             android:layout_height="45dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
             android:background="?android:selectableItemBackground"
+            android:padding="10dp"
             android:src="@drawable/back_img" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/img_back"
             android:text="@string/Completing_Purchasing"
             android:textColor="@color/white"
             android:textSize="16dp"
             android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_gravity="end|center"
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
+            android:gravity="end"
             android:orientation="horizontal">
 
             <TextView
@@ -61,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/amount_sr"
+                android:text="0 SR"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 android:textStyle="bold" />
@@ -69,7 +67,7 @@
         </LinearLayout>
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <android.support.v7.widget.CardView
         android:id="@+id/main_pay_cardview"
@@ -95,6 +93,7 @@
                 android:textSize="14dp" />
 
             <TextView
+                android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -248,6 +247,7 @@
                         android:textSize="14dp" />
 
                     <TextView
+                        android:id="@+id/tv_sc_total_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -302,6 +302,7 @@
                         android:textSize="14dp" />
 
                     <RelativeLayout
+                        android:id="@+id/rl_pay_pal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -349,6 +350,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rl_mastercard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -396,6 +398,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/rl_visa"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"

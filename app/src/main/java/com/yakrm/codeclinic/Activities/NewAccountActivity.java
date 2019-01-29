@@ -68,6 +68,10 @@ public class NewAccountActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
         img_back = findViewById(R.id.img_back);
+        String language = String.valueOf(getResources().getConfiguration().locale);
+        if (language.equals("ar")) {
+            img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
+        }
         apiService = RestClass.getClient().create(API.class);
 
         tv_user_agree = findViewById(R.id.tv_user_agree);

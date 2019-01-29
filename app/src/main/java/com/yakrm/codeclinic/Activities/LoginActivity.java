@@ -61,7 +61,10 @@ public class LoginActivity extends AppCompatActivity {
         btn_log_in = findViewById(R.id.btn_log_in);
 
         img_back = findViewById(R.id.img_back);
-
+        String language = String.valueOf(getResources().getConfiguration().locale);
+        if (language.equals("ar")) {
+            img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
+        }
         edt_email = findViewById(R.id.edt_email);
         edt_password = findViewById(R.id.edt_password);
 

@@ -360,7 +360,11 @@ public class MainActivity extends AppCompatActivity
                     findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                     setTitle(getResources().getString(R.string.title_activity_main));
                 }
-                startActivity(new Intent(MainActivity.this, FinancialTransactionsRecordActivity.class));
+                if (sessionManager.isLoggedIn()) {
+                    startActivity(new Intent(MainActivity.this, FinancialTransactionsRecordActivity.class));
+                } else {
+                    startActivity(new Intent(MainActivity.this, StartActivity.class));
+                }
             }
         });
 
@@ -483,9 +487,14 @@ public class MainActivity extends AppCompatActivity
                 getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
                 finish();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                setTitle(getResources().getString(R.string.title_activity_main));
+
             }
         });
+        if (tv_language_version.getText().equals("النسخة العربية")) {
+            setTitle("Main");
+        } else {
+            setTitle("الأساسية");
+        }
 
 
     }

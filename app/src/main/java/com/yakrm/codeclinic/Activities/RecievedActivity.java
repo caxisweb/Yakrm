@@ -27,6 +27,10 @@ public class RecievedActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         imageView = findViewById(R.id.img_back);
+        String language = String.valueOf(getResources().getConfiguration().locale);
+        if (language.equals("ar")) {
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
+        }
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

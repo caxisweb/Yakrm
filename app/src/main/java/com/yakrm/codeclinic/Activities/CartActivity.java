@@ -44,6 +44,7 @@ public class CartActivity extends AppCompatActivity {
     TextView tv_header_name;
     RelativeLayout rl_cart_filled, rl_empty_layout;
     TextView tv_total_price;
+    String total_price;
     JSONObject jsonObject = new JSONObject();
     Button btn_pay;
 
@@ -53,6 +54,10 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         img_back = findViewById(R.id.img_back);
+        String language = String.valueOf(getResources().getConfiguration().locale);
+        if (language.equals("ar")) {
+            img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
+        }
         tv_header_name = findViewById(R.id.tv_header_name);
         tv_total_price = findViewById(R.id.tv_total_price);
         recyclerView = findViewById(R.id.recyclerView);
@@ -91,6 +96,7 @@ public class CartActivity extends AppCompatActivity {
                     if (status.equals("1")) {
                         tv_header_name.setText(getResources().getString(R.string.Cart));
                         tv_total_price.setText(String.valueOf(response.body().getTotalPrice()) + getResources().getString(R.string.SR_currency));
+                        total_price = String.valueOf(response.body().getTotalPrice());
                         arrayList = response.body().getData();
                         cartlistAdapter = new CartlistAdapter(arrayList, CartActivity.this, apiService, sessionManager);
                         recyclerView.setAdapter(cartlistAdapter);
@@ -114,7 +120,10 @@ public class CartActivity extends AppCompatActivity {
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CartActivity.this, CompletingPurchasingActivity.class));
+                Intent intent = new Intent(CartActivity.this, CompletingPurchasingActivity.class);
+                intent.putExtra("price", total_price);
+                startActivity(intent);
+                finish();
             }
         });
     }
