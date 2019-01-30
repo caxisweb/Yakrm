@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.yakrm.codeclinic.Activities.FavouriteVouchersActivity;
+import com.yakrm.codeclinic.Activities.FavouritesActivity;
 import com.yakrm.codeclinic.Activities.MainActivity;
 import com.yakrm.codeclinic.Activities.UploadVouchersActivity;
 import com.yakrm.codeclinic.Activities.VoucherEndedActivity;
@@ -81,7 +81,7 @@ public class MyWalletTabFragment extends Fragment {
         llayout_fav_vouchers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), FavouriteVouchersActivity.class));
+                startActivity(new Intent(getActivity(), FavouritesActivity.class));
             }
         });
 

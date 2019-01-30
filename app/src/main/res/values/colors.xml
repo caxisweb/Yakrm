@@ -8,7 +8,7 @@
     <color name="button_color">#59C2DA</color>
     <color name="dark_button_color">#59b1da</color>
     <color name="black">#000</color>
-    <color name="text_color">#C5C5C5</color>
+    <color name="text_color">#afafaf</color>
     <color name="layout">#4bc5c5c5</color>
     <color name="toast_color">#aa4dbc5c</color>
     <color name="yellow">#aaccbb3f</color>

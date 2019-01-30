@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.paytabs.paytabs_sdk.utils.PaymentParams;
 import com.squareup.picasso.Picasso;
 import com.yakrm.codeclinic.Adapter.GiftDetailListAdapter;
 import com.yakrm.codeclinic.Models.AddToFavouritesModel;
@@ -281,5 +283,24 @@ public class GiftDetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PaymentParams.PAYMENT_REQUEST_CODE) {
+        /*    Log.e("Tag", data.getStringExtra(PaymentParams.RESPONSE_CODE));
+            Log.e("Tag", data.getStringExtra(PaymentParams.TRANSACTION_ID));
+            Toast.makeText(GiftDetailsActivity.this, data.getStringExtra(PaymentParams.RESPONSE_CODE), Toast.LENGTH_LONG).show();
+            Toast.makeText(GiftDetailsActivity.this, data.getStringExtra(PaymentParams.TRANSACTION_ID), Toast.LENGTH_LONG).show();
+            if (data.hasExtra(PaymentParams.TOKEN) && !data.getStringExtra(PaymentParams.TOKEN).isEmpty()) {
+                Log.e("Tag", data.getStringExtra(PaymentParams.TOKEN));
+                Log.e("Tag", data.getStringExtra(PaymentParams.CUSTOMER_EMAIL));
+                Log.e("Tag", data.getStringExtra(PaymentParams.CUSTOMER_PASSWORD));
+                Toast.makeText(GiftDetailsActivity.this, data.getStringExtra(PaymentParams.TOKEN), Toast.LENGTH_LONG).show();
+                Toast.makeText(GiftDetailsActivity.this, data.getStringExtra(PaymentParams.CUSTOMER_EMAIL), Toast.LENGTH_LONG).show();
+                Toast.makeText(GiftDetailsActivity.this, data.getStringExtra(PaymentParams.CUSTOMER_PASSWORD), Toast.LENGTH_LONG).show();
+            }*/
+        }
     }
 }

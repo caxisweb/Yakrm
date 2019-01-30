@@ -87,7 +87,6 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 dialogBuilder.setView(dialogView);
                 dialogBuilder.setCancelable(true);
 
-                LinearLayout llayout_custom_main = dialogView.findViewById(R.id.llayout_custom_main);
                 ImageView img_brand_img = dialogView.findViewById(R.id.img_brand_img);
                 TextView tv_brand_name = dialogView.findViewById(R.id.tv_brand_name);
                 TextView tv_ends_on = dialogView.findViewById(R.id.tv_ends_on);

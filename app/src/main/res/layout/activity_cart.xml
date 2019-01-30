@@ -134,7 +134,6 @@
                     android:id="@+id/tv_total_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/new_sr"
                     android:textColor="@color/black"
                     android:textSize="12dp" />
 

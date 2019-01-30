@@ -1,5 +1,6 @@
 package com.yakrm.codeclinic.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -89,6 +90,7 @@ public class CartActivity extends AppCompatActivity {
             progressDialog.show();
             Call<CartListModel> cartListModelCall = apiService.CART_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
             cartListModelCall.enqueue(new Callback<CartListModel>() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onResponse(Call<CartListModel> call, Response<CartListModel> response) {
                     progressDialog.dismiss();
