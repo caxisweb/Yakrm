@@ -19,6 +19,18 @@ public class VoucherDetailsListItemModel {
     @SerializedName("voucher_type")
     @Expose
     private String voucherType;
+
+    @SerializedName("voucher_image")
+    @Expose
+    private String voucherImage;
+
+    public String getVoucherImage() {
+        return voucherImage;
+    }
+
+    public void setVoucherImage(String voucherImage) {
+        this.voucherImage = voucherImage;
+    }
     @SerializedName("gift_category_name")
     @Expose
     private String giftCategoryName;

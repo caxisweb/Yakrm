@@ -51,11 +51,13 @@ public class GiftDetailsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     SessionManager sessionManager;
     Button btn_complete;
-    TextView tv_brand_name, tv_description;
+    TextView tv_brand_name, tv_description, tv_brand_type;
     ImageView img_brand_img, img_back, img_fav, img_share;
     String brand_id, token, is_fav;
 
     LinearLayout bottom_layout;
+    ArrayList<String> arrayList_type = new ArrayList<>();
+    String brand_types;
 
     JSONObject jsonObject = new JSONObject();
     JSONObject jsonObject_fav = new JSONObject();
@@ -83,6 +85,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
 
         tv_brand_name = findViewById(R.id.tv_brand_name);
         tv_description = findViewById(R.id.tv_description);
+        tv_brand_type = findViewById(R.id.tv_brand_type);
 
         sessionManager = new SessionManager(this);
         apiService = RestClass.getClient().create(API.class);
@@ -135,6 +138,18 @@ public class GiftDetailsActivity extends AppCompatActivity {
                         tv_brand_name.setText(response.body().getBrandName());
                         tv_description.setText(response.body().getDescription());
                         arrayList = response.body().getData();
+                        for (int j = 0; j < arrayList.size(); j++) {
+                            if (arrayList_type.size() == 0) {
+                                arrayList_type.add(arrayList.get(j).getVoucherType());
+                                brand_types = arrayList.get(j).getVoucherType();
+                            } else {
+                                if (!arrayList_type.contains(arrayList.get(j).getVoucherType())) {
+                                    arrayList_type.add(arrayList.get(j).getVoucherType());
+                                    brand_types = brand_types + "," + arrayList.get(j).getVoucherType();
+                                }
+                            }
+                        }
+                        tv_brand_type.setText(brand_types);
                         if (sessionManager.isLoggedIn()) {
                             is_fav = response.body().getIsFavourite();
                             if (is_fav.equals("true")) {

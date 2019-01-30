@@ -531,6 +531,7 @@ public class MainActivity extends AppCompatActivity
         TextView tv_item5 = view5.findViewById(R.id.tv_item);
         tv_item5.setText(getResources().getString(R.string.My_Wallet));
         tabLayout.getTabAt(4).setCustomView(view5);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

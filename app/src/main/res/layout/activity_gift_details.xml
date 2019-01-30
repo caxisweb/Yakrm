@@ -91,6 +91,7 @@
                         android:textSize="14dp" />
 
                     <TextView
+                        android:id="@+id/tv_brand_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/Electronic_and_paper_gifts"

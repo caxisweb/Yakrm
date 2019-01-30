@@ -1,5 +1,6 @@
 package com.yakrm.codeclinic.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -8,20 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.yakrm.codeclinic.Activities.StartActivity;
 import com.yakrm.codeclinic.Models.AddVoucherToCartModel;
 import com.yakrm.codeclinic.Models.VoucherDetailsListItemModel;
 import com.yakrm.codeclinic.R;
 import com.yakrm.codeclinic.Retrofit.API;
+import com.yakrm.codeclinic.Utils.ImageURL;
 import com.yakrm.codeclinic.Utils.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,6 +42,10 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
     ArrayList<String> ar_add_cart_value;
     JSONObject jsonObject = new JSONObject();
     SessionManager sessionManager;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog alertDialog;
+    String final_date;
+    LayoutInflater inflater;
 
 
     public GiftDetailListAdapter(List<VoucherDetailsListItemModel> arrayList, Context context, API apiService, ArrayList<String> ar_add_cart_value, SessionManager sessionManager) {
@@ -43,6 +54,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
         this.apiService = apiService;
         this.ar_add_cart_value = ar_add_cart_value;
         this.sessionManager = sessionManager;
+        inflater = LayoutInflater.from(context);
     }
 
     @NonNull
@@ -54,9 +66,6 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
 
     @Override
     public void onBindViewHolder(@NonNull final GiftDetailListAdapter.CustomViewHolder customViewHolder, final int i) {
-        if (i == 0) {
-
-        }
 
         customViewHolder.tv_value.setText(arrayList.get(i).getVoucherPrice() + context.getResources().getString(R.string.SR_currency));
         int voucher_price = Integer.parseInt(arrayList.get(i).getVoucherPrice());
@@ -69,6 +78,55 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
         } else {
             customViewHolder.tv_pay.setText(arrayList.get(i).getVoucherPrice() + context.getResources().getString(R.string.SR_currency));
         }
+
+        customViewHolder.llayout_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder = new AlertDialog.Builder(context);
+                final View dialogView = inflater.inflate(R.layout.custom_voucher_detail_popup, null);
+                dialogBuilder.setView(dialogView);
+                dialogBuilder.setCancelable(true);
+
+                LinearLayout llayout_custom_main = dialogView.findViewById(R.id.llayout_custom_main);
+                ImageView img_brand_img = dialogView.findViewById(R.id.img_brand_img);
+                TextView tv_brand_name = dialogView.findViewById(R.id.tv_brand_name);
+                TextView tv_ends_on = dialogView.findViewById(R.id.tv_ends_on);
+                TextView tv_ex_date = dialogView.findViewById(R.id.tv_ex_date);
+                TextView tv_description = dialogView.findViewById(R.id.tv_description);
+                TextView tv_gift_type = dialogView.findViewById(R.id.tv_gift_type);
+
+                alertDialog = dialogBuilder.create();
+                alertDialog.show();
+
+                Picasso.with(context).load(ImageURL.Vendor_voucher_image + arrayList.get(i).getVoucherImage()).into(img_brand_img);
+                tv_brand_name.setText(arrayList.get(i).getGiftCategoryName());
+                try {
+                    String date = arrayList.get(i).getExpiredAt().substring(0, arrayList.get(i).getExpiredAt().indexOf(" "));
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    final_date = date.trim();
+                    Date strDate = sdf.parse(final_date);
+                    if (System.currentTimeMillis() > strDate.getTime()) {
+                        tv_ends_on.setText(context.getResources().getString(R.string.Ended));
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                SimpleDateFormat spf = null;
+                Date newDate = null;
+                try {
+                    spf = new SimpleDateFormat("yyyy-MM-dd");
+                    newDate = spf.parse(final_date);
+                    spf = new SimpleDateFormat("dd-MM-yyyy");
+                    final_date = spf.format(newDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                tv_ex_date.setText(final_date);
+                tv_description.setText(arrayList.get(i).getVoucherCode());
+                tv_gift_type.setText(arrayList.get(i).getVoucherType());
+
+            }
+        });
 
         customViewHolder.img_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +175,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         TextView tv_value, tv_discount, tv_pay;
         ImageView img_view;
+        LinearLayout llayout_main;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -124,6 +183,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
             tv_discount = itemView.findViewById(R.id.tv_discount);
             tv_pay = itemView.findViewById(R.id.tv_pay);
             img_view = itemView.findViewById(R.id.img_view);
+            llayout_main = itemView.findViewById(R.id.llayout_main);
         }
     }
 }
