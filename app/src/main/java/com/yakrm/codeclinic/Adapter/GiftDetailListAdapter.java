@@ -1,5 +1,6 @@
 package com.yakrm.codeclinic.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -46,6 +47,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
     AlertDialog alertDialog;
     String final_date;
     LayoutInflater inflater;
+    String[] date_array;
 
 
     public GiftDetailListAdapter(List<VoucherDetailsListItemModel> arrayList, Context context, API apiService, ArrayList<String> ar_add_cart_value, SessionManager sessionManager) {
@@ -64,8 +66,9 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
         return new CustomViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull final GiftDetailListAdapter.CustomViewHolder customViewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final GiftDetailListAdapter.CustomViewHolder customViewHolder, @SuppressLint("RecyclerView") final int i) {
 
         customViewHolder.tv_value.setText(arrayList.get(i).getVoucherPrice() + context.getResources().getString(R.string.SR_currency));
         int voucher_price = Integer.parseInt(arrayList.get(i).getVoucherPrice());
@@ -100,7 +103,8 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 Picasso.with(context).load(ImageURL.Vendor_voucher_image + arrayList.get(i).getVoucherImage()).into(img_brand_img);
                 tv_brand_name.setText(arrayList.get(i).getGiftCategoryName());
                 try {
-                    String date = arrayList.get(i).getExpiredAt().substring(0, arrayList.get(i).getExpiredAt().indexOf(" "));
+                    date_array = arrayList.get(i).getExpiredAt().split(" ");
+                    String date = date_array[0];
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     final_date = date.trim();
                     Date strDate = sdf.parse(final_date);
@@ -120,7 +124,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                tv_ex_date.setText(final_date);
+                tv_ex_date.setText(final_date + " " + date_array[1]);
                 tv_description.setText(arrayList.get(i).getVoucherCode());
                 tv_gift_type.setText(arrayList.get(i).getVoucherType());
 
@@ -131,33 +135,36 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
             @Override
             public void onClick(View v) {
                 if (sessionManager.isLoggedIn()) {
-                    if (ar_add_cart_value.get(i).equals("0")) {
-                        ar_add_cart_value.set(i, "1");
-                        customViewHolder.img_view.setImageResource(R.mipmap.ic_fillcart_icon);
-                        try {
-                            jsonObject.put("voucher_id", arrayList.get(i).getVoucherId());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Call<AddVoucherToCartModel> addVoucherToCartModelCall = apiService.ADD_VOUCHER_TO_CART_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
-                        addVoucherToCartModelCall.enqueue(new Callback<AddVoucherToCartModel>() {
-                            @Override
-                            public void onResponse(Call<AddVoucherToCartModel> call, Response<AddVoucherToCartModel> response) {
-                                String status = response.body().getStatus();
-                                if (status.equals("1")) {
-                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    if (!arrayList.get(i).getVoucherType().equals("paper gift")) {
+                        if (ar_add_cart_value.get(i).equals("0")) {
+                            ar_add_cart_value.set(i, "1");
+                            customViewHolder.img_view.setImageResource(R.mipmap.ic_fillcart_icon);
+                            try {
+                                jsonObject.put("voucher_id", arrayList.get(i).getVoucherId());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Call<AddVoucherToCartModel> addVoucherToCartModelCall = apiService.ADD_VOUCHER_TO_CART_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                            addVoucherToCartModelCall.enqueue(new Callback<AddVoucherToCartModel>() {
+                                @Override
+                                public void onResponse(Call<AddVoucherToCartModel> call, Response<AddVoucherToCartModel> response) {
+                                    String status = response.body().getStatus();
+                                    if (status.equals("1")) {
+                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<AddVoucherToCartModel> call, Throwable t) {
-                                Toast.makeText(context, "Server Error", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } else {
-                        Toast.makeText(context, "You have already added this voucher in your cart.", Toast.LENGTH_SHORT).show();
+                                @Override
+                                public void onFailure(Call<AddVoucherToCartModel> call, Throwable t) {
+                                    Toast.makeText(context, "Server Error", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(context, "You have already added this voucher in your cart.", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 } else {
                     context.startActivity(new Intent(context, StartActivity.class));

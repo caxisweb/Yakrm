@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/brand_images"
@@ -24,14 +24,14 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:adjustViewBounds="true"
-                android:background="@color/cardview_shadow_end_color"
-                android:src="@drawable/demo_img_1" />
+                android:background="@color/cardview_shadow_end_color" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -39,21 +39,26 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_item_name"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="@string/STABUCKSCARD_electronic_and_paper_gifts"
-                        android:textColor="@color/black"
-                        android:textSize="12dp" />
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tv_item_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
 
                     <ImageView
                         android:id="@+id/img_delete"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_alignParentRight="true"
                         android:padding="3dp"
                         android:src="@drawable/close_img" />
 
@@ -100,12 +105,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="@string/sr"
+                        android:layout_marginRight="5dp"
                         android:textColor="@color/black"
                         android:textSize="12dp" />
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -124,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="3%"
+                        android:layout_marginRight="5dp"
                         android:textColor="@color/colorPrimary" />
 
                 </LinearLayout>
@@ -146,7 +150,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="@string/s_r"
+                        android:layout_marginRight="5dp"
                         android:textColor="@color/colorPrimary" />
 
                 </LinearLayout>

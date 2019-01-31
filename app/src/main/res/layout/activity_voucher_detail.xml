@@ -67,7 +67,7 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="210dp"
+                        android:layout_height="160dp"
                         android:layout_gravity="center"
                         android:src="@drawable/demo_img_1" />
 

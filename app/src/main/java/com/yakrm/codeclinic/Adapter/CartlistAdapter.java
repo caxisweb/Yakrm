@@ -43,6 +43,7 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
     JSONObject jsonObject = new JSONObject();
     ProgressDialog progressDialog;
     String final_date;
+    String[] date_array;
 
     public CartlistAdapter(List<CartListItemModel> arrayList, Context context, API apiService, SessionManager sessionManager) {
         this.arrayList = arrayList;
@@ -62,9 +63,10 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
     @Override
     public void onBindViewHolder(@NonNull CartlistAdapter.Holder holder, @SuppressLint("RecyclerView") final int i) {
         Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage()).into(holder.brand_images);
-        holder.tv_item_name.setText(arrayList.get(i).getBrandName() + "(" + context.getResources().getString(R.string.Electronic_and_paper_gifts) + ")");
+        holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
         try {
-            String date = arrayList.get(i).getExpiredAt().substring(0, arrayList.get(i).getExpiredAt().indexOf(" "));
+            date_array = arrayList.get(i).getExpiredAt().split(" ");
+            String date = date_array[0];
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             final_date = date.trim();
             Date strDate = sdf.parse(final_date);
@@ -84,7 +86,7 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.tv_ex_date.setText(final_date);
+        holder.tv_ex_date.setText(final_date + " " + date_array[1]);
         holder.tv_value.setText(arrayList.get(i).getVoucherPrice() + context.getResources().getString(R.string.SR_currency));
         holder.tv_discount.setText(arrayList.get(i).getDiscount() + "%");
         holder.tv_price.setText(String.valueOf(Float.parseFloat(arrayList.get(i).getVoucherPrice()) - (Float.parseFloat(arrayList.get(i).getVoucherPrice()) * Float.parseFloat(arrayList.get(i).getDiscount())) / 100) + context.getResources().getString(R.string.SR_currency));
