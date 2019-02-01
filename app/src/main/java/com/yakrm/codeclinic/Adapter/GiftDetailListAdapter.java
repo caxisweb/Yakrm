@@ -114,6 +114,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+
                 SimpleDateFormat spf = null;
                 Date newDate = null;
                 try {
