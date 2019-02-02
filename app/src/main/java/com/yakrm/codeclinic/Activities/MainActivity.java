@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
 
     SessionManager sessionManager;
 
-    @SuppressLint({"ClickableViewAccessibility", "ResourceType", "NewApi"})
+    @SuppressLint({"ClickableViewAccessibility", "ResourceType", "NewApi", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -301,6 +301,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
                 Toast.makeText(GiftDetailsActivity.this, data.getStringExtra(PaymentParams.CUSTOMER_EMAIL), Toast.LENGTH_LONG).show();
                 Toast.makeText(GiftDetailsActivity.this, data.getStringExtra(PaymentParams.CUSTOMER_PASSWORD), Toast.LENGTH_LONG).show();
             }*/
+            finish();
         }
     }
 }
