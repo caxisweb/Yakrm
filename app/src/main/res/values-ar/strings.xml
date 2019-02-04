@@ -168,7 +168,7 @@
     <string name="Active_coupons">القسائم النشطة</string>
     <string name="Sr_Stabuckscard"> 25 ر.س</string>
     <string name="Voucher_Number">1 قسيمة خصم </string>
-    <string name="Active_Till">صالحة حتي 23/12/2018</string>
+    <string name="Active_Till">صالحة حتي </string>
 
 
     <string name="replace_voucher">استبدل القسيمة</string>

@@ -19,7 +19,7 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/main_images"
+                android:id="@+id/brand_image"
                 android:layout_width="90dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center_horizontal"
@@ -49,12 +49,11 @@
                         android:textSize="14dp" />
 
                     <TextView
-                        android:id="@+id/img_fav"
+                        android:id="@+id/tv_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:text="@string/Sr_Stabuckscard"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14dp" />
 
@@ -68,22 +67,40 @@
                     android:layout_marginRight="5dp"
                     android:text="@string/Voucher_Number"
                     android:textColor="@color/black"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:visibility="invisible" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:text="@string/Active_Till"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="@string/Active_Till"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+
+
+                        <TextView
+                            android:id="@+id/tv_active_till"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
 
                     <ImageView
                         android:layout_width="25dp"

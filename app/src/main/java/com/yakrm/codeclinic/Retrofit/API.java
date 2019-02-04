@@ -1,5 +1,6 @@
 package com.yakrm.codeclinic.Retrofit;
 
+import com.yakrm.codeclinic.Models.ActiveVoucherListModel;
 import com.yakrm.codeclinic.Models.AddToFavouritesModel;
 import com.yakrm.codeclinic.Models.AddVoucherToCartModel;
 import com.yakrm.codeclinic.Models.AllVouchersListModel;
@@ -87,4 +88,8 @@ public interface API {
     @Headers("Content-Type: application/json")
     @GET("get_all_usertransaction")
     Call<TransactionsRecordModel> TRANSACTIONS_RECORD_MODEL_CALL(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
+    @GET("get_active_voucher_ofuser")
+    Call<ActiveVoucherListModel> ACTIVE_VOUCHER_LIST_MODEL_CALL(@Header("Authorization") String header);
 }

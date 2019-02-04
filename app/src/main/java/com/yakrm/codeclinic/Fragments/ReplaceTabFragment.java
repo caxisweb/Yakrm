@@ -43,8 +43,8 @@ public class ReplaceTabFragment extends Fragment {
         arrayList.add("Adidas Inc.");
         arrayList.add("Xbox");
 
-        myWalletAdapter = new MyWalletAdapter(arrayList, getActivity());
-        recyclerView.setAdapter(myWalletAdapter);
+      /*  myWalletAdapter = new MyWalletAdapter(arrayList, getActivity());
+        recyclerView.setAdapter(myWalletAdapter);*/
 
         return view;
     }

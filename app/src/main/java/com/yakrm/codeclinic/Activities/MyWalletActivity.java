@@ -48,8 +48,8 @@ public class MyWalletActivity extends AppCompatActivity {
         arrayList.add("Adidas Inc.");
         arrayList.add("Xbox");
 
-        myWalletAdapter = new MyWalletAdapter(arrayList, this);
-        recyclerView.setAdapter(myWalletAdapter);
+  /*      myWalletAdapter = new MyWalletAdapter(arrayList, this);
+        recyclerView.setAdapter(myWalletAdapter);*/
 
         llayout_voucher_ended.setOnClickListener(new View.OnClickListener() {
             @Override
