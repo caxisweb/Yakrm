@@ -26,8 +26,8 @@
             android:id="@+id/img_back"
             android:layout_width="40dp"
             android:layout_height="45dp"
-            android:padding="10dp"
             android:background="?android:selectableItemBackground"
+            android:padding="10dp"
             android:src="@drawable/back_img" />
 
         <TextView
@@ -66,6 +66,7 @@
                     android:padding="10dp">
 
                     <ImageView
+                        android:id="@+id/img_voucher"
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:layout_gravity="center"
@@ -82,13 +83,23 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:layout_weight="1"
-                            android:gravity="start">
+                            android:gravity="start"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
                                 android:text="@string/Voucher_Till"
+                                android:textColor="@color/black"
+                                android:textSize="12dp" />
+
+                            <TextView
+                                android:id="@+id/tv_expiredate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
                                 android:textColor="@color/black"
                                 android:textSize="12dp" />
 
@@ -101,9 +112,9 @@
                             android:gravity="end">
 
                             <TextView
+                                android:id="@+id/tv_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
                                 android:text="@string/New_Sr"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="12dp" />
@@ -126,9 +137,12 @@
                             android:textSize="12dp" />
 
                         <TextView
+                            android:id="@+id/tv_barcode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="#2556 21 9852 2541"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
                             android:textColor="@color/black"
                             android:textSize="12dp" />
 
@@ -150,9 +164,12 @@
 
 
                         <TextView
+                            android:id="@+id/tv_pincode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="#562177"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
                             android:textColor="@color/black"
                             android:textSize="12dp" />
 

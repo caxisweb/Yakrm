@@ -132,7 +132,6 @@ public class MyWalletTabFragment extends Fragment {
                         Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<ActiveVoucherListModel> call, Throwable t) {
                     progressDialog.dismiss();

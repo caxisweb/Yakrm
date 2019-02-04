@@ -172,7 +172,7 @@
 
 
     <string name="replace_voucher">استبدل القسيمة</string>
-    <string name="Voucher_Till">صالحة حتى 25 يناير 2019</string>
+    <string name="Voucher_Till">صالحة حتى </string>
     <string name="New_Sr">25 ر.س</string>
     <string name="Voucher_number">رقم القسيمة:</string>
     <string name="Pin_Number">رقم pin : </string>

@@ -1,5 +1,6 @@
 package com.yakrm.codeclinic.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -35,20 +36,23 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
         return new Holder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyWalletAdapter.Holder holder, final int i) {
-
-        Picasso.with(context).load(ImageURL.Vendor_voucher_image + arrayList.get(i).getVoucherImage()).into(holder.brand_image);
-
+        Picasso.with(context).load(ImageURL.Vendor_voucher_image + arrayList.get(i).getVoucherImage()).into(holder.voucher_image);
         holder.tv_item_name.setText(arrayList.get(i).getBrandName());
         holder.tv_price.setText(arrayList.get(i).getVoucherPrice() + " " + context.getResources().getString(R.string.SR_currency));
         holder.tv_active_till.setText(arrayList.get(i).getCreatedAt());
-
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, VoucherDetailActivity.class);
                 intent.putExtra("name", arrayList.get(i).getBrandName());
+                intent.putExtra("date", arrayList.get(i).getCreatedAt());
+                intent.putExtra("barcode", arrayList.get(i).getScanCode());
+                intent.putExtra("pincode", arrayList.get(i).getPinCode());
+                intent.putExtra("price", arrayList.get(i).getVoucherPrice());
+                intent.putExtra("v_image", arrayList.get(i).getVoucherImage());
                 context.startActivity(intent);
             }
         });
@@ -62,11 +66,11 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
     public class Holder extends RecyclerView.ViewHolder {
         TextView tv_item_name, tv_price, tv_active_till;
         CardView card_view;
-        ImageView brand_image;
+        ImageView voucher_image;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
-            brand_image = itemView.findViewById(R.id.brand_image);
+            voucher_image = itemView.findViewById(R.id.brand_image);
             tv_item_name = itemView.findViewById(R.id.tv_item_name);
             tv_price = itemView.findViewById(R.id.tv_price);
             tv_active_till = itemView.findViewById(R.id.tv_active_till);
