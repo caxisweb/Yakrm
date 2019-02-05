@@ -22,7 +22,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="com.yakrm.codeclinic.Activities.SplashActivity"
+            android:name=".Activities.SplashActivity"
             android:theme="@style/No_action_bar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,87 +30,89 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.StartActivity"
+            android:name=".Activities.StartActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.NewAccountActivity"
+            android:name=".Activities.NewAccountActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.PersonalDataActivity"
+            android:name=".Activities.PersonalDataActivity"
             android:theme="@style/No_action_bar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.GiftDetailsActivity"
+            android:name=".Activities.GiftDetailsActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.FavouritesActivity"
+            android:name=".Activities.FavouritesActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.CartActivity"
+            android:name=".Activities.CartActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.CompletingPurchasingActivity"
+            android:name=".Activities.CompletingPurchasingActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.RecievedActivity"
+            android:name=".Activities.RecievedActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.MyWalletActivity"
+            android:name=".Activities.MyWalletActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.VoucherDetailActivity"
+            android:name=".Activities.VoucherDetailActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.UploadVouchersActivity"
+            android:name=".Activities.UploadVouchersActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.UploadVoucherDataActivity"
+            android:name=".Activities.UploadVoucherDataActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.ExchangeVoucherActivity"
+            android:name=".Activities.ExchangeVoucherActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.SendToFriendActivity"
+            android:name=".Activities.SendToFriendActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.ExchangeAddBalanceActivity"
+            android:name=".Activities.ExchangeAddBalanceActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.FavouriteVouchersActivity"
+            android:name=".Activities.FavouriteVouchersActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.VoucherWillEndActivity"
+            android:name=".Activities.VoucherWillEndActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.VoucherEndedActivity"
+            android:name=".Activities.VoucherEndedActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.NotificationsActivity"
+            android:name=".Activities.NotificationsActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.FinancialTransactionsRecordActivity"
+            android:name=".Activities.FinancialTransactionsRecordActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.ExcahangeInstructionsActivity"
+            android:name=".Activities.ExcahangeInstructionsActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.AboutApplicationActivity"
+            android:name=".Activities.AboutApplicationActivity"
             android:theme="@style/No_action_bar" />
         <activity
-            android:name="com.yakrm.codeclinic.Activities.PrivayPolicyActivity"
+            android:name=".Activities.PrivayPolicyActivity"
             android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.ScanBarcodeActivity"
+            android:theme="@style/AppOverlayTheme"></activity>
     </application>
 
 </manifest>

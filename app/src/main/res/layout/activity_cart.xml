@@ -34,7 +34,7 @@
             android:id="@+id/tv_header_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/The_basket_is_empty"
+            android:text="@string/Cart"
             android:textColor="@color/white"
             android:textSize="16dp"
             android:textStyle="bold" />
@@ -80,6 +80,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_start_purchasing"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_alignParentBottom="true"

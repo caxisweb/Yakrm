@@ -38,7 +38,7 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull MyWalletAdapter.Holder holder, final int i) {
+    public void onBindViewHolder(@NonNull MyWalletAdapter.Holder holder, @SuppressLint("RecyclerView") final int i) {
         Picasso.with(context).load(ImageURL.Vendor_voucher_image + arrayList.get(i).getVoucherImage()).into(holder.voucher_image);
         holder.tv_item_name.setText(arrayList.get(i).getBrandName());
         holder.tv_price.setText(arrayList.get(i).getVoucherPrice() + " " + context.getResources().getString(R.string.SR_currency));

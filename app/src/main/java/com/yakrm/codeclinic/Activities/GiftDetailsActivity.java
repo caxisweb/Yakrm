@@ -67,6 +67,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     int fav_value = 0;
+    public static int complete_purchase = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -278,8 +279,11 @@ public class GiftDetailsActivity extends AppCompatActivity {
         btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toasty.custom(GiftDetailsActivity.this, getResources().getString(R.string.Added_to_the_buying_basket_successfully), getResources().getDrawable(R.mipmap.ic_tick_inside), getResources().getColor(R.color.toast_color), 2000, true, true).show();
-                startActivity(new Intent(GiftDetailsActivity.this, CartActivity.class));
+                if (complete_purchase == 1) {
+                    Toasty.custom(GiftDetailsActivity.this, getResources().getString(R.string.Added_to_the_buying_basket_successfully), getResources().getDrawable(R.mipmap.ic_tick_inside), getResources().getColor(R.color.toast_color), 2000, true, true).show();
+                    startActivity(new Intent(GiftDetailsActivity.this, CartActivity.class));
+                    complete_purchase = 0;
+                }
             }
         });
 

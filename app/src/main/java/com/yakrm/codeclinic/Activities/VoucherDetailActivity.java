@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bottlerocketstudios.barcode.generation.ui.BarcodeView;
 import com.squareup.picasso.Picasso;
 import com.yakrm.codeclinic.R;
 import com.yakrm.codeclinic.Utils.ImageURL;
@@ -24,6 +25,7 @@ public class VoucherDetailActivity extends AppCompatActivity {
     ImageView img_back, img_voucher;
     Button btn_done;
     String date, final_date, barcode, pincode, price, v_image;
+    BarcodeView barcodeView;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -38,6 +40,7 @@ public class VoucherDetailActivity extends AppCompatActivity {
         tv_expiredate = findViewById(R.id.tv_expiredate);
         tv_price = findViewById(R.id.tv_price);
         tv_barcode = findViewById(R.id.tv_barcode);
+        barcodeView = findViewById(R.id.generation_barcode_image);
         tv_pincode = findViewById(R.id.tv_pincode);
 
         date = getIntent().getStringExtra("date");
@@ -47,6 +50,8 @@ public class VoucherDetailActivity extends AppCompatActivity {
         v_image = getIntent().getStringExtra("v_image");
 
         Picasso.with(this).load(ImageURL.Vendor_voucher_image + v_image).into(img_voucher);
+        tv_barcode.setText(barcode);
+        barcodeView.setBarcodeText(barcode);
 
         SimpleDateFormat spf = null;
         Date newDate = null;

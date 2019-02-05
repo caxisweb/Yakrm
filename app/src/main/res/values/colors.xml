@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#D63A4F</color>
     <color name="colorAccent">#59C2DA</color>
 
+    <color name="actionbar_opacity">#33000000</color>
+
 
     <color name="button_color">#59C2DA</color>
     <color name="dark_button_color">#59b1da</color>

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.yakrm.codeclinic.Activities.GiftDetailsActivity;
 import com.yakrm.codeclinic.Activities.StartActivity;
 import com.yakrm.codeclinic.Models.AddVoucherToCartModel;
 import com.yakrm.codeclinic.Models.VoucherDetailsListItemModel;
@@ -151,6 +152,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                                 public void onResponse(Call<AddVoucherToCartModel> call, Response<AddVoucherToCartModel> response) {
                                     String status = response.body().getStatus();
                                     if (status.equals("1")) {
+                                        GiftDetailsActivity.complete_purchase = 1;
                                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();

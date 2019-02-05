@@ -47,7 +47,7 @@ public class CartActivity extends AppCompatActivity {
     TextView tv_total_price;
     String total_price;
     JSONObject jsonObject = new JSONObject();
-    Button btn_pay;
+    Button btn_pay, btn_start_purchasing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class CartActivity extends AppCompatActivity {
         rl_cart_filled = findViewById(R.id.rl_cart_filled);
         rl_empty_layout = findViewById(R.id.rl_empty_layout);
         btn_pay = findViewById(R.id.btn_pay);
+        btn_start_purchasing = findViewById(R.id.btn_start_purchasing);
 
         apiService = RestClass.getClient().create(API.class);
         progressDialog = new ProgressDialog(this);
@@ -118,6 +119,14 @@ public class CartActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
+
+        btn_start_purchasing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartActivity.this, MainActivity.class));
+                finish();
+            }
+        });
 
         btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override

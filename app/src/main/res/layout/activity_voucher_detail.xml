@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.yakrm.codeclinic.Activities.VoucherDetailActivity">
 
     <ImageView
@@ -175,12 +176,13 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="150dp"
-                        android:layout_height="50dp"
+                    <com.bottlerocketstudios.barcode.generation.ui.BarcodeView
+                        android:id="@+id/generation_barcode_image"
+                        android:layout_width="180dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/barcode_demo_img" />
+                        android:layout_height="60dp"
+                        android:layout_marginTop="20dp"
+                        app:barcode_format="code_128" />
 
                     <Button
                         android:id="@+id/btn_done"
