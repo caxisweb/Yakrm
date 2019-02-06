@@ -139,7 +139,7 @@
 
 
     <string name="Completing_Purchasing">Purchase</string>
-    <string name="Your_Amount">Your Amount</string>
+    <string name="Your_Amount">Balance</string>
     <string name="amount_sr">155 Sr</string>
     <string name="Total_Amount">Total Amount</string>
     <string name="Sr">Sr</string>
@@ -312,6 +312,8 @@
     <string name="Save">Save</string>
     <string name="discount_till">Discount till</string>
     <string name="Endingon">Ending On</string>
+
+    <string name="_0_sr">0 SR</string>
 
 
 </resources>

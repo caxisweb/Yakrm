@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
     android:fillViewport="true"
-    tools:context="com.yakrm.codeclinic.Fragments.MyVouchersAuctionFragment">
+    tools:context="com.yakrm.codeclinic.com.codeclinic.yakrm.Fragments.MyVouchersAuctionFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

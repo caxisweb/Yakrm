@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yakrm.codeclinic.Activities.LoginActivity">
+    tools:context="com.yakrm.codeclinic.com.codeclinic.yakrm.Activities.LoginActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 SR"
+                android:text="@string/Zero_SR"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 android:textStyle="bold" />
@@ -98,16 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="81.5"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/Sr"
-                android:textColor="@color/black"
                 android:textSize="14dp" />
 
 
@@ -299,7 +290,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/Charge_Your_Account_Balance"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:visibility="gone" />
 
                     <RelativeLayout
                         android:id="@+id/rl_pay_pal"

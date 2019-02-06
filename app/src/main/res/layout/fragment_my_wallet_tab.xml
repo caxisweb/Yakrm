@@ -77,7 +77,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/SR"
+                            android:text="0 SR"
                             android:textColor="@color/colorPrimary"
                             android:textSize="18dp"
                             android:textStyle="bold" />
