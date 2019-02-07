@@ -1,6 +1,7 @@
 package com.codeclinic.yakrm.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,11 +9,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.codeclinic.yakrm.Adapter.MyWalletAdapter;
+import com.codeclinic.yakrm.Models.ActiveVoucherListItemModel;
+import com.codeclinic.yakrm.Models.ActiveVoucherListModel;
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Retrofit.API;
+import com.codeclinic.yakrm.Retrofit.RestClass;
+import com.codeclinic.yakrm.Utils.Connection_Detector;
+import com.codeclinic.yakrm.Utils.SessionManager;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +33,10 @@ import java.util.ArrayList;
 public class ReplaceTabFragment extends Fragment {
     RecyclerView recyclerView;
     MyWalletAdapter myWalletAdapter;
-    ArrayList<String> arrayList = new ArrayList<>();
+    List<ActiveVoucherListItemModel> arrayList = new ArrayList<>();
+    API apiService;
+    ProgressDialog progressDialog;
+    SessionManager sessionManager;
 
     public ReplaceTabFragment() {
         // Required empty public constructor
@@ -33,18 +49,45 @@ public class ReplaceTabFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_replace_tab, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
 
+        apiService = RestClass.getClient().create(API.class);
+
+        sessionManager = new SessionManager(getActivity());
+        progressDialog = new ProgressDialog(getActivity());
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
 
-        arrayList.add("STARBUCKSCARD");
-        arrayList.add("Coca Cola");
-        arrayList.add("Adidas Inc.");
-        arrayList.add("Xbox");
+        if (Connection_Detector.isInternetAvailable(getActivity())) {
+            progressDialog.setMessage("Please Wait");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            Call<ActiveVoucherListModel> activeVoucherListModelCall = apiService.ACTIVE_VOUCHER_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+            activeVoucherListModelCall.enqueue(new Callback<ActiveVoucherListModel>() {
+                @Override
+                public void onResponse(Call<ActiveVoucherListModel> call, Response<ActiveVoucherListModel> response) {
+                    progressDialog.dismiss();
+                    String status = response.body().getStatus();
+                    if (status.equals("1")) {
+                        arrayList = response.body().getData();
+                        myWalletAdapter = new MyWalletAdapter(arrayList, getActivity());
+                        recyclerView.setAdapter(myWalletAdapter);
+                    } else {
+                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
 
-      /*  myWalletAdapter = new MyWalletAdapter(arrayList, getActivity());
-        recyclerView.setAdapter(myWalletAdapter);*/
+                @Override
+                public void onFailure(Call<ActiveVoucherListModel> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }

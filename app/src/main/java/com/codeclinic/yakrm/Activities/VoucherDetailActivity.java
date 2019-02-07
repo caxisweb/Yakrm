@@ -24,7 +24,7 @@ public class VoucherDetailActivity extends AppCompatActivity {
     TextView tv_header_name, tv_expiredate, tv_price, tv_barcode, tv_pincode;
     ImageView img_back, img_voucher;
     Button btn_done;
-    String date, final_date, barcode, pincode, price, v_image;
+    public static String v_payment_id, voucher_id, voucher_name, date, final_date, barcode, pincode, price, v_image;
     BarcodeView barcodeView;
 
     @SuppressLint("SetTextI18n")
@@ -43,11 +43,15 @@ public class VoucherDetailActivity extends AppCompatActivity {
         barcodeView = findViewById(R.id.generation_barcode_image);
         tv_pincode = findViewById(R.id.tv_pincode);
 
+
+        voucher_name = getIntent().getStringExtra("name");
         date = getIntent().getStringExtra("date");
         barcode = getIntent().getStringExtra("barcode");
         pincode = getIntent().getStringExtra("pincode");
         price = getIntent().getStringExtra("price");
         v_image = getIntent().getStringExtra("v_image");
+        v_payment_id = getIntent().getStringExtra("v_payment_id");
+        voucher_id = getIntent().getStringExtra("voucher_id");
 
         Picasso.with(this).load(ImageURL.Vendor_voucher_image + v_image).into(img_voucher);
         tv_barcode.setText(barcode);

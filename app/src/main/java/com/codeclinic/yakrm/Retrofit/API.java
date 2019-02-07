@@ -6,6 +6,7 @@ import com.codeclinic.yakrm.Models.AddVoucherToCartModel;
 import com.codeclinic.yakrm.Models.AllVouchersListModel;
 import com.codeclinic.yakrm.Models.CartListModel;
 import com.codeclinic.yakrm.Models.FavouritesListModel;
+import com.codeclinic.yakrm.Models.FriendMobileNumberModel;
 import com.codeclinic.yakrm.Models.LoginModel;
 import com.codeclinic.yakrm.Models.PaymentTransactionModel;
 import com.codeclinic.yakrm.Models.ProfileImageUpload;
@@ -13,11 +14,13 @@ import com.codeclinic.yakrm.Models.ProfileUpdateModel;
 import com.codeclinic.yakrm.Models.RegistrationModel;
 import com.codeclinic.yakrm.Models.RegistrationStep2Model;
 import com.codeclinic.yakrm.Models.RemoveCartItemModel;
+import com.codeclinic.yakrm.Models.SendVoucherToFriendModel;
 import com.codeclinic.yakrm.Models.TransactionsRecordModel;
 import com.codeclinic.yakrm.Models.VerifyOTPModel;
 import com.codeclinic.yakrm.Models.VoucherDetailsListModel;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -92,4 +95,12 @@ public interface API {
     @Headers("Content-Type: application/json")
     @GET("get_active_voucher_ofuser")
     Call<ActiveVoucherListModel> ACTIVE_VOUCHER_LIST_MODEL_CALL(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
+    @POST("find_contact_no")
+    Call<FriendMobileNumberModel> FRIEND_MOBILE_NUMBER_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Multipart
+    @POST("send_voucher_as_gift")
+    Call<SendVoucherToFriendModel> SEND_VOUCHER_TO_FRIEND_MODEL_CALL(@Header("Authorization") String header, @Part("voucher_id") RequestBody voucher_id, @Part("phone") RequestBody phone, @Part("description") RequestBody desc, @Part("voucher_payment_detail_id") RequestBody voucher_payment_id);
 }

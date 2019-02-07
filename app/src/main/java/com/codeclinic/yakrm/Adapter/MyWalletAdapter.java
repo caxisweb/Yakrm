@@ -53,6 +53,8 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
                 intent.putExtra("pincode", arrayList.get(i).getPinCode());
                 intent.putExtra("price", arrayList.get(i).getVoucherPrice());
                 intent.putExtra("v_image", arrayList.get(i).getVoucherImage());
+                intent.putExtra("v_payment_id", arrayList.get(i).getVoucherPaymentDetailId());
+                intent.putExtra("voucher_id", arrayList.get(i).getVoucherId());
                 context.startActivity(intent);
             }
         });

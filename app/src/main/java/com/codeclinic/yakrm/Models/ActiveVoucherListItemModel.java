@@ -4,9 +4,32 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ActiveVoucherListItemModel {
+    @SerializedName("voucher_payment_detail_id")
+    @Expose
+    private String voucherPaymentDetailId;
+    @SerializedName("voucher_id")
+    @Expose
+    private String voucherId;
     @SerializedName("brand_name")
     @Expose
+
     private String brandName;
+
+    public String getVoucherId() {
+        return voucherId;
+    }
+
+    public void setVoucherId(String voucherId) {
+        this.voucherId = voucherId;
+    }
+
+    public String getVoucherPaymentDetailId() {
+        return voucherPaymentDetailId;
+    }
+
+    public void setVoucherPaymentDetailId(String voucherPaymentDetailId) {
+        this.voucherPaymentDetailId = voucherPaymentDetailId;
+    }
     @SerializedName("vendor_name")
     @Expose
     private String vendorName;

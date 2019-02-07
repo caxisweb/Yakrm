@@ -55,6 +55,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     double price;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +80,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         tv_total_price = findViewById(R.id.tv_total_price);
         tv_sc_total_price = findViewById(R.id.tv_sc_total_price);
         tv_total_price.setText(getIntent().getStringExtra("price") + " " + getResources().getString(R.string.SR_currency));
+        tv_sc_total_price.setText(getIntent().getStringExtra("price") + " " + getResources().getString(R.string.SR_currency));
         total_price = getIntent().getStringExtra("price");
-        tv_sc_total_price.setText(total_price);
         price = Double.parseDouble(total_price);
         progressDialog = new ProgressDialog(this);
 
