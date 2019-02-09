@@ -142,7 +142,7 @@
     <string name="Completing_Payment">إتمام الدفع </string>
     <string name="The_Process_Is_Carried_Out_Successfully">تمت العملية بنجاح</string>
     <string name="Something_Wrong_Occur_AndProcess_Is_Not_Finished_Yet">حدث خطأ ما ولم تتم العملية </string>
-    <string name="Your_Current_Amount_Is_Not_Enough_To_Carry_Out_Purchasing_Process">رصيدك الحالي غير كافي لإتمام علية الشراء </string>
+    <string name="Your_Current_Amount_Is_Not_Enough_To_Carry_Out_Purchasing_Process">رصيدك الحالي غير كافي لإتمام عملية الشراء </string>
     <string name="Charge_Your_Account_Balance">شحن رصيد لحسابك </string>
     <string name="By_Using_Pay_Pal">By Using Pay Pal</string>
     <string name="By_Using_Mada_Card">بواسطة بطاقة مدى </string>
@@ -298,7 +298,20 @@
     <string name="Endingon">تنتهي في</string>
 
 
-    <string name="_0_sr">0 SR</string>
+    <string name="_0_sr">0 ريال</string>
+
+    <string name="Payment_method">طرق الدفع </string>
+    <string name="there_is_no_any_payment_method_added_in_your_account">لا يوجد طرق للدفع مسجلة لديك </string>
+    <string name="Adding_A_Payment_Method">إضافة طريقة دفع </string>
+    <string name="Card_Holder_Name">اسم صاحب البطاقة </string>
+    <string name="Card_Number">رقم البطاقة </string>
+    <string name="Security_Number">رقم الحماية </string>
+    <string name="Expiry_Date">تاريخ الإنتهاء </string>
+    <string name="Add">إضافة </string>
+
+
+    <string name="Current_payment_methods">طرق الدفع الحالية</string>
+    <string name="Add_Another_Method">إضافة طريقة أخرى </string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>

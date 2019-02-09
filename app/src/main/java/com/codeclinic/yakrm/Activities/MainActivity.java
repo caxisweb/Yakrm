@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity
         LinearLayout llayout_best_brands = header1.findViewById(R.id.llayout_best_brands);
         LinearLayout llayout_finance_records = header1.findViewById(R.id.llayout_finance_records);
         LinearLayout llayout_auctions = header1.findViewById(R.id.llayout_auctions);
+        LinearLayout llayout_payment_method = header1.findViewById(R.id.llayout_payment_method);
         LinearLayout llayout_support_contact = header1.findViewById(R.id.llayout_support_contact);
         LinearLayout llayout_about_app = header1.findViewById(R.id.llayout_about_app);
         LinearLayout llayout_instruction_conditions = header1.findViewById(R.id.llayout_instruction_conditions);
@@ -382,6 +383,19 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+        llayout_payment_method.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                llayout_tab.setVisibility(View.VISIBLE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }
+                startActivity(new Intent(MainActivity.this, EnterCardDetailsActivity.class));
+            }
+        });
 
         llayout_support_contact.setOnClickListener(new View.OnClickListener() {
             @Override

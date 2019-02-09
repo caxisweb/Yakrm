@@ -314,6 +314,16 @@
     <string name="Endingon">Ending On</string>
 
     <string name="_0_sr">0 SR</string>
+    <string name="Payment_method">Payment Methods</string>
+    <string name="there_is_no_any_payment_method_added_in_your_account">There Is No Any Payment Method Added In Your Account</string>
+    <string name="Adding_A_Payment_Method">Adding A Payment Method</string>
+    <string name="Card_Holder_Name">Card Holder Name</string>
+    <string name="Card_Number">Card Number</string>
+    <string name="Security_Number">Security Number</string>
+    <string name="Expiry_Date">Expiry Date</string>
+    <string name="Add">Add</string>
+    <string name="Current_payment_methods">Current payment methods</string>
+    <string name="Add_Another_Method">Add Another Method</string>
 
 
 </resources>

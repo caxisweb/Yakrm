@@ -168,6 +168,8 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                             Toast.makeText(context, "You have already added this voucher in your cart.", Toast.LENGTH_SHORT).show();
                         }
 
+                    } else {
+                        Toast.makeText(context, "You can't buy the paper gift online ,you have to go to the vendor office", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     context.startActivity(new Intent(context, StartActivity.class));
