@@ -312,6 +312,9 @@
 
     <string name="Current_payment_methods">طرق الدفع الحالية</string>
     <string name="Add_Another_Method">إضافة طريقة أخرى </string>
+    <string name="Change_password">غير كلمة السر</string>
+    <string name="Enter_Old_password">أدخل كلمة المرور القديمة</string>
+    <string name="Enter_New_password">أدخل كلمة مرور جديدة</string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>

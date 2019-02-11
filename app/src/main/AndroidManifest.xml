@@ -116,6 +116,9 @@
         <activity
             android:name=".Activities.EnterCardDetailsActivity"
             android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.ChangePasswordActivity"
+            android:theme="@style/No_action_bar" />
     </application>
 
 </manifest>

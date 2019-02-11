@@ -324,6 +324,9 @@
     <string name="Add">Add</string>
     <string name="Current_payment_methods">Current payment methods</string>
     <string name="Add_Another_Method">Add Another Method</string>
+    <string name="Change_password">Change password</string>
+    <string name="Enter_Old_password">Enter Old password</string>
+    <string name="Enter_New_password">Enter New password</string>
 
 
 </resources>

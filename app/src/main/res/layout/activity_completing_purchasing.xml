@@ -196,7 +196,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_action_bar"
         android:fillViewport="true"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -283,7 +283,7 @@
                         android:textSize="14dp"
                         android:visibility="gone" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/rl_pay_pal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -296,14 +296,15 @@
                             android:id="@+id/img_paypal"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:layout_alignParentLeft="true"
+                            android:padding="5dp"
                             android:src="@drawable/paypal_img" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:layout_toRightOf="@+id/img_paypal"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
@@ -325,13 +326,12 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
                             android:src="@drawable/right_arrow" />
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/rl_mastercard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -345,13 +345,14 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_alignParentLeft="true"
-                            android:src="@drawable/payment_type_csmada_icon" />
+                            android:src="@mipmap/ic_payment_csmada_icon" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:layout_toRightOf="@+id/img_paypal2"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
@@ -373,13 +374,12 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
                             android:src="@drawable/right_arrow" />
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/rl_visa"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -394,13 +394,14 @@
                             android:layout_height="30dp"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
-                            android:src="@drawable/payment_visa_icon" />
+                            android:src="@mipmap/ic_payment_visa_icon" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:layout_toRightOf="@+id/img_visa"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
@@ -422,11 +423,10 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
                             android:src="@drawable/right_arrow" />
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
 
                 </LinearLayout>

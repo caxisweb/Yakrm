@@ -1,12 +1,15 @@
 package com.codeclinic.yakrm.Retrofit;
 
 import com.codeclinic.yakrm.Models.ActiveVoucherListModel;
+import com.codeclinic.yakrm.Models.AddCardDetailsModel;
 import com.codeclinic.yakrm.Models.AddToFavouritesModel;
 import com.codeclinic.yakrm.Models.AddVoucherToCartModel;
 import com.codeclinic.yakrm.Models.AllVouchersListModel;
 import com.codeclinic.yakrm.Models.CartListModel;
+import com.codeclinic.yakrm.Models.ChangePasswordModel;
 import com.codeclinic.yakrm.Models.FavouritesListModel;
 import com.codeclinic.yakrm.Models.FriendMobileNumberModel;
+import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.LoginModel;
 import com.codeclinic.yakrm.Models.PaymentTransactionModel;
 import com.codeclinic.yakrm.Models.ProfileImageUpload;
@@ -103,4 +106,16 @@ public interface API {
     @Multipart
     @POST("send_voucher_as_gift")
     Call<SendVoucherToFriendModel> SEND_VOUCHER_TO_FRIEND_MODEL_CALL(@Header("Authorization") String header, @Part("voucher_id") RequestBody voucher_id, @Part("phone") RequestBody phone, @Part("description") RequestBody desc, @Part("voucher_payment_detail_id") RequestBody voucher_payment_id);
+
+    @Headers("Content-Type: application/json")
+    @POST("change_password")
+    Call<ChangePasswordModel> CHANGE_PASSWORD_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("add_payment_cards")
+    Call<AddCardDetailsModel> ADD_CARD_DETAILS_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @GET("get_all_cards_ofusers")
+    Call<GetCardListModel> GET_CARD_LIST_MODEL_CALL(@Header("Authorization") String header);
 }

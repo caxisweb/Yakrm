@@ -60,7 +60,7 @@ public class PersonalDataActivity extends AppCompatActivity {
     private final int PICK_IMAGE_GALLERY = 3;
     String str_mobile, str_email;
     RoundedImageView img_profile;
-    TextView tv_mobile, tv_email, tv_username, tv_name;
+    TextView tv_mobile, tv_email, tv_username, tv_name, tv_change_pass;
     RelativeLayout rl_imgprofile;
     JSONObject jsonObject = new JSONObject();
 
@@ -108,6 +108,7 @@ public class PersonalDataActivity extends AppCompatActivity {
         tv_email = findViewById(R.id.tv_email);
         tv_username = findViewById(R.id.tv_username);
         tv_name = findViewById(R.id.tv_name);
+        tv_change_pass = findViewById(R.id.tv_change_pass);
 
         tv_mobile.setText(sessionManager.getUserDetails().get(SessionManager.USER_MOBILE));
         tv_email.setText(sessionManager.getUserDetails().get(SessionManager.User_Email));
@@ -210,6 +211,13 @@ public class PersonalDataActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        tv_change_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PersonalDataActivity.this, ChangePasswordActivity.class));
             }
         });
     }

@@ -393,7 +393,12 @@ public class MainActivity extends AppCompatActivity
                     findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                     setTitle(getResources().getString(R.string.title_activity_main));
                 }
-                startActivity(new Intent(MainActivity.this, EnterCardDetailsActivity.class));
+                if (sessionManager.isLoggedIn()) {
+                    startActivity(new Intent(MainActivity.this, EnterCardDetailsActivity.class));
+                } else {
+                    startActivity(new Intent(MainActivity.this, StartActivity.class));
+                }
+
             }
         });
 

@@ -143,6 +143,7 @@
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:textSize="14dp" />
 
                 </TableRow>
@@ -180,6 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:text="@string/Saudi_Arabia"
                         android:textColor="@color/black"
                         android:textSize="14dp" />
@@ -217,7 +219,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
+                        android:inputType="number"
                         android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:singleLine="true"
                         android:textSize="14dp" />
 
                 </TableRow>
@@ -255,6 +260,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:textSize="14dp" />
 
                 </TableRow>
@@ -271,31 +277,43 @@
                     android:layout_marginTop="5dp"
                     android:gravity="center_vertical"
                     android:padding="5dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:layout_marginLeft="5dp"
                         android:src="@mipmap/ic_password_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
                         android:text="@string/password"
                         android:textSize="16dp" />
 
-                    <EditText
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:background="@color/white"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:text="*********"
                         android:textSize="16dp" />
 
+
                 </TableRow>
+
+                <TextView
+                    android:id="@+id/tv_change_pass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/Change_password"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14dp" />
+
             </TableLayout>
 
 
