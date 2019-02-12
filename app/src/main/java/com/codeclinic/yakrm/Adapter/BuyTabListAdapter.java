@@ -1,5 +1,6 @@
 package com.codeclinic.yakrm.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -35,11 +36,21 @@ public class BuyTabListAdapter extends RecyclerView.Adapter<BuyTabListAdapter.Cu
         return new CustomViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull BuyTabListAdapter.CustomViewHolder customViewHolder, final int i) {
 
         customViewHolder.tv_item_name.setText(arrayList.get(i).getBrandName());
-        customViewHolder.tv_discount_percent.setText(arrayList.get(i).getDiscount() + "%");
+        customViewHolder.tv_discount_percent.setText(arrayList.get(i).getDiscount().replaceAll("1", context.getResources().getString(R.string.one))
+                .replaceAll("2", context.getResources().getString(R.string.two))
+                .replaceAll("3", context.getResources().getString(R.string.three))
+                .replaceAll("4", context.getResources().getString(R.string.four))
+                .replaceAll("5", context.getResources().getString(R.string.five))
+                .replaceAll("6", context.getResources().getString(R.string.six))
+                .replaceAll("7", context.getResources().getString(R.string.seven))
+                .replaceAll("8", context.getResources().getString(R.string.eight))
+                .replaceAll("9", context.getResources().getString(R.string.nine))
+                .replaceAll("0", context.getResources().getString(R.string.zero)) + "%");
         Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage()).into(customViewHolder.brand_image);
 
         customViewHolder.card_view.setOnClickListener(new View.OnClickListener() {

@@ -98,7 +98,16 @@ public class CartActivity extends AppCompatActivity {
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
                         tv_header_name.setText(getResources().getString(R.string.Cart));
-                        tv_total_price.setText(String.valueOf(response.body().getTotalPrice()) + getResources().getString(R.string.SR_currency));
+                        tv_total_price.setText(String.valueOf(response.body().getTotalPrice()).replaceAll("1", getResources().getString(R.string.one))
+                                .replaceAll("2", getResources().getString(R.string.two))
+                                .replaceAll("3", getResources().getString(R.string.three))
+                                .replaceAll("4", getResources().getString(R.string.four))
+                                .replaceAll("5", getResources().getString(R.string.five))
+                                .replaceAll("6", getResources().getString(R.string.six))
+                                .replaceAll("7", getResources().getString(R.string.seven))
+                                .replaceAll("8", getResources().getString(R.string.eight))
+                                .replaceAll("9", getResources().getString(R.string.nine))
+                                .replaceAll("0", getResources().getString(R.string.zero)) + getResources().getString(R.string.SR_currency));
                         total_price = String.valueOf(response.body().getTotalPrice());
                         arrayList = response.body().getData();
                         cartlistAdapter = new CartlistAdapter(arrayList, CartActivity.this, apiService, sessionManager);

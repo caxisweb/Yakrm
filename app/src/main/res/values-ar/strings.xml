@@ -298,7 +298,7 @@
     <string name="Endingon">تنتهي في</string>
 
 
-    <string name="_0_sr">0 ريال</string>
+    <string name="_0_sr">٠ ريال</string>
 
     <string name="Payment_method">طرق الدفع </string>
     <string name="there_is_no_any_payment_method_added_in_your_account">لا يوجد طرق للدفع مسجلة لديك </string>
@@ -315,6 +315,18 @@
     <string name="Change_password">غير كلمة السر</string>
     <string name="Enter_Old_password">أدخل كلمة المرور القديمة</string>
     <string name="Enter_New_password">أدخل كلمة مرور جديدة</string>
+
+
+    <string name="one">١</string>
+    <string name="two">٢</string>
+    <string name="three">٣</string>
+    <string name="four">٤</string>
+    <string name="five">٥</string>
+    <string name="six">٦</string>
+    <string name="seven">٧</string>
+    <string name="eight">٨</string>
+    <string name="nine">٩</string>
+    <string name="zero">٠</string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>

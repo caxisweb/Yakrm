@@ -156,6 +156,7 @@ public class PersonalDataActivity extends AppCompatActivity {
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
+
                     try {
                         jsonObject.put("name", u_name);
                         jsonObject.put("email", u_email);
@@ -164,6 +165,7 @@ public class PersonalDataActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                     Call<ProfileUpdateModel> profileUpdateModelCall = apiService.PROFILE_UPDATE_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
                     profileUpdateModelCall.enqueue(new Callback<ProfileUpdateModel>() {
                         @Override

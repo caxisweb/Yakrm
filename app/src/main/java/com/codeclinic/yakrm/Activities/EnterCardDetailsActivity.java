@@ -31,7 +31,7 @@ import retrofit2.Response;
 public class EnterCardDetailsActivity extends AppCompatActivity {
     ImageView img_back, img_mada_select, img_paypal_select, img_visa_select, img_card_type;
     EditText edt_ex_date, edt_card_no, edt_cvv, edt_name;
-    String cardtype, card_select = "1";
+    String cardtype, card_select = "3";
     Integer[] imageArray = {R.mipmap.ic_payment_visa_icon, R.mipmap.ic_payment_csmada_icon, R.mipmap.ic_payment_csmada_icon, R.mipmap.ic_payment_csmada_icon};
     String ex_date = "/^(0[1-9]|1[0-2])\\/?([0-9]{4}|[0-9]{2})$/";
 
@@ -110,7 +110,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity {
                 img_visa_select.setBackground(getResources().getDrawable(R.drawable.card_selected_background));
                 img_paypal_select.setBackground(getResources().getDrawable(R.drawable.card_details_item_background));
                 img_mada_select.setBackground(getResources().getDrawable(R.drawable.card_details_item_background));
-                card_select = "1";
+                card_select = "3";
             }
         });
 
@@ -130,7 +130,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity {
                 img_visa_select.setBackground(getResources().getDrawable(R.drawable.card_details_item_background));
                 img_paypal_select.setBackground(getResources().getDrawable(R.drawable.card_details_item_background));
                 img_mada_select.setBackground(getResources().getDrawable(R.drawable.card_selected_background));
-                card_select = "3";
+                card_select = "1";
             }
         });
 

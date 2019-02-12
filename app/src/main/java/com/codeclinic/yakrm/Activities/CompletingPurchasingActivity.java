@@ -44,7 +44,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
     CardView main_pay_cardview, succesful_cardview, error_cardview;
     Button btn_cmplt_pay;
     ScrollView scrollview_pay;
-    TextView tv_total_price, tv_sc_total_price;
+    TextView tv_total_price, tv_sc_total_price, tv_card_no_visa, tv_card_no_cs_mada;
     LinearLayout payment_layout;
     LinearLayout rl_pay_pal, rl_mastercard, rl_visa;
 
@@ -59,6 +59,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
 
     List<GetCardListItemModel> arrayList = new ArrayList<>();
     ArrayList<String> card_type_arrayList = new ArrayList<>();
+    ArrayList<String> card_no_arrayList = new ArrayList<>();
     String card_type_select = "0";
 
     @SuppressLint("SetTextI18n")
@@ -74,19 +75,43 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         }
         scrollview_pay = findViewById(R.id.scrollview_pay);
         btn_cmplt_pay = findViewById(R.id.btn_cmplt_pay);
+
         rl_visa = findViewById(R.id.rl_visa);
         rl_mastercard = findViewById(R.id.rl_mastercard);
         rl_pay_pal = findViewById(R.id.rl_pay_pal);
+
         apiService = RestClass.getClient().create(API.class);
         sessionManager = new SessionManager(this);
         succesful_cardview = findViewById(R.id.succesful_cardview);
         error_cardview = findViewById(R.id.error_cardview);
         main_pay_cardview = findViewById(R.id.main_pay_cardview);
         payment_layout = findViewById(R.id.payment_layout);
+
+        tv_card_no_visa = findViewById(R.id.tv_card_no_visa);
+        tv_card_no_cs_mada = findViewById(R.id.tv_card_no_cs_mada);
+
         tv_total_price = findViewById(R.id.tv_total_price);
         tv_sc_total_price = findViewById(R.id.tv_sc_total_price);
-        tv_total_price.setText(getIntent().getStringExtra("price") + " " + getResources().getString(R.string.SR_currency));
-        tv_sc_total_price.setText(getIntent().getStringExtra("price") + " " + getResources().getString(R.string.SR_currency));
+        tv_total_price.setText(getIntent().getStringExtra("price").replaceAll("1", getResources().getString(R.string.one))
+                .replaceAll("2", getResources().getString(R.string.two))
+                .replaceAll("3", getResources().getString(R.string.three))
+                .replaceAll("4", getResources().getString(R.string.four))
+                .replaceAll("5", getResources().getString(R.string.five))
+                .replaceAll("6", getResources().getString(R.string.six))
+                .replaceAll("7", getResources().getString(R.string.seven))
+                .replaceAll("8", getResources().getString(R.string.eight))
+                .replaceAll("9", getResources().getString(R.string.nine))
+                .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+        tv_sc_total_price.setText(getIntent().getStringExtra("price").replaceAll("1", getResources().getString(R.string.one))
+                .replaceAll("2", getResources().getString(R.string.two))
+                .replaceAll("3", getResources().getString(R.string.three))
+                .replaceAll("4", getResources().getString(R.string.four))
+                .replaceAll("5", getResources().getString(R.string.five))
+                .replaceAll("6", getResources().getString(R.string.six))
+                .replaceAll("7", getResources().getString(R.string.seven))
+                .replaceAll("8", getResources().getString(R.string.eight))
+                .replaceAll("9", getResources().getString(R.string.nine))
+                .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
         total_price = getIntent().getStringExtra("price");
         price = Double.parseDouble(total_price);
         progressDialog = new ProgressDialog(this);
@@ -148,7 +173,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
 
                         in.putExtra(PaymentParams.IS_TOKENIZATION, true);
                         startActivityForResult(in, PaymentParams.PAYMENT_REQUEST_CODE);*/
-                        card_type_select = "1";
+                        card_type_select = "2";
                         if (arrayList != null) {
                             if (card_type_arrayList.contains("2")) {
                                 progressDialog.setMessage("Please Wait");
@@ -220,7 +245,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         card_type_select = "1";
                         if (arrayList != null) {
-                            if (card_type_arrayList.contains("3")) {
+                            if (card_type_arrayList.contains("1")) {
                                 progressDialog.setMessage("Please Wait");
                                 progressDialog.setIndeterminate(true);
                                 progressDialog.setCancelable(false);
@@ -288,9 +313,9 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                     @SuppressLint("StaticFieldLeak")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        card_type_select = "1";
+                        card_type_select = "3";
                         if (arrayList != null) {
-                            if (card_type_arrayList.contains("1")) {
+                            if (card_type_arrayList.contains("3")) {
                                 progressDialog.setMessage("Please Wait");
                                 progressDialog.setIndeterminate(true);
                                 progressDialog.setCancelable(false);
@@ -416,6 +441,24 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                     arrayList = response.body().getData();
                     for (int i = 0; i < arrayList.size(); i++) {
                         card_type_arrayList.add(arrayList.get(i).getPaymentMethod());
+                        card_no_arrayList.add(arrayList.get(i).getCardNumber());
+                    }
+                    if (card_type_arrayList.contains("1")) {
+                        for (int j = 0; j < card_type_arrayList.size(); j++) {
+                            if (card_type_arrayList.contains("1")) {
+                                tv_card_no_cs_mada.setVisibility(View.VISIBLE);
+                                //tv_card_no_cs_mada.setText(getResources().getString(R.string.digits).substring(getResources().getString(R.string.digits).length() - 4, getResources().getString(R.string.digits).length()).replace(card_no_arrayList.get(j)));
+                            }
+                        }
+
+                    }
+                    if (card_type_arrayList.contains("3")) {
+                        for (int j = 0; j < card_type_arrayList.size(); j++) {
+                            if (card_type_arrayList.contains("3")) {
+                                tv_card_no_visa.setVisibility(View.VISIBLE);
+                            }
+                        }
+
                     }
                 } else {
                     arrayList = null;

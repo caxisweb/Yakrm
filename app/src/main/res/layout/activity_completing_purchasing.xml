@@ -196,7 +196,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_action_bar"
         android:fillViewport="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -350,6 +350,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
@@ -363,11 +364,13 @@
                                 android:textSize="10dp" />
 
                             <TextView
+                                android:id="@+id/tv_card_no_cs_mada"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/digits"
                                 android:textColor="@color/black"
-                                android:textSize="10dp" />
+                                android:textSize="10dp"
+                                android:visibility="gone" />
 
                         </LinearLayout>
 
@@ -402,6 +405,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
+                            android:layout_gravity="center_vertical"
                             android:orientation="vertical">
 
                             <TextView
@@ -412,11 +416,13 @@
                                 android:textSize="10dp" />
 
                             <TextView
+                                android:id="@+id/tv_card_no_visa"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/digits"
                                 android:textColor="@color/black"
-                                android:textSize="10dp" />
+                                android:textSize="10dp"
+                                android:visibility="gone" />
 
                         </LinearLayout>
 

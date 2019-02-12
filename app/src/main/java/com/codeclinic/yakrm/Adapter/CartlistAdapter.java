@@ -86,10 +86,55 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.tv_ex_date.setText(final_date + " " + date_array[1]);
-        holder.tv_value.setText(arrayList.get(i).getVoucherPrice() + context.getResources().getString(R.string.SR_currency));
-        holder.tv_discount.setText(arrayList.get(i).getDiscount() + "%");
-        holder.tv_price.setText(String.valueOf(Float.parseFloat(arrayList.get(i).getVoucherPrice()) - (Float.parseFloat(arrayList.get(i).getVoucherPrice()) * Float.parseFloat(arrayList.get(i).getDiscount())) / 100) + context.getResources().getString(R.string.SR_currency));
+        holder.tv_ex_date.setText(final_date.replaceAll("1", context.getResources().getString(R.string.one))
+                .replaceAll("2", context.getResources().getString(R.string.two))
+                .replaceAll("3", context.getResources().getString(R.string.three))
+                .replaceAll("4", context.getResources().getString(R.string.four))
+                .replaceAll("5", context.getResources().getString(R.string.five))
+                .replaceAll("6", context.getResources().getString(R.string.six))
+                .replaceAll("7", context.getResources().getString(R.string.seven))
+                .replaceAll("8", context.getResources().getString(R.string.eight))
+                .replaceAll("9", context.getResources().getString(R.string.nine))
+                .replaceAll("0", context.getResources().getString(R.string.zero)) + " " + date_array[1].replaceAll("1", context.getResources().getString(R.string.one))
+                .replaceAll("2", context.getResources().getString(R.string.two))
+                .replaceAll("3", context.getResources().getString(R.string.three))
+                .replaceAll("4", context.getResources().getString(R.string.four))
+                .replaceAll("5", context.getResources().getString(R.string.five))
+                .replaceAll("6", context.getResources().getString(R.string.six))
+                .replaceAll("7", context.getResources().getString(R.string.seven))
+                .replaceAll("8", context.getResources().getString(R.string.eight))
+                .replaceAll("9", context.getResources().getString(R.string.nine))
+                .replaceAll("0", context.getResources().getString(R.string.zero)));
+        holder.tv_value.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
+                .replaceAll("2", context.getResources().getString(R.string.two))
+                .replaceAll("3", context.getResources().getString(R.string.three))
+                .replaceAll("4", context.getResources().getString(R.string.four))
+                .replaceAll("5", context.getResources().getString(R.string.five))
+                .replaceAll("6", context.getResources().getString(R.string.six))
+                .replaceAll("7", context.getResources().getString(R.string.seven))
+                .replaceAll("8", context.getResources().getString(R.string.eight))
+                .replaceAll("9", context.getResources().getString(R.string.nine))
+                .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
+        holder.tv_discount.setText(arrayList.get(i).getDiscount().replaceAll("1", context.getResources().getString(R.string.one))
+                .replaceAll("2", context.getResources().getString(R.string.two))
+                .replaceAll("3", context.getResources().getString(R.string.three))
+                .replaceAll("4", context.getResources().getString(R.string.four))
+                .replaceAll("5", context.getResources().getString(R.string.five))
+                .replaceAll("6", context.getResources().getString(R.string.six))
+                .replaceAll("7", context.getResources().getString(R.string.seven))
+                .replaceAll("8", context.getResources().getString(R.string.eight))
+                .replaceAll("9", context.getResources().getString(R.string.nine))
+                .replaceAll("0", context.getResources().getString(R.string.zero)) + "%");
+        holder.tv_price.setText(String.valueOf(Float.parseFloat(arrayList.get(i).getVoucherPrice()) - (Float.parseFloat(arrayList.get(i).getVoucherPrice()) * Float.parseFloat(arrayList.get(i).getDiscount())) / 100).replaceAll("1", context.getResources().getString(R.string.one))
+                .replaceAll("2", context.getResources().getString(R.string.two))
+                .replaceAll("3", context.getResources().getString(R.string.three))
+                .replaceAll("4", context.getResources().getString(R.string.four))
+                .replaceAll("5", context.getResources().getString(R.string.five))
+                .replaceAll("6", context.getResources().getString(R.string.six))
+                .replaceAll("7", context.getResources().getString(R.string.seven))
+                .replaceAll("8", context.getResources().getString(R.string.eight))
+                .replaceAll("9", context.getResources().getString(R.string.nine))
+                .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

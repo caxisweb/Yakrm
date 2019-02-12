@@ -120,6 +120,33 @@ public class NewAccountActivity extends AppCompatActivity {
             }
         });
 
+        edt_number.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                edt_number.getText().toString()
+                        .replaceAll("1", getResources().getString(R.string.one));
+                       /* .replaceAll("2", getResources().getString(R.string.two))
+                        .replaceAll("3", getResources().getString(R.string.three))
+                        .replaceAll("4", getResources().getString(R.string.four))
+                        .replaceAll("5", getResources().getString(R.string.five))
+                        .replaceAll("6", getResources().getString(R.string.six))
+                        .replaceAll("7", getResources().getString(R.string.seven))
+                        .replaceAll("8", getResources().getString(R.string.eight))
+                        .replaceAll("9", getResources().getString(R.string.nine))
+                        .replaceAll("0", getResources().getString(R.string.zero));*/
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override

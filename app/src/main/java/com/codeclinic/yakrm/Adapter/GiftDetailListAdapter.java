@@ -71,16 +71,52 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
     @Override
     public void onBindViewHolder(@NonNull final GiftDetailListAdapter.CustomViewHolder customViewHolder, @SuppressLint("RecyclerView") final int i) {
 
-        customViewHolder.tv_value.setText(arrayList.get(i).getVoucherPrice() + context.getResources().getString(R.string.SR_currency));
+        customViewHolder.tv_value.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
+                .replaceAll("2", context.getResources().getString(R.string.two))
+                .replaceAll("3", context.getResources().getString(R.string.three))
+                .replaceAll("4", context.getResources().getString(R.string.four))
+                .replaceAll("5", context.getResources().getString(R.string.five))
+                .replaceAll("6", context.getResources().getString(R.string.six))
+                .replaceAll("7", context.getResources().getString(R.string.seven))
+                .replaceAll("8", context.getResources().getString(R.string.eight))
+                .replaceAll("9", context.getResources().getString(R.string.nine))
+                .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
         int voucher_price = Integer.parseInt(arrayList.get(i).getVoucherPrice());
-        customViewHolder.tv_discount.setText(arrayList.get(i).getDiscount() + "%");
+        customViewHolder.tv_discount.setText(arrayList.get(i).getDiscount().replaceAll("1", context.getResources().getString(R.string.one))
+                .replaceAll("2", context.getResources().getString(R.string.two))
+                .replaceAll("3", context.getResources().getString(R.string.three))
+                .replaceAll("4", context.getResources().getString(R.string.four))
+                .replaceAll("5", context.getResources().getString(R.string.five))
+                .replaceAll("6", context.getResources().getString(R.string.six))
+                .replaceAll("7", context.getResources().getString(R.string.seven))
+                .replaceAll("8", context.getResources().getString(R.string.eight))
+                .replaceAll("9", context.getResources().getString(R.string.nine))
+                .replaceAll("0", context.getResources().getString(R.string.zero)) + "%");
         float voucher_discount = Float.parseFloat(arrayList.get(i).getDiscount()) / 100;
         float voucher_disount_price = Integer.parseInt(arrayList.get(i).getVoucherPrice()) * voucher_discount;
         if (voucher_price != 0) {
             float voucher_pay = Float.parseFloat(arrayList.get(i).getVoucherPrice()) - voucher_disount_price;
-            customViewHolder.tv_pay.setText(String.valueOf(voucher_pay) + context.getResources().getString(R.string.SR_currency));
+            customViewHolder.tv_pay.setText(String.valueOf(voucher_pay).replaceAll("1", context.getResources().getString(R.string.one))
+                    .replaceAll("2", context.getResources().getString(R.string.two))
+                    .replaceAll("3", context.getResources().getString(R.string.three))
+                    .replaceAll("4", context.getResources().getString(R.string.four))
+                    .replaceAll("5", context.getResources().getString(R.string.five))
+                    .replaceAll("6", context.getResources().getString(R.string.six))
+                    .replaceAll("7", context.getResources().getString(R.string.seven))
+                    .replaceAll("8", context.getResources().getString(R.string.eight))
+                    .replaceAll("9", context.getResources().getString(R.string.nine))
+                    .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
         } else {
-            customViewHolder.tv_pay.setText(arrayList.get(i).getVoucherPrice() + context.getResources().getString(R.string.SR_currency));
+            customViewHolder.tv_pay.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
+                    .replaceAll("2", context.getResources().getString(R.string.two))
+                    .replaceAll("3", context.getResources().getString(R.string.three))
+                    .replaceAll("4", context.getResources().getString(R.string.four))
+                    .replaceAll("5", context.getResources().getString(R.string.five))
+                    .replaceAll("6", context.getResources().getString(R.string.six))
+                    .replaceAll("7", context.getResources().getString(R.string.seven))
+                    .replaceAll("8", context.getResources().getString(R.string.eight))
+                    .replaceAll("9", context.getResources().getString(R.string.nine))
+                    .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
         }
 
         customViewHolder.llayout_main.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +162,25 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                tv_ex_date.setText(final_date + " " + date_array[1]);
+                tv_ex_date.setText(final_date.replaceAll("1", context.getResources().getString(R.string.one))
+                        .replaceAll("2", context.getResources().getString(R.string.two))
+                        .replaceAll("3", context.getResources().getString(R.string.three))
+                        .replaceAll("4", context.getResources().getString(R.string.four))
+                        .replaceAll("5", context.getResources().getString(R.string.five))
+                        .replaceAll("6", context.getResources().getString(R.string.six))
+                        .replaceAll("7", context.getResources().getString(R.string.seven))
+                        .replaceAll("8", context.getResources().getString(R.string.eight))
+                        .replaceAll("9", context.getResources().getString(R.string.nine))
+                        .replaceAll("0", context.getResources().getString(R.string.zero)) + " " + date_array[1].replaceAll("1", context.getResources().getString(R.string.one))
+                        .replaceAll("2", context.getResources().getString(R.string.two))
+                        .replaceAll("3", context.getResources().getString(R.string.three))
+                        .replaceAll("4", context.getResources().getString(R.string.four))
+                        .replaceAll("5", context.getResources().getString(R.string.five))
+                        .replaceAll("6", context.getResources().getString(R.string.six))
+                        .replaceAll("7", context.getResources().getString(R.string.seven))
+                        .replaceAll("8", context.getResources().getString(R.string.eight))
+                        .replaceAll("9", context.getResources().getString(R.string.nine))
+                        .replaceAll("0", context.getResources().getString(R.string.zero)));
                 tv_description.setText(arrayList.get(i).getVoucherCode());
                 tv_gift_type.setText(arrayList.get(i).getVoucherType());
 
