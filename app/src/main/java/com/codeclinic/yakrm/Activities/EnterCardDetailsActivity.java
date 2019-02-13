@@ -185,9 +185,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity {
                         Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Correct Card no", Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_ex_date.getText().toString())) {
                         Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Card Expiry date", Toast.LENGTH_SHORT).show();
-                    } /*else if (!edt_ex_date.getText().toString().matches(ex_date)) {
-                        Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Correct Expiry Date", Toast.LENGTH_SHORT).show();
-                    } */ else if (isEmpty(edt_cvv.getText().toString())) {
+                    } else if (isEmpty(edt_cvv.getText().toString())) {
                         Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Security Number", Toast.LENGTH_SHORT).show();
                     } else if (edt_cvv.getText().toString().length() != 3) {
                         Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Correct Security Number", Toast.LENGTH_SHORT).show();

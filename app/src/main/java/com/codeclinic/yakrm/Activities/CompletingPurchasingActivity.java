@@ -25,6 +25,9 @@ import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.paytabs.paytabs_sdk.http.APIClient;
+import com.paytabs.paytabs_sdk.http.ApiInterface;
+import com.paytabs.paytabs_sdk.payment.ui.activities.PayTabActivity;
 import com.paytabs.paytabs_sdk.utils.PaymentParams;
 
 import org.json.JSONException;
@@ -37,6 +40,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class CompletingPurchasingActivity extends AppCompatActivity {
@@ -132,6 +136,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                 scrollview_pay.setVisibility(View.VISIBLE);
             }
         });
+        Retrofit retrofit = APIClient.getClient();
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         rl_pay_pal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +149,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                     @SuppressLint("StaticFieldLeak")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                     /*   Intent in = new Intent(getApplicationContext(), PayTabActivity.class);
+                        Intent in = new Intent(getApplicationContext(), PayTabActivity.class);
                         in.putExtra(PaymentParams.MERCHANT_EMAIL, "ahmed@yakrm.com");
                         in.putExtra(PaymentParams.SECRET_KEY, "ex2SHCqdgtJlrF2gp5fGCis3tUGh5EkjcmcTZD7g6RCxwEOWJ3Cml4qOY664KroXOBQNeY3lPFTlkHh4KUq6YQVXW22HtrFh2w4g");
                         in.putExtra(PaymentParams.LANGUAGE, PaymentParams.ENGLISH);
@@ -172,8 +178,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                         in.putExtra(PaymentParams.THEME, PaymentParams.THEME_LIGHT);
 
                         in.putExtra(PaymentParams.IS_TOKENIZATION, true);
-                        startActivityForResult(in, PaymentParams.PAYMENT_REQUEST_CODE);*/
-                        card_type_select = "2";
+                        startActivityForResult(in, PaymentParams.PAYMENT_REQUEST_CODE);
+                     /*   card_type_select = "2";
                         if (arrayList != null) {
                             if (card_type_arrayList.contains("2")) {
                                 progressDialog.setMessage("Please Wait");
@@ -220,7 +226,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                             }
                         } else {
                             startActivity(new Intent(CompletingPurchasingActivity.this, EnterCardDetailsActivity.class));
-                        }
+                        }*/
                     }
                 }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
