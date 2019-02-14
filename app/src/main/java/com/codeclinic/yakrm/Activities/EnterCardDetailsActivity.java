@@ -34,6 +34,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity {
     String cardtype, card_select = "3";
     Integer[] imageArray = {R.mipmap.ic_payment_visa_icon, R.mipmap.ic_payment_csmada_icon, R.mipmap.ic_payment_csmada_icon, R.mipmap.ic_payment_csmada_icon};
     String ex_date = "/^(0[1-9]|1[0-2])\\/?([0-9]{4}|[0-9]{2})$/";
+    String name_regex = "^((?:[A-Za-z]+ ?){1,3})$";
 
     API apiService;
     ProgressDialog progressDialog;
@@ -179,6 +180,8 @@ public class EnterCardDetailsActivity extends AppCompatActivity {
                 if (Connection_Detector.isInternetAvailable(EnterCardDetailsActivity.this)) {
                     if (isEmpty(edt_name.getText().toString())) {
                         Toast.makeText(EnterCardDetailsActivity.this, "Please Enter CardHolder Name", Toast.LENGTH_SHORT).show();
+                    } else if (!edt_name.getText().toString().matches(name_regex)) {
+                        Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Valid Name", Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_card_no.getText().toString())) {
                         Toast.makeText(EnterCardDetailsActivity.this, "Please Enter CardNumber", Toast.LENGTH_SHORT).show();
                     } else if (edt_card_no.getText().toString().length() != 16) {
