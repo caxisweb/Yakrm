@@ -225,6 +225,7 @@
                 android:textStyle="bold" />
 
             <CheckBox
+                android:id="@+id/chk_e_gift"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
@@ -233,6 +234,7 @@
                 android:text="@string/Electronic_gift" />
 
             <CheckBox
+                android:id="@+id/chk_p_gift"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
@@ -262,6 +264,7 @@
                 android:layout_height="wrap_content">
 
                 <RadioButton
+                    android:id="@+id/rb_m_popular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
@@ -270,6 +273,7 @@
                     android:text="@string/Most_popular" />
 
                 <RadioButton
+                    android:id="@+id/rb_high_discounted"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
@@ -278,6 +282,7 @@
                     android:text="@string/High_discounted" />
 
                 <RadioButton
+                    android:id="@+id/rb_brand_names"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
@@ -310,6 +315,7 @@
                     android:textColor="@color/colorPrimary" />
 
                 <Button
+                    android:id="@+id/btn_filter"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_margin="5dp"

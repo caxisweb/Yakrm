@@ -238,7 +238,7 @@
                 android:layout_below="@+id/rl_action_bar"
                 android:layout_margin="10dp"
                 android:background="@color/white"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -415,7 +415,7 @@
                                 android:layout_marginTop="5dp"
                                 android:layout_marginRight="5dp"
                                 android:layout_weight="1"
-                                android:text="@string/Security_Number"
+                                android:text="@string/CVV"
                                 android:textColor="@color/text_color"
                                 android:textSize="14dp"
                                 android:textStyle="bold" />

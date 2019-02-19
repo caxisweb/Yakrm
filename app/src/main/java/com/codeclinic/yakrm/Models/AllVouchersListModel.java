@@ -15,6 +15,17 @@ public class AllVouchersListModel {
     @SerializedName("data")
     @Expose
     private List<AllVoucherListItemModel> data = null;
+    @SerializedName("gift_category")
+    @Expose
+    private List<GiftCategoryModel> giftCategory = null;
+
+    public List<GiftCategoryModel> getGiftCategory() {
+        return giftCategory;
+    }
+
+    public void setGiftCategory(List<GiftCategoryModel> giftCategory) {
+        this.giftCategory = giftCategory;
+    }
 
     public Integer getStatus() {
         return status;

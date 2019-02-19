@@ -327,6 +327,7 @@
     <string name="eight">٨</string>
     <string name="nine">٩</string>
     <string name="zero">٠</string>
+    <string name="CVV">CVV</string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>

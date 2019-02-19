@@ -8,6 +8,7 @@ import com.codeclinic.yakrm.Models.AllVouchersListModel;
 import com.codeclinic.yakrm.Models.CartListModel;
 import com.codeclinic.yakrm.Models.ChangePasswordModel;
 import com.codeclinic.yakrm.Models.FavouritesListModel;
+import com.codeclinic.yakrm.Models.FilterListModel;
 import com.codeclinic.yakrm.Models.FriendMobileNumberModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.GetMerchantInfoModel;
@@ -66,6 +67,10 @@ public interface API {
     @Headers("Content-Type: application/json")
     @GET("getAllActiveVoucher")
     Call<AllVouchersListModel> ALL_VOUCHERS_LIST_MODEL_CALL(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
+    @POST("filter_voucher")
+    Call<FilterListModel> FILTER_LIST_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
     @Headers("Content-Type: application/json")
     @POST("getAllVoucherByBrandId")

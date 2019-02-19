@@ -339,6 +339,7 @@
     <string name="eight">8</string>
     <string name="nine">9</string>
     <string name="zero">0</string>
+    <string name="CVV">CVV</string>
 
 
 </resources>

@@ -29,8 +29,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.codeclinic.yakrm.Fragments.AuctionTabFragment;
@@ -39,6 +41,7 @@ import com.codeclinic.yakrm.Fragments.MyWalletTabFragment;
 import com.codeclinic.yakrm.Fragments.RecievedTabFragment;
 import com.codeclinic.yakrm.Fragments.ReplaceTabFragment;
 import com.codeclinic.yakrm.Fragments.SupportContactFragment;
+import com.codeclinic.yakrm.Models.GiftCategoryModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.nex3z.flowlayout.FlowLayout;
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     public static DrawerLayout drawer;
     public static ViewPager viewPager;
 
-    ArrayList<String> arrayList = new ArrayList<>();
+    public static ArrayList<GiftCategoryModel> arrayList = new ArrayList<>();
     Button btn[];
     int i;
     AlertDialog.Builder dialogBuilder;
@@ -62,7 +65,9 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     Drawable drawable;
 
-    public static int back_flag = 0;
+    public static int back_flag = 0, filter_array = 0;
+    public static String gift_category_id = "", gift_type = "", gift_order = "";
+    ArrayList<String> category_classification_array = new ArrayList<>();
     LinearLayout llayout_tab;
     CoordinatorLayout main_content;
 
@@ -206,13 +211,23 @@ public class MainActivity extends AppCompatActivity
         LinearLayout llayout_signout = header1.findViewById(R.id.llayout_signout);
         TextView tv_signout = header1.findViewById(R.id.tv_signout);
 
+        final CheckBox chk_e_gift = header2.findViewById(R.id.chk_e_gift);
+        final CheckBox chk_p_gift = header2.findViewById(R.id.chk_p_gift);
+
+        final RadioButton rb_m_popular = header2.findViewById(R.id.rb_m_popular);
+        final RadioButton rb_high_discounted = header2.findViewById(R.id.rb_high_discounted);
+        final RadioButton rb_brand_names = header2.findViewById(R.id.rb_brand_names);
+
+        Button btn_filter = header2.findViewById(R.id.btn_filter);
+
+
         if (!sessionManager.isLoggedIn()) {
             tv_signout.setText(getResources().getString(R.string.Signup) + " / " + getResources().getString(R.string.Log_in));
         }
         LinearLayout llayout_english = header1.findViewById(R.id.llayout_english);
         final TextView tv_language_version = header1.findViewById(R.id.tv_language_version);
 
-        arrayList.add(getResources().getString(R.string.Cuisine));
+      /*arrayList.add(getResources().getString(R.string.Cuisine));
         arrayList.add(getResources().getString(R.string.books_and_magazines));
         arrayList.add(getResources().getString(R.string.coffee));
         arrayList.add(getResources().getString(R.string.Stores_and_groceries));
@@ -225,7 +240,7 @@ public class MainActivity extends AppCompatActivity
         arrayList.add(getResources().getString(R.string.sport_tools));
         arrayList.add(getResources().getString(R.string.Clothes));
         arrayList.add(getResources().getString(R.string.jewelries_and_golden));
-        arrayList.add(getResources().getString(R.string.others));
+        arrayList.add(getResources().getString(R.string.others));*/
 
         btn = new Button[arrayList.size()];
         for (i = 0; i < arrayList.size(); i++) {
@@ -240,7 +255,7 @@ public class MainActivity extends AppCompatActivity
             btn[i].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
             btn[i].setTextColor(getResources().getColor(R.color.white));
             btn[i].setTextSize(10);
-            btn[i].setText(arrayList.get(i));
+            btn[i].setText(arrayList.get(i).getGiftCategoryName());
             btn[i].setTextColor(getResources().getColor(R.color.black));
 
             final Handler mHandler = new Handler();
@@ -256,8 +271,10 @@ public class MainActivity extends AppCompatActivity
 
                     if (newPressed) {
                         button.setTextColor(getResources().getColor(R.color.white));
+                        category_classification_array.add(arrayList.get(i).getId());
                     } else {
                         button.setTextColor(getResources().getColor(R.color.black));
+                        category_classification_array.remove(i);
                     }
                     // setTag to store state
                     view.setTag(newPressed);
@@ -515,6 +532,42 @@ public class MainActivity extends AppCompatActivity
         } else {
             setTitle("الأساسية");
         }
+
+        btn_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (category_classification_array != null) {
+                    for (int i = 0; i < category_classification_array.size(); i++) {
+                        gift_category_id = gift_category_id + category_classification_array.get(i) + ",";
+                    }
+                } else {
+                    gift_category_id = "0";
+                }
+
+                if (chk_e_gift.isChecked() && chk_p_gift.isChecked()) {
+                    gift_type = "paper gift,electronic gift";
+                } else if (chk_e_gift.isChecked()) {
+                    gift_type = "electronic gift";
+                } else if (chk_p_gift.isChecked()) {
+                    gift_type = "paper gift";
+                }
+
+                if (rb_m_popular.isChecked()) {
+                    gift_order = "0";
+                } else if (rb_high_discounted.isChecked()) {
+                    gift_order = "2";
+                } else if (rb_brand_names.isChecked()) {
+                    gift_order = "3";
+                } else {
+                    gift_order = "0";
+                }
+
+                filter_array = 1;
+                drawer.closeDrawer(GravityCompat.END);
+                setupViewPager(viewPager);
+
+            }
+        });
 
 
     }
