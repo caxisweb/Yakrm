@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -57,17 +56,21 @@ public class MainActivity extends AppCompatActivity
     public static ViewPager viewPager;
 
     public static ArrayList<GiftCategoryModel> arrayList = new ArrayList<>();
-    Button btn[];
+    public static ArrayList<String> cat_arrayList_id = new ArrayList<>();
+    public static ArrayList<String> cat_arrayList_name = new ArrayList<>();
+    public static Button btn[];
+    public static NavigationView navigationView2;
     int i;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
 
     private TabLayout tabLayout;
     Drawable drawable;
+    public static FlowLayout flowLayout;
 
     public static int back_flag = 0, filter_array = 0;
     public static String gift_category_id = "", gift_type = "", gift_order = "";
-    ArrayList<String> category_classification_array = new ArrayList<>();
+    public static ArrayList<String> category_classification_array = new ArrayList<>();
     LinearLayout llayout_tab;
     CoordinatorLayout main_content;
 
@@ -87,16 +90,9 @@ public class MainActivity extends AppCompatActivity
 
         sessionManager = new SessionManager(this);
 
-
         viewPager = findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-        if (getIntent().hasExtra("view_pos")) {
-            viewPager.setCurrentItem(Integer.parseInt(getIntent().getStringExtra("view_pos")));
-        }
 
         tabLayout = findViewById(R.id.tablayout);
-        tabLayout.setupWithViewPager(viewPager);
-        createTabIcons();
 
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
@@ -193,10 +189,10 @@ public class MainActivity extends AppCompatActivity
 
 
         NavigationView navigationView = findViewById(R.id.nav_view);
-        NavigationView navigationView2 = findViewById(R.id.nav_view2);
+        navigationView2 = findViewById(R.id.nav_view2);
         View header2 = navigationView2.getHeaderView(0);
         View header1 = navigationView.getHeaderView(0);
-        FlowLayout flowLayout = header2.findViewById(R.id.main_flow_layout);
+        flowLayout = header2.findViewById(R.id.main_flow_layout);
         LinearLayout llayout_main_page = header1.findViewById(R.id.llayout_main_page);
         LinearLayout layout_personal_account = header1.findViewById(R.id.layout_personal_account);
         LinearLayout llayout_fav_voucher = header1.findViewById(R.id.llayout_fav_voucher);
@@ -242,59 +238,8 @@ public class MainActivity extends AppCompatActivity
         arrayList.add(getResources().getString(R.string.jewelries_and_golden));
         arrayList.add(getResources().getString(R.string.others));*/
 
-        btn = new Button[arrayList.size()];
-        for (i = 0; i < arrayList.size(); i++) {
-            btn[i] = new Button(this);
-            final float scale = getResources().getDisplayMetrics().density;
-            int pixels_height = (int) (30 * scale + 0.5f);
-            int pixels_padding = (int) (10 * scale + 0.5f);
-            btn[i].setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, pixels_height));
-            btn[i].setId(i);
-            btn[i].setPadding(pixels_padding, 0, pixels_padding, 0);
-            btn[i].setGravity(Gravity.CENTER);
-            btn[i].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
-            btn[i].setTextColor(getResources().getColor(R.color.white));
-            btn[i].setTextSize(10);
-            btn[i].setText(arrayList.get(i).getGiftCategoryName());
-            btn[i].setTextColor(getResources().getColor(R.color.black));
-
-            final Handler mHandler = new Handler();
-            btn[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Button button = (Button) view;
-                    boolean pressed = false;
-                    if (view.getTag() instanceof Boolean) {
-                        pressed = (boolean) view.getTag();
-                    }
-                    final boolean newPressed = !pressed;
-
-                    if (newPressed) {
-                        button.setTextColor(getResources().getColor(R.color.white));
-                        category_classification_array.add(arrayList.get(i).getId());
-                    } else {
-                        button.setTextColor(getResources().getColor(R.color.black));
-                        category_classification_array.remove(i);
-                    }
-                    // setTag to store state
-                    view.setTag(newPressed);
-                    final View vRun = view;
-                    Runnable run = new Runnable() {
-                        @Override
-                        public void run() {
-                            vRun.setPressed(newPressed);
-                        }
-                    };
-                    mHandler.post(run);
-                    mHandler.postDelayed(run, 100);
-
-                }
-            });
-            flowLayout.addView(btn[i]);
-        }
-
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView2.setNavigationItemSelectedListener(this);
+
 
         llayout_main_page.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -533,12 +478,14 @@ public class MainActivity extends AppCompatActivity
             setTitle("الأساسية");
         }
 
+
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (category_classification_array != null) {
                     for (int i = 0; i < category_classification_array.size(); i++) {
-                        gift_category_id = gift_category_id + category_classification_array.get(i) + ",";
+                        int pos = cat_arrayList_name.indexOf(category_classification_array.get(i));
+                        gift_category_id = gift_category_id + cat_arrayList_id.get(pos) + ",";
                     }
                 } else {
                     gift_category_id = "0";
@@ -565,9 +512,19 @@ public class MainActivity extends AppCompatActivity
                 filter_array = 1;
                 drawer.closeDrawer(GravityCompat.END);
                 setupViewPager(viewPager);
+                tabLayout.setupWithViewPager(viewPager);
+                createTabIcons();
 
             }
         });
+
+        setupViewPager(viewPager);
+        if (getIntent().hasExtra("view_pos")) {
+            viewPager.setCurrentItem(Integer.parseInt(getIntent().getStringExtra("view_pos")));
+        }
+        tabLayout.setupWithViewPager(viewPager);
+        createTabIcons();
+        navigationView2.setNavigationItemSelectedListener(this);
 
 
     }
