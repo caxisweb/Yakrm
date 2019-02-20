@@ -75,8 +75,6 @@ public class BuyTabFragment extends Fragment {
         progressDialog = new ProgressDialog(getActivity());
 
 
-
-
         if (Connection_Detector.isInternetAvailable(getActivity())) {
             progressDialog.setMessage("Please Wait");
             progressDialog.setIndeterminate(true);
@@ -91,7 +89,7 @@ public class BuyTabFragment extends Fragment {
                         int status = response.body().getStatus();
                         if (status == 1) {
                             arrayList = response.body().getData();
-                            if (MainActivity.arrayList != null) {
+                            if (MainActivity.arrayList.size() == 0) {
                                 MainActivity.arrayList = (ArrayList<GiftCategoryModel>) response.body().getGiftCategory();
                                 for (int k = 0; k < MainActivity.arrayList.size(); k++) {
                                     MainActivity.cat_arrayList_id.add(MainActivity.arrayList.get(k).getId());
@@ -126,11 +124,11 @@ public class BuyTabFragment extends Fragment {
 
                                             if (newPressed) {
                                                 button.setTextColor(getResources().getColor(R.color.white));
-                                                //int pos = MainActivity.arrayList.indexOf(button.getText().toString());
+                                                button.setBackground(getResources().getDrawable(R.drawable.flow_layout_pressed_background));
                                                 MainActivity.category_classification_array.add(button.getText().toString());
                                             } else {
                                                 button.setTextColor(getResources().getColor(R.color.black));
-                                                //int pos = MainActivity.arrayList.indexOf(button.getText().toString());
+                                                button.setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
                                                 MainActivity.category_classification_array.remove(button.getText().toString());
                                             }
                                             // setTag to store state

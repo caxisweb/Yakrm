@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity
         final RadioButton rb_brand_names = header2.findViewById(R.id.rb_brand_names);
 
         Button btn_filter = header2.findViewById(R.id.btn_filter);
+        Button btn_delete = header2.findViewById(R.id.btn_delete);
 
 
         if (!sessionManager.isLoggedIn()) {
@@ -515,6 +516,27 @@ public class MainActivity extends AppCompatActivity
                 tabLayout.setupWithViewPager(viewPager);
                 createTabIcons();
 
+            }
+        });
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flowLayout.removeAllViews();
+                chk_e_gift.setChecked(false);
+                chk_p_gift.setChecked(false);
+                rb_m_popular.setChecked(false);
+                rb_high_discounted.setChecked(false);
+                rb_brand_names.setChecked(false);
+                gift_order = "";
+                gift_category_id = "";
+                gift_type = "";
+                arrayList.clear();
+                filter_array = 0;
+                drawer.closeDrawer(GravityCompat.END);
+                setupViewPager(viewPager);
+                tabLayout.setupWithViewPager(viewPager);
+                createTabIcons();
             }
         });
 
