@@ -142,6 +142,7 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CartActivity.this, CompletingPurchasingActivity.class);
                 intent.putExtra("price", total_price);
+                intent.putExtra("flag_cart", "1");
                 startActivity(intent);
                 finish();
             }

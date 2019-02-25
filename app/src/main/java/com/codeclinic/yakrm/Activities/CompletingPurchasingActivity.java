@@ -22,6 +22,7 @@ import com.codeclinic.yakrm.Models.GetCardListItemModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.PaymentTransactionModel;
 import com.codeclinic.yakrm.Models.PrepareTransactionProcessModel;
+import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.PaymentRestClass;
@@ -65,7 +66,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
     ArrayList<String> card_name_arrayList = new ArrayList<>();
     ArrayList<String> card_expiry_arrayList = new ArrayList<>();
     ArrayList<String> card_cvv_arrayList = new ArrayList<>();
-    String card_type_select = "0", card_holder_name, card_expiry_date, card_cvv, card_no, card_ex_date, card_ex_year;
+    String card_type_select = "0", card_holder_name, card_expiry_date, card_cvv, card_no, card_ex_date, card_ex_year, flag_cart = "1", main_price;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -80,6 +81,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         }
         scrollview_pay = findViewById(R.id.scrollview_pay);
         btn_cmplt_pay = findViewById(R.id.btn_cmplt_pay);
+
 
         rl_visa = findViewById(R.id.rl_visa);
         rl_mastercard = findViewById(R.id.rl_mastercard);
@@ -97,6 +99,9 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
 
         tv_total_price = findViewById(R.id.tv_total_price);
         tv_sc_total_price = findViewById(R.id.tv_sc_total_price);
+
+        flag_cart = getIntent().getStringExtra("flag_cart");
+        main_price = getIntent().getStringExtra("price");
         tv_total_price.setText(getIntent().getStringExtra("price").replaceAll("1", getResources().getString(R.string.one))
                 .replaceAll("2", getResources().getString(R.string.two))
                 .replaceAll("3", getResources().getString(R.string.three))
@@ -440,43 +445,95 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                 Toast.makeText(CompletingPurchasingActivity.this, data.getStringExtra(PaymentParams.CUSTOMER_PASSWORD), Toast.LENGTH_LONG).show();
             }*/
 
+
             progressDialog.setMessage("Please Wait");
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
 
-            try {
-                jsonObject.put("transaction_id", data.getStringExtra("transaction_id"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Call<PaymentTransactionModel> paymentTransactionModelCall = apiService.PAYMENT_TRANSACTION_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
-            paymentTransactionModelCall.enqueue(new Callback<PaymentTransactionModel>() {
-                @Override
-                public void onResponse(Call<PaymentTransactionModel> call, Response<PaymentTransactionModel> response) {
-                    String status = response.body().getStatus();
-                    progressDialog.dismiss();
-                    if (status.equals("1")) {
-                        succesful_cardview.setVisibility(View.VISIBLE);
-                        scrollview_pay.setVisibility(View.GONE);
-                        Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        finish();
+            if (flag_cart.equals("1")) {
+                try {
+                    jsonObject.put("transaction_id", data.getStringExtra("transaction_id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Call<PaymentTransactionModel> paymentTransactionModelCall = apiService.PAYMENT_TRANSACTION_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                paymentTransactionModelCall.enqueue(new Callback<PaymentTransactionModel>() {
+                    @Override
+                    public void onResponse(Call<PaymentTransactionModel> call, Response<PaymentTransactionModel> response) {
+                        String status = response.body().getStatus();
+                        progressDialog.dismiss();
+                        if (status.equals("1")) {
+                            succesful_cardview.setVisibility(View.VISIBLE);
+                            scrollview_pay.setVisibility(View.GONE);
+                            Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            finish();
 
-                    } else {
+                        } else {
+                            scrollview_pay.setVisibility(View.GONE);
+                            error_cardview.setVisibility(View.VISIBLE);
+                            Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PaymentTransactionModel> call, Throwable t) {
+                        progressDialog.dismiss();
                         scrollview_pay.setVisibility(View.GONE);
                         error_cardview.setVisibility(View.VISIBLE);
-                        Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                     }
+                });
+            } else {
+                try {
+                    jsonObject.put("replace_active_voucher_id", VoucherDetailActivity.voucher_id);
+                    jsonObject.put("voucher_payment_detail_id", VoucherDetailActivity.v_payment_id);
+                    jsonObject.put("replace_voucher_id", ExchangeAddBalanceActivity.voucher_id);
+                    jsonObject.put("wallet", "0");
+                    jsonObject.put("transaction_id", data.getStringExtra("transaction_id"));
+                    jsonObject.put("transaction_price", String.valueOf(main_price));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
-                @Override
-                public void onFailure(Call<PaymentTransactionModel> call, Throwable t) {
-                    progressDialog.dismiss();
-                    scrollview_pay.setVisibility(View.GONE);
-                    error_cardview.setVisibility(View.VISIBLE);
-                    Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                }
-            });
+                Call<ReplaceVoucherModel> replaceVoucherModelCall = apiService.REPLACE_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                replaceVoucherModelCall.enqueue(new Callback<ReplaceVoucherModel>() {
+                    @Override
+                    public void onResponse(Call<ReplaceVoucherModel> call, Response<ReplaceVoucherModel> response) {
+                        progressDialog.dismiss();
+                        String status = response.body().getStatus();
+                        if (status.equals("1")) {
+                            VoucherDetailActivity.voucher_name = "";
+                            VoucherDetailActivity.date = "";
+                            VoucherDetailActivity.barcode = "";
+                            VoucherDetailActivity.pincode = "";
+                            VoucherDetailActivity.price = "";
+                            VoucherDetailActivity.v_image = "";
+                            VoucherDetailActivity.v_payment_id = "";
+                            VoucherDetailActivity.voucher_id = "";
+                            VoucherDetailActivity.v_image = "";
+                            ExchangeAddBalanceActivity.main_price = 0;
+                            ExchangeAddBalanceActivity.voucher_price = 0;
+                            ExchangeAddBalanceActivity.replace_price = 0;
+                            ExchangeAddBalanceActivity.temp_price = 0;
+                            startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
+                            finish();
+                            ExchangeAddBalanceActivity.exchange_activity.finish();
+                            ExchangeVoucherActivity.ex_activity.finish();
+                            VoucherDetailActivity.voucher_detail_activity.finish();
+                            Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ReplaceVoucherModel> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
         }
     }

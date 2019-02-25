@@ -88,9 +88,9 @@ public class LoginActivity extends AppCompatActivity {
                 str_password = edt_password.getText().toString();
                 if (isEmpty(str_email)) {
                     Toast.makeText(LoginActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
-                } else if (!str_email.matches(str_email_regex)) {
+                }/* else if (!str_email.matches(str_email_regex)) {
                     Toast.makeText(LoginActivity.this, "Please Enter Valid Email", Toast.LENGTH_SHORT).show();
-                } else if (isEmpty(str_password)) {
+                }*/ else if (isEmpty(str_password)) {
                     Toast.makeText(LoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.setMessage("Please Wait");
@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
-                                sessionManager.createLoginSession(response.body().getToken(), response.body().getUserId(), response.body().getName(), response.body().getEmail(), response.body().getPhone(), response.body().getCountryId(), response.body().getUser_profile());
+                                sessionManager.createLoginSession(response.body().getToken(), response.body().getUserId(), response.body().getName(), response.body().getEmail(), response.body().getPhone(), response.body().getCountryId(), response.body().getUser_profile(), response.body().getWallet());
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             } else {

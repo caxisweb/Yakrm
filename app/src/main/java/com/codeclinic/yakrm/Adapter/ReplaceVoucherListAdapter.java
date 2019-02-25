@@ -13,9 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codeclinic.yakrm.Activities.ExchangeAddBalanceActivity;
+import com.codeclinic.yakrm.Activities.VoucherDetailActivity;
 import com.codeclinic.yakrm.Models.AllVoucherListItemModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.ImageURL;
+import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -28,8 +30,10 @@ public class ReplaceVoucherListAdapter extends RecyclerView.Adapter<ReplaceVouch
     ImageView voucher_image;
     TextView tv_replace_price, tv_replace_voucher_name, tv_price;
     LinearLayout llayout_main;
+    SessionManager sessionManager;
+    double wallet_amt = 0.00;
 
-    public ReplaceVoucherListAdapter(List<AllVoucherListItemModel> arrayList, Context context, RecyclerView recyclerView, TextView tv_replace_price, TextView tv_replace_voucher_name, TextView tv_price, ImageView voucher_image, LinearLayout llayout_main) {
+    public ReplaceVoucherListAdapter(List<AllVoucherListItemModel> arrayList, Context context, RecyclerView recyclerView, TextView tv_replace_price, TextView tv_replace_voucher_name, TextView tv_price, ImageView voucher_image, LinearLayout llayout_main, SessionManager sessionManager) {
         this.arrayList = arrayList;
         this.context = context;
         this.recyclerView = recyclerView;
@@ -38,6 +42,7 @@ public class ReplaceVoucherListAdapter extends RecyclerView.Adapter<ReplaceVouch
         this.voucher_image = voucher_image;
         this.llayout_main = llayout_main;
         this.tv_price = tv_price;
+        this.sessionManager = sessionManager;
     }
 
     @NonNull
@@ -51,7 +56,9 @@ public class ReplaceVoucherListAdapter extends RecyclerView.Adapter<ReplaceVouch
     @Override
     public void onBindViewHolder(@NonNull ReplaceVoucherListAdapter.Holder holder, final int i) {
         Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage()).into(holder.voucher_image);
+
         holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+
         holder.tv_price.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
                 .replaceAll("3", context.getResources().getString(R.string.three))
@@ -83,14 +90,25 @@ public class ReplaceVoucherListAdapter extends RecyclerView.Adapter<ReplaceVouch
                 tv_replace_voucher_name.setText(arrayList.get(i).getBrandName());
                 tv_replace_price.setText(arrayList.get(i).getVoucherPrice() + " " + context.getResources().getString(R.string.SR_currency));
                 Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage()).into(voucher_image);
-                ExchangeAddBalanceActivity.temp_price = ExchangeAddBalanceActivity.replace_price * 0.05;
+                double percent = Integer.parseInt(VoucherDetailActivity.admin_voucher_discount);
+                double temp_percent = percent / 100;
+                ExchangeAddBalanceActivity.temp_price = ExchangeAddBalanceActivity.replace_price * temp_percent;
                 ExchangeAddBalanceActivity.replace_price = ExchangeAddBalanceActivity.replace_price - ExchangeAddBalanceActivity.temp_price;
+                wallet_amt = Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
                 if (ExchangeAddBalanceActivity.voucher_price > ExchangeAddBalanceActivity.replace_price) {
                     ExchangeAddBalanceActivity.main_price = ExchangeAddBalanceActivity.voucher_price - ExchangeAddBalanceActivity.replace_price;
-                    tv_price.setText(String.valueOf(ExchangeAddBalanceActivity.main_price) + " " + context.getResources().getString(R.string.SR_currency));
+                    if (wallet_amt > ExchangeAddBalanceActivity.main_price) {
+                        tv_price.setText(String.valueOf(wallet_amt - ExchangeAddBalanceActivity.main_price) + " " + context.getResources().getString(R.string.SR_currency));
+                    } else {
+                        tv_price.setText(String.valueOf(ExchangeAddBalanceActivity.main_price - wallet_amt) + " " + context.getResources().getString(R.string.SR_currency));
+                    }
                 } else {
                     ExchangeAddBalanceActivity.main_price = ExchangeAddBalanceActivity.replace_price - ExchangeAddBalanceActivity.voucher_price;
-                    tv_price.setText(String.valueOf(ExchangeAddBalanceActivity.main_price) + " " + context.getResources().getString(R.string.SR_currency));
+                    if (wallet_amt > ExchangeAddBalanceActivity.main_price) {
+                        tv_price.setText(String.valueOf(wallet_amt - ExchangeAddBalanceActivity.main_price) + " " + context.getResources().getString(R.string.SR_currency));
+                    } else {
+                        tv_price.setText(String.valueOf(ExchangeAddBalanceActivity.main_price - wallet_amt) + " " + context.getResources().getString(R.string.SR_currency));
+                    }
                 }
             }
         });

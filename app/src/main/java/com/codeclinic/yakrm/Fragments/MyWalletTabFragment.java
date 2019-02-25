@@ -52,6 +52,8 @@ public class MyWalletTabFragment extends Fragment {
     ProgressDialog progressDialog;
     SessionManager sessionManager;
 
+    String admin_discount;
+
     public MyWalletTabFragment() {
         // Required empty public constructor
     }
@@ -126,12 +128,14 @@ public class MyWalletTabFragment extends Fragment {
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
                         arrayList = response.body().getData();
-                        myWalletAdapter = new MyWalletAdapter(arrayList, getActivity());
+                        admin_discount = response.body().getAdminProfitDis();
+                        myWalletAdapter = new MyWalletAdapter(arrayList, getActivity(), admin_discount);
                         recyclerView.setAdapter(myWalletAdapter);
                     } else {
                         Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
+
                 @Override
                 public void onFailure(Call<ActiveVoucherListModel> call, Throwable t) {
                     progressDialog.dismiss();

@@ -68,7 +68,7 @@ public class PersonalDataActivity extends AppCompatActivity {
 
     SessionManager sessionManager;
     API apiService;
-    String user_id, user_name, user_token, user_email, user_number, user_profile, user_country_id;
+    String user_id, user_name, user_token, user_email, user_number, user_profile, user_country_id, wallet;
 
     Uri selectedImage;
     File sourceFile_sign, compressed_Image;
@@ -116,6 +116,7 @@ public class PersonalDataActivity extends AppCompatActivity {
         if (!isEmpty(sessionManager.getUserDetails().get(SessionManager.USER_Profile))) {
             Picasso.with(this).load(ImageURL.profile_img_url + sessionManager.getUserDetails().get(SessionManager.USER_Profile)).into(img_profile);
         }
+        wallet = sessionManager.getUserDetails().get(SessionManager.Wallet);
 
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +189,7 @@ public class PersonalDataActivity extends AppCompatActivity {
                                         @Override
                                         public void onResponse(Call<ProfileImageUpload> call, Response<ProfileImageUpload> response) {
                                             if (status.equals("1")) {
-                                                sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, user_country_id, response.body().getUserProfile());
+                                                sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, user_country_id, response.body().getUserProfile(), wallet);
                                             }
                                         }
 
@@ -198,7 +199,7 @@ public class PersonalDataActivity extends AppCompatActivity {
                                         }
                                     });
                                 } else {
-                                    sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, user_country_id, "");
+                                    sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, user_country_id, "", wallet);
                                 }
                                 Toast.makeText(PersonalDataActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             } else {

@@ -1,6 +1,7 @@
 package com.codeclinic.yakrm.Activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,8 +25,10 @@ public class VoucherDetailActivity extends AppCompatActivity {
     TextView tv_header_name, tv_expiredate, tv_price, tv_barcode, tv_pincode;
     ImageView img_back, img_voucher;
     Button btn_done;
-    public static String v_payment_id, voucher_id, voucher_name, date, final_date, barcode, pincode, price, v_image;
+    public static String v_payment_id, voucher_id, voucher_name, date, final_date, barcode, pincode, price, v_image, admin_voucher_discount;
     BarcodeView barcodeView;
+
+    public static Activity voucher_detail_activity;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -42,7 +45,7 @@ public class VoucherDetailActivity extends AppCompatActivity {
         tv_barcode = findViewById(R.id.tv_barcode);
         barcodeView = findViewById(R.id.generation_barcode_image);
         tv_pincode = findViewById(R.id.tv_pincode);
-
+        voucher_detail_activity = this;
 
         voucher_name = getIntent().getStringExtra("name");
         date = getIntent().getStringExtra("date");
@@ -52,6 +55,7 @@ public class VoucherDetailActivity extends AppCompatActivity {
         v_image = getIntent().getStringExtra("v_image");
         v_payment_id = getIntent().getStringExtra("v_payment_id");
         voucher_id = getIntent().getStringExtra("voucher_id");
+        admin_voucher_discount = getIntent().getStringExtra("admin_voucher_discount");
 
         Picasso.with(this).load(ImageURL.Vendor_voucher_image + v_image).into(img_voucher);
         tv_barcode.setText(barcode);

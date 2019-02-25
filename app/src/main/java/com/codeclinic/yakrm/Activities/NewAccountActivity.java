@@ -369,7 +369,7 @@ public class NewAccountActivity extends AppCompatActivity {
                         public void onResponse(Call<RegistrationStep2Model> call, Response<RegistrationStep2Model> response) {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
-                                sessionManager.createLoginSession(response.body().getToken(), response.body().getUserId(), response.body().getName(), response.body().getEmail(), response.body().getPhone(), response.body().getCountryId(), response.body().getUserProfile());
+                                sessionManager.createLoginSession(response.body().getToken(), response.body().getUserId(), response.body().getName(), response.body().getEmail(), response.body().getPhone(), response.body().getCountryId(), response.body().getUserProfile(), "0");
                                 startActivity(new Intent(NewAccountActivity.this, MainActivity.class));
                                 finish();
                                 Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

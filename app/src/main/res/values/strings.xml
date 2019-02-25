@@ -340,6 +340,7 @@
     <string name="nine">9</string>
     <string name="zero">0</string>
     <string name="CVV">CVV</string>
+    <string name="wallet_amount_is_0_and_ammount_to_be_paid_is">wallet amount is 0 and ammount to be paid is :</string>
 
 
 </resources>

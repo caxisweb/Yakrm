@@ -1,5 +1,6 @@
 package com.codeclinic.yakrm.Activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,10 +24,14 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
 
+    public static Activity ex_activity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_voucher);
+
+        ex_activity = this;
 
         img_back = findViewById(R.id.img_back);
         String language = String.valueOf(getResources().getConfiguration().locale);

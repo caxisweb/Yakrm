@@ -12,6 +12,18 @@ public class ActiveVoucherListModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("admin_profit_dis")
+    @Expose
+    private String adminProfitDis;
+
+    public String getAdminProfitDis() {
+        return adminProfitDis;
+    }
+
+    public void setAdminProfitDis(String adminProfitDis) {
+        this.adminProfitDis = adminProfitDis;
+    }
+
     @SerializedName("data")
     @Expose
     private List<ActiveVoucherListItemModel> data = null;

@@ -238,6 +238,16 @@
                             android:textSize="14dp"
                             android:visibility="gone" />
 
+                        <TextView
+                            android:id="@+id/tv_amount_be_paid"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="@string/wallet_amount_is_0_and_ammount_to_be_paid_is"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -283,6 +293,7 @@
 
 
                         </LinearLayout>
+
 
                         <Button
                             android:id="@+id/btn_complete"

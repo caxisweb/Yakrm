@@ -23,10 +23,12 @@ import java.util.List;
 public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder> {
     List<ActiveVoucherListItemModel> arrayList;
     Context context;
+    String admin_discount;
 
-    public MyWalletAdapter(List<ActiveVoucherListItemModel> arrayList, Context context) {
+    public MyWalletAdapter(List<ActiveVoucherListItemModel> arrayList, Context context, String admin_discount) {
         this.arrayList = arrayList;
         this.context = context;
+        this.admin_discount = admin_discount;
     }
 
     @NonNull
@@ -61,6 +63,7 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
                 .replaceAll("8", context.getResources().getString(R.string.eight))
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)));
+
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +76,7 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
                 intent.putExtra("v_image", arrayList.get(i).getVoucherImage());
                 intent.putExtra("v_payment_id", arrayList.get(i).getVoucherPaymentDetailId());
                 intent.putExtra("voucher_id", arrayList.get(i).getVoucherId());
+                intent.putExtra("admin_voucher_discount", admin_discount);
                 context.startActivity(intent);
             }
         });

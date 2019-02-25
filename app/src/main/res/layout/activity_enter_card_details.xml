@@ -436,7 +436,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/card_details_item_background"
                                 android:imeOptions="actionNext"
-                                android:inputType="datetime"
+                                android:inputType="number"
                                 android:maxLength="5" />
 
                             <EditText

@@ -32,6 +32,18 @@ public class LoginModel {
     @Expose
     private String user_profile;
 
+    @SerializedName("wallet")
+    @Expose
+    private String wallet;
+
+    public String getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(String wallet) {
+        this.wallet = wallet;
+    }
+
     public String getStatus() {
         return status;
     }
