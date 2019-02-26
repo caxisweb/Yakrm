@@ -22,7 +22,6 @@ import com.codeclinic.yakrm.Models.GetCardListItemModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.PaymentTransactionModel;
 import com.codeclinic.yakrm.Models.PrepareTransactionProcessModel;
-import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.PaymentRestClass;
@@ -487,7 +486,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                try {
+         /*       try {
                     jsonObject.put("replace_active_voucher_id", VoucherDetailActivity.voucher_id);
                     jsonObject.put("voucher_payment_detail_id", VoucherDetailActivity.v_payment_id);
                     jsonObject.put("replace_voucher_id", ExchangeAddBalanceActivity.voucher_id);
@@ -534,7 +533,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
             }
 
         }

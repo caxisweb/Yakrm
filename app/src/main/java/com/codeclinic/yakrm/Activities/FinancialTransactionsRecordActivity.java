@@ -1,5 +1,6 @@
 package com.codeclinic.yakrm.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeclinic.yakrm.Adapter.FinancialRecordAdapter;
@@ -31,9 +33,11 @@ public class FinancialTransactionsRecordActivity extends AppCompatActivity {
     ImageView img_back;
     RecyclerView recyclerView;
     API apiService;
+    TextView tv_wallet_amount;
     SessionManager sessionManager;
     ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,7 @@ public class FinancialTransactionsRecordActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         img_back = findViewById(R.id.img_back);
+        tv_wallet_amount = findViewById(R.id.tv_wallet_amount);
         String language = String.valueOf(getResources().getConfiguration().locale);
         if (language.equals("ar")) {
             img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
@@ -55,6 +60,16 @@ public class FinancialTransactionsRecordActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         apiService = RestClass.getClient().create(API.class);
 
+        tv_wallet_amount.setText(sessionManager.getUserDetails().get(SessionManager.Wallet).replaceAll("1", getResources().getString(R.string.one))
+                .replaceAll("2", getResources().getString(R.string.two))
+                .replaceAll("3", getResources().getString(R.string.three))
+                .replaceAll("4", getResources().getString(R.string.four))
+                .replaceAll("5", getResources().getString(R.string.five))
+                .replaceAll("6", getResources().getString(R.string.six))
+                .replaceAll("7", getResources().getString(R.string.seven))
+                .replaceAll("8", getResources().getString(R.string.eight))
+                .replaceAll("9", getResources().getString(R.string.nine))
+                .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

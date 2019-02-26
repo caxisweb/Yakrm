@@ -91,7 +91,17 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
 
         try {
             tv_voucher_name.setText(VoucherDetailActivity.voucher_name);
-            tv_voucher_price.setText(VoucherDetailActivity.price + " " + getResources().getString(R.string.SR_currency));
+            tv_voucher_price.setText(VoucherDetailActivity.price.replaceAll("1", getResources().getString(R.string.one))
+                    .replaceAll("2", getResources().getString(R.string.two))
+                    .replaceAll("3", getResources().getString(R.string.three))
+                    .replaceAll("4", getResources().getString(R.string.four))
+                    .replaceAll("5", getResources().getString(R.string.five))
+                    .replaceAll("6", getResources().getString(R.string.six))
+                    .replaceAll("7", getResources().getString(R.string.seven))
+                    .replaceAll("8", getResources().getString(R.string.eight))
+                    .replaceAll("9", getResources().getString(R.string.nine))
+                    .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+
             Picasso.with(this).load(ImageURL.Vendor_voucher_image + VoucherDetailActivity.v_image).into(main_voucher_image);
         } catch (Resources.NotFoundException e) {
             e.printStackTrace();
@@ -104,6 +114,17 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
 
         String str_temp_paid_amount = getResources().getString(R.string.wallet_amount_is_0_and_ammount_to_be_paid_is);
         str_temp_paid_amount = str_temp_paid_amount.replace("0", sessionManager.getUserDetails().get(SessionManager.Wallet));
+        str_temp_paid_amount.replaceAll("1", getResources().getString(R.string.one))
+                .replaceAll("2", getResources().getString(R.string.two))
+                .replaceAll("3", getResources().getString(R.string.three))
+                .replaceAll("4", getResources().getString(R.string.four))
+                .replaceAll("5", getResources().getString(R.string.five))
+                .replaceAll("6", getResources().getString(R.string.six))
+                .replaceAll("7", getResources().getString(R.string.seven))
+                .replaceAll("8", getResources().getString(R.string.eight))
+                .replaceAll("9", getResources().getString(R.string.nine))
+                .replaceAll("0", getResources().getString(R.string.zero));
+
         tv_amount_be_paid.setText(str_temp_paid_amount);
 
         String language = String.valueOf(getResources().getConfiguration().locale);
