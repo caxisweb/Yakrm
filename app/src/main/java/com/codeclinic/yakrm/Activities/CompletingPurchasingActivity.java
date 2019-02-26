@@ -102,6 +102,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
 
         flag_cart = getIntent().getStringExtra("flag_cart");
         main_price = getIntent().getStringExtra("price");
+
         tv_total_price.setText(getIntent().getStringExtra("price").replaceAll("1", getResources().getString(R.string.one))
                 .replaceAll("2", getResources().getString(R.string.two))
                 .replaceAll("3", getResources().getString(R.string.three))
@@ -112,6 +113,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                 .replaceAll("8", getResources().getString(R.string.eight))
                 .replaceAll("9", getResources().getString(R.string.nine))
                 .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+
         tv_sc_total_price.setText(getIntent().getStringExtra("price").replaceAll("1", getResources().getString(R.string.one))
                 .replaceAll("2", getResources().getString(R.string.two))
                 .replaceAll("3", getResources().getString(R.string.three))
