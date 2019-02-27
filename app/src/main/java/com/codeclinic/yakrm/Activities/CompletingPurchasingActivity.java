@@ -46,7 +46,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
     CardView main_pay_cardview, succesful_cardview, error_cardview;
     Button btn_cmplt_pay;
     ScrollView scrollview_pay;
-    TextView tv_total_price, tv_sc_total_price, tv_card_no_visa, tv_card_no_cs_mada;
+    TextView tv_total_price, tv_sc_total_price, tv_card_no_visa, tv_card_no_cs_mada, tv_wallet_amount;
     LinearLayout payment_layout;
     LinearLayout rl_pay_pal, rl_mastercard, rl_visa;
 
@@ -95,6 +95,17 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
 
         tv_card_no_visa = findViewById(R.id.tv_card_no_visa);
         tv_card_no_cs_mada = findViewById(R.id.tv_card_no_cs_mada);
+        tv_wallet_amount = findViewById(R.id.tv_wallet_amount);
+        tv_wallet_amount.setText(sessionManager.getUserDetails().get(SessionManager.Wallet).replaceAll("1", getResources().getString(R.string.one))
+                .replaceAll("2", getResources().getString(R.string.two))
+                .replaceAll("3", getResources().getString(R.string.three))
+                .replaceAll("4", getResources().getString(R.string.four))
+                .replaceAll("5", getResources().getString(R.string.five))
+                .replaceAll("6", getResources().getString(R.string.six))
+                .replaceAll("7", getResources().getString(R.string.seven))
+                .replaceAll("8", getResources().getString(R.string.eight))
+                .replaceAll("9", getResources().getString(R.string.nine))
+                .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
 
         tv_total_price = findViewById(R.id.tv_total_price);
         tv_sc_total_price = findViewById(R.id.tv_sc_total_price);

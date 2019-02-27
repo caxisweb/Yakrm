@@ -218,7 +218,6 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
                             ExchangeAddBalanceActivity.temp_price = 0;
                             startActivity(new Intent(ExchangeAddBalanceActivity.this, MainActivity.class));
                             finish();
-                            //ExchangeAddBalanceActivity.exchange_activity.finish();
                             ExchangeVoucherActivity.ex_activity.finish();
                             VoucherDetailActivity.voucher_detail_activity.finish();
                             Toast.makeText(ExchangeAddBalanceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
