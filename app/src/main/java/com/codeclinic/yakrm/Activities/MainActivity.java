@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codeclinic.yakrm.Fragments.AuctionTabFragment;
 import com.codeclinic.yakrm.Fragments.BuyTabFragment;
@@ -75,6 +76,10 @@ public class MainActivity extends AppCompatActivity
     CoordinatorLayout main_content;
 
     SessionManager sessionManager;
+
+    public boolean isEmpty(CharSequence character) {
+        return character == null || character.length() == 0;
+    }
 
     @SuppressLint({"ClickableViewAccessibility", "ResourceType", "NewApi", "SetTextI18n"})
     @Override
@@ -483,13 +488,14 @@ public class MainActivity extends AppCompatActivity
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (category_classification_array != null) {
                     for (int i = 0; i < category_classification_array.size(); i++) {
                         int pos = cat_arrayList_name.indexOf(category_classification_array.get(i));
                         gift_category_id = gift_category_id + cat_arrayList_id.get(pos) + ",";
                     }
                 } else {
-                    gift_category_id = "0";
+                    gift_category_id = "";
                 }
 
                 if (chk_e_gift.isChecked() && chk_p_gift.isChecked()) {
@@ -498,6 +504,8 @@ public class MainActivity extends AppCompatActivity
                     gift_type = "electronic gift";
                 } else if (chk_p_gift.isChecked()) {
                     gift_type = "paper gift";
+                } else {
+                    gift_type = "";
                 }
 
                 if (rb_m_popular.isChecked()) {
@@ -507,15 +515,19 @@ public class MainActivity extends AppCompatActivity
                 } else if (rb_brand_names.isChecked()) {
                     gift_order = "3";
                 } else {
-                    gift_order = "0";
+                    gift_order = "";
                 }
+                if (!isEmpty(gift_category_id) && !isEmpty(gift_type) && !isEmpty(gift_order)) {
+                    filter_array = 1;
+                    drawer.closeDrawer(GravityCompat.END);
+                    setupViewPager(viewPager);
+                    tabLayout.setupWithViewPager(viewPager);
+                    createTabIcons();
 
-                filter_array = 1;
-                drawer.closeDrawer(GravityCompat.END);
-                setupViewPager(viewPager);
-                tabLayout.setupWithViewPager(viewPager);
-                createTabIcons();
+                } else {
 
+                    Toast.makeText(MainActivity.this, "Please Select atleast one filter category from above", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -82,6 +82,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
         int voucher_price = Integer.parseInt(arrayList.get(i).getVoucherPrice());
+
         customViewHolder.tv_discount.setText(arrayList.get(i).getDiscount().replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
                 .replaceAll("3", context.getResources().getString(R.string.three))
@@ -93,6 +94,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + "%");
         float voucher_discount = Float.parseFloat(arrayList.get(i).getDiscount()) / 100;
+
         float voucher_disount_price = Integer.parseInt(arrayList.get(i).getVoucherPrice()) * voucher_discount;
         if (voucher_price != 0) {
             float voucher_pay = Float.parseFloat(arrayList.get(i).getVoucherPrice()) - voucher_disount_price;
