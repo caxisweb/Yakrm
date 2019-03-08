@@ -1,5 +1,6 @@
 package com.codeclinic.yakrm.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,7 @@ public class FinancialRecordAdapter extends RecyclerView.Adapter<FinancialRecord
         return new Holder(view);
     }
 
+    @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
     public void onBindViewHolder(@NonNull FinancialRecordAdapter.Holder holder, int i) {
 

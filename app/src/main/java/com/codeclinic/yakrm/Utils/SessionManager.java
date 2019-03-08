@@ -23,6 +23,7 @@ public class SessionManager {
     public static final String USER_COUNTRY_ID = "user_country_id";
     public static final String USER_Profile = "user_profile";
     public static final String Wallet = "wallet";
+    public static final String UserType = "userType";
 
 
     // Sharedpref file name
@@ -58,7 +59,7 @@ public class SessionManager {
         return this.pref.getString(key, defValue);
     }
 
-    public void createLoginSession(String token, String id, String name, String email, String number, String user_country_id, String user_profile, String str_wallet) {
+    public void createLoginSession(String token, String id, String name, String email, String number, String user_country_id, String user_profile, String str_wallet, String str_userType) {
         // Storing login value as TRUE
         try {
             editor.putBoolean(IS_LOGIN, true);
@@ -71,6 +72,7 @@ public class SessionManager {
             editor.putString(USER_COUNTRY_ID, user_country_id);
             editor.putString(USER_Profile, user_profile);
             editor.putString(Wallet, str_wallet);
+            editor.putString(UserType, str_userType);
 
             // commit changes
             editor.commit();
@@ -93,6 +95,7 @@ public class SessionManager {
         user.put(USER_COUNTRY_ID, pref.getString(USER_COUNTRY_ID, null));
         user.put(USER_Profile, pref.getString(USER_Profile, null));
         user.put(Wallet, pref.getString(Wallet, null));
+        user.put(UserType, pref.getString(UserType, null));
 
         return user;
     }

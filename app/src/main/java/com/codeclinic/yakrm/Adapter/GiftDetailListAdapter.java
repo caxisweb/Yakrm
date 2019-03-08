@@ -122,6 +122,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
         }
 
         customViewHolder.llayout_main.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SimpleDateFormat")
             @Override
             public void onClick(View v) {
                 dialogBuilder = new AlertDialog.Builder(context);

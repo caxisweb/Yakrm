@@ -45,13 +45,11 @@ public class ReplaceTabFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_replace_tab, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
 
         apiService = RestClass.getClient().create(API.class);
-
         sessionManager = new SessionManager(getActivity());
         progressDialog = new ProgressDialog(getActivity());
 

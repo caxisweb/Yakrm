@@ -17,6 +17,7 @@ import com.codeclinic.yakrm.Models.PaymentTransactionModel;
 import com.codeclinic.yakrm.Models.PrepareTransactionProcessModel;
 import com.codeclinic.yakrm.Models.ProfileImageUpload;
 import com.codeclinic.yakrm.Models.ProfileUpdateModel;
+import com.codeclinic.yakrm.Models.RecievedGiftListModel;
 import com.codeclinic.yakrm.Models.RegistrationModel;
 import com.codeclinic.yakrm.Models.RegistrationStep2Model;
 import com.codeclinic.yakrm.Models.RemoveCartItemModel;
@@ -104,6 +105,10 @@ public interface API {
     @Headers("Content-Type: application/json")
     @GET("get_all_usertransaction")
     Call<TransactionsRecordModel> TRANSACTIONS_RECORD_MODEL_CALL(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
+    @GET("get_all_gift_received")
+    Call<RecievedGiftListModel> RECIEVED_GIFT_LIST_MODEL_CALL(@Header("Authorization") String header);
 
     @Headers("Content-Type: application/json")
     @GET("get_active_voucher_ofuser")
