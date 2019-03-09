@@ -44,10 +44,10 @@ public class RecievedActivity extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
 
 
-        arrayList.add("");
+/*        arrayList.add("");
         arrayList.add("");
 
         recievedListAdapter = new RecievedListAdapter(arrayList, this);
-        recyclerView.setAdapter(recievedListAdapter);
+        recyclerView.setAdapter(recievedListAdapter);*/
     }
 }

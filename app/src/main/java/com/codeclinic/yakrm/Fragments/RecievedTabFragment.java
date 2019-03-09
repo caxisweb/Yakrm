@@ -55,8 +55,8 @@ public class RecievedTabFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
 
 
-        recievedListAdapter = new RecievedListAdapter(arrayList, getActivity());
-        recyclerView.setAdapter(recievedListAdapter);
+   /*     recievedListAdapter = new RecievedListAdapter(arrayList, getActivity());
+        recyclerView.setAdapter(recievedListAdapter);*/
 
         return view;
     }

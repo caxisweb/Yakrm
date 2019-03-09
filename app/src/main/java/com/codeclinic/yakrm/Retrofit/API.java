@@ -5,6 +5,7 @@ import com.codeclinic.yakrm.Models.AddCardDetailsModel;
 import com.codeclinic.yakrm.Models.AddToFavouritesModel;
 import com.codeclinic.yakrm.Models.AddVoucherToCartModel;
 import com.codeclinic.yakrm.Models.AllVouchersListModel;
+import com.codeclinic.yakrm.Models.BrandListModel;
 import com.codeclinic.yakrm.Models.CartListModel;
 import com.codeclinic.yakrm.Models.ChangePasswordModel;
 import com.codeclinic.yakrm.Models.FavouritesListModel;
@@ -22,10 +23,12 @@ import com.codeclinic.yakrm.Models.RegistrationModel;
 import com.codeclinic.yakrm.Models.RegistrationStep2Model;
 import com.codeclinic.yakrm.Models.RemoveCartItemModel;
 import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
+import com.codeclinic.yakrm.Models.ScanVoucherModel;
 import com.codeclinic.yakrm.Models.SendVoucherToFriendModel;
 import com.codeclinic.yakrm.Models.TransactionsRecordModel;
 import com.codeclinic.yakrm.Models.VerifyOTPModel;
 import com.codeclinic.yakrm.Models.VoucherDetailsListModel;
+import com.codeclinic.yakrm.Models.WalletActiveListModel;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -120,7 +123,7 @@ public interface API {
 
     @Multipart
     @POST("send_voucher_as_gift")
-    Call<SendVoucherToFriendModel> SEND_VOUCHER_TO_FRIEND_MODEL_CALL(@Header("Authorization") String header, @Part("voucher_id") RequestBody voucher_id, @Part("phone") RequestBody phone, @Part("description") RequestBody desc, @Part("voucher_payment_detail_id") RequestBody voucher_payment_id);
+    Call<SendVoucherToFriendModel> SEND_VOUCHER_TO_FRIEND_MODEL_CALL(@Header("Authorization") String header, @Part("voucher_id") RequestBody voucher_id, @Part("phone") RequestBody phone, @Part("description") RequestBody desc, @Part("payment_replace_id") RequestBody voucher_payment_id, @Part("scan_voucher_type") RequestBody scan_voucher_type, @Part MultipartBody.Part image);
 
     @Headers("Content-Type: application/json")
     @POST("change_password")
@@ -131,7 +134,7 @@ public interface API {
     Call<AddCardDetailsModel> ADD_CARD_DETAILS_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
     @Headers("Content-Type: application/json")
-    @GET("get_all_cards_ofusers")
+    @GET("/get_all_cards_ofusers")
     Call<GetCardListModel> GET_CARD_LIST_MODEL_CALL(@Header("Authorization") String header);
 
     @FormUrlEncoded
@@ -145,5 +148,18 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("replace_voucher")
     Call<ReplaceVoucherModel> REPLACE_VOUCHER_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @GET("get_all_brands_of_vendors")
+    Call<BrandListModel> BRAND_LIST_MODEL_CALL(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
+    @GET("get_active_voucher_ofuser")
+    Call<WalletActiveListModel> WALLET_ACTIVE_LIST_MODEL_CALL(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
+    @POST("voucher_scan")
+    Call<ScanVoucherModel> SCAN_VOUCHER_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
 
 }

@@ -1,6 +1,7 @@
 package com.codeclinic.yakrm.Activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Utils.ImageURL;
+import com.squareup.picasso.Picasso;
 
 
 public class UploadVoucherDataActivity extends AppCompatActivity {
@@ -22,8 +25,9 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
     LinearLayout layout_scan_img, llayout_scan, llayout_scan_detail, llayout_manual_voucher_details;
     Button btn_add_note1, btn_add_note2;
     TextView tv_item_name, tv_enter_manualy;
-    ImageView img_back;
+    public static Activity pre_activity;
     String name;
+    ImageView img_back, img_brand;
     private static final int ZXING_CAMERA_PERMISSION = 13;
     private Class<?> mClss;
 
@@ -41,6 +45,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
         layout_scan_img = findViewById(R.id.layout_scan_img);
 
         img_back = findViewById(R.id.img_back);
+        img_brand = findViewById(R.id.img_brand);
         String language = String.valueOf(getResources().getConfiguration().locale);
         if (language.equals("ar")) {
             img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
@@ -53,6 +58,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
         });
 
         tv_item_name.setText(getIntent().getStringExtra("name"));
+        Picasso.with(this).load(ImageURL.Vendor_brand_image + getIntent().getStringExtra("image")).into(img_brand);
         name = getIntent().getStringExtra("name");
 
         btn_add_note1 = findViewById(R.id.btn_add_note1);
@@ -61,8 +67,8 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
         layout_scan_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                llayout_scan.setVisibility(View.GONE);
-                llayout_scan_detail.setVisibility(View.VISIBLE);
+              /*  llayout_scan.setVisibility(View.GONE);
+                llayout_scan_detail.setVisibility(View.VISIBLE);*/
                 launchActivity(ScanBarcodeActivity.class);
             }
         });
@@ -70,30 +76,32 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
         btn_add_note1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                llayout_scan_detail.setVisibility(View.GONE);
+          /*      llayout_scan_detail.setVisibility(View.GONE);
                 llayout_manual_voucher_details.setVisibility(View.VISIBLE);
-                Intent intent = new Intent(UploadVoucherDataActivity.this, MainActivity.class);
+           *//*     Intent intent = new Intent(UploadVoucherDataActivity.this, MainActivity.class);
                 intent.putExtra("view_pos", "4");
-                startActivity(intent);
+                startActivity(intent);*//*
+                finish();*/
             }
         });
 
         btn_add_note2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                llayout_manual_voucher_details.setVisibility(View.GONE);
+          /*      llayout_manual_voucher_details.setVisibility(View.GONE);
                 llayout_scan.setVisibility(View.VISIBLE);
-                Intent intent = new Intent(UploadVoucherDataActivity.this, MainActivity.class);
+                *//*Intent intent = new Intent(UploadVoucherDataActivity.this, MainActivity.class);
                 intent.putExtra("view_pos", "4");
-                startActivity(intent);
+                startActivity(intent);*//*
+                finish();*/
             }
         });
 
         tv_enter_manualy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                llayout_scan.setVisibility(View.GONE);
-                llayout_manual_voucher_details.setVisibility(View.VISIBLE);
+         /*       llayout_scan.setVisibility(View.GONE);
+                llayout_manual_voucher_details.setVisibility(View.VISIBLE);*/
             }
         });
     }

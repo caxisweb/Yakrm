@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codeclinic.yakrm.Activities.VoucherDetailActivity;
-import com.codeclinic.yakrm.Models.ActiveVoucherListItemModel;
+import com.codeclinic.yakrm.Models.WalletActiveListItemModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.ImageURL;
 import com.squareup.picasso.Picasso;
@@ -21,14 +21,18 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder> {
-    List<ActiveVoucherListItemModel> arrayList;
+    List<WalletActiveListItemModel> arrayList;
     Context context;
     String admin_discount;
 
-    public MyWalletAdapter(List<ActiveVoucherListItemModel> arrayList, Context context, String admin_discount) {
+    public MyWalletAdapter(List<WalletActiveListItemModel> arrayList, Context context, String admin_discount) {
         this.arrayList = arrayList;
         this.context = context;
         this.admin_discount = admin_discount;
+    }
+
+    public boolean isEmpty(CharSequence character) {
+        return character == null || character.length() == 0;
     }
 
     @NonNull
@@ -74,9 +78,16 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
                 intent.putExtra("pincode", arrayList.get(i).getPinCode());
                 intent.putExtra("price", arrayList.get(i).getVoucherPrice());
                 intent.putExtra("v_image", arrayList.get(i).getVoucherImage());
-                intent.putExtra("v_payment_id", arrayList.get(i).getVoucherPaymentDetailId());
+                if (!isEmpty(arrayList.get(i).getVoucherPaymentDetailId())) {
+                    intent.putExtra("v_payment_id", arrayList.get(i).getVoucherPaymentDetailId());
+                    intent.putExtra("v_payment_type", "voucher_payment");
+                } else {
+                    intent.putExtra("v_payment_id", arrayList.get(i).getReplaceVoucherPaymentId());
+                    intent.putExtra("v_payment_type", "replace_payment");
+                }
                 intent.putExtra("voucher_id", arrayList.get(i).getVoucherId());
                 intent.putExtra("admin_voucher_discount", admin_discount);
+                intent.putExtra("scan_voucher_type", arrayList.get(i).getScanVoucherType());
                 context.startActivity(intent);
             }
         });

@@ -1,11 +1,25 @@
 package com.codeclinic.yakrm.Activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,13 +37,20 @@ import com.codeclinic.yakrm.Utils.Connection_Detector;
 import com.codeclinic.yakrm.Utils.ImageURL;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Date;
 
+import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,8 +61,10 @@ public class SendToFriendActivity extends AppCompatActivity {
 
     Button btn_complete;
     ImageView img_back, img_voucher, img_search;
-    TextView tv_itemname, tv_price, tv_name, tv_email, tv_sending_date;
+    private final int CAMERA_IMAGE = 1;
     EditText edt_mobile, ed_description;
+    private final int PICK_IMAGE_GALLERY = 3;
+    TextView tv_itemname, tv_price, tv_name, tv_email, tv_sending_date, tv_add_video;
 
     API apiService;
     JSONObject jsonObject_mobile = new JSONObject();
@@ -50,6 +73,10 @@ public class SendToFriendActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     String mobile_number;
+    Uri selectedImage;
+    File sourceFile_sign, compressed_Image;
+    boolean value;
+    Compressor compressedImage;
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;
@@ -61,6 +88,9 @@ public class SendToFriendActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_to_friend);
 
+        StrictMode.VmPolicy.Builder builder1 = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder1.build());
+        compressedImage = new Compressor(this);
         apiService = RestClass.getClient().create(API.class);
 
         btn_complete = findViewById(R.id.btn_complete);
@@ -78,6 +108,7 @@ public class SendToFriendActivity extends AppCompatActivity {
         tv_name = findViewById(R.id.tv_name);
         tv_email = findViewById(R.id.tv_email);
         tv_sending_date = findViewById(R.id.tv_sending_date);
+        tv_add_video = findViewById(R.id.tv_add_video);
 
         edt_mobile = findViewById(R.id.edt_mobile);
         ed_description = findViewById(R.id.ed_description);
@@ -146,6 +177,13 @@ public class SendToFriendActivity extends AppCompatActivity {
             }
         });
 
+        tv_add_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
+
         btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +202,10 @@ public class SendToFriendActivity extends AppCompatActivity {
                         RequestBody mobile = RequestBody.create(MediaType.parse("text/plain"), mobile_number);
                         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), ed_description.getText().toString());
                         RequestBody voucher_payment_id = RequestBody.create(MediaType.parse("text/plain"), VoucherDetailActivity.v_payment_id);
-                        Call<SendVoucherToFriendModel> sendVoucherToFriendModelCall = apiService.SEND_VOUCHER_TO_FRIEND_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), voucherID, mobile, description, voucher_payment_id);
+                        RequestBody scan_v_type = RequestBody.create(MediaType.parse("text/plain"), VoucherDetailActivity.scan_voucher_type);
+                        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), sourceFile_sign);
+                        MultipartBody.Part body = MultipartBody.Part.createFormData("video_or_image", sourceFile_sign.getName(), reqFile);
+                        Call<SendVoucherToFriendModel> sendVoucherToFriendModelCall = apiService.SEND_VOUCHER_TO_FRIEND_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), voucherID, mobile, description, voucher_payment_id, scan_v_type, body);
                         sendVoucherToFriendModelCall.enqueue(new Callback<SendVoucherToFriendModel>() {
                             @Override
                             public void onResponse(Call<SendVoucherToFriendModel> call, Response<SendVoucherToFriendModel> response) {
@@ -179,6 +220,9 @@ public class SendToFriendActivity extends AppCompatActivity {
                                     VoucherDetailActivity.v_payment_id = "";
                                     VoucherDetailActivity.voucher_id = "";
                                     VoucherDetailActivity.v_image = "";
+                                    VoucherDetailActivity.scan_voucher_type = "";
+                                    VoucherDetailActivity.voucher_detail_activity.finish();
+                                    ExchangeVoucherActivity.ex_activity.finish();
                                     finish();
                                     startActivity(new Intent(SendToFriendActivity.this, MainActivity.class));
                                     Toast.makeText(SendToFriendActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -202,6 +246,146 @@ public class SendToFriendActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void selectImage() {
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(SendToFriendActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+                    if (isPermissionGranted()) {
+                        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Yakrm/";
+                        File newdir = new File(dir);
+                        newdir.mkdirs();
+                        String file = dir + DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString() + ".jpg";
+                        File newfile = new File(file);
+                        try {
+                            newfile.createNewFile();
+                        } catch (IOException ignored) {
+                        }
+                        selectedImage = Uri.fromFile(newfile);
+                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImage);
+                        startActivityForResult(cameraIntent, CAMERA_IMAGE);
+                    } else {
+                        Toast.makeText(SendToFriendActivity.this, "Permission needed to access Camera", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else if (options[item].equals("Choose from Gallery")) {
+                    if (isPermissionGranted()) {
+                        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        photoPickerIntent.setType("image/*");
+                        startActivityForResult(photoPickerIntent, PICK_IMAGE_GALLERY);
+                    } else {
+                        Toast.makeText(SendToFriendActivity.this, "Permission needed to access Gallery", Toast.LENGTH_SHORT).show();
+                    }
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            if (requestCode == CAMERA_IMAGE) {
+                CropImage.activity(selectedImage)
+                        .setFixAspectRatio(true)
+                        .start(this);
+            } else if (requestCode == PICK_IMAGE_GALLERY) {
+                selectedImage = data.getData();
+                CropImage.activity(selectedImage)
+                        .setFixAspectRatio(true)
+                        .start(this);
+            } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                selectedImage = result.getUri();
+                if (resultCode == RESULT_OK) {
+                    sourceFile_sign = new File(selectedImage.getPath());
+                    compressed_Image = compressedImage
+                            .setMaxWidth(400)
+                            .setMaxHeight(400)
+                            .setQuality(50)
+                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath())
+                            .compressToFile(sourceFile_sign);
+                    sourceFile_sign = new File(compressed_Image.getPath());
+                    InputStream in = null;
+                    try {
+                        final int IMAGE_MAX_SIZE = 1200000; // 1.2MP
+                        in = getContentResolver().openInputStream(selectedImage);
+                        // Decode image size
+                        BitmapFactory.Options o = new BitmapFactory.Options();
+                        o.inJustDecodeBounds = true;
+                        BitmapFactory.decodeStream(in, null, o);
+                        try {
+                            in.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        int scale = 1;
+                        while ((o.outWidth * o.outHeight) * (1 / Math.pow(scale, 2)) >
+                                IMAGE_MAX_SIZE) {
+                            scale++;
+                        }
+                        Bitmap b = null;
+                        in = getContentResolver().openInputStream(selectedImage);
+                        if (scale > 1) {
+                            scale--;
+                            // scale to max possible inSampleSize that still yields an image
+                            // larger than target
+                            o = new BitmapFactory.Options();
+                            o.inSampleSize = scale;
+                            b = BitmapFactory.decodeStream(in, null, o);
+
+                            // resize to desired dimensions
+                            int height = b.getHeight();
+                            int width = b.getWidth();
+
+                            double y = Math.sqrt(IMAGE_MAX_SIZE
+                                    / (((double) width) / height));
+                            double x = (y / height) * width;
+
+                            Bitmap scaledBitmap = Bitmap.createScaledBitmap(b, (int) x,
+                                    (int) y, true);
+                            b.recycle();
+                            b = scaledBitmap;
+
+                            System.gc();
+                        } else {
+                            b = BitmapFactory.decodeStream(in);
+                        }
+                        in.close();
+                        /* img_profile.setImageBitmap(b);*/
+                    } catch (Exception ignored) {
+                    }
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    Toast.makeText(SendToFriendActivity.this, "Image Can't be cropped", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(SendToFriendActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(SendToFriendActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(SendToFriendActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                value = true;
+            } else {
+                ActivityCompat.requestPermissions(SendToFriendActivity.this, new String[]{"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"}, 200);
+                value = false;
+            }
+        } else {
+            value = true;
+        }
+        return value;
     }
 
     private void datePicker() {

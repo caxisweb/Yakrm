@@ -112,7 +112,12 @@ public class LoginActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
                                 sessionManager.createLoginSession(response.body().getToken(), response.body().getUserId(), response.body().getName(), response.body().getEmail(), response.body().getPhone(), response.body().getCountryId(), response.body().getUser_profile(), response.body().getWallet(), response.body().getUser_type());//else salesmen
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                if (response.body().getUser_type().equals("salesmen")) {
+                                    startActivity(new Intent(LoginActivity.this, UploadVouchersActivity.class));
+                                } else {
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                }
+
                                 finish();
                             } else {
                                 Toast.makeText(LoginActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

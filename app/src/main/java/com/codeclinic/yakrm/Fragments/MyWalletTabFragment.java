@@ -21,8 +21,8 @@ import com.codeclinic.yakrm.Activities.UploadVouchersActivity;
 import com.codeclinic.yakrm.Activities.VoucherEndedActivity;
 import com.codeclinic.yakrm.Activities.VoucherWillEndActivity;
 import com.codeclinic.yakrm.Adapter.MyWalletAdapter;
-import com.codeclinic.yakrm.Models.ActiveVoucherListItemModel;
-import com.codeclinic.yakrm.Models.ActiveVoucherListModel;
+import com.codeclinic.yakrm.Models.WalletActiveListItemModel;
+import com.codeclinic.yakrm.Models.WalletActiveListModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
@@ -45,7 +45,7 @@ public class MyWalletTabFragment extends Fragment {
 
     RecyclerView recyclerView;
     MyWalletAdapter myWalletAdapter;
-    List<ActiveVoucherListItemModel> arrayList = new ArrayList<>();
+    List<WalletActiveListItemModel> arrayList = new ArrayList<>();
     TextView tv_upload_voucher, tv_wallet_amount;
     LinearLayout llayout_voucher_ended_valid, llayout_fav_vouchers, llayout_active_vouchers, llayout_voucher_ended_done;
     JSONObject jsonObject = new JSONObject();
@@ -135,10 +135,10 @@ public class MyWalletTabFragment extends Fragment {
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
-            Call<ActiveVoucherListModel> activeVoucherListModelCall = apiService.ACTIVE_VOUCHER_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
-            activeVoucherListModelCall.enqueue(new Callback<ActiveVoucherListModel>() {
+            Call<WalletActiveListModel> walletActiveListModelCall = apiService.WALLET_ACTIVE_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+            walletActiveListModelCall.enqueue(new Callback<WalletActiveListModel>() {
                 @Override
-                public void onResponse(Call<ActiveVoucherListModel> call, Response<ActiveVoucherListModel> response) {
+                public void onResponse(Call<WalletActiveListModel> call, Response<WalletActiveListModel> response) {
                     progressDialog.dismiss();
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
@@ -152,7 +152,7 @@ public class MyWalletTabFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<ActiveVoucherListModel> call, Throwable t) {
+                public void onFailure(Call<WalletActiveListModel> call, Throwable t) {
                     progressDialog.dismiss();
                     Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
                 }

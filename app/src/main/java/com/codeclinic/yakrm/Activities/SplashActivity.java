@@ -25,9 +25,15 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (sessionManager.isLoggedIn()) {
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    finish();
-                    startActivity(intent);
+                    if (sessionManager.getUserDetails().get(SessionManager.UserType).equals("users")) {
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        finish();
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(SplashActivity.this, UploadVouchersActivity.class);
+                        finish();
+                        startActivity(intent);
+                    }
                 } else {
                     Intent intent = new Intent(SplashActivity.this, StartActivity.class);
                     finish();

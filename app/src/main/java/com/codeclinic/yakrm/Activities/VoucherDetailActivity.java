@@ -25,7 +25,7 @@ public class VoucherDetailActivity extends AppCompatActivity {
     TextView tv_header_name, tv_expiredate, tv_price, tv_barcode, tv_pincode;
     ImageView img_back, img_voucher;
     Button btn_done;
-    public static String v_payment_id, voucher_id, voucher_name, date, final_date, barcode, pincode, price, v_image, admin_voucher_discount;
+    public static String v_payment_id, voucher_id, voucher_name, date, final_date, barcode, pincode, price, v_image, admin_voucher_discount, scan_voucher_type, v_payment_type;
     BarcodeView barcodeView;
 
     public static Activity voucher_detail_activity;
@@ -49,16 +49,25 @@ public class VoucherDetailActivity extends AppCompatActivity {
 
         voucher_name = getIntent().getStringExtra("name");
         date = getIntent().getStringExtra("date");
-        barcode = getIntent().getStringExtra("barcode");
         pincode = getIntent().getStringExtra("pincode");
         price = getIntent().getStringExtra("price");
         v_image = getIntent().getStringExtra("v_image");
         v_payment_id = getIntent().getStringExtra("v_payment_id");
         voucher_id = getIntent().getStringExtra("voucher_id");
         admin_voucher_discount = getIntent().getStringExtra("admin_voucher_discount");
+        v_payment_type = getIntent().getStringExtra("v_payment_type");
+        if (getIntent().getStringExtra("scan_voucher_type").equals("purchase_voucher")) {
+            scan_voucher_type = "p";
+        } else if (getIntent().getStringExtra("scan_voucher_type").equals("replace_voucher")) {
+            scan_voucher_type = "r";
+        } else {
+            scan_voucher_type = "g";
+        }
+        barcode = getIntent().getStringExtra("barcode");
 
         Picasso.with(this).load(ImageURL.Vendor_voucher_image + v_image).into(img_voucher);
         tv_barcode.setText(barcode);
+        barcode = barcode + "@" + scan_voucher_type;
         barcodeView.setBarcodeText(barcode);
 
         SimpleDateFormat spf = null;
