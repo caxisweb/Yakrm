@@ -134,7 +134,7 @@ public interface API {
     Call<AddCardDetailsModel> ADD_CARD_DETAILS_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
     @Headers("Content-Type: application/json")
-    @GET("/get_all_cards_ofusers")
+    @GET("get_all_cards_ofusers")
     Call<GetCardListModel> GET_CARD_LIST_MODEL_CALL(@Header("Authorization") String header);
 
     @FormUrlEncoded

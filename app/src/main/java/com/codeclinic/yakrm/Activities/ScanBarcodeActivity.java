@@ -60,23 +60,19 @@ public class ScanBarcodeActivity extends BaseScannerActivity implements ZXingSca
 
     @Override
     public void handleResult(Result rawResult) {
-        /*Toast.makeText(this, "Contents = " + rawResult.getText() +
-                ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mScannerView.resumeCameraPreview(ScanBarcodeActivity.this);
-            }
-        }, 2000);*/
+
         String main_value = rawResult.getText().substring(0, rawResult.getText().length() - 1);
         String str_v_type = rawResult.getText().substring(rawResult.getText().length() - 1);
-        if (str_v_type.equals("p")) {
-            str_v_type = "@purchase_voucher";
-        } else if (str_v_type.equals("replace_voucher")) {
-            str_v_type = "@replace_voucher";
-        } else {
-            str_v_type = "@gift_voucher";
+        switch (str_v_type) {
+            case "p":
+                str_v_type = "@purchase_voucher";
+                break;
+            case "replace_voucher":
+                str_v_type = "@replace_voucher";
+                break;
+            default:
+                str_v_type = "@gift_voucher";
+                break;
         }
         try {
             jsonObject.put("scan_code", main_value + str_v_type);

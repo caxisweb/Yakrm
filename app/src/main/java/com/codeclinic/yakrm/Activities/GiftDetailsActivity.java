@@ -209,7 +209,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
                     if (is_fav.equals("true")) {
                         fav_value = 0;
                         jsonObject_fav.put("is_favourite", fav_value);
-                        AlertDialog.Builder alert = new AlertDialog.Builder(GiftDetailsActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                        AlertDialog.Builder alert = new AlertDialog.Builder(GiftDetailsActivity.this, R.style.CustomDialogFragment);
                         alert.setMessage("Are you sure you want to remove from Favourites?");
                         alert.setCancelable(false);
                         alert.setPositiveButton("Remove", new DialogInterface.OnClickListener() {

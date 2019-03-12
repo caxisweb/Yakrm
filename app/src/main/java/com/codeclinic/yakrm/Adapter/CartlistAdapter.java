@@ -138,7 +138,7 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.CustomDialogFragment);
                 alert.setMessage("Are you Sure?");
                 alert.setCancelable(false);
                 alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {

@@ -24,7 +24,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/main_images"
+                    android:id="@+id/voucher_image"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

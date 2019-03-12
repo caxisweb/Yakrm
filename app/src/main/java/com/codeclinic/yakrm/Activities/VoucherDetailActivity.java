@@ -30,7 +30,7 @@ public class VoucherDetailActivity extends AppCompatActivity {
 
     public static Activity voucher_detail_activity;
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,18 +56,23 @@ public class VoucherDetailActivity extends AppCompatActivity {
         voucher_id = getIntent().getStringExtra("voucher_id");
         admin_voucher_discount = getIntent().getStringExtra("admin_voucher_discount");
         v_payment_type = getIntent().getStringExtra("v_payment_type");
-        if (getIntent().getStringExtra("scan_voucher_type").equals("purchase_voucher")) {
-            scan_voucher_type = "p";
-        } else if (getIntent().getStringExtra("scan_voucher_type").equals("replace_voucher")) {
-            scan_voucher_type = "r";
-        } else {
-            scan_voucher_type = "g";
+
+        switch (getIntent().getStringExtra("scan_voucher_type")) {
+            case "purchase_voucher":
+                scan_voucher_type = "p";
+                break;
+            case "replace_voucher":
+                scan_voucher_type = "r";
+                break;
+            default:
+                scan_voucher_type = "g";
+                break;
         }
         barcode = getIntent().getStringExtra("barcode");
 
         Picasso.with(this).load(ImageURL.Vendor_voucher_image + v_image).into(img_voucher);
         tv_barcode.setText(barcode);
-        barcode = barcode + "@" + scan_voucher_type;
+        barcode = barcode + scan_voucher_type;
         barcodeView.setBarcodeText(barcode);
 
         SimpleDateFormat spf = null;

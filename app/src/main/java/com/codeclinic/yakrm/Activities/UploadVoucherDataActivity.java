@@ -2,39 +2,64 @@ package com.codeclinic.yakrm.Activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.Models.ScanVoucherModel;
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Utils.ImageURL;
+import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class UploadVoucherDataActivity extends AppCompatActivity {
 
     LinearLayout layout_scan_img, llayout_scan, llayout_scan_detail, llayout_manual_voucher_details;
-    Button btn_add_note1, btn_add_note2;
+    Button btn_add_note1, btn_done;
     TextView tv_item_name, tv_enter_manualy;
+    EditText edt_voucher_no;
     public static Activity pre_activity;
     String name;
+    JSONObject jsonObject = new JSONObject();
+    ProgressDialog progressDialog;
     ImageView img_back, img_brand;
     private static final int ZXING_CAMERA_PERMISSION = 13;
     private Class<?> mClss;
+    API apiService;
+
+    SessionManager sessionManager;
+
+    public boolean isEmpty(CharSequence character) {
+        return character == null || character.length() == 0;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_voucher_data);
+
+        apiService = UploadVouchersActivity.RestClasses.getClient().create(API.class);
 
         tv_item_name = findViewById(R.id.tv_item_name);
         tv_enter_manualy = findViewById(R.id.tv_enter_manualy);
@@ -46,6 +71,12 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
 
         img_back = findViewById(R.id.img_back);
         img_brand = findViewById(R.id.img_brand);
+
+        edt_voucher_no = findViewById(R.id.edt_voucher_no);
+
+        progressDialog = new ProgressDialog(this);
+        sessionManager = new SessionManager(this);
+
         String language = String.valueOf(getResources().getConfiguration().locale);
         if (language.equals("ar")) {
             img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
@@ -62,7 +93,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
         name = getIntent().getStringExtra("name");
 
         btn_add_note1 = findViewById(R.id.btn_add_note1);
-        btn_add_note2 = findViewById(R.id.btn_add_note2);
+        btn_done = findViewById(R.id.btn_done);
 
         layout_scan_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,23 +116,64 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
             }
         });
 
-        btn_add_note2.setOnClickListener(new View.OnClickListener() {
+        btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-          /*      llayout_manual_voucher_details.setVisibility(View.GONE);
-                llayout_scan.setVisibility(View.VISIBLE);
-                *//*Intent intent = new Intent(UploadVoucherDataActivity.this, MainActivity.class);
-                intent.putExtra("view_pos", "4");
-                startActivity(intent);*//*
-                finish();*/
+                if (isEmpty(edt_voucher_no.getText().toString())) {
+                    Toast.makeText(UploadVoucherDataActivity.this, "Enter Voucher Number", Toast.LENGTH_SHORT).show();
+                } else {
+                    String main_value = edt_voucher_no.getText().toString().substring(0, edt_voucher_no.getText().toString().length() - 1);
+                    String str_v_type = edt_voucher_no.getText().toString().substring(edt_voucher_no.getText().toString().length() - 1);
+                    switch (str_v_type) {
+                        case "p":
+                            str_v_type = "@purchase_voucher";
+                            break;
+                        case "replace_voucher":
+                            str_v_type = "@replace_voucher";
+                            break;
+                        default:
+                            str_v_type = "@gift_voucher";
+                            break;
+                    }
+                    try {
+                        jsonObject.put("scan_code", main_value + str_v_type);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Log.i("details", jsonObject.toString());
+                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    Call<ScanVoucherModel> scanVoucherModelCall = apiService.SCAN_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                    scanVoucherModelCall.enqueue(new Callback<ScanVoucherModel>() {
+                        @Override
+                        public void onResponse(Call<ScanVoucherModel> call, Response<ScanVoucherModel> response) {
+                            progressDialog.dismiss();
+                            if (response.body().getStatus().equals("1")) {
+                                Log.i("status_details", "success");
+                                finish();
+                                Toast.makeText(UploadVoucherDataActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(UploadVoucherDataActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ScanVoucherModel> call, Throwable t) {
+                            progressDialog.dismiss();
+                            Toast.makeText(UploadVoucherDataActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 
         tv_enter_manualy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-         /*       llayout_scan.setVisibility(View.GONE);
-                llayout_manual_voucher_details.setVisibility(View.VISIBLE);*/
+                llayout_scan.setVisibility(View.GONE);
+                llayout_manual_voucher_details.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -131,6 +203,15 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
                     Toast.makeText(this, "Please grant camera permission to use the QR Scanner", Toast.LENGTH_SHORT).show();
                 }
                 return;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (UploadVouchersActivity.str_scanned.equals("1")) {
+            UploadVouchersActivity.str_scanned = "0";
+            finish();
         }
     }
 }

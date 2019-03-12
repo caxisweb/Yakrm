@@ -77,6 +77,7 @@ public class SendToFriendActivity extends AppCompatActivity {
     File sourceFile_sign, compressed_Image;
     boolean value;
     Compressor compressedImage;
+    MultipartBody.Part body = null;
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;
@@ -202,9 +203,22 @@ public class SendToFriendActivity extends AppCompatActivity {
                         RequestBody mobile = RequestBody.create(MediaType.parse("text/plain"), mobile_number);
                         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), ed_description.getText().toString());
                         RequestBody voucher_payment_id = RequestBody.create(MediaType.parse("text/plain"), VoucherDetailActivity.v_payment_id);
-                        RequestBody scan_v_type = RequestBody.create(MediaType.parse("text/plain"), VoucherDetailActivity.scan_voucher_type);
-                        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), sourceFile_sign);
-                        MultipartBody.Part body = MultipartBody.Part.createFormData("video_or_image", sourceFile_sign.getName(), reqFile);
+                        RequestBody scan_v_type = null;
+                        switch (VoucherDetailActivity.scan_voucher_type) {
+                            case "p":
+                                scan_v_type = RequestBody.create(MediaType.parse("text/plain"), "purchase_voucher");
+                                break;
+                            case "r":
+                                scan_v_type = RequestBody.create(MediaType.parse("text/plain"), "replace_voucher");
+                                break;
+                            case "g":
+                                scan_v_type = RequestBody.create(MediaType.parse("text/plain"), "gift_voucher");
+                                break;
+                        }
+                        if (sourceFile_sign != null) {
+                            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), sourceFile_sign);
+                            body = MultipartBody.Part.createFormData("video_or_image", sourceFile_sign.getName(), reqFile);
+                        }
                         Call<SendVoucherToFriendModel> sendVoucherToFriendModelCall = apiService.SEND_VOUCHER_TO_FRIEND_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), voucherID, mobile, description, voucher_payment_id, scan_v_type, body);
                         sendVoucherToFriendModelCall.enqueue(new Callback<SendVoucherToFriendModel>() {
                             @Override

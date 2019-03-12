@@ -160,7 +160,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         rl_pay_pal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.CustomDialogFragment);
                 alert.setMessage("Are you Sure?");
                 alert.setCancelable(false);
                 alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -266,7 +266,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         rl_mastercard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.CustomDialogFragment);
                 alert.setMessage("Are you Sure?");
                 alert.setCancelable(false);
                 alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -355,7 +355,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         rl_visa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.CustomDialogFragment);
                 alert.setMessage("Are you Sure?");
                 alert.setCancelable(false);
                 alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -551,6 +551,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
     }
 
     public void getAllcardList() {
+        Log.i("token_session", sessionManager.getUserDetails().get(SessionManager.User_Token));
         Call<GetCardListModel> getCardListModelCall = apiService.GET_CARD_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
         getCardListModelCall.enqueue(new Callback<GetCardListModel>() {
             @Override

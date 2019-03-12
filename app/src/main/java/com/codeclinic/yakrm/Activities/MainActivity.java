@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 if (sessionManager.isLoggedIn()) {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.CustomDialogFragment);
                     alert.setMessage("Are you Sure you want to logout?");
                     alert.setCancelable(false);
                     alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {

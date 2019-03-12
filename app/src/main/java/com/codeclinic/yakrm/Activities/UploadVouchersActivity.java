@@ -68,20 +68,15 @@ public class UploadVouchersActivity extends AppCompatActivity {
         tv_signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(UploadVouchersActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                AlertDialog.Builder alert = new AlertDialog.Builder(UploadVouchersActivity.this, R.style.CustomDialogFragment);
                 alert.setMessage("Are you Sure you want to logout?");
                 alert.setCancelable(false);
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @SuppressLint("StaticFieldLeak")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
-                            findViewById(R.id.frame_contaner).setVisibility(View.GONE);
-                            setTitle(getResources().getString(R.string.title_activity_main));
-                        }
                         sessionManager.logoutUser();
-                        finish();
+                        //finish();
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
