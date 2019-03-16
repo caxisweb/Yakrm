@@ -291,7 +291,8 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/light_grey_border_background"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:padding="10dp"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/img_paypal"

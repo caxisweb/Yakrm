@@ -63,7 +63,8 @@ public class FavouritesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
             }
-        });
+                                    }
+        );
 
         if (Connection_Detector.isInternetAvailable(this)) {
             progressDialog.setMessage("Please Wait");

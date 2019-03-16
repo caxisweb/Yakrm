@@ -59,6 +59,7 @@ public class UploadVouchersAdapter extends RecyclerView.Adapter<UploadVouchersAd
                 Intent intent = new Intent(context, UploadVoucherDataActivity.class);
                 intent.putExtra("name", arrayList.get(i).getBrandName());
                 intent.putExtra("image", arrayList.get(i).getBrandImage());
+                intent.putExtra("brand_id", arrayList.get(i).getId());
                 context.startActivity(intent);
             }
         });

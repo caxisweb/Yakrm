@@ -3,7 +3,7 @@ package com.codeclinic.yakrm.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ScanVoucherModel {
+public class ScanBarcodeItemModel {
     @SerializedName("status")
     @Expose
     private String status;
@@ -25,29 +25,6 @@ public class ScanVoucherModel {
     @SerializedName("voucher_code")
     @Expose
     private String voucherCode;
-    @SerializedName("voucher_price")
-    @Expose
-    private String voucherPrice;
-    @SerializedName("discount")
-    @Expose
-    private String discount;
-
-
-    public String getVoucherPrice() {
-        return voucherPrice;
-    }
-
-    public void setVoucherPrice(String voucherPrice) {
-        this.voucherPrice = voucherPrice;
-    }
-
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
-    }
 
     public String getStatus() {
         return status;

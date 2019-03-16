@@ -1,6 +1,7 @@
 package com.codeclinic.yakrm.Activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bottlerocketstudios.barcode.generation.ui.BarcodeView;
 import com.codeclinic.yakrm.Models.ScanVoucherModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
@@ -28,6 +30,10 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,16 +43,18 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
 
     LinearLayout layout_scan_img, llayout_scan, llayout_scan_detail, llayout_manual_voucher_details;
     Button btn_add_note1, btn_done;
-    TextView tv_item_name, tv_enter_manualy;
+    public static String name, brand_id, voucher_number, pin_number, voucher_value, exp_date;
     EditText edt_voucher_no;
     public static Activity pre_activity;
-    String name;
+    TextView tv_item_name, tv_enter_manualy, tv_voucher_no, tv_pin_no, tv_voucher_price, tv_exp_date;
     JSONObject jsonObject = new JSONObject();
     ProgressDialog progressDialog;
     ImageView img_back, img_brand;
     private static final int ZXING_CAMERA_PERMISSION = 13;
     private Class<?> mClss;
+    BarcodeView barcodeView;
     API apiService;
+    String final_date;
 
     SessionManager sessionManager;
 
@@ -68,9 +76,15 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
         llayout_scan_detail = findViewById(R.id.llayout_scan_detail);
         llayout_scan = findViewById(R.id.llayout_scan);
         layout_scan_img = findViewById(R.id.layout_scan_img);
+        barcodeView = findViewById(R.id.generation_barcode_image);
 
         img_back = findViewById(R.id.img_back);
         img_brand = findViewById(R.id.img_brand);
+
+        tv_voucher_no = findViewById(R.id.tv_voucher_no);
+        tv_pin_no = findViewById(R.id.tv_pin_no);
+        tv_voucher_price = findViewById(R.id.tv_voucher_price);
+        tv_exp_date = findViewById(R.id.tv_exp_date);
 
         edt_voucher_no = findViewById(R.id.edt_voucher_no);
 
@@ -91,6 +105,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
         tv_item_name.setText(getIntent().getStringExtra("name"));
         Picasso.with(this).load(ImageURL.Vendor_brand_image + getIntent().getStringExtra("image")).into(img_brand);
         name = getIntent().getStringExtra("name");
+        brand_id = getIntent().getStringExtra("brand_id");
 
         btn_add_note1 = findViewById(R.id.btn_add_note1);
         btn_done = findViewById(R.id.btn_done);
@@ -136,7 +151,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
                             break;
                     }
                     try {
-                        jsonObject.put("scan_code", main_value + str_v_type);
+                        jsonObject.put("scan_code", main_value + str_v_type + "@" + brand_id);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -147,12 +162,40 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
                     progressDialog.show();
                     Call<ScanVoucherModel> scanVoucherModelCall = apiService.SCAN_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
                     scanVoucherModelCall.enqueue(new Callback<ScanVoucherModel>() {
+                        @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
                         @Override
                         public void onResponse(Call<ScanVoucherModel> call, Response<ScanVoucherModel> response) {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
                                 Log.i("status_details", "success");
                                 finish();
+                                voucher_number = response.body().getScanCode();
+                                voucher_value = response.body().getVoucherPrice();
+                                pin_number = response.body().getPinCode();
+                                exp_date = response.body().getExpiredAt();
+
+                                barcodeView.setBarcodeText(voucher_number);
+                                tv_voucher_no.setText(voucher_number);
+                                tv_pin_no.setText(pin_number);
+                                tv_voucher_price.setText(voucher_value + " " + getResources().getString(R.string.SR_currency));
+
+                                SimpleDateFormat spf = null;
+                                Date newDate = null;
+                                try {
+                                    String date = exp_date.substring(0, exp_date.indexOf(" "));
+                                    final_date = date.trim();
+                                    spf = new SimpleDateFormat("yyyy-MM-dd");
+                                    newDate = spf.parse(final_date);
+                                    spf = new SimpleDateFormat("dd MMMM yyyy");
+                                    final_date = spf.format(newDate);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                tv_exp_date.setText(final_date);
+
+                                llayout_manual_voucher_details.setVisibility(View.GONE);
+                                llayout_scan_detail.setVisibility(View.VISIBLE);
+
                                 Toast.makeText(UploadVoucherDataActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(UploadVoucherDataActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -206,12 +249,33 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
     protected void onResume() {
         super.onResume();
         if (UploadVouchersActivity.str_scanned.equals("1")) {
             UploadVouchersActivity.str_scanned = "0";
-            finish();
+            llayout_scan_detail.setVisibility(View.VISIBLE);
+            llayout_scan.setVisibility(View.GONE);
+            llayout_manual_voucher_details.setVisibility(View.GONE);
+            tv_voucher_no.setText(voucher_number);
+            tv_pin_no.setText(pin_number);
+            tv_voucher_price.setText(voucher_value + " " + getResources().getString(R.string.SR_currency));
+            SimpleDateFormat spf = null;
+            Date newDate = null;
+            try {
+                String date = exp_date.substring(0, exp_date.indexOf(" "));
+                final_date = date.trim();
+                spf = new SimpleDateFormat("yyyy-MM-dd");
+                newDate = spf.parse(final_date);
+                spf = new SimpleDateFormat("dd-MMM-yyyy");
+                final_date = spf.format(newDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            tv_exp_date.setText(final_date);
+
         }
     }
 }

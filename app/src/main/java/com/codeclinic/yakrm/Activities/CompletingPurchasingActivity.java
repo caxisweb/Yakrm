@@ -297,6 +297,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                                 prepareTransactionProcessModelCall.enqueue(new Callback<PrepareTransactionProcessModel>() {
                                     @Override
                                     public void onResponse(Call<PrepareTransactionProcessModel> call, Response<PrepareTransactionProcessModel> response) {
+                                        Log.i("response_pay", response.toString());
                                         progressDialog.dismiss();
                                         Intent in = new Intent(CompletingPurchasingActivity.this, SecurePaymentActivity.class);
                                         JSONObject jsonObjectData = new JSONObject();

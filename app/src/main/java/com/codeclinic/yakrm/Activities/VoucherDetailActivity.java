@@ -45,6 +45,8 @@ public class VoucherDetailActivity extends AppCompatActivity {
         tv_barcode = findViewById(R.id.tv_barcode);
         barcodeView = findViewById(R.id.generation_barcode_image);
         tv_pincode = findViewById(R.id.tv_pincode);
+
+        tv_pincode = findViewById(R.id.tv_pincode);
         voucher_detail_activity = this;
 
         voucher_name = getIntent().getStringExtra("name");

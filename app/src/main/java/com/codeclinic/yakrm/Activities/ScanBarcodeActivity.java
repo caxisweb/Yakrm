@@ -75,7 +75,7 @@ public class ScanBarcodeActivity extends BaseScannerActivity implements ZXingSca
                 break;
         }
         try {
-            jsonObject.put("scan_code", main_value + str_v_type);
+            jsonObject.put("scan_code", main_value + str_v_type + "@" + UploadVoucherDataActivity.brand_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -92,6 +92,10 @@ public class ScanBarcodeActivity extends BaseScannerActivity implements ZXingSca
                 if (response.body().getStatus().equals("1")) {
                     Log.i("status_details", "success");
                     UploadVouchersActivity.str_scanned = "1";
+                    UploadVoucherDataActivity.voucher_number = response.body().getScanCode();
+                    UploadVoucherDataActivity.voucher_value = response.body().getVoucherPrice();
+                    UploadVoucherDataActivity.pin_number = response.body().getPinCode();
+                    UploadVoucherDataActivity.exp_date = response.body().getExpiredAt();
                     finish();
                     Toast.makeText(ScanBarcodeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 } else {

@@ -313,6 +313,7 @@
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
                             android:padding="10dp"
+                            android:visibility="gone"
                             android:background="@drawable/card_details_item_background"
                             android:src="@mipmap/ic_payment_paypal" />
 

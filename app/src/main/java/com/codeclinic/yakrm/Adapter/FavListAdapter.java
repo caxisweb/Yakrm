@@ -56,6 +56,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.Holder> 
         return new Holder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final FavListAdapter.Holder holder, final int i) {
         holder.tv_item_name.setText(arrayList.get(i).getBrandName());
@@ -71,7 +72,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.Holder> 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.CustomDialogFragment);
                 alert.setMessage("Are you sure you want to remove from Favourites?");
                 alert.setCancelable(false);
                 alert.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
