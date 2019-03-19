@@ -108,7 +108,7 @@ public class BuyTabFragment extends Fragment {
                                     MainActivity.btn[i].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
                                     MainActivity.btn[i].setTextColor(getResources().getColor(R.color.white));
                                     MainActivity.btn[i].setTextSize(10);
-                                    MainActivity.btn[i].setText(arrayList.get(i).getGiftCategoryName());
+                                    MainActivity.btn[i].setText(MainActivity.arrayList.get(i).getGiftCategoryName());
                                     MainActivity.btn[i].setTextColor(getResources().getColor(R.color.black));
 
                                     final Handler mHandler = new Handler();
