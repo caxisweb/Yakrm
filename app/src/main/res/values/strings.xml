@@ -202,6 +202,7 @@
     <string name="Send_For_A_Friend_As_A_Gift">Send For A Friend As A Gift</string>
     <string name="Exchange_And_Add_The_Amount_On_Your_Balance">Exchange And Add The Amount On Your Balance</string>
     <string name="Display_The_Voucher_On_An_Auction">Display The Voucher On An Auction</string>
+    <string name="Return_Voucher_Add_The_Amount_On_Your_Balance">Return Voucher Add The Amount On Your Balance</string>
 
 
     <string name="Send_to_a_friend">Send to a friend</string>
@@ -217,6 +218,7 @@
 
 
     <string name="Exchanging_And_add_to_my_balance">Exchanging And Add to my balance</string>
+    <string name="Return_Voucher">Return Voucher</string>
     <string name="How_Much_You_Will_Exchange_The_Amount">How Much You Will Exchange The Amount?</string>
     <string name="You_Will_Get_The_Amount_Of">You Will Get The Amount Of</string>
     <string name="SR_only">8.5 SR only</string>

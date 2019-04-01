@@ -193,9 +193,11 @@
     <string name="Adding_To_My_Notecase">إضافة إلى محفظتي </string>
 
     <string name="Exchange_A_Discount_Voucher">استبدال قسيمة خصم </string>
+    <string name="Return_Voucher">قسيمة العودة </string>
     <string name="Send_For_A_Friend_As_A_Gift">ارسال إلى صديق كهدية </string>
     <string name="Exchange_And_Add_The_Amount_On_Your_Balance">استبدال وإضافة المبلغ إلى رصيدك</string>
     <string name="Display_The_Voucher_On_An_Auction">عرض القسيمة إلى المزاد </string>
+    <string name="Return_Voucher_Add_The_Amount_On_Your_Balance">عودة قسيمة إضافة المبلغ على رصيدك</string>
 
     <string name="Send_to_a_friend">إرسال لصديق</string>
     <string name="Friend_mobile_number">أدخل رقم جوال صديقك </string>

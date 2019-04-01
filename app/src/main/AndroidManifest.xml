@@ -22,6 +22,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity
             android:name=".Activities.SplashActivity"
             android:theme="@style/No_action_bar">
@@ -34,6 +35,9 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+        <activity
+            android:name=".Activities.ReturnVoucherActivity"
+            android:theme="@style/No_action_bar" />
         <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/No_action_bar" />

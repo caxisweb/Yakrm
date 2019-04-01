@@ -276,6 +276,11 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -332,110 +337,6 @@
                             android:src="@drawable/right_arrow" />
 
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/rl_mastercard"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/light_grey_border_background"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-                        <ImageView
-                            android:id="@+id/img_paypal2"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentLeft="true"
-                            android:src="@mipmap/ic_payment_csmada_icon" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/By_Using_Mada_Card"
-                                android:textColor="@color/black"
-                                android:textSize="10dp" />
-
-                            <TextView
-                                android:id="@+id/tv_card_no_cs_mada"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/digits"
-                                android:textColor="@color/black"
-                                android:textSize="10dp"
-                                android:visibility="gone" />
-
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/right_arrow" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/rl_visa"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/light_grey_border_background"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-                        <ImageView
-                            android:id="@+id/img_visa"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentTop="true"
-                            android:src="@mipmap/ic_payment_visa_icon" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="1"
-                            android:layout_gravity="center_vertical"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/By_Using_Credit_Card"
-                                android:textColor="@color/black"
-                                android:textSize="10dp" />
-
-                            <TextView
-                                android:id="@+id/tv_card_no_visa"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/digits"
-                                android:textColor="@color/black"
-                                android:textSize="10dp"
-                                android:visibility="gone" />
-
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/right_arrow" />
-
-                    </LinearLayout>
-
 
                 </LinearLayout>
 

@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.Adapter.SavedCardListAdapter;
 import com.codeclinic.yakrm.Models.GetCardListItemModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.PaymentTransactionModel;
@@ -33,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -46,21 +51,24 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
     CardView main_pay_cardview, succesful_cardview, error_cardview;
     Button btn_cmplt_pay;
     ScrollView scrollview_pay;
-    TextView tv_total_price, tv_sc_total_price, tv_card_no_visa, tv_card_no_cs_mada, tv_wallet_amount;
+    public static String card_ID;
     LinearLayout payment_layout;
     LinearLayout rl_pay_pal, rl_mastercard, rl_visa;
-
+    TextView tv_total_price, tv_sc_total_price, tv_wallet_amount;
+    RecyclerView recyclerView;
     JSONObject jsonObject = new JSONObject();
     String total_price;
 
     ImageView img_back;
     API apiService;
+    API apiInterface;
     SessionManager sessionManager;
     ProgressDialog progressDialog;
     double price;
 
     List<GetCardListItemModel> arrayList = new ArrayList<>();
     ArrayList<String> card_type_arrayList = new ArrayList<>();
+    ArrayList<String> card_id_arrayList = new ArrayList<>();
     ArrayList<String> card_no_arrayList = new ArrayList<>();
     ArrayList<String> card_name_arrayList = new ArrayList<>();
     ArrayList<String> card_expiry_arrayList = new ArrayList<>();
@@ -85,6 +93,12 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         rl_visa = findViewById(R.id.rl_visa);
         rl_mastercard = findViewById(R.id.rl_mastercard);
         rl_pay_pal = findViewById(R.id.rl_pay_pal);
+        recyclerView = findViewById(R.id.recyclerView);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
 
         apiService = RestClass.getClient().create(API.class);
         sessionManager = new SessionManager(this);
@@ -93,8 +107,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         main_pay_cardview = findViewById(R.id.main_pay_cardview);
         payment_layout = findViewById(R.id.payment_layout);
 
-        tv_card_no_visa = findViewById(R.id.tv_card_no_visa);
-        tv_card_no_cs_mada = findViewById(R.id.tv_card_no_cs_mada);
         tv_wallet_amount = findViewById(R.id.tv_wallet_amount);
         tv_wallet_amount.setText(sessionManager.getUserDetails().get(SessionManager.Wallet).replaceAll("1", getResources().getString(R.string.one))
                 .replaceAll("2", getResources().getString(R.string.two))
@@ -146,16 +158,75 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
             }
         });
 
-
         btn_cmplt_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                main_pay_cardview.setVisibility(View.GONE);
-                scrollview_pay.setVisibility(View.VISIBLE);
+                if (Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)) > price) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.CustomDialogFragment);
+                    alert.setMessage("Are you Sure?");
+                    alert.setCancelable(false);
+                    alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @SuppressLint("StaticFieldLeak")
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            progressDialog.setMessage("Please Wait");
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setCancelable(false);
+                            progressDialog.show();
+                            try {
+                                jsonObject.put("transaction_id", DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString());
+                                jsonObject.put("amount_from_wallet", sessionManager.getUserDetails().get(SessionManager.Wallet));
+                                jsonObject.put("amount_from_bank", price);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Call<PaymentTransactionModel> paymentTransactionModelCall = apiService.PAYMENT_TRANSACTION_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                            paymentTransactionModelCall.enqueue(new Callback<PaymentTransactionModel>() {
+                                @Override
+                                public void onResponse(Call<PaymentTransactionModel> call, Response<PaymentTransactionModel> response) {
+                                    String status = response.body().getStatus();
+                                    progressDialog.dismiss();
+                                    if (status.equals("1")) {
+                                        sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
+                                        succesful_cardview.setVisibility(View.VISIBLE);
+                                        scrollview_pay.setVisibility(View.GONE);
+                                        Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        finish();
+
+                                    } else {
+                                        scrollview_pay.setVisibility(View.GONE);
+                                        error_cardview.setVisibility(View.VISIBLE);
+                                        Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<PaymentTransactionModel> call, Throwable t) {
+                                    progressDialog.dismiss();
+                                    scrollview_pay.setVisibility(View.GONE);
+                                    error_cardview.setVisibility(View.VISIBLE);
+                                    Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = alert.create();
+                    alertDialog.show();
+
+                } else {
+                    main_pay_cardview.setVisibility(View.GONE);
+                    scrollview_pay.setVisibility(View.VISIBLE);
+                }
             }
         });
         Retrofit retrofit = PaymentRestClass.getClient();
-        final API apiInterface = retrofit.create(API.class);
+        apiInterface = retrofit.create(API.class);
 
         rl_pay_pal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,182 +333,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-
-        rl_mastercard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.CustomDialogFragment);
-                alert.setMessage("Are you Sure?");
-                alert.setCancelable(false);
-                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @SuppressLint("StaticFieldLeak")
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        card_type_select = "1";
-                        if (arrayList != null) {
-                            boolean payment_available = false;
-                            String[] card_date = null;
-                            for (int i = 0; i < arrayList.size(); i++) {
-                                if (arrayList.get(i).getPaymentMethod().equals("1")) {
-                                    payment_available = true;
-                                    card_cvv = arrayList.get(i).getSecurityNumber();
-                                    card_holder_name = arrayList.get(i).getHolderName();
-                                    card_expiry_date = arrayList.get(i).getExpiryDate();
-                                    card_date = card_expiry_date.split("/");
-                                    card_date[0] = card_date[0].trim();
-                                    card_no = arrayList.get(i).getCardNumber();
-                                }
-                            }
-                            if (payment_available) {
-                                progressDialog.setMessage("Please Wait");
-                                progressDialog.setIndeterminate(true);
-                                progressDialog.setCancelable(false);
-                                progressDialog.show();
-                                Call<PrepareTransactionProcessModel> prepareTransactionProcessModelCall = apiInterface.prepareTransaction("ex2SHCqdgtJlrF2gp5fGCis3tUGh5EkjcmcTZD7g6RCxwEOWJ3Cml4qOY664KroXOBQNeY3lPFTlkHh4KUq6YQVXW22HtrFh2w4g", "ahmed@yakrm.com", price, "Paytabs", card_holder_name.substring(0, card_holder_name.indexOf(" ")), card_holder_name.substring(card_holder_name.indexOf(" ") + 1), card_date[1] + card_date[0], card_cvv, "4000000000000002", "SDK", "SAR", "ahmed@yakrm.com", "1", "00966551432252", "123456", "Product 1, Product 2", "jaypokarjdp@gmail.com", "BHR", "Flat 1,Building 123, Road 2345", "Manama", "Manama", "00973", "BHR", "Flat 1,Building 123, Road 2345", "Manama", "Manama", "00973", "1", "TRUE", "no", null, null, null);
-                                prepareTransactionProcessModelCall.enqueue(new Callback<PrepareTransactionProcessModel>() {
-                                    @Override
-                                    public void onResponse(Call<PrepareTransactionProcessModel> call, Response<PrepareTransactionProcessModel> response) {
-                                        Log.i("response_pay", response.toString());
-                                        progressDialog.dismiss();
-                                        Intent in = new Intent(CompletingPurchasingActivity.this, SecurePaymentActivity.class);
-                                        JSONObject jsonObjectData = new JSONObject();
-
-                                        try {
-                                            jsonObjectData.put("merchant_email", "ahmed@yakrm.com");
-                                            jsonObjectData.put("merchant_secret", "ex2SHCqdgtJlrF2gp5fGCis3tUGh5EkjcmcTZD7g6RCxwEOWJ3Cml4qOY664KroXOBQNeY3lPFTlkHh4KUq6YQVXW22HtrFh2w4g");
-                                            jsonObjectData.put("processor", "1");
-                                            jsonObjectData.put("acsUrl", response.body().getPayerAuthEnrollReply().getAcsURL());
-                                            jsonObjectData.put("paReq", response.body().getPayerAuthEnrollReply().getPaReq());
-                                            jsonObjectData.put("xid", response.body().getPayerAuthEnrollReply().getXid());
-                                            jsonObjectData.put("local_transaction_id", response.body().getLocalTransactionId());
-                                            jsonObjectData.put("merchant_id", response.body().getMerchantId());
-                                            jsonObjectData.put("rating", "3");
-                                            jsonObjectData.put("signature", "test");
-                                            jsonObjectData.put("amount", price);
-                                            jsonObjectData.put("currency", "SAR");
-                                            jsonObjectData.put("store_name", "Yakrm");
-                                            jsonObjectData.put("cc_holder_name", card_holder_name);
-                                            jsonObjectData.put("is_tokenization", "TRUE");
-                                        } catch (JSONException var19) {
-                                            var19.printStackTrace();
-                                        }
-
-                                        in.putExtra("data", jsonObjectData.toString());
-                                        in.putExtra("language", "en");
-
-                                        startActivityForResult(in, 1001);
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<PrepareTransactionProcessModel> call, Throwable t) {
-                                        progressDialog.dismiss();
-                                        Log.i("response", t.toString());
-                                    }
-                                });
-                            } else {
-                                startActivity(new Intent(CompletingPurchasingActivity.this, EnterCardDetailsActivity.class));
-                            }
-                        } else {
-                            startActivity(new Intent(CompletingPurchasingActivity.this, EnterCardDetailsActivity.class));
-                        }
-
-                    }
-                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog alertDialog = alert.create();
-                alertDialog.show();
-            }
-        });
-
-        rl_visa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.CustomDialogFragment);
-                alert.setMessage("Are you Sure?");
-                alert.setCancelable(false);
-                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @SuppressLint("StaticFieldLeak")
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        card_type_select = "3";
-                        if (arrayList != null) {
-                            boolean payment_available = false;
-                            String[] card_date = null;
-                            for (int i = 0; i < arrayList.size(); i++) {
-                                if (arrayList.get(i).getPaymentMethod().equals("3")) {
-                                    payment_available = true;
-                                    card_cvv = arrayList.get(i).getSecurityNumber();
-                                    card_holder_name = arrayList.get(i).getHolderName();
-                                    card_expiry_date = arrayList.get(i).getExpiryDate();
-                                    card_date = card_expiry_date.split("/");
-                                    card_date[0] = card_date[0].trim();
-                                    card_no = arrayList.get(i).getCardNumber();
-                                }
-                            }
-                            if (payment_available) {
-                                progressDialog.setMessage("Please Wait");
-                                progressDialog.setIndeterminate(true);
-                                progressDialog.setCancelable(false);
-                                progressDialog.show();
-                                Call<PrepareTransactionProcessModel> prepareTransactionProcessModelCall = apiInterface.prepareTransaction("ex2SHCqdgtJlrF2gp5fGCis3tUGh5EkjcmcTZD7g6RCxwEOWJ3Cml4qOY664KroXOBQNeY3lPFTlkHh4KUq6YQVXW22HtrFh2w4g", "ahmed@yakrm.com", price, "Paytabs", card_holder_name.substring(0, card_holder_name.indexOf(" ")), card_holder_name.substring(card_holder_name.indexOf(" ") + 1), card_date[1] + card_date[0], card_cvv, "4000000000000002", "SDK", "SAR", "ahmed@yakrm.com", "1", "00966551432252", "123456", "Product 1, Product 2", "jaypokarjdp@gmail.com", "BHR", "Flat 1,Building 123, Road 2345", "Manama", "Manama", "00973", "BHR", "Flat 1,Building 123, Road 2345", "Manama", "Manama", "00973", "1", "TRUE", "no", null, null, null);
-                                prepareTransactionProcessModelCall.enqueue(new Callback<PrepareTransactionProcessModel>() {
-                                    @Override
-                                    public void onResponse(Call<PrepareTransactionProcessModel> call, Response<PrepareTransactionProcessModel> response) {
-                                        progressDialog.dismiss();
-                                        Intent in = new Intent(CompletingPurchasingActivity.this, SecurePaymentActivity.class);
-                                        JSONObject jsonObjectData = new JSONObject();
-
-                                        try {
-                                            jsonObjectData.put("merchant_email", "ahmed@yakrm.com");
-                                            jsonObjectData.put("merchant_secret", "ex2SHCqdgtJlrF2gp5fGCis3tUGh5EkjcmcTZD7g6RCxwEOWJ3Cml4qOY664KroXOBQNeY3lPFTlkHh4KUq6YQVXW22HtrFh2w4g");
-                                            jsonObjectData.put("processor", "1");
-                                            jsonObjectData.put("acsUrl", response.body().getPayerAuthEnrollReply().getAcsURL());
-                                            jsonObjectData.put("paReq", response.body().getPayerAuthEnrollReply().getPaReq());
-                                            jsonObjectData.put("xid", response.body().getPayerAuthEnrollReply().getXid());
-                                            jsonObjectData.put("local_transaction_id", response.body().getLocalTransactionId());
-                                            jsonObjectData.put("merchant_id", response.body().getMerchantId());
-                                            jsonObjectData.put("rating", "3");
-                                            jsonObjectData.put("signature", "test");
-                                            jsonObjectData.put("amount", price);
-                                            jsonObjectData.put("currency", "SAR");
-                                            jsonObjectData.put("store_name", "Yakrm");
-                                            jsonObjectData.put("cc_holder_name", card_holder_name);
-                                            jsonObjectData.put("is_tokenization", "TRUE");
-                                        } catch (JSONException var19) {
-                                            var19.printStackTrace();
-                                        }
-                                        in.putExtra("data", jsonObjectData.toString());
-                                        in.putExtra("language", "en");
-                                        startActivityForResult(in, 1001);
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<PrepareTransactionProcessModel> call, Throwable t) {
-                                        progressDialog.dismiss();
-                                        Log.i("response", t.toString());
-                                    }
-                                });
-                            } else {
-                                startActivity(new Intent(CompletingPurchasingActivity.this, EnterCardDetailsActivity.class));
-                            }
-                        } else {
-                            startActivity(new Intent(CompletingPurchasingActivity.this, EnterCardDetailsActivity.class));
-                        }
-                    }
-                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog alertDialog = alert.create();
-                alertDialog.show();
-            }
-        });
         getAllcardList();
     }
 
@@ -467,6 +362,14 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
             if (flag_cart.equals("1")) {
                 try {
                     jsonObject.put("transaction_id", data.getStringExtra("transaction_id"));
+                    jsonObject.put("card_id", card_ID);
+                    jsonObject.put("amount_from_wallet", sessionManager.getUserDetails().get(SessionManager.Wallet));
+                    if (price > Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet))) {
+                        jsonObject.put("amount_from_bank", price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)));
+                    } else {
+                        jsonObject.put("amount_from_bank", Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)) - price);
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -474,9 +377,11 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                 paymentTransactionModelCall.enqueue(new Callback<PaymentTransactionModel>() {
                     @Override
                     public void onResponse(Call<PaymentTransactionModel> call, Response<PaymentTransactionModel> response) {
+                        Log.i("main_message", response.body().getMessage());
                         String status = response.body().getStatus();
                         progressDialog.dismiss();
                         if (status.equals("1")) {
+                            sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
                             succesful_cardview.setVisibility(View.VISIBLE);
                             scrollview_pay.setVisibility(View.GONE);
                             Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -560,32 +465,11 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                 String status = response.body().getStatus();
                 if (status.equals("1")) {
                     arrayList = response.body().getData();
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        card_type_arrayList.add(arrayList.get(i).getPaymentMethod());
-                        card_no_arrayList.add(arrayList.get(i).getCardNumber());
-                        card_name_arrayList.add(arrayList.get(i).getHolderName());
-                        card_expiry_arrayList.add(arrayList.get(i).getExpiryDate());
-                        card_cvv_arrayList.add(arrayList.get(i).getSecurityNumber());
-                    }
-                    if (card_type_arrayList.contains("1")) {
-                        for (int j = 0; j < card_type_arrayList.size(); j++) {
-                            if (card_type_arrayList.contains("1")) {
-                                tv_card_no_cs_mada.setVisibility(View.VISIBLE);
-                                //tv_card_no_cs_mada.setText(getResources().getString(R.string.digits).substring(getResources().getString(R.string.digits).length() - 4, getResources().getString(R.string.digits).length()).replace(card_no_arrayList.get(j)));
-                            }
-                        }
-
-                    }
-                    if (card_type_arrayList.contains("3")) {
-                        for (int j = 0; j < card_type_arrayList.size(); j++) {
-                            if (card_type_arrayList.contains("3")) {
-                                tv_card_no_visa.setVisibility(View.VISIBLE);
-                            }
-                        }
-
-                    }
+                    SavedCardListAdapter savedCardListAdapter = new SavedCardListAdapter(arrayList, CompletingPurchasingActivity.this, apiInterface, progressDialog, sessionManager, price);
+                    recyclerView.setAdapter(savedCardListAdapter);
                 } else {
                     arrayList = null;
+                    startActivity(new Intent(CompletingPurchasingActivity.this, EnterCardDetailsActivity.class));
                 }
             }
 
@@ -599,8 +483,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (card_type_select.equals("1")) {
-            getAllcardList();
-        }
+        getAllcardList();
     }
 }

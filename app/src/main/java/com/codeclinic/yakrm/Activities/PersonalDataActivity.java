@@ -72,7 +72,6 @@ public class PersonalDataActivity extends AppCompatActivity {
 
     Uri selectedImage;
     File sourceFile_sign, compressed_Image;
-    String status1 = "0", message1 = "Try Again";
     boolean value;
     Compressor compressedImage;
     String str_email_regex = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";

@@ -23,6 +23,7 @@ import com.codeclinic.yakrm.Models.RegistrationModel;
 import com.codeclinic.yakrm.Models.RegistrationStep2Model;
 import com.codeclinic.yakrm.Models.RemoveCartItemModel;
 import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
+import com.codeclinic.yakrm.Models.ReturnVoucherModel;
 import com.codeclinic.yakrm.Models.ScanVoucherModel;
 import com.codeclinic.yakrm.Models.SendVoucherToFriendModel;
 import com.codeclinic.yakrm.Models.TransactionsRecordModel;
@@ -148,6 +149,10 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("replace_voucher")
     Call<ReplaceVoucherModel> REPLACE_VOUCHER_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("voucher_return")
+    Call<ReturnVoucherModel> RETURN_VOUCHER_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
     @Headers("Content-Type: application/json")
     @GET("get_all_brands_of_vendors")

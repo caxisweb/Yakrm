@@ -20,7 +20,7 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
     TextView tv_item_name;
     ImageView img_back;
 
-    LinearLayout llayout_send_friend, llayout_add_balance, llayout_display_voucher;
+    LinearLayout llayout_send_friend, llayout_add_balance, llayout_display_voucher, llayout_return_voucher;
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
 
@@ -43,6 +43,7 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
         llayout_send_friend = findViewById(R.id.llayout_send_friend);
         llayout_add_balance = findViewById(R.id.llayout_add_balance);
         llayout_display_voucher = findViewById(R.id.llayout_display_voucher);
+        llayout_return_voucher = findViewById(R.id.llayout_return_voucher);
 
         tv_item_name.setText(getIntent().getStringExtra("name"));
 
@@ -64,6 +65,13 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ExchangeVoucherActivity.this, ExchangeAddBalanceActivity.class));
+            }
+        });
+
+        llayout_return_voucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ExchangeVoucherActivity.this, ReturnVoucherActivity.class));
             }
         });
 

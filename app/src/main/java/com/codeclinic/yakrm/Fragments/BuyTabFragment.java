@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +87,7 @@ public class BuyTabFragment extends Fragment {
                     @Override
                     public void onResponse(Call<AllVouchersListModel> call, Response<AllVouchersListModel> response) {
                         progressDialog.dismiss();
+                        Log.i("user_token", sessionManager.getUserDetails().get(SessionManager.User_Token));
                         int status = response.body().getStatus();
                         if (status == 1) {
                             arrayList = response.body().getData();

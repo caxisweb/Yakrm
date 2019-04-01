@@ -70,8 +70,10 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final GiftDetailListAdapter.CustomViewHolder customViewHolder, @SuppressLint("RecyclerView") final int i) {
-
-        customViewHolder.tv_value.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
+        float voucher_discount = Float.parseFloat(arrayList.get(i).getDiscount()) / 100;
+        float voucher_disount_price = Integer.parseInt(arrayList.get(i).getVoucherPrice()) * voucher_discount;
+        float voucher_value = Float.parseFloat(arrayList.get(i).getVoucherPrice()) + voucher_disount_price;
+        customViewHolder.tv_value.setText(String.valueOf(voucher_value).replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
                 .replaceAll("3", context.getResources().getString(R.string.three))
                 .replaceAll("4", context.getResources().getString(R.string.four))
@@ -93,12 +95,9 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 .replaceAll("8", context.getResources().getString(R.string.eight))
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + "%");
-        float voucher_discount = Float.parseFloat(arrayList.get(i).getDiscount()) / 100;
 
-        float voucher_disount_price = Integer.parseInt(arrayList.get(i).getVoucherPrice()) * voucher_discount;
         if (voucher_price != 0) {
-            float voucher_pay = Float.parseFloat(arrayList.get(i).getVoucherPrice()) - voucher_disount_price;
-            customViewHolder.tv_pay.setText(String.valueOf(voucher_pay).replaceAll("1", context.getResources().getString(R.string.one))
+            customViewHolder.tv_pay.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
                     .replaceAll("2", context.getResources().getString(R.string.two))
                     .replaceAll("3", context.getResources().getString(R.string.three))
                     .replaceAll("4", context.getResources().getString(R.string.four))
