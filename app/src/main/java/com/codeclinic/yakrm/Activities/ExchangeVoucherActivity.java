@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codeclinic.yakrm.R;
 
@@ -64,7 +65,11 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
         llayout_add_balance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ExchangeVoucherActivity.this, ExchangeAddBalanceActivity.class));
+                if (VoucherDetailActivity.scan_voucher_type_full.equals("replace_voucher")) {
+                    Toast.makeText(ExchangeVoucherActivity.this, "Voucher Already been replaced,you can't replace it again", Toast.LENGTH_LONG).show();
+                } else {
+                    startActivity(new Intent(ExchangeVoucherActivity.this, ExchangeAddBalanceActivity.class));
+                }
             }
         });
 

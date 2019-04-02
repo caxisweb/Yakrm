@@ -85,7 +85,11 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
                     intent.putExtra("v_payment_id", arrayList.get(i).getReplaceVoucherPaymentId());
                     intent.putExtra("v_payment_type", "replace_payment");
                 }
-                intent.putExtra("voucher_id", arrayList.get(i).getVoucherId());
+                if (!isEmpty(arrayList.get(i).getVoucherId())) {
+                    intent.putExtra("voucher_id", arrayList.get(i).getVoucherId());
+                } else {
+                    intent.putExtra("voucher_id", arrayList.get(i).getNewVoucherId());
+                }
                 intent.putExtra("admin_voucher_discount", admin_discount);
                 intent.putExtra("scan_voucher_type", arrayList.get(i).getScanVoucherType());
                 context.startActivity(intent);
