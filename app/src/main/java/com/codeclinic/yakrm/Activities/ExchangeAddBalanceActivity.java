@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 import com.codeclinic.yakrm.Adapter.ReplaceVoucherListAdapter;
 import com.codeclinic.yakrm.Models.AllVoucherListItemModel;
 import com.codeclinic.yakrm.Models.AllVouchersListModel;
-import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
@@ -32,7 +30,6 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -176,12 +173,12 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
         btn_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  Intent intent = new Intent(ExchangeAddBalanceActivity.this, CompletingPurchasingActivity.class);
+                Intent intent = new Intent(ExchangeAddBalanceActivity.this, CompletingPurchasingActivity.class);
                 intent.putExtra("price", String.valueOf(main_price));
                 intent.putExtra("flag_cart", "2");
-                startActivity(intent);*/
+                startActivity(intent);
 
-                progressDialog.setMessage("Please Wait");
+        /*        progressDialog.setMessage("Please Wait");
                 progressDialog.setIndeterminate(true);
                 progressDialog.setCancelable(false);
                 progressDialog.show();
@@ -231,7 +228,7 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         Toast.makeText(ExchangeAddBalanceActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
             }
         });
 

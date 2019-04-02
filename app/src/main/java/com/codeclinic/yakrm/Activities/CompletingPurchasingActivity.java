@@ -26,6 +26,7 @@ import com.codeclinic.yakrm.Models.GetCardListItemModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.PaymentTransactionModel;
 import com.codeclinic.yakrm.Models.PrepareTransactionProcessModel;
+import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.PaymentRestClass;
@@ -403,13 +404,20 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                     }
                 });
             } else {
-         /*       try {
+                try {
                     jsonObject.put("replace_active_voucher_id", VoucherDetailActivity.voucher_id);
                     jsonObject.put("voucher_payment_detail_id", VoucherDetailActivity.v_payment_id);
                     jsonObject.put("replace_voucher_id", ExchangeAddBalanceActivity.voucher_id);
-                    jsonObject.put("wallet", "0");
+                    jsonObject.put("card_id", card_ID);
                     jsonObject.put("transaction_id", data.getStringExtra("transaction_id"));
-                    jsonObject.put("transaction_price", String.valueOf(main_price));
+                    if (Double.parseDouble(main_price) > Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet))) {
+                        jsonObject.put("transaction_price", Double.parseDouble(main_price));
+                        jsonObject.put("wallet", "0");
+                    } else {
+                        jsonObject.put("transaction_price", "0");
+                        jsonObject.put("wallet", sessionManager.getUserDetails().get(SessionManager.Wallet));
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -418,6 +426,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                 replaceVoucherModelCall.enqueue(new Callback<ReplaceVoucherModel>() {
                     @Override
                     public void onResponse(Call<ReplaceVoucherModel> call, Response<ReplaceVoucherModel> response) {
+                        Log.i("response_main", response.body().getStatus());
                         progressDialog.dismiss();
                         String status = response.body().getStatus();
                         if (status.equals("1")) {
@@ -450,7 +459,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                     }
-                });*/
+                });
             }
 
         }
