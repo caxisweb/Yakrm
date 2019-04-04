@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -61,6 +62,11 @@ public class SavedCardListAdapter extends RecyclerView.Adapter<SavedCardListAdap
 
     @Override
     public void onBindViewHolder(@NonNull SavedCardListAdapter.Holder holder, final int i) {
+
+        if (arrayList.get(i).getPaymentMethod().equals("1")) {
+            holder.img_visa.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_payment_csmada_icon));
+        }
+
         holder.tv_card_no_visa.setText("**** **** **** " + arrayList.get(i).getCardNumber().substring(arrayList.get(i).getCardNumber().length() - 4));
         holder.ll_card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,11 +88,13 @@ public class SavedCardListAdapter extends RecyclerView.Adapter<SavedCardListAdap
                         card_date[0] = card_date[0].trim();
                         card_no = arrayList.get(i).getCardNumber();
 
+                        double main_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
+
                         progressDialog.setMessage("Please Wait");
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
-                        Call<PrepareTransactionProcessModel> prepareTransactionProcessModelCall = apiService.prepareTransaction("ex2SHCqdgtJlrF2gp5fGCis3tUGh5EkjcmcTZD7g6RCxwEOWJ3Cml4qOY664KroXOBQNeY3lPFTlkHh4KUq6YQVXW22HtrFh2w4g", "ahmed@yakrm.com", price, "Paytabs", card_holder_name.substring(0, card_holder_name.indexOf(" ")), card_holder_name.substring(card_holder_name.indexOf(" ") + 1), card_date[1] + card_date[0], card_cvv, "4000000000000002", "SDK", "SAR", "ahmed@yakrm.com", "1", "00966551432252", "123456", "Product 1, Product 2", "jaypokarjdp@gmail.com", "BHR", "Flat 1,Building 123, Road 2345", "Manama", "Manama", "00973", "BHR", "Flat 1,Building 123, Road 2345", "Manama", "Manama", "00973", "1", "TRUE", "no", null, null, null);
+                        Call<PrepareTransactionProcessModel> prepareTransactionProcessModelCall = apiService.prepareTransaction("ex2SHCqdgtJlrF2gp5fGCis3tUGh5EkjcmcTZD7g6RCxwEOWJ3Cml4qOY664KroXOBQNeY3lPFTlkHh4KUq6YQVXW22HtrFh2w4g", "ahmed@yakrm.com", main_price, "Paytabs", card_holder_name, "test", card_date[1] + card_date[0], card_cvv, "4000000000000002", "SDK", "SAR", "ahmed@yakrm.com", "1", "00966551432252", "123456", "Product 1, Product 2", "jaypokarjdp@gmail.com", "BHR", "Flat 1,Building 123, Road 2345", "Manama", "Manama", "00973", "BHR", "Flat 1,Building 123, Road 2345", "Manama", "Manama", "00973", "1", "TRUE", "no", null, null, null);
                         prepareTransactionProcessModelCall.enqueue(new Callback<PrepareTransactionProcessModel>() {
                             @Override
                             public void onResponse(Call<PrepareTransactionProcessModel> call, Response<PrepareTransactionProcessModel> response) {
@@ -105,7 +113,7 @@ public class SavedCardListAdapter extends RecyclerView.Adapter<SavedCardListAdap
                                     jsonObjectData.put("merchant_id", response.body().getMerchantId());
                                     jsonObjectData.put("rating", "3");
                                     jsonObjectData.put("signature", "test");
-                                    jsonObjectData.put("amount", price);
+                                    jsonObjectData.put("amount", price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)));
                                     jsonObjectData.put("currency", "SAR");
                                     jsonObjectData.put("store_name", "Yakrm");
                                     jsonObjectData.put("cc_holder_name", card_holder_name);
@@ -144,11 +152,13 @@ public class SavedCardListAdapter extends RecyclerView.Adapter<SavedCardListAdap
 
     public class Holder extends RecyclerView.ViewHolder {
         TextView tv_card_no_visa;
+        ImageView img_visa;
         LinearLayout ll_card;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
             tv_card_no_visa = itemView.findViewById(R.id.tv_card_no_visa);
+            img_visa = itemView.findViewById(R.id.img_visa);
             ll_card = itemView.findViewById(R.id.ll_card);
         }
     }

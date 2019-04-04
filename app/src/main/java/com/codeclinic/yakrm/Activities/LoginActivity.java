@@ -17,6 +17,7 @@ import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -101,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         jsonObject.put("email", str_email);
                         jsonObject.put("password", str_password);
+                        jsonObject.put("gcm_id", FirebaseInstanceId.getInstance().getToken());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

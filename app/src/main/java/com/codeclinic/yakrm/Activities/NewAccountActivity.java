@@ -22,6 +22,7 @@ import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -360,6 +361,7 @@ public class NewAccountActivity extends AppCompatActivity {
                         jsonObject_signup.put("name", str_name);
                         jsonObject_signup.put("email", str_email);
                         jsonObject_signup.put("password", str_password);
+                        jsonObject_signup.put("gcm_id", FirebaseInstanceId.getInstance().getToken());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

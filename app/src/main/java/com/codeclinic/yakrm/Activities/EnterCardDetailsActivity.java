@@ -3,15 +3,23 @@ package com.codeclinic.yakrm.Activities;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.Adapter.StoredCardListAdapter;
 import com.codeclinic.yakrm.Models.AddCardDetailsModel;
+import com.codeclinic.yakrm.Models.GetCardListItemModel;
+import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
@@ -23,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,13 +44,17 @@ public class EnterCardDetailsActivity extends AppCompatActivity {
     Integer[] imageArray = {R.mipmap.ic_payment_visa_icon, R.mipmap.ic_payment_csmada_icon, R.mipmap.ic_payment_csmada_icon, R.mipmap.ic_payment_csmada_icon};
     String ex_date = "/^(0[1-9]|1[0-2])\\/?([0-9]{4}|[0-9]{2})$/";
     String name_regex = "^((?:[A-Za-z]+ ?){1,3})$";
+    List<GetCardListItemModel> arrayList = new ArrayList<>();
+    RecyclerView recyclerView;
+    CardView card_list_llayout;
+    ScrollView scrollview_pay;
 
     API apiService;
     ProgressDialog progressDialog;
     SessionManager sessionManager;
     JSONObject jsonObject = new JSONObject();
 
-    Button btn_add;
+    Button btn_add, btn_add_another;
 
     public static ArrayList<String> listOfPattern() {
 
@@ -74,13 +87,20 @@ public class EnterCardDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_card_details);
 
+        card_list_llayout = findViewById(R.id.card_list_llayout);
+        scrollview_pay = findViewById(R.id.scrollview_pay);
+
         edt_ex_date = findViewById(R.id.edt_ex_date);
         edt_card_no = findViewById(R.id.edt_card_no);
         edt_cvv = findViewById(R.id.edt_cvv);
         edt_name = findViewById(R.id.edt_name);
+        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
 
         img_back = findViewById(R.id.img_back);
-
         img_mada_select = findViewById(R.id.img_mada_select);
         img_paypal_select = findViewById(R.id.img_paypal_select);
         img_visa_select = findViewById(R.id.img_visa_select);
@@ -92,6 +112,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity {
         apiService = RestClass.getClient().create(API.class);
 
         btn_add = findViewById(R.id.btn_add);
+        btn_add_another = findViewById(R.id.btn_add_another);
 
 
         String language = String.valueOf(getResources().getConfiguration().locale);
@@ -105,31 +126,28 @@ public class EnterCardDetailsActivity extends AppCompatActivity {
             }
         });
 
+        btn_add_another.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                card_list_llayout.setVisibility(View.GONE);
+                scrollview_pay.setVisibility(View.VISIBLE);
+            }
+        });
+
         img_visa_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 img_visa_select.setBackground(getResources().getDrawable(R.drawable.card_selected_background));
-                img_paypal_select.setBackground(getResources().getDrawable(R.drawable.card_details_item_background));
                 img_mada_select.setBackground(getResources().getDrawable(R.drawable.card_details_item_background));
                 card_select = "3";
             }
         });
 
-        img_paypal_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                img_visa_select.setBackground(getResources().getDrawable(R.drawable.card_details_item_background));
-                img_paypal_select.setBackground(getResources().getDrawable(R.drawable.card_selected_background));
-                img_mada_select.setBackground(getResources().getDrawable(R.drawable.card_details_item_background));
-                card_select = "2";
-            }
-        });
 
         img_mada_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 img_visa_select.setBackground(getResources().getDrawable(R.drawable.card_details_item_background));
-                img_paypal_select.setBackground(getResources().getDrawable(R.drawable.card_details_item_background));
                 img_mada_select.setBackground(getResources().getDrawable(R.drawable.card_selected_background));
                 card_select = "1";
             }
@@ -233,9 +251,32 @@ public class EnterCardDetailsActivity extends AppCompatActivity {
                 }
             }
         });
-        //edt_card_no.addTextChangedListener(new OtherCardTextWatcher(edt_card_no));
 
         edt_ex_date.addTextChangedListener(new TwoDigitsCardTextWatcher(edt_ex_date));
+        getAllcardList();
 
+    }
+
+    public void getAllcardList() {
+        Log.i("token_session", sessionManager.getUserDetails().get(SessionManager.User_Token));
+        Call<GetCardListModel> getCardListModelCall = apiService.GET_CARD_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+        getCardListModelCall.enqueue(new Callback<GetCardListModel>() {
+            @Override
+            public void onResponse(Call<GetCardListModel> call, Response<GetCardListModel> response) {
+                String status = response.body().getStatus();
+                if (status.equals("1")) {
+                    arrayList = response.body().getData();
+                    StoredCardListAdapter storedCardListAdapter = new StoredCardListAdapter(arrayList, EnterCardDetailsActivity.this);
+                    recyclerView.setAdapter(storedCardListAdapter);
+                } else {
+                    Toast.makeText(EnterCardDetailsActivity.this, "No Card is Added yet", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetCardListModel> call, Throwable t) {
+                Toast.makeText(EnterCardDetailsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

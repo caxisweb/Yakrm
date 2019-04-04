@@ -19,7 +19,6 @@ import com.codeclinic.yakrm.Activities.FavouritesActivity;
 import com.codeclinic.yakrm.Activities.MainActivity;
 import com.codeclinic.yakrm.Activities.UploadVouchersActivity;
 import com.codeclinic.yakrm.Activities.VoucherEndedActivity;
-import com.codeclinic.yakrm.Activities.VoucherWillEndActivity;
 import com.codeclinic.yakrm.Adapter.MyWalletAdapter;
 import com.codeclinic.yakrm.Models.WalletActiveListItemModel;
 import com.codeclinic.yakrm.Models.WalletActiveListModel;
@@ -119,7 +118,7 @@ public class MyWalletTabFragment extends Fragment {
         llayout_active_vouchers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), VoucherWillEndActivity.class));
+                MainActivity.viewPager.setCurrentItem(2);
             }
         });
 

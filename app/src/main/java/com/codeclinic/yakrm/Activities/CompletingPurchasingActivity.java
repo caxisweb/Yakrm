@@ -91,8 +91,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         btn_cmplt_pay = findViewById(R.id.btn_cmplt_pay);
 
 
-        rl_visa = findViewById(R.id.rl_visa);
-        rl_mastercard = findViewById(R.id.rl_mastercard);
+       /* rl_visa = findViewById(R.id.rl_visa);
+        rl_mastercard = findViewById(R.id.rl_mastercard);*/
         rl_pay_pal = findViewById(R.id.rl_pay_pal);
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -122,33 +122,41 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
 
         tv_total_price = findViewById(R.id.tv_total_price);
         tv_sc_total_price = findViewById(R.id.tv_sc_total_price);
-
         flag_cart = getIntent().getStringExtra("flag_cart");
         main_price = getIntent().getStringExtra("price");
 
-        tv_total_price.setText(getIntent().getStringExtra("price").replaceAll("1", getResources().getString(R.string.one))
-                .replaceAll("2", getResources().getString(R.string.two))
-                .replaceAll("3", getResources().getString(R.string.three))
-                .replaceAll("4", getResources().getString(R.string.four))
-                .replaceAll("5", getResources().getString(R.string.five))
-                .replaceAll("6", getResources().getString(R.string.six))
-                .replaceAll("7", getResources().getString(R.string.seven))
-                .replaceAll("8", getResources().getString(R.string.eight))
-                .replaceAll("9", getResources().getString(R.string.nine))
-                .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
-
-        tv_sc_total_price.setText(getIntent().getStringExtra("price").replaceAll("1", getResources().getString(R.string.one))
-                .replaceAll("2", getResources().getString(R.string.two))
-                .replaceAll("3", getResources().getString(R.string.three))
-                .replaceAll("4", getResources().getString(R.string.four))
-                .replaceAll("5", getResources().getString(R.string.five))
-                .replaceAll("6", getResources().getString(R.string.six))
-                .replaceAll("7", getResources().getString(R.string.seven))
-                .replaceAll("8", getResources().getString(R.string.eight))
-                .replaceAll("9", getResources().getString(R.string.nine))
-                .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
         total_price = getIntent().getStringExtra("price");
         price = Double.parseDouble(total_price);
+
+        if (price > Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet))) {
+            double t_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
+            tv_total_price.setText(String.valueOf(t_price).replaceAll("1", getResources().getString(R.string.one))
+                    .replaceAll("2", getResources().getString(R.string.two))
+                    .replaceAll("3", getResources().getString(R.string.three))
+                    .replaceAll("4", getResources().getString(R.string.four))
+                    .replaceAll("5", getResources().getString(R.string.five))
+                    .replaceAll("6", getResources().getString(R.string.six))
+                    .replaceAll("7", getResources().getString(R.string.seven))
+                    .replaceAll("8", getResources().getString(R.string.eight))
+                    .replaceAll("9", getResources().getString(R.string.nine))
+                    .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+
+            tv_sc_total_price.setText(String.valueOf(t_price).replaceAll("1", getResources().getString(R.string.one))
+                    .replaceAll("2", getResources().getString(R.string.two))
+                    .replaceAll("3", getResources().getString(R.string.three))
+                    .replaceAll("4", getResources().getString(R.string.four))
+                    .replaceAll("5", getResources().getString(R.string.five))
+                    .replaceAll("6", getResources().getString(R.string.six))
+                    .replaceAll("7", getResources().getString(R.string.seven))
+                    .replaceAll("8", getResources().getString(R.string.eight))
+                    .replaceAll("9", getResources().getString(R.string.nine))
+                    .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+        } else {
+            String t_price = "0";
+            tv_total_price.setText(t_price.replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+            tv_sc_total_price.setText(t_price.replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+        }
+
         progressDialog = new ProgressDialog(this);
 
 
@@ -177,7 +185,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                             try {
                                 jsonObject.put("transaction_id", DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString());
                                 jsonObject.put("amount_from_wallet", sessionManager.getUserDetails().get(SessionManager.Wallet));
-                                jsonObject.put("amount_from_bank", price);
+                                jsonObject.put("amount_from_bank", "0");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

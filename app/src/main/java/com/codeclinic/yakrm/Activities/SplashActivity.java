@@ -7,17 +7,24 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.crashlytics.android.Crashlytics;
+
+import io.fabric.sdk.android.Fabric;
 
 public class SplashActivity extends AppCompatActivity {
 
     SessionManager sessionManager;
     public static String language_name = "ar";
 
+    public void forceCrash() {
+        throw new RuntimeException("This is a crash");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash);
-
         sessionManager = new SessionManager(this);
 
 
