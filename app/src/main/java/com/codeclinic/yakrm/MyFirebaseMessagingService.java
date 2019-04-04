@@ -19,6 +19,8 @@ import com.codeclinic.yakrm.Utils.SessionManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Date;
+
 /**
  * Created by bhatt on 1/12/2017.
  */
@@ -63,19 +65,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             message = remoteMessage.getNotification().getBody();
         } else {
+            str_title = remoteMessage.getData().get("subject");
+            message = remoteMessage.getData().get("description");
 
-            //message = remoteMessage.getData().get("text");
-          /*  str_title = remoteMessage.getData().get("title");
-            noti_type = remoteMessage.getData().get("noti_type");
-            message = remoteMessage.getData().get("text");
-            user_type = remoteMessage.getData().get("user_type");
-            order_id = remoteMessage.getData().get("noti_id");
-            if (user_type.equals("S")) {
-                user_name = remoteMessage.getData().get("buyer_name");
-            } else {
-                user_name = remoteMessage.getData().get("seller_name");
-            }
-            */
         }
         Notification(message);
     }
@@ -111,7 +103,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setSound(defaultSoundUri)
                     .setContentIntent(pendingIntent);
 
-            notificationManager.notify(0, notificationBuilder.build());
+            int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+
+            notificationManager.notify(m, notificationBuilder.build());
 
 
         }

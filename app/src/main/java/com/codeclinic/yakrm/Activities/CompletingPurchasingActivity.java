@@ -25,14 +25,12 @@ import com.codeclinic.yakrm.Adapter.SavedCardListAdapter;
 import com.codeclinic.yakrm.Models.GetCardListItemModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.PaymentTransactionModel;
-import com.codeclinic.yakrm.Models.PrepareTransactionProcessModel;
 import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.PaymentRestClass;
 import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.SessionManager;
-import com.paytabs.paytabs_sdk.payment.ui.activities.SecurePaymentActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -197,8 +195,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                                     progressDialog.dismiss();
                                     if (status.equals("1")) {
                                         sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
-                                        succesful_cardview.setVisibility(View.VISIBLE);
-                                        scrollview_pay.setVisibility(View.GONE);
+                                      /*  succesful_cardview.setVisibility(View.VISIBLE);
+                                        scrollview_pay.setVisibility(View.GONE);*/
                                         Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                         finish();
                                         startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
@@ -237,111 +235,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         Retrofit retrofit = PaymentRestClass.getClient();
         apiInterface = retrofit.create(API.class);
 
-        rl_pay_pal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.CustomDialogFragment);
-                alert.setMessage("Are you Sure?");
-                alert.setCancelable(false);
-                alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @SuppressLint("StaticFieldLeak")
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        card_type_select = "2";
-                        progressDialog.setMessage("Please Wait");
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-                /*        try {
-                            jsonObject.put("secret_key", "ex2SHCqdgtJlrF2gp5fGCis3tUGh5EkjcmcTZD7g6RCxwEOWJ3Cml4qOY664KroXOBQNeY3lPFTlkHh4KUq6YQVXW22HtrFh2w4g");
-                            jsonObject.put("merchant_email", "ahmed@yakrm.com");
-                            jsonObject.put("amount", price);
-                            jsonObject.put("title", "Paytabs");
-                            jsonObject.put("cc_first_name", "jay");
-                            jsonObject.put("cc_last_name", "pokar");
-                            jsonObject.put("card_exp", "2106");
-                            jsonObject.put("cvv", "123");
-                            jsonObject.put("card_number", "4000000000000002");
-                            jsonObject.put("original_assignee_code", "SDK");
-                            jsonObject.put("currency", "SAR");
-                            jsonObject.put("email", "ahmed@yakrm.com");
-                            jsonObject.put("skip_email", "1");
-                            jsonObject.put("phone_number", "00966551432252");
-                            jsonObject.put("order_id", "123456");
-                            jsonObject.put("product_name", "Product 1, Product 2");
-                            jsonObject.put("customer_email", "jaypokarjdp@gmail.com");
-                            jsonObject.put("country_billing", "BHR");
-                            jsonObject.put("address_billing", "Flat 1,Building 123, Road 2345");
-                            jsonObject.put("city_billing", "Manama");
-                            jsonObject.put("state_billing", "Manama");
-                            jsonObject.put("postal_code_billing", "00973");
-                            jsonObject.put("country_shipping", "BHR");
-                            jsonObject.put("address_shipping", "Flat 1,Building 123, Road 2345");
-                            jsonObject.put("city_shipping", "Manama");
-                            jsonObject.put("state_shipping", "Manama");
-                            jsonObject.put("postal_code_shipping", "00973");
-                            jsonObject.put("exchange_rate", "1");
-                            jsonObject.put("is_tokenization", "TRUE");
-                            jsonObject.put("is_existing_customer", "no");
-                            jsonObject.put("pt_token", null);
-                            jsonObject.put("pt_customer_email", null);
-                            jsonObject.put("pt_customer_password", null);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-*/
-                        Call<PrepareTransactionProcessModel> prepareTransactionProcessModelCall = apiInterface.prepareTransaction("ex2SHCqdgtJlrF2gp5fGCis3tUGh5EkjcmcTZD7g6RCxwEOWJ3Cml4qOY664KroXOBQNeY3lPFTlkHh4KUq6YQVXW22HtrFh2w4g", "ahmed@yakrm.com", price, "Paytabs", "jay", "pokar", "2106", "123", "4000000000000002", "SDK", "SAR", "ahmed@yakrm.com", "1", "00966551432252", "123456", "Product 1, Product 2", "jaypokarjdp@gmail.com", "BHR", "Flat 1,Building 123, Road 2345", "Manama", "Manama", "00973", "BHR", "Flat 1,Building 123, Road 2345", "Manama", "Manama", "00973", "1", "TRUE", "no", null, null, null);
-                        prepareTransactionProcessModelCall.enqueue(new Callback<PrepareTransactionProcessModel>() {
-                            @Override
-                            public void onResponse(Call<PrepareTransactionProcessModel> call, Response<PrepareTransactionProcessModel> response) {
-                                progressDialog.dismiss();
-                                Intent in = new Intent(CompletingPurchasingActivity.this, SecurePaymentActivity.class);
-                                JSONObject jsonObjectData = new JSONObject();
-
-                                try {
-                                    jsonObjectData.put("merchant_email", "ahmed@yakrm.com");
-                                    jsonObjectData.put("merchant_secret", "ex2SHCqdgtJlrF2gp5fGCis3tUGh5EkjcmcTZD7g6RCxwEOWJ3Cml4qOY664KroXOBQNeY3lPFTlkHh4KUq6YQVXW22HtrFh2w4g");
-                                    jsonObjectData.put("processor", "1");
-                                    jsonObjectData.put("acsUrl", response.body().getPayerAuthEnrollReply().getAcsURL());
-                                    jsonObjectData.put("paReq", response.body().getPayerAuthEnrollReply().getPaReq());
-                                    jsonObjectData.put("xid", response.body().getPayerAuthEnrollReply().getXid());
-                                    jsonObjectData.put("local_transaction_id", response.body().getLocalTransactionId());
-                                    jsonObjectData.put("merchant_id", response.body().getMerchantId());
-                                    jsonObjectData.put("rating", "3");
-                                    jsonObjectData.put("signature", "test");
-                                    jsonObjectData.put("amount", price);
-                                    jsonObjectData.put("currency", "SAR");
-                                    jsonObjectData.put("store_name", "Yakrm");
-                                    jsonObjectData.put("cc_holder_name", "jay pokar");
-                                    jsonObjectData.put("is_tokenization", "TRUE");
-                                } catch (JSONException var19) {
-                                    var19.printStackTrace();
-                                }
-
-                                in.putExtra("data", jsonObjectData.toString());
-                                in.putExtra("language", "en");
-
-                                startActivityForResult(in, 1001);
-                            }
-
-                            @Override
-                            public void onFailure(Call<PrepareTransactionProcessModel> call, Throwable t) {
-                                progressDialog.dismiss();
-                                Log.i("response", t.toString());
-                            }
-                        });
-
-                    }
-                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog alertDialog = alert.create();
-                alertDialog.show();
-            }
-        });
         getAllcardList();
     }
 
@@ -391,8 +284,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         if (status.equals("1")) {
                             sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
-                            succesful_cardview.setVisibility(View.VISIBLE);
-                            scrollview_pay.setVisibility(View.GONE);
+                         /*   succesful_cardview.setVisibility(View.VISIBLE);
+                            scrollview_pay.setVisibility(View.GONE);*/
                             Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
