@@ -201,7 +201,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                                         scrollview_pay.setVisibility(View.GONE);
                                         Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                         finish();
-
+                                        startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
                                     } else {
                                         scrollview_pay.setVisibility(View.GONE);
                                         error_cardview.setVisibility(View.VISIBLE);
@@ -395,6 +395,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                             scrollview_pay.setVisibility(View.GONE);
                             Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             finish();
+                            startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
 
                         } else {
                             scrollview_pay.setVisibility(View.GONE);

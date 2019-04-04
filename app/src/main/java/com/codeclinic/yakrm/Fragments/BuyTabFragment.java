@@ -69,6 +69,7 @@ public class BuyTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buy_tab, container, false);
+        setRetainInstance(true);
         sessionManager = new SessionManager(getActivity());
         layout_filter = view.findViewById(R.id.layout_filter);
         recyclerView = view.findViewById(R.id.recyclerView);

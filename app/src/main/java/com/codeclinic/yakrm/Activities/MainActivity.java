@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity
         sessionManager = new SessionManager(this);
 
         viewPager = findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(5);
 
         tabLayout = findViewById(R.id.tablayout);
 
