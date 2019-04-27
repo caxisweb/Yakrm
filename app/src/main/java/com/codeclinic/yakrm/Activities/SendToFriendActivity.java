@@ -8,8 +8,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.codeclinic.yakrm.Models.FriendMobileNumberModel;
 import com.codeclinic.yakrm.Models.SendVoucherToFriendModel;
@@ -37,16 +37,16 @@ import com.codeclinic.yakrm.Utils.Connection_Detector;
 import com.codeclinic.yakrm.Utils.ImageURL;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
-import java.util.Date;
 
 import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
@@ -64,6 +64,8 @@ public class SendToFriendActivity extends AppCompatActivity {
     private final int CAMERA_IMAGE = 1;
     EditText edt_mobile, ed_description;
     private final int PICK_IMAGE_GALLERY = 3;
+    private static final String VIDEO_DIRECTORY = "/yakrm";
+    String camera_or_gallery = "0";
     TextView tv_itemname, tv_price, tv_name, tv_email, tv_sending_date, tv_add_video;
 
     API apiService;
@@ -76,8 +78,10 @@ public class SendToFriendActivity extends AppCompatActivity {
     Uri selectedImage;
     File sourceFile_sign, compressed_Image;
     boolean value;
+    private int GALLERY = 1, CAMERA = 2;
     Compressor compressedImage;
     MultipartBody.Part body = null;
+    private VideoView videoView;
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;
@@ -93,7 +97,7 @@ public class SendToFriendActivity extends AppCompatActivity {
         StrictMode.setVmPolicy(builder1.build());
         compressedImage = new Compressor(this);
         apiService = RestClass.getClient().create(API.class);
-
+        videoView = findViewById(R.id.vv);
         btn_complete = findViewById(R.id.btn_complete);
 
         progressDialog = new ProgressDialog(this);
@@ -216,7 +220,7 @@ public class SendToFriendActivity extends AppCompatActivity {
                                 break;
                         }
                         if (sourceFile_sign != null) {
-                            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), sourceFile_sign);
+                            RequestBody reqFile = RequestBody.create(MediaType.parse("video/mp4"), sourceFile_sign);
                             body = MultipartBody.Part.createFormData("video_or_image", sourceFile_sign.getName(), reqFile);
                         }
                         Call<SendVoucherToFriendModel> sendVoucherToFriendModelCall = apiService.SEND_VOUCHER_TO_FRIEND_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), voucherID, mobile, description, voucher_payment_id, scan_v_type, body);
@@ -224,25 +228,21 @@ public class SendToFriendActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<SendVoucherToFriendModel> call, Response<SendVoucherToFriendModel> response) {
                                 progressDialog.dismiss();
-                                if (response.body().equals("1")) {
-                                    VoucherDetailActivity.voucher_name = "";
-                                    VoucherDetailActivity.date = "";
-                                    VoucherDetailActivity.barcode = "";
-                                    VoucherDetailActivity.pincode = "";
-                                    VoucherDetailActivity.price = "";
-                                    VoucherDetailActivity.v_image = "";
-                                    VoucherDetailActivity.v_payment_id = "";
-                                    VoucherDetailActivity.voucher_id = "";
-                                    VoucherDetailActivity.v_image = "";
-                                    VoucherDetailActivity.scan_voucher_type = "";
-                                    VoucherDetailActivity.voucher_detail_activity.finish();
-                                    ExchangeVoucherActivity.ex_activity.finish();
-                                    finish();
-                                    startActivity(new Intent(SendToFriendActivity.this, MainActivity.class));
-                                    Toast.makeText(SendToFriendActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(SendToFriendActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
+                                VoucherDetailActivity.voucher_name = "";
+                                VoucherDetailActivity.date = "";
+                                VoucherDetailActivity.barcode = "";
+                                VoucherDetailActivity.pincode = "";
+                                VoucherDetailActivity.price = "";
+                                VoucherDetailActivity.v_image = "";
+                                VoucherDetailActivity.v_payment_id = "";
+                                VoucherDetailActivity.voucher_id = "";
+                                VoucherDetailActivity.v_image = "";
+                                VoucherDetailActivity.scan_voucher_type = "";
+                                startActivity(new Intent(SendToFriendActivity.this, MainActivity.class));
+                                Toast.makeText(SendToFriendActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                VoucherDetailActivity.voucher_detail_activity.finish();
+                                ExchangeVoucherActivity.ex_activity.finish();
+                                finish();
                             }
 
                             @Override
@@ -263,36 +263,24 @@ public class SendToFriendActivity extends AppCompatActivity {
     }
 
     private void selectImage() {
-        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        final CharSequence[] options = {"Record video from camera", "Select video from gallery", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(SendToFriendActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Add Video!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
+            @SuppressLint("IntentReset")
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo")) {
+                if (options[item].equals("Record video from camera")) {
                     if (isPermissionGranted()) {
-                        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Yakrm/";
-                        File newdir = new File(dir);
-                        newdir.mkdirs();
-                        String file = dir + DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString() + ".jpg";
-                        File newfile = new File(file);
-                        try {
-                            newfile.createNewFile();
-                        } catch (IOException ignored) {
-                        }
-                        selectedImage = Uri.fromFile(newfile);
-                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImage);
-                        startActivityForResult(cameraIntent, CAMERA_IMAGE);
+                        camera_or_gallery = "0";
+                        takeVideoFromCamera();
                     } else {
                         Toast.makeText(SendToFriendActivity.this, "Permission needed to access Camera", Toast.LENGTH_SHORT).show();
                     }
-
-                } else if (options[item].equals("Choose from Gallery")) {
+                } else if (options[item].equals("Select video from gallery")) {
                     if (isPermissionGranted()) {
-                        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        photoPickerIntent.setType("image/*");
-                        startActivityForResult(photoPickerIntent, PICK_IMAGE_GALLERY);
+                        camera_or_gallery = "1";
+                        chooseVideoFromGallary();
                     } else {
                         Toast.makeText(SendToFriendActivity.this, "Permission needed to access Gallery", Toast.LENGTH_SHORT).show();
                     }
@@ -304,88 +292,185 @@ public class SendToFriendActivity extends AppCompatActivity {
         builder.show();
     }
 
-    @SuppressLint("NewApi")
+
+    public void chooseVideoFromGallary() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, GALLERY);
+    }
+
+    private void takeVideoFromCamera() {
+
+        try {
+            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            startActivityForResult(intent, CAMERA);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        try {
-            if (requestCode == CAMERA_IMAGE) {
-                CropImage.activity(selectedImage)
-                        .setFixAspectRatio(true)
-                        .start(this);
-            } else if (requestCode == PICK_IMAGE_GALLERY) {
-                selectedImage = data.getData();
-                CropImage.activity(selectedImage)
-                        .setFixAspectRatio(true)
-                        .start(this);
-            } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                selectedImage = result.getUri();
-                if (resultCode == RESULT_OK) {
-                    sourceFile_sign = new File(selectedImage.getPath());
-                    compressed_Image = compressedImage
-                            .setMaxWidth(400)
-                            .setMaxHeight(400)
-                            .setQuality(50)
-                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath())
-                            .compressToFile(sourceFile_sign);
-                    sourceFile_sign = new File(compressed_Image.getPath());
-                    InputStream in = null;
-                    try {
-                        final int IMAGE_MAX_SIZE = 1200000; // 1.2MP
-                        in = getContentResolver().openInputStream(selectedImage);
-                        // Decode image size
-                        BitmapFactory.Options o = new BitmapFactory.Options();
-                        o.inJustDecodeBounds = true;
-                        BitmapFactory.decodeStream(in, null, o);
-                        try {
-                            in.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        int scale = 1;
-                        while ((o.outWidth * o.outHeight) * (1 / Math.pow(scale, 2)) >
-                                IMAGE_MAX_SIZE) {
-                            scale++;
-                        }
-                        Bitmap b = null;
-                        in = getContentResolver().openInputStream(selectedImage);
-                        if (scale > 1) {
-                            scale--;
-                            // scale to max possible inSampleSize that still yields an image
-                            // larger than target
-                            o = new BitmapFactory.Options();
-                            o.inSampleSize = scale;
-                            b = BitmapFactory.decodeStream(in, null, o);
 
-                            // resize to desired dimensions
-                            int height = b.getHeight();
-                            int width = b.getWidth();
+        Log.d("result", "" + resultCode);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CANCELED) {
+            return;
+        }
+        if (requestCode == GALLERY) {
+            Log.d("what", "gale");
+            if (data != null) {
+                Uri contentURI = data.getData();
+                String selectedVideoPath = getPath(contentURI);
+                sourceFile_sign = new File(selectedVideoPath);
+                videoView.setVideoURI(contentURI);
+                videoView.requestFocus();
+                videoView.start();
+            }
 
-                            double y = Math.sqrt(IMAGE_MAX_SIZE
-                                    / (((double) width) / height));
-                            double x = (y / height) * width;
-
-                            Bitmap scaledBitmap = Bitmap.createScaledBitmap(b, (int) x,
-                                    (int) y, true);
-                            b.recycle();
-                            b = scaledBitmap;
-
-                            System.gc();
-                        } else {
-                            b = BitmapFactory.decodeStream(in);
-                        }
-                        in.close();
-                        /* img_profile.setImageBitmap(b);*/
-                    } catch (Exception ignored) {
-                    }
-                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    Toast.makeText(SendToFriendActivity.this, "Image Can't be cropped", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == CAMERA) {
+            Uri contentURI = data.getData();
+            String recordedVideoPath = getPath(contentURI);
+            sourceFile_sign = new File(recordedVideoPath);
+            try {
+                File currentFile = new File(recordedVideoPath);
+                File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + VIDEO_DIRECTORY);
+                if (!wallpaperDirectory.exists()) {
+                    wallpaperDirectory.mkdirs();
                 }
+                sourceFile_sign = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".mp4");
+
+                if (currentFile.exists()) {
+                    InputStream in = new FileInputStream(currentFile);
+                    OutputStream out = new FileOutputStream(sourceFile_sign);
+                    // Copy the bits from instream to outstream
+                    byte[] buf = new byte[1024];
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                    in.close();
+                    out.close();
+                    Log.v("vii", "Video file saved successfully.");
+                } else {
+                    Log.v("vii", "Video saving failed. Source file missing.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            videoView.setVideoURI(Uri.fromFile(sourceFile_sign));
+            videoView.requestFocus();
+            videoView.start();
+        }
+    }
+
+    private void saveVideoToInternalStorage(String filePath) {
+
+        File newfile;
+        try {
+
+            File currentFile = new File(filePath);
+            File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + VIDEO_DIRECTORY);
+            wallpaperDirectory.mkdirs();
+            sourceFile_sign = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".mp4");
+
+
+            if (currentFile.exists()) {
+
+                InputStream in = new FileInputStream(currentFile);
+                OutputStream out = new FileOutputStream(sourceFile_sign);
+
+                // Copy the bits from instream to outstream
+                byte[] buf = new byte[1024];
+                int len;
+
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                in.close();
+                out.close();
+                Log.v("vii", "Video file saved successfully.");
+            } else {
+                Log.v("vii", "Video saving failed. Source file missing.");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+      /*  if (camera_or_gallery.equals("0")) {
+
+            try {
+
+                File currentFile = new File(filePath);
+                File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + VIDEO_DIRECTORY);
+                sourceFile_sign = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".mp4");
+                wallpaperDirectory.mkdirs();
+
+                if (currentFile.exists()) {
+
+                    InputStream in = new FileInputStream(currentFile);
+                    OutputStream out = new FileOutputStream(sourceFile_sign);
+
+                    // Copy the bits from instream to outstream
+                    byte[] buf = new byte[1024];
+                    int len;
+
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                    in.close();
+                    out.close();
+                    Log.v("vii", "Video file saved successfully.");
+                } else {
+                    Log.v("vii", "Video saving failed. Source file missing.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+
+                File currentFile = new File(filePath);
+                File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + VIDEO_DIRECTORY);
+                sourceFile_sign = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".mp4");
+                wallpaperDirectory.mkdirs();
+
+                if (currentFile.exists()) {
+
+                    InputStream in = new FileInputStream(currentFile);
+                    OutputStream out = new FileOutputStream(sourceFile_sign);
+
+                    // Copy the bits from instream to outstream
+                    byte[] buf = new byte[1024];
+                    int len;
+
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                    in.close();
+                    out.close();
+                    Log.v("vii", "Video file saved successfully.");
+                } else {
+                    Log.v("vii", "Video saving failed. Source file missing.");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }*/
+
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.Video.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } else
+            return null;
     }
 
     public boolean isPermissionGranted() {

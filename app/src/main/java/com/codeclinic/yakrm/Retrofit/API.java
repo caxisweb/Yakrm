@@ -124,7 +124,7 @@ public interface API {
 
     @Multipart
     @POST("send_voucher_as_gift")
-    Call<SendVoucherToFriendModel> SEND_VOUCHER_TO_FRIEND_MODEL_CALL(@Header("Authorization") String header, @Part("voucher_id") RequestBody voucher_id, @Part("phone") RequestBody phone, @Part("description") RequestBody desc, @Part("payment_replace_id") RequestBody voucher_payment_id, @Part("scan_voucher_type") RequestBody scan_voucher_type, @Part MultipartBody.Part image);
+    Call<SendVoucherToFriendModel> SEND_VOUCHER_TO_FRIEND_MODEL_CALL(@Header("Authorization") String header, @Part("voucher_id") RequestBody voucher_id, @Part("phone") RequestBody phone, @Part("description") RequestBody desc, @Part("payment_replace_id") RequestBody voucher_payment_id, @Part("scan_voucher_type") RequestBody scan_voucher_type, @Part MultipartBody.Part file);
 
     @Headers("Content-Type: application/json")
     @POST("change_password")

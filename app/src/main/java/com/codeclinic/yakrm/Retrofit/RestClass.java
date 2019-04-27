@@ -1,10 +1,8 @@
 package com.codeclinic.yakrm.Retrofit;
 
-import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -19,19 +17,25 @@ public class RestClass {
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
+        OkHttpClient httpClient = new OkHttpClient.Builder().connectTimeout(40, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
+                    .client(httpClient)
                     .baseUrl(BASE_URL)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
+
                     .build();
         }
         return retrofit;
     }
 
 
-    private static OkHttpClient Client() {
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+/*    private static OkHttpClient Client() {
+
 
         httpClient.addInterceptor(new Interceptor() {
             @Override
@@ -53,6 +57,6 @@ public class RestClass {
 
         return httpClient.build();
 
-    }
+    }*/
 
 }
