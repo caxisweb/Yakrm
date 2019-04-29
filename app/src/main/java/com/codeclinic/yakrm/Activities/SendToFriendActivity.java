@@ -64,9 +64,10 @@ public class SendToFriendActivity extends AppCompatActivity {
     private final int CAMERA_IMAGE = 1;
     EditText edt_mobile, ed_description;
     private final int PICK_IMAGE_GALLERY = 3;
-    private static final String VIDEO_DIRECTORY = "/yakrm";
-    String camera_or_gallery = "0";
+    private static final String VIDEO_DIRECTORY = "/yakrm/";
+    String camera_or_gallery = "0", mediatype;
     TextView tv_itemname, tv_price, tv_name, tv_email, tv_sending_date, tv_add_video;
+    String decodableString;
 
     API apiService;
     JSONObject jsonObject_mobile = new JSONObject();
@@ -220,7 +221,7 @@ public class SendToFriendActivity extends AppCompatActivity {
                                 break;
                         }
                         if (sourceFile_sign != null) {
-                            RequestBody reqFile = RequestBody.create(MediaType.parse("video/mp4"), sourceFile_sign);
+                            RequestBody reqFile = RequestBody.create(MediaType.parse("*/*"), sourceFile_sign);
                             body = MultipartBody.Part.createFormData("video_or_image", sourceFile_sign.getName(), reqFile);
                         }
                         Call<SendVoucherToFriendModel> sendVoucherToFriendModelCall = apiService.SEND_VOUCHER_TO_FRIEND_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), voucherID, mobile, description, voucher_payment_id, scan_v_type, body);
@@ -272,14 +273,12 @@ public class SendToFriendActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Record video from camera")) {
                     if (isPermissionGranted()) {
-                        camera_or_gallery = "0";
                         takeVideoFromCamera();
                     } else {
                         Toast.makeText(SendToFriendActivity.this, "Permission needed to access Camera", Toast.LENGTH_SHORT).show();
                     }
                 } else if (options[item].equals("Select video from gallery")) {
                     if (isPermissionGranted()) {
-                        camera_or_gallery = "1";
                         chooseVideoFromGallary();
                     } else {
                         Toast.makeText(SendToFriendActivity.this, "Permission needed to access Gallery", Toast.LENGTH_SHORT).show();
@@ -291,7 +290,6 @@ public class SendToFriendActivity extends AppCompatActivity {
         });
         builder.show();
     }
-
 
     public void chooseVideoFromGallary() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
@@ -313,54 +311,27 @@ public class SendToFriendActivity extends AppCompatActivity {
 
         Log.d("result", "" + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == RESULT_CANCELED) {
             return;
         }
-        if (requestCode == GALLERY) {
-            Log.d("what", "gale");
-            if (data != null) {
-                Uri contentURI = data.getData();
-                String selectedVideoPath = getPath(contentURI);
-                sourceFile_sign = new File(selectedVideoPath);
-                videoView.setVideoURI(contentURI);
-                videoView.requestFocus();
-                videoView.start();
-            }
 
-        } else if (requestCode == CAMERA) {
-            Uri contentURI = data.getData();
-            String recordedVideoPath = getPath(contentURI);
-            sourceFile_sign = new File(recordedVideoPath);
-            try {
-                File currentFile = new File(recordedVideoPath);
-                File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + VIDEO_DIRECTORY);
-                if (!wallpaperDirectory.exists()) {
-                    wallpaperDirectory.mkdirs();
-                }
-                sourceFile_sign = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".mp4");
-
-                if (currentFile.exists()) {
-                    InputStream in = new FileInputStream(currentFile);
-                    OutputStream out = new FileOutputStream(sourceFile_sign);
-                    // Copy the bits from instream to outstream
-                    byte[] buf = new byte[1024];
-                    int len;
-                    while ((len = in.read(buf)) > 0) {
-                        out.write(buf, 0, len);
-                    }
-                    in.close();
-                    out.close();
-                    Log.v("vii", "Video file saved successfully.");
-                } else {
-                    Log.v("vii", "Video saving failed. Source file missing.");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (requestCode == GALLERY || requestCode == CAMERA) {
+            Uri selectedVideo = data.getData();
+            String[] filePathColumn = {MediaStore.Video.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedVideo, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            decodableString = cursor.getString(columnIndex);
+            cursor.close();
+            mediatype = getContentResolver().getType(selectedVideo);
+            sourceFile_sign = new File(decodableString);
+            videoView.setVisibility(View.VISIBLE);
             videoView.setVideoURI(Uri.fromFile(sourceFile_sign));
             videoView.requestFocus();
             videoView.start();
         }
+
     }
 
     private void saveVideoToInternalStorage(String filePath) {
