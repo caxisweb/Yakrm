@@ -83,7 +83,7 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
         tv_voucher_price = findViewById(R.id.tv_voucher_price);
         tv_price = findViewById(R.id.tv_price);
         tv_amount_be_paid = findViewById(R.id.tv_amount_be_paid);
-        replace_price = Integer.parseInt(VoucherDetailActivity.price);
+        replace_price = Double.parseDouble(VoucherDetailActivity.price);
 
 
         try {
@@ -178,57 +178,63 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
                 intent.putExtra("flag_cart", "2");
                 startActivity(intent);
 
-        /*        progressDialog.setMessage("Please Wait");
-                progressDialog.setIndeterminate(true);
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-                try {
-                    jsonObject.put("replace_active_voucher_id", VoucherDetailActivity.voucher_id);
-                    jsonObject.put("voucher_payment_detail_id", VoucherDetailActivity.v_payment_id);
-                    jsonObject.put("replace_voucher_id", voucher_id);
-                    //jsonObject.put("wallet", "0");
-                    jsonObject.put("transaction_id", DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString());
-                    jsonObject.put("transaction_price", String.valueOf(main_price));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+           /*     if (tv_price.getText().toString().equals("0.0") || tv_price.getText().toString().equals("0")) {
+                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    try {
+                        jsonObject.put("replace_active_voucher_id", VoucherDetailActivity.voucher_id);
+                        jsonObject.put("voucher_payment_detail_id", VoucherDetailActivity.v_payment_id);
+                        jsonObject.put("replace_voucher_id", voucher_id);
+                        jsonObject.put("wallet", sessionManager.getUserDetails().get(SessionManager.Wallet));
+                        jsonObject.put("transaction_id", DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString());
+                        jsonObject.put("transaction_price", 0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-                Call<ReplaceVoucherModel> replaceVoucherModelCall = apiService.REPLACE_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
-                replaceVoucherModelCall.enqueue(new Callback<ReplaceVoucherModel>() {
-                    @Override
-                    public void onResponse(Call<ReplaceVoucherModel> call, Response<ReplaceVoucherModel> response) {
-                        progressDialog.dismiss();
-                        String status = response.body().getStatus();
-                        if (status.equals("1")) {
-                            VoucherDetailActivity.voucher_name = "";
-                            VoucherDetailActivity.date = "";
-                            VoucherDetailActivity.barcode = "";
-                            VoucherDetailActivity.pincode = "";
-                            VoucherDetailActivity.price = "";
-                            VoucherDetailActivity.v_image = "";
-                            VoucherDetailActivity.v_payment_id = "";
-                            VoucherDetailActivity.voucher_id = "";
-                            VoucherDetailActivity.v_image = "";
-                            ExchangeAddBalanceActivity.main_price = 0;
-                            ExchangeAddBalanceActivity.voucher_price = 0;
-                            ExchangeAddBalanceActivity.replace_price = 0;
-                            ExchangeAddBalanceActivity.temp_price = 0;
-                            startActivity(new Intent(ExchangeAddBalanceActivity.this, MainActivity.class));
-                            finish();
-                            ExchangeVoucherActivity.ex_activity.finish();
-                            VoucherDetailActivity.voucher_detail_activity.finish();
-                            Toast.makeText(ExchangeAddBalanceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(ExchangeAddBalanceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    Call<ReplaceVoucherModel> replaceVoucherModelCall = apiService.REPLACE_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                    replaceVoucherModelCall.enqueue(new Callback<ReplaceVoucherModel>() {
+                        @Override
+                        public void onResponse(Call<ReplaceVoucherModel> call, Response<ReplaceVoucherModel> response) {
+                            progressDialog.dismiss();
+                            String status = response.body().getStatus();
+                            if (status.equals("1")) {
+                                VoucherDetailActivity.voucher_name = "";
+                                VoucherDetailActivity.date = "";
+                                VoucherDetailActivity.barcode = "";
+                                VoucherDetailActivity.pincode = "";
+                                VoucherDetailActivity.price = "";
+                                VoucherDetailActivity.v_image = "";
+                                VoucherDetailActivity.v_payment_id = "";
+                                VoucherDetailActivity.voucher_id = "";
+                                VoucherDetailActivity.v_image = "";
+                                ExchangeAddBalanceActivity.main_price = 0;
+                                ExchangeAddBalanceActivity.voucher_price = 0;
+                                ExchangeAddBalanceActivity.replace_price = 0;
+                                ExchangeAddBalanceActivity.temp_price = 0;
+                                startActivity(new Intent(ExchangeAddBalanceActivity.this, MainActivity.class));
+                                finish();
+                                ExchangeVoucherActivity.ex_activity.finish();
+                                VoucherDetailActivity.voucher_detail_activity.finish();
+                                Toast.makeText(ExchangeAddBalanceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ExchangeAddBalanceActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ReplaceVoucherModel> call, Throwable t) {
-                        progressDialog.dismiss();
-                        Toast.makeText(ExchangeAddBalanceActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                    }
-                });*/
+                        @Override
+                        public void onFailure(Call<ReplaceVoucherModel> call, Throwable t) {
+                            progressDialog.dismiss();
+                            Toast.makeText(ExchangeAddBalanceActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } else {
+
+                }
+*/
             }
         });
 

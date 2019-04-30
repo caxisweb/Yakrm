@@ -226,6 +226,64 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                     AlertDialog alertDialog = alert.create();
                     alertDialog.show();
 
+                } else if (Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)) == price) {
+                    try {
+                        jsonObject.put("replace_active_voucher_id", VoucherDetailActivity.voucher_id);
+                        jsonObject.put("voucher_payment_detail_id", VoucherDetailActivity.v_payment_id);
+                        jsonObject.put("replace_voucher_id", ExchangeAddBalanceActivity.voucher_id);
+                        jsonObject.put("card_id", arrayList.get(0).getId());
+                        jsonObject.put("transaction_id", DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString());
+                        if (Double.parseDouble(main_price) > Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet))) {
+                            jsonObject.put("transaction_price", Double.parseDouble(main_price));
+                            jsonObject.put("wallet", "0");
+                        } else {
+                            jsonObject.put("transaction_price", "0");
+                            jsonObject.put("wallet", sessionManager.getUserDetails().get(SessionManager.Wallet));
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    Call<ReplaceVoucherModel> replaceVoucherModelCall = apiService.REPLACE_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                    replaceVoucherModelCall.enqueue(new Callback<ReplaceVoucherModel>() {
+                        @Override
+                        public void onResponse(Call<ReplaceVoucherModel> call, Response<ReplaceVoucherModel> response) {
+                            Log.i("response_main", response.body().getStatus());
+                            progressDialog.dismiss();
+                            String status = response.body().getStatus();
+                            if (status.equals("1")) {
+                                sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
+                                VoucherDetailActivity.voucher_name = "";
+                                VoucherDetailActivity.date = "";
+                                VoucherDetailActivity.barcode = "";
+                                VoucherDetailActivity.pincode = "";
+                                VoucherDetailActivity.price = "";
+                                VoucherDetailActivity.v_image = "";
+                                VoucherDetailActivity.v_payment_id = "";
+                                VoucherDetailActivity.voucher_id = "";
+                                VoucherDetailActivity.v_image = "";
+                                ExchangeAddBalanceActivity.main_price = 0;
+                                ExchangeAddBalanceActivity.voucher_price = 0;
+                                ExchangeAddBalanceActivity.replace_price = 0;
+                                ExchangeAddBalanceActivity.temp_price = 0;
+                                startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
+                                finish();
+                                ExchangeAddBalanceActivity.exchange_activity.finish();
+                                ExchangeVoucherActivity.ex_activity.finish();
+                                VoucherDetailActivity.voucher_detail_activity.finish();
+                                Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ReplaceVoucherModel> call, Throwable t) {
+                            progressDialog.dismiss();
+                            Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
                     main_pay_cardview.setVisibility(View.GONE);
                     scrollview_pay.setVisibility(View.VISIBLE);
@@ -332,6 +390,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         String status = response.body().getStatus();
                         if (status.equals("1")) {
+                            sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
                             VoucherDetailActivity.voucher_name = "";
                             VoucherDetailActivity.date = "";
                             VoucherDetailActivity.barcode = "";
