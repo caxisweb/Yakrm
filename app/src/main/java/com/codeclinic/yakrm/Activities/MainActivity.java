@@ -374,14 +374,18 @@ public class MainActivity extends AppCompatActivity
         llayout_support_contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawer.closeDrawer(GravityCompat.START);
-                llayout_tab.setVisibility(View.GONE);
-                findViewById(R.id.frame_contaner).setVisibility(View.VISIBLE);
-                toolbar.setTitle(getResources().getString(R.string.Support_And_Contact));
-                SupportContactFragment fragment = null;
-                fragment = new SupportContactFragment();
-                android.app.FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
+                if (sessionManager.isLoggedIn()) {
+                    drawer.closeDrawer(GravityCompat.START);
+                    llayout_tab.setVisibility(View.GONE);
+                    findViewById(R.id.frame_contaner).setVisibility(View.VISIBLE);
+                    toolbar.setTitle(getResources().getString(R.string.Support_And_Contact));
+                    SupportContactFragment fragment = null;
+                    fragment = new SupportContactFragment();
+                    android.app.FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
+                } else {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
             }
         });
 
