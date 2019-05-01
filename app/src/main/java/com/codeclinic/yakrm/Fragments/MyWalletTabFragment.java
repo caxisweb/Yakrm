@@ -45,7 +45,7 @@ public class MyWalletTabFragment extends Fragment {
     RecyclerView recyclerView;
     MyWalletAdapter myWalletAdapter;
     List<WalletActiveListItemModel> arrayList = new ArrayList<>();
-    TextView tv_upload_voucher, tv_wallet_amount;
+    TextView tv_upload_voucher, tv_wallet_amount, tv_fav_voucher, tv_active_voucher, tv_voucher_about_end, tv_voucher_ended;
     LinearLayout llayout_voucher_ended_valid, llayout_fav_vouchers, llayout_active_vouchers, llayout_voucher_ended_done;
     JSONObject jsonObject = new JSONObject();
     API apiService;
@@ -73,6 +73,12 @@ public class MyWalletTabFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         tv_upload_voucher = view.findViewById(R.id.tv_upload_voucher);
         tv_wallet_amount = view.findViewById(R.id.tv_wallet_amount);
+
+        tv_fav_voucher = view.findViewById(R.id.tv_fav_voucher);
+        tv_active_voucher = view.findViewById(R.id.tv_active_voucher);
+        tv_voucher_about_end = view.findViewById(R.id.tv_voucher_about_end);
+        tv_voucher_ended = view.findViewById(R.id.tv_voucher_ended);
+
         sessionManager = new SessionManager(getActivity());
         apiService = RestClass.getClient().create(API.class);
         progressDialog = new ProgressDialog(getActivity());
@@ -141,6 +147,10 @@ public class MyWalletTabFragment extends Fragment {
                     progressDialog.dismiss();
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
+                        tv_fav_voucher.setText(response.body().getTotal_favourites());
+                        tv_active_voucher.setText(response.body().getTotal_active_voucher());
+                        tv_voucher_about_end.setText(response.body().getVoucher_end_soon());
+                        tv_voucher_ended.setText(response.body().getVoucher_ended());
                         arrayList = response.body().getData();
                         admin_discount = response.body().getAdminProfitDis();
                         myWalletAdapter = new MyWalletAdapter(arrayList, getActivity(), admin_discount);

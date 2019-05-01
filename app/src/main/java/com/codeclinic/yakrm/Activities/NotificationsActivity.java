@@ -8,12 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.codeclinic.yakrm.Adapter.SimpleAdapter;
-import com.codeclinic.yakrm.Adapter.SimpleSectionedRecyclerViewAdapter;
 import com.codeclinic.yakrm.R;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NotificationsActivity extends AppCompatActivity {
 
@@ -49,7 +47,7 @@ public class NotificationsActivity extends AppCompatActivity {
                 .sizeResId(R.dimen.divider)
                 .build());
 
-        arrayList[0] = getResources().getString(R.string.System_Administrator);
+   /*     arrayList[0] = getResources().getString(R.string.System_Administrator);
         arrayList[1] = getResources().getString(R.string.System_Administrator);
         arrayList[2] = getResources().getString(R.string.System_Administrator);
         arrayList[3] = getResources().getString(R.string.System_Administrator);
@@ -81,7 +79,7 @@ public class NotificationsActivity extends AppCompatActivity {
         mSectionedAdapter.setSections(sections.toArray(dummy));
 
         //Apply this adapter to the RecyclerView
-        recyclerView.setAdapter(mSectionedAdapter);
+        recyclerView.setAdapter(mSectionedAdapter);*/
 
 
     }

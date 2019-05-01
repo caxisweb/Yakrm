@@ -1,5 +1,6 @@
 package com.codeclinic.yakrm.Retrofit;
 
+import com.codeclinic.yakrm.Models.AboutApplicationModel;
 import com.codeclinic.yakrm.Models.ActiveVoucherListModel;
 import com.codeclinic.yakrm.Models.AddCardDetailsModel;
 import com.codeclinic.yakrm.Models.AddToFavouritesModel;
@@ -9,11 +10,13 @@ import com.codeclinic.yakrm.Models.BrandListModel;
 import com.codeclinic.yakrm.Models.CartListModel;
 import com.codeclinic.yakrm.Models.ChangePasswordModel;
 import com.codeclinic.yakrm.Models.FavouritesListModel;
+import com.codeclinic.yakrm.Models.FeedBackModel;
 import com.codeclinic.yakrm.Models.FilterListModel;
 import com.codeclinic.yakrm.Models.FriendMobileNumberModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.GetMerchantInfoModel;
 import com.codeclinic.yakrm.Models.LoginModel;
+import com.codeclinic.yakrm.Models.NotificationListModel;
 import com.codeclinic.yakrm.Models.PaymentTransactionModel;
 import com.codeclinic.yakrm.Models.PrepareTransactionProcessModel;
 import com.codeclinic.yakrm.Models.ProfileImageUpload;
@@ -165,6 +168,18 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("voucher_scan")
     Call<ScanVoucherModel> SCAN_VOUCHER_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @GET("get_about_application")
+    Call<AboutApplicationModel> ABOUT_APPLICATION_MODEL_CALL();
+
+    @Headers("Content-Type: application/json")
+    @GET("get_users_notifications_history")
+    Call<NotificationListModel> NOTIFICATION_LIST_MODEL_CALL(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
+    @POST("add_feedback")
+    Call<FeedBackModel> FEED_BACK_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
 
 }

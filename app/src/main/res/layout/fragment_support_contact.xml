@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    tools:context="com.yakrm.codeclinic.com.codeclinic.yakrm.Fragments.SupportContactFragment">
+    android:fillViewport="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -47,18 +45,21 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/email_address"
                     android:textColor="@color/text_color"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:visibility="visible" />
 
                 <EditText
+                    android:id="@+id/edt_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/light_grey_border_background"
                     android:hint="email@domain.dlt"
                     android:inputType="textEmailAddress"
-                    android:padding="6dp"
+                    android:padding="10dp"
                     android:textColor="@color/black"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -68,20 +69,17 @@
                     android:textColor="@color/text_color"
                     android:textSize="14dp" />
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
+
+                <EditText
+                    android:id="@+id/edt_msg_title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/light_grey_border_background">
+                    android:background="@drawable/light_grey_border_background"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
 
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </Spinner>
-
-
-                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -92,6 +90,7 @@
                     android:textSize="14dp" />
 
                 <EditText
+                    android:id="@+id/edt_description"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginTop="10dp"
@@ -104,7 +103,7 @@
 
 
                 <Button
-                    android:id="@+id/btn_log_in"
+                    android:id="@+id/btn_send"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     android:layout_marginTop="10dp"

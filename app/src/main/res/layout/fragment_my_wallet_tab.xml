@@ -124,6 +124,7 @@
                         android:padding="5dp">
 
                         <TextView
+                            android:id="@+id/tv_fav_voucher"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -182,6 +183,7 @@
                         android:padding="5dp">
 
                         <TextView
+                            android:id="@+id/tv_active_voucher"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -247,6 +249,7 @@
                         android:padding="5dp">
 
                         <TextView
+                            android:id="@+id/tv_voucher_about_end"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -306,6 +309,7 @@
                         android:padding="5dp">
 
                         <TextView
+                            android:id="@+id/tv_voucher_ended"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"

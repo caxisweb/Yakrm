@@ -12,6 +12,18 @@ public class WalletActiveListModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("total_active_voucher")
+    @Expose
+    private String total_active_voucher;
+    @SerializedName("total_favourites")
+    @Expose
+    private String total_favourites;
+    @SerializedName("voucher_end_soon")
+    @Expose
+    private String voucher_end_soon;
+    @SerializedName("voucher_ended")
+    @Expose
+    private String voucher_ended;
     @SerializedName("admin_profit_dis")
     @Expose
     private String adminProfitDis;
@@ -34,6 +46,40 @@ public class WalletActiveListModel {
     public void setMessage(String message) {
         this.message = message;
     }
+
+
+    public String getTotal_active_voucher() {
+        return total_active_voucher;
+    }
+
+    public void setTotal_active_voucher(String total_active_voucher) {
+        this.total_active_voucher = total_active_voucher;
+    }
+
+    public String getTotal_favourites() {
+        return total_favourites;
+    }
+
+    public void setTotal_favourites(String total_favourites) {
+        this.total_favourites = total_favourites;
+    }
+
+    public String getVoucher_end_soon() {
+        return voucher_end_soon;
+    }
+
+    public void setVoucher_end_soon(String voucher_end_soon) {
+        this.voucher_end_soon = voucher_end_soon;
+    }
+
+    public String getVoucher_ended() {
+        return voucher_ended;
+    }
+
+    public void setVoucher_ended(String voucher_ended) {
+        this.voucher_ended = voucher_ended;
+    }
+
 
     public String getAdminProfitDis() {
         return adminProfitDis;

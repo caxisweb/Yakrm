@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.yakrm.codeclinic.com.codeclinic.yakrm.Activities.ExcahangeInstructionsActivity">
+    android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="match_parent"
@@ -26,14 +24,14 @@
             android:id="@+id/img_back"
             android:layout_width="40dp"
             android:layout_height="45dp"
-            android:padding="10dp"
             android:background="?android:selectableItemBackground"
+            android:padding="10dp"
             android:src="@drawable/back_img" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/About_Yakrm"
+            android:text="@string/About_The_Application"
             android:textColor="@color/white"
             android:textSize="16dp"
             android:textStyle="bold" />
@@ -51,51 +49,21 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Idea_of_Yakrm"
-                android:textColor="@color/black"
-                android:textSize="14dp"
-                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/Here_You_Find_Voucher_Cards_Friend"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
 
             <TextView
+                android:id="@+id/tv_terms_condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/You_Can_Transform_It_Ito_Walet_Cards_And_Use_It_In_purchasing_And_Discount_Process"
+                android:layout_marginTop="15dp"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/Here_You_Find_Voucher_Cards_Friend"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/You_Can_Transform_It_Ito_Walet_Cards_And_Use_It_In_purchasing_And_Discount_Process"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/Version_Number"
-                android:textColor="@color/colorPrimary"
-                android:textSize="10dp"
-                android:textStyle="bold" />
 
 
         </LinearLayout>

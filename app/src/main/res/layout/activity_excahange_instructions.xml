@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.yakrm.codeclinic.com.codeclinic.yakrm.Activities.ExcahangeInstructionsActivity">
+    android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="match_parent"
@@ -33,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Exchange_Instructions"
+            android:text="@string/Instructions_And_Conditions"
             android:textColor="@color/white"
             android:textSize="16dp"
             android:textStyle="bold" />
