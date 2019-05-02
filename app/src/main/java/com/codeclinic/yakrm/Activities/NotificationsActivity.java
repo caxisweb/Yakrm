@@ -1,31 +1,58 @@
 package com.codeclinic.yakrm.Activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.codeclinic.yakrm.Adapter.SimpleAdapter;
+import com.codeclinic.yakrm.Adapter.SimpleSectionedRecyclerViewAdapter;
+import com.codeclinic.yakrm.Models.NotificationListItemModel;
+import com.codeclinic.yakrm.Models.NotificationListModel;
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Retrofit.API;
+import com.codeclinic.yakrm.Retrofit.RestClass;
+import com.codeclinic.yakrm.Utils.Connection_Detector;
+import com.codeclinic.yakrm.Utils.SessionManager;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NotificationsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ImageView img_back;
     String[] arrayList = new String[12];
-    ArrayList<String> title_arrayList = new ArrayList<>();
+    ArrayList<String> title_arrayList;
+    ArrayList<Integer> title_arrayList_size = new ArrayList<>();
     SimpleAdapter mAdapter;
+    int count = 0;
+
+    ArrayList<ArrayList<String>> arrayList_sections = new ArrayList<>();
+    List<NotificationListItemModel> arrayList_notification = new ArrayList<>();
+    API apiService;
+    SessionManager sessionManager;
+    ProgressDialog progressDialog;
+    List<SimpleSectionedRecyclerViewAdapter.Section> sections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
 
+        apiService = RestClass.getClient().create(API.class);
+        progressDialog = new ProgressDialog(this);
+        sessionManager = new SessionManager(this);
         recyclerView = findViewById(R.id.recyclerView);
         img_back = findViewById(R.id.img_back);
         String language = String.valueOf(getResources().getConfiguration().locale);
@@ -38,7 +65,7 @@ public class NotificationsActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        sections = new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -47,39 +74,99 @@ public class NotificationsActivity extends AppCompatActivity {
                 .sizeResId(R.dimen.divider)
                 .build());
 
-   /*     arrayList[0] = getResources().getString(R.string.System_Administrator);
-        arrayList[1] = getResources().getString(R.string.System_Administrator);
-        arrayList[2] = getResources().getString(R.string.System_Administrator);
-        arrayList[3] = getResources().getString(R.string.System_Administrator);
-        arrayList[4] = getResources().getString(R.string.System_Administrator);
-        arrayList[5] = getResources().getString(R.string.System_Administrator);
-        arrayList[6] = getResources().getString(R.string.System_Administrator);
-        arrayList[7] = getResources().getString(R.string.System_Administrator);
-        arrayList[8] = getResources().getString(R.string.System_Administrator);
-        arrayList[9] = getResources().getString(R.string.System_Administrator);
-        arrayList[10] = getResources().getString(R.string.System_Administrator);
-        arrayList[11] = getResources().getString(R.string.System_Administrator);
+        if (Connection_Detector.isInternetAvailable(this)) {
+            progressDialog.setMessage("Please Wait");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            Call<NotificationListModel> notificationListModelCall = apiService.NOTIFICATION_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+            notificationListModelCall.enqueue(new Callback<NotificationListModel>() {
+                @Override
+                public void onResponse(Call<NotificationListModel> call, Response<NotificationListModel> response) {
+                    progressDialog.dismiss();
+                    if (response.body().getStatus().equals("1")) {
+                        arrayList_notification = response.body().getData();
+                        Collections.reverse(arrayList_notification);
+                        title_arrayList = new ArrayList<>();
+                        for (int i = 0; i < arrayList_notification.size(); i++) {
+                            if (title_arrayList.contains(arrayList_notification.get(i).getCreatedAt())) {
+                                title_arrayList.add(arrayList_notification.get(i).getCreatedAt());
+                                count++;
 
-        mAdapter = new SimpleAdapter(this, arrayList);
+                            } else {
+                                if (title_arrayList.size() != 0) {
+                                    arrayList_sections.add(title_arrayList);
 
+                                    if (arrayList_sections.size() == 1) {
+                                        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, title_arrayList.get(0)));
+                                    } else {
+                                        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(count - title_arrayList.size(), title_arrayList.get(0)));
+                                    }
 
-        //This is the code to provide a sectioned list
-        List<SimpleSectionedRecyclerViewAdapter.Section> sections =
-                new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+                                /*    String date = title_arrayList.get(0);
+                                    Calendar nowTime = Calendar.getInstance();
+                                    Date strDate = null;
+                                    try {
+                                        SimpleDateFormat sdf = new SimpleDateFormat("ddd MMM yyyy");
+                                        String final_date = date.trim();
+                                        strDate = sdf.parse(final_date);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (nowTime.get(Calendar.DATE) == strDate.getDate()) {
+                                        if (arrayList_sections.size() == 1) {
+                                            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, title_arrayList.get(0)));
+                                        } else {
+                                            //sections.add(new SimpleSectionedRecyclerViewAdapter.Section(count-title_arrayList.size()+2, title_arrayList.get(0)));
+                                            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(count - title_arrayList.size(), title_arrayList.get(0)));
+                                        }
+                                    } else if (nowTime.get(Calendar.DATE) - strDate.getDate() == 1) {
+                                        if (arrayList_sections.size() == 1) {
+                                            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, title_arrayList.get(0)));
+                                        } else {
+                                            //sections.add(new SimpleSectionedRecyclerViewAdapter.Section(count-title_arrayList.size()+2, title_arrayList.get(0)));
+                                            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(count - title_arrayList.size(), title_arrayList.get(0)));
+                                        }
+                                    } else {
+                                        if (arrayList_sections.size() == 1) {
+                                            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, title_arrayList.get(0)));
+                                        } else {
+                                            //sections.add(new SimpleSectionedRecyclerViewAdapter.Section(count-title_arrayList.size()+2, title_arrayList.get(0)));
+                                            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(count - title_arrayList.size(), title_arrayList.get(0)));
+                                        }
+                                    }*/
 
-        //Sections
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, getResources().getString(R.string.Yesterday)));
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(5, getResources().getString(R.string.Dec_18)));
+                                }
+                                title_arrayList = new ArrayList<>();
+                                title_arrayList.add(arrayList_notification.get(i).getCreatedAt());
+                                count++;
+                            }
+                        }
 
+                        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(count - title_arrayList.size(), title_arrayList.get(0)));
+                        mAdapter = new SimpleAdapter(NotificationsActivity.this, arrayList_notification);
+                        //Add your adapter to the sectionAdapter
+                        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+                        SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new SimpleSectionedRecyclerViewAdapter(NotificationsActivity.this, R.layout.custom_notification_header_view, R.id.tv_header, mAdapter);
+                        mSectionedAdapter.setSections(sections.toArray(dummy));
+                        //Apply this adapter to the RecyclerView
+                        recyclerView.setAdapter(mSectionedAdapter);
 
-        //Add your adapter to the sectionAdapter
-        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
-        SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new
-                SimpleSectionedRecyclerViewAdapter(this, R.layout.custom_notification_header_view, R.id.tv_header, mAdapter);
-        mSectionedAdapter.setSections(sections.toArray(dummy));
+                    } else {
+                        Toast.makeText(NotificationsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
 
-        //Apply this adapter to the RecyclerView
-        recyclerView.setAdapter(mSectionedAdapter);*/
+                }
+
+                @Override
+                public void onFailure(Call<NotificationListModel> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(NotificationsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
 
 
     }

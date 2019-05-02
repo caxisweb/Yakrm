@@ -50,10 +50,12 @@ public class SupportContactFragment extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_support_contact, container, false);
         MainActivity.back_flag = 1;
+
         edt_msg_title = view.findViewById(R.id.edt_msg_title);
         edt_description = view.findViewById(R.id.edt_description);
         edt_email = view.findViewById(R.id.edt_email);
         btn_send = view.findViewById(R.id.btn_send);
+
         apiService = RestClass.getClient().create(API.class);
         progressDialog = new ProgressDialog(getActivity());
         sessionManager = new SessionManager(getActivity());

@@ -8,24 +8,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.Models.NotificationListItemModel;
 import com.codeclinic.yakrm.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleViewHolder> {
-    private final Context mContext;
-    private List<String> mData;
+    final Context mContext;
+    List<NotificationListItemModel> mData;
 
-    public SimpleAdapter(Context context, String[] data) {
+    public SimpleAdapter(Context context, List<NotificationListItemModel> data) {
         mContext = context;
-        if (data != null)
-            mData = new ArrayList<String>(Arrays.asList(data));
-        else mData = new ArrayList<String>();
+        this.mData = data;
     }
 
-    public void add(String s, int position) {
+    public void add(NotificationListItemModel s, int position) {
         position = position == -1 ? getItemCount() : position;
         mData.add(position, s);
         notifyItemInserted(position);
@@ -45,8 +42,9 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
-        holder.title.setText(mData.get(position));
-        holder.title.setOnClickListener(new View.OnClickListener() {
+        holder.tv_notification_Title.setText(mData.get(position).getSubject());
+        holder.tv_notification.setText(mData.get(position).getDescription());
+        holder.tv_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "Position =" + position, Toast.LENGTH_SHORT).show();
@@ -60,11 +58,12 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
     }
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        public final TextView title;
+        TextView tv_notification, tv_notification_Title;
 
         public SimpleViewHolder(View view) {
             super(view);
-            title = view.findViewById(R.id.tv_notification);
+            tv_notification = view.findViewById(R.id.tv_notification);
+            tv_notification_Title = view.findViewById(R.id.tv_notification_Title);
         }
     }
 }

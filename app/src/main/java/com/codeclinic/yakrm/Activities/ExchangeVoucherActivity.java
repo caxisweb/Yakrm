@@ -22,6 +22,7 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
     ImageView img_back;
 
     LinearLayout llayout_send_friend, llayout_add_balance, llayout_display_voucher, llayout_return_voucher;
+
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
 

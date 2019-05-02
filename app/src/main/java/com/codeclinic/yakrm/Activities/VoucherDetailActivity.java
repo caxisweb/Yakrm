@@ -20,7 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class VoucherDetailActivity extends AppCompatActivity {
+public class
+VoucherDetailActivity extends AppCompatActivity {
 
     TextView tv_header_name, tv_expiredate, tv_price, tv_barcode, tv_pincode;
     ImageView img_back, img_voucher;
