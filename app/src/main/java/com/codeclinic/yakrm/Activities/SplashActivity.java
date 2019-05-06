@@ -34,17 +34,17 @@ public class SplashActivity extends AppCompatActivity {
                 if (sessionManager.isLoggedIn()) {
                     if (sessionManager.getUserDetails().get(SessionManager.UserType).equals("users")) {
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                        finish();
                         startActivity(intent);
+                        finish();
                     } else {
                         Intent intent = new Intent(SplashActivity.this, UploadVouchersActivity.class);
-                        finish();
                         startActivity(intent);
+                        finish();
                     }
                 } else {
                     Intent intent = new Intent(SplashActivity.this, StartActivity.class);
-                    finish();
                     startActivity(intent);
+                    finish();
                 }
             }
         }, 2000);

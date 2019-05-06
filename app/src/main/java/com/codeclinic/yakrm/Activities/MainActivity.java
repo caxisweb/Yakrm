@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity
     public static ArrayList<GiftCategoryModel> arrayList = new ArrayList<>();
     public static ArrayList<String> cat_arrayList_id = new ArrayList<>();
     public static ArrayList<String> cat_arrayList_name = new ArrayList<>();
-    public static Button btn[];
+    public static Button[] btn;
     public static NavigationView navigationView2;
     int i;
     AlertDialog.Builder dialogBuilder;
