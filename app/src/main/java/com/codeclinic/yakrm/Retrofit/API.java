@@ -14,6 +14,7 @@ import com.codeclinic.yakrm.Models.FeedBackModel;
 import com.codeclinic.yakrm.Models.FilterListModel;
 import com.codeclinic.yakrm.Models.FriendMobileNumberModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
+import com.codeclinic.yakrm.Models.GetCheckoutIDModel;
 import com.codeclinic.yakrm.Models.GetMerchantInfoModel;
 import com.codeclinic.yakrm.Models.LoginModel;
 import com.codeclinic.yakrm.Models.NotificationListModel;
@@ -180,6 +181,10 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("add_feedback")
     Call<FeedBackModel> FEED_BACK_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("checkout")
+    Call<GetCheckoutIDModel> GET_CHECKOUT_ID_MODEL_CALL(@Body String Body);
 
 
 }

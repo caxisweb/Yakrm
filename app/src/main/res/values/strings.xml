@@ -28,6 +28,9 @@
     <string name="Sign_up_a_new_account">Sign up a new account</string>
     <string name="SR_currency">SR</string>
 
+    <string name="video_saved_at">Video saves at : $%1s</string>
+    <string name="label_select_video">Select Video</string>
+    <string name="toast_cannot_retrieve_selected_video">Cannot retrieve selected video</string>
 
     <string name="Step_1_Enter_your_login_data">Enter your login data</string>
     <string name="email_address">Email address</string>

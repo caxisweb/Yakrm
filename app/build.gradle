@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation project(':paytabs_sdk-v3.0.0')
-
+    implementation project(':oppwa.mobile-2.2.0')
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-iid:17.0.0'
     implementation 'com.google.firebase:firebase-messaging:17.3.0'
@@ -71,6 +71,8 @@ dependencies {
         transitive = true
     }
     implementation project(':Cardlibrary')
+    implementation project(':camerafragment')
+    implementation project(':k4l-video-trimmer')
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
 }
