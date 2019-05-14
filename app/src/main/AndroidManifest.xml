@@ -92,7 +92,7 @@
         <activity
             android:name=".Activities.SendToFriendActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeFullscreen"></activity>
+            android:theme="@style/ThemeFullscreen"/>
         <activity
             android:name="com.github.florent37.camerafragment.PreviewActivity"
             android:screenOrientation="portrait"

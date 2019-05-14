@@ -2,6 +2,8 @@ package com.codeclinic.yakrm.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,7 +43,7 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
 
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
-    public void onBindViewHolder(@NonNull RecievedListAdapter.Holder holder, int i) {
+    public void onBindViewHolder(@NonNull RecievedListAdapter.Holder holder, final int i) {
         holder.tv_description.setText(arrayList.get(i).getDescription());
         holder.tv_friend_name.setText(arrayList.get(i).getName());
         holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
@@ -119,6 +121,16 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
 
+        holder.tv_press_watch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(ImageURL.gift_video + arrayList.get(i).getAttachedVideoImage());
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(uri, "video/*");
+                context.startActivity(intent);
+            }
+        });
+
         holder.img_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +147,7 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
 
     public class Holder extends RecyclerView.ViewHolder {
         ImageView img_wallet, voucher_image;
-        TextView tv_item_name, tv_expiry_date, tv_price, tv_discount, tv_discount_price, tv_friend_name, tv_description, tv_ends_on;
+        TextView tv_item_name, tv_expiry_date, tv_price, tv_discount, tv_discount_price, tv_friend_name, tv_description, tv_ends_on, tv_press_watch;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -149,6 +161,7 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
             tv_friend_name = itemView.findViewById(R.id.tv_friend_name);
             tv_description = itemView.findViewById(R.id.tv_description);
             tv_ends_on = itemView.findViewById(R.id.tv_ends_on);
+            tv_press_watch = itemView.findViewById(R.id.tv_press_watch);
         }
     }
 }

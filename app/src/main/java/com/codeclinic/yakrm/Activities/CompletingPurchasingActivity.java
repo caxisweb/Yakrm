@@ -323,7 +323,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
             }
         });
 
-       /* btn_cmplt_pay.setOnClickListener(new View.OnClickListener() {
+   /*     btn_cmplt_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -448,16 +448,15 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         checkoutSettings.getAndroidPaySettings();
         checkoutSettings.setWebViewEnabledFor3DSecure(true);
 
-
         ComponentName componentName = new ComponentName(BuildConfig.APPLICATION_ID, CheckoutBroadcastReceiver.class.getCanonicalName());
 
-/*        Intent intent = new Intent(CompletingPurchasingActivity.this, CheckoutActivity.class);
+        Intent intent = new Intent(CompletingPurchasingActivity.this, CheckoutActivity.class);
         intent.putExtra(CheckoutActivity.CHECKOUT_SETTINGS, checkoutSettings);
         intent.putExtra(CheckoutActivity.CHECKOUT_RECEIVER, componentName);
-        startActivityForResult(intent, CheckoutActivity.CHECKOUT_ACTIVITY);*/
-
-        Intent intent = new Intent(CompletingPurchasingActivity.this, CheckoutActivity.class);
         startActivityForResult(intent, CheckoutActivity.CHECKOUT_ACTIVITY);
+
+       /* Intent intent = new Intent(CompletingPurchasingActivity.this, CheckoutActivity.class);
+        startActivityForResult(intent, CheckoutActivity.CHECKOUT_ACTIVITY);*/
     }
 
     @Override
@@ -496,7 +495,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         };
     }
 
- /*   @Override
+  /*  @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case CheckoutActivity.RESULT_OK:
@@ -529,8 +528,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == 1001) {
-        /*    Log.e("Tag", data.getStringExtra(PaymentParams.RESPONSE_CODE));
+    /*    if (resultCode == RESULT_OK && requestCode == 1001) {
+            Log.e("Tag", data.getStringExtra(PaymentParams.RESPONSE_CODE));
             Log.e("Tag", data.getStringExtra(PaymentParams.TRANSACTION_ID));
             Toast.makeText(CompletingPurchasingActivity.this, data.getStringExtra(PaymentParams.RESPONSE_CODE), Toast.LENGTH_LONG).show();
             Toast.makeText(CompletingPurchasingActivity.this, data.getStringExtra(PaymentParams.TRANSACTION_ID), Toast.LENGTH_LONG).show();
@@ -541,8 +540,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                 Toast.makeText(CompletingPurchasingActivity.this, data.getStringExtra(PaymentParams.TOKEN), Toast.LENGTH_LONG).show();
                 Toast.makeText(CompletingPurchasingActivity.this, data.getStringExtra(PaymentParams.CUSTOMER_EMAIL), Toast.LENGTH_LONG).show();
                 Toast.makeText(CompletingPurchasingActivity.this, data.getStringExtra(PaymentParams.CUSTOMER_PASSWORD), Toast.LENGTH_LONG).show();
-            }
-*/
+            }*/
+
 
             progressDialog.setMessage("Please Wait");
             progressDialog.setIndeterminate(true);
@@ -654,7 +653,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
             }
 
         }
-    }
+
 
     public void getAllcardList() {
         Log.i("token_session", sessionManager.getUserDetails().get(SessionManager.User_Token));

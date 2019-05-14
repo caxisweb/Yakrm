@@ -147,10 +147,6 @@ public class MyWalletTabFragment extends Fragment {
                     progressDialog.dismiss();
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
-                        tv_fav_voucher.setText(response.body().getTotal_favourites());
-                        tv_active_voucher.setText(response.body().getTotal_active_voucher());
-                        tv_voucher_about_end.setText(response.body().getVoucher_end_soon());
-                        tv_voucher_ended.setText(response.body().getVoucher_ended());
                         arrayList = response.body().getData();
                         admin_discount = response.body().getAdminProfitDis();
                         myWalletAdapter = new MyWalletAdapter(arrayList, getActivity(), admin_discount);
@@ -158,6 +154,10 @@ public class MyWalletTabFragment extends Fragment {
                     } else {
                         Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
+                    tv_fav_voucher.setText(response.body().getTotal_favourites());
+                    tv_active_voucher.setText(response.body().getTotal_active_voucher());
+                    tv_voucher_about_end.setText(response.body().getVoucher_end_soon());
+                    tv_voucher_ended.setText(response.body().getVoucher_ended());
                 }
 
                 @Override

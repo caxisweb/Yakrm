@@ -26,8 +26,7 @@ public class CheckoutBroadcastReceiver extends BroadcastReceiver {
 
 
         intent = new Intent(context, CheckoutActivity.class);
-    /*    intent.setComponent(senderComponentName);
-        intent.setPackage(senderComponentName.getPackageName());*/
+        intent.setPackage(BuildConfig.APPLICATION_ID);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(CheckoutActivity.ACTION_PAYMENT_METHOD_SELECTED);
         intent.putExtra(CheckoutActivity.EXTRA_CHECKOUT_ID, checkoutId);
