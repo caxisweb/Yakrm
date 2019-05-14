@@ -47,6 +47,6 @@
         android:id="@+id/frame_contaner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"></FrameLayout>
+        android:visibility="gone"/>
 
 </RelativeLayout>

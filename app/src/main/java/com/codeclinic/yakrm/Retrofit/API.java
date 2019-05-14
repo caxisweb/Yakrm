@@ -9,6 +9,7 @@ import com.codeclinic.yakrm.Models.AllVouchersListModel;
 import com.codeclinic.yakrm.Models.BrandListModel;
 import com.codeclinic.yakrm.Models.CartListModel;
 import com.codeclinic.yakrm.Models.ChangePasswordModel;
+import com.codeclinic.yakrm.Models.EndedVoucherListModel;
 import com.codeclinic.yakrm.Models.FavouritesListModel;
 import com.codeclinic.yakrm.Models.FeedBackModel;
 import com.codeclinic.yakrm.Models.FilterListModel;
@@ -29,6 +30,7 @@ import com.codeclinic.yakrm.Models.RemoveCartItemModel;
 import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
 import com.codeclinic.yakrm.Models.ReturnVoucherModel;
 import com.codeclinic.yakrm.Models.ScanVoucherModel;
+import com.codeclinic.yakrm.Models.SearchListModel;
 import com.codeclinic.yakrm.Models.SendVoucherToFriendModel;
 import com.codeclinic.yakrm.Models.TransactionsRecordModel;
 import com.codeclinic.yakrm.Models.VerifyOTPModel;
@@ -179,12 +181,20 @@ public interface API {
     Call<NotificationListModel> NOTIFICATION_LIST_MODEL_CALL(@Header("Authorization") String header);
 
     @Headers("Content-Type: application/json")
+    @GET("get_ended_vouchers_of_user")
+    Call<EndedVoucherListModel> ENDED_VOUCHER_LIST_MODEL_CALL(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
     @POST("add_feedback")
     Call<FeedBackModel> FEED_BACK_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
     @Headers("Content-Type: application/json")
     @POST("checkout")
     Call<GetCheckoutIDModel> GET_CHECKOUT_ID_MODEL_CALL(@Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("search_brand")
+    Call<SearchListModel> SEARCH_LIST_MODEL_CALL(@Body String Body);
 
 
 }

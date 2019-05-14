@@ -66,7 +66,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/doller_img" />
+                        android:src="@mipmap/ic_sar_currency_icon" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

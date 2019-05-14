@@ -110,7 +110,7 @@ public class MyWalletTabFragment extends Fragment {
         llayout_voucher_ended_valid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), VoucherEndedActivity.class));
+                MainActivity.viewPager.setCurrentItem(2);
             }
         });
 
@@ -131,7 +131,7 @@ public class MyWalletTabFragment extends Fragment {
         llayout_voucher_ended_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.viewPager.setCurrentItem(2);
+                startActivity(new Intent(getActivity(), VoucherEndedActivity.class));
             }
         });
 

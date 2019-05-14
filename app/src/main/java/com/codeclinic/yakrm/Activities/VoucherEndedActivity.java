@@ -1,28 +1,49 @@
 package com.codeclinic.yakrm.Activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.codeclinic.yakrm.Adapter.MyWalletAdapter;
 import com.codeclinic.yakrm.Adapter.VoucherWillEndAdapter;
+import com.codeclinic.yakrm.Models.EndedVoucherListItemModel;
+import com.codeclinic.yakrm.Models.EndedVoucherListModel;
+import com.codeclinic.yakrm.Models.WalletActiveListModel;
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Retrofit.API;
+import com.codeclinic.yakrm.Retrofit.RestClass;
+import com.codeclinic.yakrm.Utils.Connection_Detector;
+import com.codeclinic.yakrm.Utils.SessionManager;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VoucherEndedActivity extends AppCompatActivity {
-    ArrayList arrayList = new ArrayList();
+    List<EndedVoucherListItemModel> arrayList = new ArrayList();
     RecyclerView recyclerView;
     ImageView img_back;
     VoucherWillEndAdapter voucherWillEndAdapter;
+    SessionManager sessionManager;
+    ProgressDialog progressDialog;
+    API apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voucher_ended);
 
+        sessionManager = new SessionManager(this);
+        progressDialog = new ProgressDialog(this);
+        apiService = RestClass.getClient().create(API.class);
 
         img_back = findViewById(R.id.img_back);
         String language = String.valueOf(getResources().getConfiguration().locale);
@@ -42,13 +63,38 @@ public class VoucherEndedActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
 
-        arrayList.add("STABUCKSCARD");
-        arrayList.add("Coca Cola ");
-        arrayList.add("Adidas Inc. ");
-        arrayList.add("XBOX");
-        arrayList.add("STABUCKSCARD");
 
-        voucherWillEndAdapter = new VoucherWillEndAdapter(arrayList, this);
-        recyclerView.setAdapter(voucherWillEndAdapter);
+        if (Connection_Detector.isInternetAvailable(this)) {
+            progressDialog.setMessage("Please Wait");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            Call<EndedVoucherListModel> endedVoucherListModelCall = apiService.ENDED_VOUCHER_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+            endedVoucherListModelCall.enqueue(new Callback<EndedVoucherListModel>() {
+                @Override
+                public void onResponse(Call<EndedVoucherListModel> call, Response<EndedVoucherListModel> response) {
+                    progressDialog.dismiss();
+                    String status = response.body().getStatus();
+                    if (status.equals("1")) {
+                        arrayList = response.body().getData();
+                        voucherWillEndAdapter = new VoucherWillEndAdapter(arrayList, VoucherEndedActivity.this);
+                        recyclerView.setAdapter(voucherWillEndAdapter);
+
+                    } else {
+                        Toast.makeText(VoucherEndedActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<EndedVoucherListModel> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(VoucherEndedActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(VoucherEndedActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

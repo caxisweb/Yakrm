@@ -25,8 +25,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:theme,android:icon,android:roundIcon">
-        <activity android:name=".Activities.TrimmerActivity"></activity>
-        <activity android:name=".Activities.CustomActivity" />
+
         <activity
             android:name=".Activities.SplashActivity"
             android:theme="@style/No_action_bar">
@@ -92,7 +91,7 @@
         <activity
             android:name=".Activities.SendToFriendActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ThemeFullscreen"/>
+            android:theme="@style/ThemeFullscreen" />
         <activity
             android:name="com.github.florent37.camerafragment.PreviewActivity"
             android:screenOrientation="portrait"
@@ -176,6 +175,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".Activities.SearchedVoucherActivity"
+            android:theme="@style/No_action_bar" />
+        <activity android:name=".Activities.TrimmerActivity" />
+        <activity android:name=".Activities.CustomActivity" />
     </application>
 
 </manifest>

@@ -21,14 +21,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -643,13 +647,49 @@ public class MainActivity extends AppCompatActivity
             dialogBuilder.setView(dialogView);
             dialogBuilder.setCancelable(true);
 
-            final ImageView img_cancel = dialogView.findViewById(R.id.img_search);
+            final ImageView img_search = dialogView.findViewById(R.id.img_search);
+            final EditText edt_search = dialogView.findViewById(R.id.edt_search);
 
             alertDialog = dialogBuilder.create();
             WindowManager.LayoutParams wmlp = alertDialog.getWindow().getAttributes();
             wmlp.gravity = Gravity.TOP | Gravity.CENTER;
             wmlp.y = 200;
             alertDialog.show();
+            img_search.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isEmpty(edt_search.getText().toString())) {
+                        Toast.makeText(MainActivity.this, "Enter Search Item", Toast.LENGTH_SHORT).show();
+                    } else {
+                        alertDialog.dismiss();
+                        Intent intent = new Intent(MainActivity.this, SearchedVoucherActivity.class);
+                        intent.putExtra("search", edt_search.getText().toString());
+                        startActivity(intent);
+                    }
+                }
+            });
+
+            edt_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if ((actionId == EditorInfo.IME_ACTION_SEARCH)) {
+
+                        if (isEmpty(edt_search.getText().toString())) {
+                            Toast.makeText(MainActivity.this, "Enter Search Item", Toast.LENGTH_SHORT).show();
+                        } else {
+                            alertDialog.dismiss();
+                            Intent intent = new Intent(MainActivity.this, SearchedVoucherActivity.class);
+                            intent.putExtra("search", edt_search.getText().toString());
+                            startActivity(intent);
+                        }
+
+                        return true;
+
+                    }
+                    return false;
+                }
+            });
+
             return true;
         } else if (id == R.id.action_fav) {
             if (sessionManager.isLoggedIn()) {
