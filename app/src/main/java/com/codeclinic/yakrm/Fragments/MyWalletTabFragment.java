@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.codeclinic.yakrm.Activities.FavouritesActivity;
 import com.codeclinic.yakrm.Activities.MainActivity;
 import com.codeclinic.yakrm.Activities.UploadVouchersActivity;
+import com.codeclinic.yakrm.Activities.VoucherAboutToEndActivity;
 import com.codeclinic.yakrm.Activities.VoucherEndedActivity;
 import com.codeclinic.yakrm.Adapter.MyWalletAdapter;
 import com.codeclinic.yakrm.Models.WalletActiveListItemModel;
@@ -110,7 +111,7 @@ public class MyWalletTabFragment extends Fragment {
         llayout_voucher_ended_valid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.viewPager.setCurrentItem(2);
+                startActivity(new Intent(getActivity(), VoucherAboutToEndActivity.class));
             }
         });
 

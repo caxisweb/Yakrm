@@ -13,6 +13,8 @@ import com.codeclinic.yakrm.Models.EndedVoucherListModel;
 import com.codeclinic.yakrm.Models.FavouritesListModel;
 import com.codeclinic.yakrm.Models.FeedBackModel;
 import com.codeclinic.yakrm.Models.FilterListModel;
+import com.codeclinic.yakrm.Models.ForgetPasswordNumberModel;
+import com.codeclinic.yakrm.Models.ForgotPasswordOTPModel;
 import com.codeclinic.yakrm.Models.FriendMobileNumberModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.GetCheckoutIDModel;
@@ -34,6 +36,7 @@ import com.codeclinic.yakrm.Models.SearchListModel;
 import com.codeclinic.yakrm.Models.SendVoucherToFriendModel;
 import com.codeclinic.yakrm.Models.TransactionsRecordModel;
 import com.codeclinic.yakrm.Models.VerifyOTPModel;
+import com.codeclinic.yakrm.Models.VoucherAboutToEndListModel;
 import com.codeclinic.yakrm.Models.VoucherDetailsListModel;
 import com.codeclinic.yakrm.Models.WalletActiveListModel;
 
@@ -185,6 +188,10 @@ public interface API {
     Call<EndedVoucherListModel> ENDED_VOUCHER_LIST_MODEL_CALL(@Header("Authorization") String header);
 
     @Headers("Content-Type: application/json")
+    @GET("get_ended_vouchers_of_user_very_soon")
+    Call<VoucherAboutToEndListModel> VOUCHER_ABOUT_TO_END_LIST_MODEL_CALL(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
     @POST("add_feedback")
     Call<FeedBackModel> FEED_BACK_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
@@ -195,6 +202,14 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("search_brand")
     Call<SearchListModel> SEARCH_LIST_MODEL_CALL(@Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("checked_mobile_for_forgetpassword")
+    Call<ForgetPasswordNumberModel> FORGET_PASSWORD_NUMBER_MODEL_CALL(@Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("forgot_and_change_new_password")
+    Call<ForgotPasswordOTPModel> FORGOT_PASSWORD_OTP_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
 
 }

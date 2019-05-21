@@ -60,16 +60,6 @@ public class FinancialTransactionsRecordActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         apiService = RestClass.getClient().create(API.class);
 
-        tv_wallet_amount.setText(sessionManager.getUserDetails().get(SessionManager.Wallet).replaceAll("1", getResources().getString(R.string.one))
-                .replaceAll("2", getResources().getString(R.string.two))
-                .replaceAll("3", getResources().getString(R.string.three))
-                .replaceAll("4", getResources().getString(R.string.four))
-                .replaceAll("5", getResources().getString(R.string.five))
-                .replaceAll("6", getResources().getString(R.string.six))
-                .replaceAll("7", getResources().getString(R.string.seven))
-                .replaceAll("8", getResources().getString(R.string.eight))
-                .replaceAll("9", getResources().getString(R.string.nine))
-                .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -90,6 +80,18 @@ public class FinancialTransactionsRecordActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
+
+                        tv_wallet_amount.setText(response.body().getWallet().replaceAll("1", getResources().getString(R.string.one))
+                                .replaceAll("2", getResources().getString(R.string.two))
+                                .replaceAll("3", getResources().getString(R.string.three))
+                                .replaceAll("4", getResources().getString(R.string.four))
+                                .replaceAll("5", getResources().getString(R.string.five))
+                                .replaceAll("6", getResources().getString(R.string.six))
+                                .replaceAll("7", getResources().getString(R.string.seven))
+                                .replaceAll("8", getResources().getString(R.string.eight))
+                                .replaceAll("9", getResources().getString(R.string.nine))
+                                .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+
                         arrayList = response.body().getData();
                         financialRecordAdapter = new FinancialRecordAdapter(arrayList, FinancialTransactionsRecordActivity.this);
                         recyclerView.setAdapter(financialRecordAdapter);

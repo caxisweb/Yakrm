@@ -4,48 +4,81 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class TransactionsListItemModel {
-    @SerializedName("brand_name")
+    @SerializedName("id")
     @Expose
-    private String brandName;
-    @SerializedName("vendor_name")
+    private String id;
+    @SerializedName("transaction_id")
     @Expose
-    private String vendorName;
-    @SerializedName("voucher_price")
+    private String transactionId;
+    @SerializedName("total_price")
     @Expose
-    private String voucherPrice;
-    @SerializedName("created_at")
+    private String totalPrice;
+    @SerializedName("amount_from_wallet")
     @Expose
-    private String createdAt;
+    private String amountFromWallet;
+    @SerializedName("amount_from_bank")
+    @Expose
+    private String amountFromBank;
+    @SerializedName("updated_at")
+    @Expose
+    private String updatedAt;
+    @SerializedName("scan_voucher_type")
+    @Expose
+    private String scanVoucherType;
 
-    public String getBrandName() {
-        return brandName;
+    public String getId() {
+        return id;
     }
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getVendorName() {
-        return vendorName;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public void setVendorName(String vendorName) {
-        this.vendorName = vendorName;
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 
-    public String getVoucherPrice() {
-        return voucherPrice;
+    public String getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setVoucherPrice(String voucherPrice) {
-        this.voucherPrice = voucherPrice;
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getAmountFromWallet() {
+        return amountFromWallet;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setAmountFromWallet(String amountFromWallet) {
+        this.amountFromWallet = amountFromWallet;
+    }
+
+    public String getAmountFromBank() {
+        return amountFromBank;
+    }
+
+    public void setAmountFromBank(String amountFromBank) {
+        this.amountFromBank = amountFromBank;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getScanVoucherType() {
+        return scanVoucherType;
+    }
+
+    public void setScanVoucherType(String scanVoucherType) {
+        this.scanVoucherType = scanVoucherType;
     }
 }

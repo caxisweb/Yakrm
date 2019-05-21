@@ -179,6 +179,12 @@
         <activity
             android:name=".Activities.SearchedVoucherActivity"
             android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.VoucherAboutToEndActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
+            android:name=".Activities.ForgetPasswordActivity"
+            android:theme="@style/No_action_bar" />
         <activity android:name=".Activities.TrimmerActivity" />
         <activity android:name=".Activities.CustomActivity" />
     </application>

@@ -3,21 +3,19 @@ package com.codeclinic.yakrm.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class TransactionsRecordModel {
+public class ForgetPasswordNumberModel {
     @SerializedName("status")
     @Expose
     private String status;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("wallet")
+    @SerializedName("otp")
     @Expose
-    private String wallet;
-    @SerializedName("data")
+    private Integer otp;
+    @SerializedName("token")
     @Expose
-    private List<TransactionsListItemModel> data = null;
+    private String token;
 
     public String getStatus() {
         return status;
@@ -35,19 +33,19 @@ public class TransactionsRecordModel {
         this.message = message;
     }
 
-    public String getWallet() {
-        return wallet;
+    public Integer getOtp() {
+        return otp;
     }
 
-    public void setWallet(String wallet) {
-        this.wallet = wallet;
+    public void setOtp(Integer otp) {
+        this.otp = otp;
     }
 
-    public List<TransactionsListItemModel> getData() {
-        return data;
+    public String getToken() {
+        return token;
     }
 
-    public void setData(List<TransactionsListItemModel> data) {
-        this.data = data;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

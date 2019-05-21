@@ -331,6 +331,9 @@
     <string name="zero">٠</string>
     <string name="CVV">CVV</string>
     <string name="wallet_amount_is_0_and_ammount_to_be_paid_is"> مبلغ المحفظة هو 0 والمبلغ الواجب دفعه هو :</string>
+    <string name="by_visa">عن طريق التأشيرة:</string>
+    <string name="by_wallet">بواسطة محفظة:</string>
+    <string name="confirm_new_password">تأكيد كلمة المرور الجديدة</string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>

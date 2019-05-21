@@ -5,19 +5,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class TransactionsRecordModel {
+public class VoucherAboutToEndListModel {
     @SerializedName("status")
     @Expose
     private String status;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("wallet")
-    @Expose
-    private String wallet;
     @SerializedName("data")
     @Expose
-    private List<TransactionsListItemModel> data = null;
+    private List<VoucherAboutToEndListItemModel> data = null;
 
     public String getStatus() {
         return status;
@@ -35,19 +32,11 @@ public class TransactionsRecordModel {
         this.message = message;
     }
 
-    public String getWallet() {
-        return wallet;
-    }
-
-    public void setWallet(String wallet) {
-        this.wallet = wallet;
-    }
-
-    public List<TransactionsListItemModel> getData() {
+    public List<VoucherAboutToEndListItemModel> getData() {
         return data;
     }
 
-    public void setData(List<TransactionsListItemModel> data) {
+    public void setData(List<VoucherAboutToEndListItemModel> data) {
         this.data = data;
     }
 }

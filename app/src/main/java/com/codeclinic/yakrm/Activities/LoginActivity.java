@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     EditText edt_email, edt_password;
-    TextView tv_signup;
+    TextView tv_signup, tv_forget_pass;
 
     API apiService;
     JSONObject jsonObject = new JSONObject();
@@ -70,6 +70,13 @@ public class LoginActivity extends AppCompatActivity {
         edt_password = findViewById(R.id.edt_password);
 
         tv_signup = findViewById(R.id.tv_signup);
+        tv_forget_pass = findViewById(R.id.tv_forget_pass);
+        tv_forget_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
+            }
+        });
 
         apiService = RestClass.getClient().create(API.class);
 
@@ -89,9 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                 str_password = edt_password.getText().toString();
                 if (isEmpty(str_email)) {
                     Toast.makeText(LoginActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
-                }/* else if (!str_email.matches(str_email_regex)) {
-                    Toast.makeText(LoginActivity.this, "Please Enter Valid Email", Toast.LENGTH_SHORT).show();
-                }*/ else if (isEmpty(str_password)) {
+                } else if (isEmpty(str_password)) {
                     Toast.makeText(LoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.setMessage("Please Wait");

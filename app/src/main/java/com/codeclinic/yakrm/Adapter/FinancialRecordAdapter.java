@@ -38,14 +38,25 @@ public class FinancialRecordAdapter extends RecyclerView.Adapter<FinancialRecord
     @Override
     public void onBindViewHolder(@NonNull FinancialRecordAdapter.Holder holder, int i) {
 
-        holder.tv_price.setText(arrayList.get(i).getVoucherPrice() + " " + context.getResources().getString(R.string.SR_currency));
-        holder.tv_itemname.setText(arrayList.get(i).getBrandName());
-        holder.tv_vendor_name.setText(arrayList.get(i).getVendorName());
+        holder.tv_price.setText(arrayList.get(i).getTotalPrice() + " " + context.getResources().getString(R.string.SR_currency));
+        holder.tv_by_visa.setText(arrayList.get(i).getAmountFromBank() + " " + context.getResources().getString(R.string.SR_currency));
+        holder.tv_by_wallet.setText(arrayList.get(i).getAmountFromWallet() + " " + context.getResources().getString(R.string.SR_currency));
+
+        if (arrayList.get(i).getScanVoucherType().equals("purchase_voucher")) {
+            holder.tv_itemname.setText("DEBITED");
+            holder.tv_itemname.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            holder.view.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        } else {
+            holder.tv_itemname.setText("CREDITED");
+            holder.tv_itemname.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            holder.view.setBackgroundColor(context.getResources().getColor(R.color.digit_color));
+        }
+        //holder.tv_vendor_name.setText(arrayList.get(i).getVendorName());
 
         SimpleDateFormat spf = null;
         Date newDate = null;
         try {
-            String date = arrayList.get(i).getCreatedAt().substring(0, arrayList.get(i).getCreatedAt().indexOf(" "));
+            String date = arrayList.get(i).getUpdatedAt().substring(0, arrayList.get(i).getUpdatedAt().indexOf(" "));
             final_date = date.trim();
             spf = new SimpleDateFormat("yyyy-MM-dd");
             newDate = spf.parse(final_date);
@@ -65,13 +76,16 @@ public class FinancialRecordAdapter extends RecyclerView.Adapter<FinancialRecord
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        TextView tv_itemname, tv_price, tv_vendor_name, tv_date;
+        TextView tv_itemname, tv_price, tv_by_visa, tv_by_wallet, tv_date;
+        View view;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
+            view = itemView.findViewById(R.id.view);
             tv_itemname = itemView.findViewById(R.id.tv_itemname);
             tv_price = itemView.findViewById(R.id.tv_price);
-            tv_vendor_name = itemView.findViewById(R.id.tv_vendor_name);
+            tv_by_visa = itemView.findViewById(R.id.tv_by_visa);
+            tv_by_wallet = itemView.findViewById(R.id.tv_by_wallet);
             tv_date = itemView.findViewById(R.id.tv_date);
         }
     }

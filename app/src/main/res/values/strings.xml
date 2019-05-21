@@ -346,6 +346,9 @@
     <string name="zero">0</string>
     <string name="CVV">CVV</string>
     <string name="wallet_amount_is_0_and_ammount_to_be_paid_is">wallet amount is 0 and the amount to be paid is :</string>
+    <string name="by_visa">By Visa :</string>
+    <string name="by_wallet">By Wallet :</string>
+    <string name="confirm_new_password">Confirm New password</string>
 
 
 </resources>
