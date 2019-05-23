@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,12 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeclinic.yakrm.Adapter.SavedCardListAdapter;
-import com.codeclinic.yakrm.BuildConfig;
 import com.codeclinic.yakrm.Models.GetCardListItemModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.GetCheckoutIDModel;
-import com.codeclinic.yakrm.Models.PaymentTransactionModel;
-import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
@@ -36,8 +32,11 @@ import com.codeclinic.yakrm.Utils.CheckoutBroadcastReceiver;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity;
 import com.oppwa.mobile.connect.checkout.meta.CheckoutSettings;
+import com.oppwa.mobile.connect.exception.PaymentError;
 import com.oppwa.mobile.connect.exception.PaymentException;
 import com.oppwa.mobile.connect.provider.Connect;
+import com.oppwa.mobile.connect.provider.Transaction;
+import com.oppwa.mobile.connect.provider.TransactionType;
 import com.oppwa.mobile.connect.service.ConnectService;
 import com.oppwa.mobile.connect.service.IProviderBinder;
 
@@ -357,7 +356,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
 
         this.checkoutId = checkoutId;
 
-        Set<String> paymentBrands = new LinkedHashSet<>();
+/*        Set<String> paymentBrands = new LinkedHashSet<>();
 
         paymentBrands.add("VISA");
         paymentBrands.add("MASTER");
@@ -367,7 +366,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
 
         checkoutSettings = new CheckoutSettings(checkoutId, paymentBrands);
         checkoutSettings.getStorePaymentDetailsMode();
-        checkoutSettings.getAndroidPaySettings();
         checkoutSettings.setWebViewEnabledFor3DSecure(true);
 
         ComponentName componentName = new ComponentName(BuildConfig.APPLICATION_ID, CheckoutBroadcastReceiver.class.getCanonicalName());
@@ -375,10 +373,17 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         Intent intent = new Intent(CompletingPurchasingActivity.this, CheckoutActivity.class);
         intent.putExtra(CheckoutActivity.CHECKOUT_SETTINGS, checkoutSettings);
         intent.putExtra(CheckoutActivity.CHECKOUT_RECEIVER, componentName);
-        startActivityForResult(intent, CheckoutActivity.CHECKOUT_ACTIVITY);
-
-       /* Intent intent = new Intent(CompletingPurchasingActivity.this, CheckoutActivity.class);
         startActivityForResult(intent, CheckoutActivity.CHECKOUT_ACTIVITY);*/
+
+
+        Set<String> paymentBrands = new LinkedHashSet<String>();
+        paymentBrands.add("VISA");
+        paymentBrands.add("MASTER");
+        CheckoutSettings checkoutSettings = new CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.TEST);
+        ComponentName componentName = new ComponentName(getPackageName(), CheckoutBroadcastReceiver.class.getName());
+        /* Set up the Intent and start the checkout activity. */
+        Intent intent = checkoutSettings.createCheckoutActivityIntent(this, componentName);
+        startActivityForResult(intent, CheckoutActivity.REQUEST_CODE_CHECKOUT);
     }
 
     @Override
@@ -417,40 +422,48 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         };
     }
 
-  /*  @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case CheckoutActivity.RESULT_OK:
-                *//* transaction completed *//*
+                /* transaction completed */
                 Transaction transaction = data.getParcelableExtra(CheckoutActivity.CHECKOUT_RESULT_TRANSACTION);
 
-                *//* resource path if needed *//*
+                /* resource path if needed */
                 String resourcePath = data.getStringExtra(CheckoutActivity.CHECKOUT_RESULT_RESOURCE_PATH);
 
                 if (transaction.getTransactionType() == TransactionType.SYNC) {
-                    *//* check the result of synchronous transaction *//*
-                    // fireBroadcast(Config.SUCCESS, "checkoutId=" + checkoutId);
+                    /* check the result of synchronous transaction */
                 } else {
-                    *//* wait for the asynchronous transaction callback in the onNewIntent() *//*
+                    /* wait for the asynchronous transaction callback in the onNewIntent() */
                 }
-
                 break;
             case CheckoutActivity.RESULT_CANCELED:
-                //fireBroadcast(Config.FAILED, "Shoper cancelled transaction");
+                /* shopper canceled the checkout process */
+                Toast.makeText(getBaseContext(), "canceled", Toast.LENGTH_LONG).show();
                 break;
             case CheckoutActivity.RESULT_ERROR:
-                PaymentError error = data.getParcelableExtra(CheckoutActivity.CHECKOUT_RESULT_ERROR);
-                //fireBroadcast(Config.FAILED, error.getErrorMessage());
-                break;
-            default:
-                break;
-        }
-    }*/
+                /* error occurred */
 
-    @Override
+                PaymentError error = data.getParcelableExtra(CheckoutActivity.CHECKOUT_RESULT_ERROR);
+
+                Toast.makeText(getBaseContext(), "error", Toast.LENGTH_LONG).show();
+
+                Log.e("errorrr", String.valueOf(error.getErrorInfo()));
+
+                Log.e("errorrr2", String.valueOf(error.getErrorCode()));
+
+                Log.e("errorrr3", String.valueOf(error.getErrorMessage()));
+
+                Log.e("errorrr4", String.valueOf(error.describeContents()));
+
+        }
+    }
+
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    /*    if (resultCode == RESULT_OK && requestCode == 1001) {
+    *//*    if (resultCode == RESULT_OK && requestCode == 1001) {
             Log.e("Tag", data.getStringExtra(PaymentParams.RESPONSE_CODE));
             Log.e("Tag", data.getStringExtra(PaymentParams.TRANSACTION_ID));
             Toast.makeText(CompletingPurchasingActivity.this, data.getStringExtra(PaymentParams.RESPONSE_CODE), Toast.LENGTH_LONG).show();
@@ -462,7 +475,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
                 Toast.makeText(CompletingPurchasingActivity.this, data.getStringExtra(PaymentParams.TOKEN), Toast.LENGTH_LONG).show();
                 Toast.makeText(CompletingPurchasingActivity.this, data.getStringExtra(PaymentParams.CUSTOMER_EMAIL), Toast.LENGTH_LONG).show();
                 Toast.makeText(CompletingPurchasingActivity.this, data.getStringExtra(PaymentParams.CUSTOMER_PASSWORD), Toast.LENGTH_LONG).show();
-            }*/
+            }*//*
 
 
         progressDialog.setMessage("Please Wait");
@@ -574,7 +587,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
             });
         }
 
-    }
+    }*/
 
 
     public void getAllcardList() {
