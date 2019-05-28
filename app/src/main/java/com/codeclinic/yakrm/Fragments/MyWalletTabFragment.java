@@ -4,6 +4,7 @@ package com.codeclinic.yakrm.Fragments;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,16 +85,20 @@ public class MyWalletTabFragment extends Fragment {
         apiService = RestClass.getClient().create(API.class);
         progressDialog = new ProgressDialog(getActivity());
 
-        tv_wallet_amount.setText(sessionManager.getUserDetails().get(SessionManager.Wallet).replaceAll("1", getResources().getString(R.string.one))
-                .replaceAll("2", getResources().getString(R.string.two))
-                .replaceAll("3", getResources().getString(R.string.three))
-                .replaceAll("4", getResources().getString(R.string.four))
-                .replaceAll("5", getResources().getString(R.string.five))
-                .replaceAll("6", getResources().getString(R.string.six))
-                .replaceAll("7", getResources().getString(R.string.seven))
-                .replaceAll("8", getResources().getString(R.string.eight))
-                .replaceAll("9", getResources().getString(R.string.nine))
-                .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+        try {
+            tv_wallet_amount.setText(sessionManager.getUserDetails().get(SessionManager.Wallet).replaceAll("1", getResources().getString(R.string.one))
+                    .replaceAll("2", getResources().getString(R.string.two))
+                    .replaceAll("3", getResources().getString(R.string.three))
+                    .replaceAll("4", getResources().getString(R.string.four))
+                    .replaceAll("5", getResources().getString(R.string.five))
+                    .replaceAll("6", getResources().getString(R.string.six))
+                    .replaceAll("7", getResources().getString(R.string.seven))
+                    .replaceAll("8", getResources().getString(R.string.eight))
+                    .replaceAll("9", getResources().getString(R.string.nine))
+                    .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

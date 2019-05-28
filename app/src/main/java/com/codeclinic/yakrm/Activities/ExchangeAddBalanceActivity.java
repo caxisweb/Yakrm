@@ -27,6 +27,7 @@ import com.codeclinic.yakrm.Utils.ImageURL;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
     ReplaceVoucherListAdapter replaceVoucherListAdapter;
     JSONObject jsonObject = new JSONObject();
     TextView tv_replace_voucher_name, tv_replace_price, tv_voucher_name, tv_voucher_price, tv_price, tv_amount_be_paid;
+    String login_flag = "0";
 
 
     public boolean isEmpty(CharSequence character) {
@@ -107,6 +109,9 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
         apiService = RestClass.getClient().create(API.class);
         sessionManager = new SessionManager(this);
         progressDialog = new ProgressDialog(this);
+        if (sessionManager.isLoggedIn()) {
+            login_flag = "1";
+        }
 
 
         String str_temp_paid_amount = getResources().getString(R.string.wallet_amount_is_0_and_ammount_to_be_paid_is);
@@ -141,11 +146,17 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
 
         if (Connection_Detector.isInternetAvailable(this)) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("is_login", login_flag);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             progressDialog.setMessage("Please Wait");
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
-            Call<AllVouchersListModel> allVouchersListModelCall = apiService.ALL_VOUCHERS_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+            Call<AllVouchersListModel> allVouchersListModelCall = apiService.ALL_VOUCHERS_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
             allVouchersListModelCall.enqueue(new Callback<AllVouchersListModel>() {
                 @Override
                 public void onResponse(Call<AllVouchersListModel> call, Response<AllVouchersListModel> response) {

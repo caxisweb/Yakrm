@@ -349,6 +349,7 @@
     <string name="by_visa">By Visa :</string>
     <string name="by_wallet">By Wallet :</string>
     <string name="confirm_new_password">Confirm New password</string>
+    <string name="Confirm_new_password">Confirm new password</string>
 
 
 </resources>

@@ -9,6 +9,7 @@ import com.codeclinic.yakrm.Models.AllVouchersListModel;
 import com.codeclinic.yakrm.Models.BrandListModel;
 import com.codeclinic.yakrm.Models.CartListModel;
 import com.codeclinic.yakrm.Models.ChangePasswordModel;
+import com.codeclinic.yakrm.Models.EditCardModel;
 import com.codeclinic.yakrm.Models.EndedVoucherListModel;
 import com.codeclinic.yakrm.Models.FavouritesListModel;
 import com.codeclinic.yakrm.Models.FeedBackModel;
@@ -28,6 +29,7 @@ import com.codeclinic.yakrm.Models.ProfileUpdateModel;
 import com.codeclinic.yakrm.Models.RecievedGiftListModel;
 import com.codeclinic.yakrm.Models.RegistrationModel;
 import com.codeclinic.yakrm.Models.RegistrationStep2Model;
+import com.codeclinic.yakrm.Models.RemoveCardModel;
 import com.codeclinic.yakrm.Models.RemoveCartItemModel;
 import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
 import com.codeclinic.yakrm.Models.ReturnVoucherModel;
@@ -80,8 +82,8 @@ public interface API {
     Call<ProfileImageUpload> PROFILE_IMAGE_UPLOAD_CALL(@Header("Authorization") String header, @Part MultipartBody.Part image);
 
     @Headers("Content-Type: application/json")
-    @GET("getAllActiveVoucher")
-    Call<AllVouchersListModel> ALL_VOUCHERS_LIST_MODEL_CALL(@Header("Authorization") String header);
+    @POST("getAllActiveVoucher")
+    Call<AllVouchersListModel> ALL_VOUCHERS_LIST_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
     @Headers("Content-Type: application/json")
     @POST("filter_voucher")
@@ -146,6 +148,14 @@ public interface API {
     @Headers("Content-Type: application/json")
     @GET("get_all_cards_ofusers")
     Call<GetCardListModel> GET_CARD_LIST_MODEL_CALL(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
+    @POST("edit_card_of_users")
+    Call<EditCardModel> EDIT_CARD_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("remove_card_of_users")
+    Call<RemoveCardModel> REMOVE_CARD_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
     @FormUrlEncoded
     @POST("/apiv3/get_merchant_info")

@@ -25,7 +25,7 @@ import retrofit2.Response;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
-    EditText edt_old_pass, edt_new_pass;
+    EditText edt_old_pass, edt_new_pass, edt_confm_new_pass;
     Button btn_change_pass;
     API apiService;
     SessionManager sessionManager;
@@ -44,6 +44,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_password);
 
         edt_old_pass = findViewById(R.id.edt_old_pass);
+        edt_confm_new_pass = findViewById(R.id.edt_confm_new_pass);
         edt_new_pass = findViewById(R.id.edt_new_pass);
         btn_change_pass = findViewById(R.id.btn_change_pass);
 
@@ -72,6 +73,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     Toast.makeText(ChangePasswordActivity.this, "Please Enter Old Password", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(edt_new_pass.getText().toString())) {
                     Toast.makeText(ChangePasswordActivity.this, "Please Enter New Password", Toast.LENGTH_SHORT).show();
+                } else if (isEmpty(edt_confm_new_pass.getText().toString())) {
+                    Toast.makeText(ChangePasswordActivity.this, "Please Confirm New Password", Toast.LENGTH_SHORT).show();
+                } else if (!edt_confm_new_pass.getText().toString().matches(edt_new_pass.getText().toString())) {
+                    Toast.makeText(ChangePasswordActivity.this, "Confirm Password not matched", Toast.LENGTH_SHORT).show();
                 } else {
 
                     if (Connection_Detector.isInternetAvailable(ChangePasswordActivity.this)) {

@@ -1,4 +1,4 @@
-package com.codeclinic.yakrm;
+package com.codeclinic.yakrm.Utils;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
@@ -15,7 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.codeclinic.yakrm.Activities.MainActivity;
-import com.codeclinic.yakrm.Utils.SessionManager;
+import com.codeclinic.yakrm.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

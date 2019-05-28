@@ -334,6 +334,7 @@
     <string name="by_visa">عن طريق التأشيرة:</string>
     <string name="by_wallet">بواسطة محفظة:</string>
     <string name="confirm_new_password">تأكيد كلمة المرور الجديدة</string>
+    <string name="Confirm_new_password">تأكيد كلمة المرور الجديدة</string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>

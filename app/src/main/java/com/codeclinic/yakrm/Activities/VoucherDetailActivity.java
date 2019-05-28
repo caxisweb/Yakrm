@@ -69,6 +69,7 @@ VoucherDetailActivity extends AppCompatActivity {
                 break;
             default:
                 scan_voucher_type = "g";
+                btn_done.setEnabled(false);
                 break;
         }
         barcode = getIntent().getStringExtra("barcode");

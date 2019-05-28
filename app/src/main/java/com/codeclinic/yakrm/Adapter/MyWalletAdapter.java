@@ -46,7 +46,12 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
     @Override
     public void onBindViewHolder(@NonNull MyWalletAdapter.Holder holder, @SuppressLint("RecyclerView") final int i) {
         Picasso.with(context).load(ImageURL.Vendor_voucher_image + arrayList.get(i).getVoucherImage()).into(holder.voucher_image);
-        holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+        if (arrayList.get(i).getScanVoucherType().equals("gift_voucher")) {
+            holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " (Gifted)");
+        } else {
+            holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+        }
+
         holder.tv_price.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
                 .replaceAll("3", context.getResources().getString(R.string.three))

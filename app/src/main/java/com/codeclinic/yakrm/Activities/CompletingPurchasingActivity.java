@@ -381,7 +381,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity {
         paymentBrands.add("MASTER");
         CheckoutSettings checkoutSettings = new CheckoutSettings(checkoutId, paymentBrands, Connect.ProviderMode.TEST);
         ComponentName componentName = new ComponentName(getPackageName(), CheckoutBroadcastReceiver.class.getName());
-        /* Set up the Intent and start the checkout activity. */
         Intent intent = checkoutSettings.createCheckoutActivityIntent(this, componentName);
         startActivityForResult(intent, CheckoutActivity.REQUEST_CODE_CHECKOUT);
     }

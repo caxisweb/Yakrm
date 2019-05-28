@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codeclinic.yakrm.Activities.MainActivity;
+import com.codeclinic.yakrm.Activities.VoucherDetailActivity;
 import com.codeclinic.yakrm.Models.RecievedGftListItemModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.ImageURL;
@@ -32,6 +34,11 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
     public RecievedListAdapter(List<RecievedGftListItemModel> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
+    }
+
+
+    public boolean isEmpty(CharSequence character) {
+        return character == null || character.length() == 0;
     }
 
     @NonNull
@@ -138,6 +145,25 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
             }
         });
 
+        holder.card_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, VoucherDetailActivity.class);
+                intent.putExtra("name", arrayList.get(i).getBrandName());
+                intent.putExtra("date", arrayList.get(i).getExpiredAt());
+                intent.putExtra("barcode", arrayList.get(i).getScanCode());
+                intent.putExtra("pincode", arrayList.get(i).getPinCode());
+                intent.putExtra("price", arrayList.get(i).getVoucherPrice());
+                intent.putExtra("v_image", arrayList.get(i).getVoucherImage());
+                intent.putExtra("v_payment_id", arrayList.get(i).getVoucherId());
+                intent.putExtra("v_payment_type", "voucher_payment");
+                intent.putExtra("voucher_id", arrayList.get(i).getVoucherId());
+                intent.putExtra("admin_voucher_discount", arrayList.get(i).getDiscount());
+                intent.putExtra("scan_voucher_type", arrayList.get(i).getScanVoucherType());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -146,11 +172,13 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
     }
 
     public class Holder extends RecyclerView.ViewHolder {
+        CardView card_view;
         ImageView img_wallet, voucher_image;
         TextView tv_item_name, tv_expiry_date, tv_price, tv_discount, tv_discount_price, tv_friend_name, tv_description, tv_ends_on, tv_press_watch;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
+            card_view = itemView.findViewById(R.id.card_view);
             voucher_image = itemView.findViewById(R.id.voucher_image);
             img_wallet = itemView.findViewById(R.id.img_wallet);
             tv_item_name = itemView.findViewById(R.id.tv_item_name);

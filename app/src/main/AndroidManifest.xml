@@ -130,6 +130,9 @@
             android:name=".Activities.EnterCardDetailsActivity"
             android:theme="@style/No_action_bar" />
         <activity
+            android:name=".Activities.EditCardActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
             android:name=".Activities.ChangePasswordActivity"
             android:theme="@style/No_action_bar" />
 
@@ -170,7 +173,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name=".Utils.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

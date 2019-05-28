@@ -21,7 +21,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -60,6 +59,7 @@ public class MainActivity extends AppCompatActivity
 
     public static DrawerLayout drawer;
     public static ViewPager viewPager;
+    public static TextView textCartItemCount;
 
     public static ArrayList<GiftCategoryModel> arrayList = new ArrayList<>();
     public static ArrayList<String> cat_arrayList_id = new ArrayList<>();
@@ -735,12 +735,14 @@ public class MainActivity extends AppCompatActivity
             final MenuItem menuItem2 = menu.findItem(R.id.action_fav);
             final MenuItem menuItem3 = menu.findItem(R.id.action_notification);
             final MenuItem menuItem4 = menu.findItem(R.id.action_basket);
+
             final MenuItem menuItem5 = menu.findItem(R.id.action_user);
 
             View actionView1 = MenuItemCompat.getActionView(menuItem1);
             View actionView2 = MenuItemCompat.getActionView(menuItem2);
             View actionView3 = MenuItemCompat.getActionView(menuItem3);
             View actionView4 = MenuItemCompat.getActionView(menuItem4);
+            textCartItemCount = actionView4.findViewById(R.id.cart_badge);
             View actionView5 = MenuItemCompat.getActionView(menuItem5);
 
             actionView1.setOnClickListener(new View.OnClickListener() {

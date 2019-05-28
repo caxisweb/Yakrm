@@ -58,6 +58,7 @@ public class BuyTabFragment extends Fragment {
     ProgressDialog progressDialog;
     LinearLayout layout_filter;
     SessionManager sessionManager;
+    String login_flag = "0";
     JSONObject jsonObject = new JSONObject();
 
     public BuyTabFragment() {
@@ -75,7 +76,9 @@ public class BuyTabFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         apiService = RestClass.getClient().create(API.class);
         progressDialog = new ProgressDialog(getActivity());
-
+        if (sessionManager.isLoggedIn()) {
+            login_flag = "1";
+        }
 
         if (Connection_Detector.isInternetAvailable(getActivity())) {
             progressDialog.setMessage("Please Wait");
@@ -83,7 +86,13 @@ public class BuyTabFragment extends Fragment {
             progressDialog.setCancelable(false);
             progressDialog.show();
             if (MainActivity.filter_array == 0) {
-                Call<AllVouchersListModel> allVouchersListModelCall = apiService.ALL_VOUCHERS_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("is_login", login_flag);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Call<AllVouchersListModel> allVouchersListModelCall = apiService.ALL_VOUCHERS_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
                 allVouchersListModelCall.enqueue(new Callback<AllVouchersListModel>() {
                     @Override
                     public void onResponse(Call<AllVouchersListModel> call, Response<AllVouchersListModel> response) {
@@ -91,6 +100,11 @@ public class BuyTabFragment extends Fragment {
                         Log.i("user_token", sessionManager.getUserDetails().get(SessionManager.User_Token));
                         int status = response.body().getStatus();
                         if (status == 1) {
+                            if (login_flag.equals("0")) {
+                                MainActivity.textCartItemCount.setVisibility(View.GONE);
+                            } else {
+                                MainActivity.textCartItemCount.setText(response.body().getTotal_cart_item());
+                            }
                             arrayList = response.body().getData();
                             if (MainActivity.arrayList.size() == 0) {
                                 MainActivity.arrayList = (ArrayList<GiftCategoryModel>) response.body().getGiftCategory();
@@ -194,13 +208,23 @@ public class BuyTabFragment extends Fragment {
                             recyclerView.setAdapter(filterListAdapter);
                         } else {
                             Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                            Call<AllVouchersListModel> allVouchersListModelCall = apiService.ALL_VOUCHERS_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+                            try {
+                                jsonObject.put("is_login", login_flag);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Call<AllVouchersListModel> allVouchersListModelCall = apiService.ALL_VOUCHERS_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
                             allVouchersListModelCall.enqueue(new Callback<AllVouchersListModel>() {
                                 @Override
                                 public void onResponse(Call<AllVouchersListModel> call, Response<AllVouchersListModel> response) {
                                     progressDialog.dismiss();
                                     int status = response.body().getStatus();
                                     if (status == 1) {
+                                        if (login_flag.equals("0")) {
+                                            MainActivity.textCartItemCount.setVisibility(View.GONE);
+                                        } else {
+                                            MainActivity.textCartItemCount.setText(response.body().getTotal_cart_item());
+                                        }
                                         arrayList = response.body().getData();
                                         if (MainActivity.arrayList != null) {
                                             MainActivity.arrayList = (ArrayList<GiftCategoryModel>) response.body().getGiftCategory();

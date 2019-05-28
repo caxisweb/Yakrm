@@ -12,6 +12,9 @@ public class AllVouchersListModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("total_cart_item")
+    @Expose
+    private String total_cart_item;
     @SerializedName("data")
     @Expose
     private List<AllVoucherListItemModel> data = null;
@@ -27,6 +30,13 @@ public class AllVouchersListModel {
         this.giftCategory = giftCategory;
     }
 
+    public String getTotal_cart_item() {
+        return total_cart_item;
+    }
+
+    public void setTotal_cart_item(String total_cart_item) {
+        this.total_cart_item = total_cart_item;
+    }
     public Integer getStatus() {
         return status;
     }
