@@ -20,7 +20,6 @@ import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.ImageURL;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -64,7 +63,7 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
             if (System.currentTimeMillis() > strDate.getTime()) {
                 holder.tv_ends_on.setText(" " + context.getResources().getString(R.string.Ended) + " ");
             }
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         SimpleDateFormat spf = null;
@@ -74,28 +73,32 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
             newDate = spf.parse(final_date);
             spf = new SimpleDateFormat("dd-MM-yyyy");
             final_date = spf.format(newDate);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        holder.tv_expiry_date.setText(final_date.replaceAll("1", context.getResources().getString(R.string.one))
-                .replaceAll("2", context.getResources().getString(R.string.two))
-                .replaceAll("3", context.getResources().getString(R.string.three))
-                .replaceAll("4", context.getResources().getString(R.string.four))
-                .replaceAll("5", context.getResources().getString(R.string.five))
-                .replaceAll("6", context.getResources().getString(R.string.six))
-                .replaceAll("7", context.getResources().getString(R.string.seven))
-                .replaceAll("8", context.getResources().getString(R.string.eight))
-                .replaceAll("9", context.getResources().getString(R.string.nine))
-                .replaceAll("0", context.getResources().getString(R.string.zero)) + " " + date_array[1].replaceAll("1", context.getResources().getString(R.string.one))
-                .replaceAll("2", context.getResources().getString(R.string.two))
-                .replaceAll("3", context.getResources().getString(R.string.three))
-                .replaceAll("4", context.getResources().getString(R.string.four))
-                .replaceAll("5", context.getResources().getString(R.string.five))
-                .replaceAll("6", context.getResources().getString(R.string.six))
-                .replaceAll("7", context.getResources().getString(R.string.seven))
-                .replaceAll("8", context.getResources().getString(R.string.eight))
-                .replaceAll("9", context.getResources().getString(R.string.nine))
-                .replaceAll("0", context.getResources().getString(R.string.zero)));
+        try {
+            holder.tv_expiry_date.setText(final_date.replaceAll("1", context.getResources().getString(R.string.one))
+                    .replaceAll("2", context.getResources().getString(R.string.two))
+                    .replaceAll("3", context.getResources().getString(R.string.three))
+                    .replaceAll("4", context.getResources().getString(R.string.four))
+                    .replaceAll("5", context.getResources().getString(R.string.five))
+                    .replaceAll("6", context.getResources().getString(R.string.six))
+                    .replaceAll("7", context.getResources().getString(R.string.seven))
+                    .replaceAll("8", context.getResources().getString(R.string.eight))
+                    .replaceAll("9", context.getResources().getString(R.string.nine))
+                    .replaceAll("0", context.getResources().getString(R.string.zero)) + " " + date_array[1].replaceAll("1", context.getResources().getString(R.string.one))
+                    .replaceAll("2", context.getResources().getString(R.string.two))
+                    .replaceAll("3", context.getResources().getString(R.string.three))
+                    .replaceAll("4", context.getResources().getString(R.string.four))
+                    .replaceAll("5", context.getResources().getString(R.string.five))
+                    .replaceAll("6", context.getResources().getString(R.string.six))
+                    .replaceAll("7", context.getResources().getString(R.string.seven))
+                    .replaceAll("8", context.getResources().getString(R.string.eight))
+                    .replaceAll("9", context.getResources().getString(R.string.nine))
+                    .replaceAll("0", context.getResources().getString(R.string.zero)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         holder.tv_price.setText(String.valueOf(Float.parseFloat(arrayList.get(i).getVoucherPrice()) + (Float.parseFloat(arrayList.get(i).getVoucherPrice()) * Float.parseFloat(arrayList.get(i).getDiscount())) / 100).replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))

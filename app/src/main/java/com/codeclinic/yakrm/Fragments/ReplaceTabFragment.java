@@ -59,7 +59,7 @@ public class ReplaceTabFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
 
         if (Connection_Detector.isInternetAvailable(getActivity())) {
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -82,11 +82,11 @@ public class ReplaceTabFragment extends Fragment {
                 @Override
                 public void onFailure(Call<WalletActiveListModel> call, Throwable t) {
                     progressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
-            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getResources().getString(R.string.No_Internet_Connection), Toast.LENGTH_SHORT).show();
         }
 
         return view;

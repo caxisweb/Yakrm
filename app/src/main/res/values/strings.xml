@@ -350,6 +350,23 @@
     <string name="by_wallet">By Wallet :</string>
     <string name="confirm_new_password">Confirm New password</string>
     <string name="Confirm_new_password">Confirm new password</string>
+    <string name="Please_Enter_Email">Please Enter Email</string>
+    <string name="Please_Enter_Password">Please Enter Password</string>
+    <string name="Server_Error">Server Error</string>
+    <string name="Please_Wait">Please Wait</string>
+    <string name="Please_Enter_Mobile_Number">Please Enter Mobile Number</string>
+    <string name="Mobile_Number_should_be_minimum">Mobile Number should be minimum of 10 characters</string>
+    <string name="Please_Enter_OTP">Please Enter OTP</string>
+    <string name="Please_Enter_Name">Please Enter Name</string>
+    <string name="Name_should_be_minimum_of_three_characters">Name should be  minimum of 3 characters</string>
+    <string name="Please_Enter_Valid_Email">Please Enter Valid Email</string>
+    <string name="Password_should_be_minimum_of_six_characters">Password should be  minimum of 6 characters</string>
+    <string name="Please_Select_atleast_one_filter_category_from_above">Please Select atleast one filter category from above</string>
+    <string name="No_Internet_Connection">No Internet Connection</string>
+    <string name="Take_Photo">Take Photo</string>
+    <string name="Choose_from_Gallery">Choose from Gallery</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Add_Photo">Add Photo!</string>
 
 
 </resources>

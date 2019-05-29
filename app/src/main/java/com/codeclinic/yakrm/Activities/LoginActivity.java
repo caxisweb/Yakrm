@@ -95,11 +95,11 @@ public class LoginActivity extends AppCompatActivity {
                 str_email = edt_email.getText().toString();
                 str_password = edt_password.getText().toString();
                 if (isEmpty(str_email)) {
-                    Toast.makeText(LoginActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.Please_Enter_Email), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_password)) {
-                    Toast.makeText(LoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.Please_Enter_Password), Toast.LENGTH_SHORT).show();
                 } else {
-                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<LoginModel> call, Throwable t) {
                             progressDialog.dismiss();
-                            Toast.makeText(LoginActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

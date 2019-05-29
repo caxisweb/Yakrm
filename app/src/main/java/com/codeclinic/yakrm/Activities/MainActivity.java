@@ -527,6 +527,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     gift_order = "";
                 }
+
                 if (!isEmpty(gift_category_id) && !isEmpty(gift_type) && !isEmpty(gift_order)) {
                     filter_array = 1;
                     drawer.closeDrawer(GravityCompat.END);
@@ -536,8 +537,9 @@ public class MainActivity extends AppCompatActivity
 
                 } else {
 
-                    Toast.makeText(MainActivity.this, "Please Select atleast one filter category from above", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getResources().getString(R.string.Please_Select_atleast_one_filter_category_from_above), Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

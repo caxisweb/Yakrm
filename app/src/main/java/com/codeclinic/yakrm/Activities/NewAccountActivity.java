@@ -154,11 +154,11 @@ public class NewAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 str_number = edt_number.getText().toString();
                 if (isEmpty(str_number)) {
-                    Toast.makeText(NewAccountActivity.this, "Please Enter Mobile Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_Mobile_Number), Toast.LENGTH_SHORT).show();
                 } else if (str_number.length() < 10) {
-                    Toast.makeText(NewAccountActivity.this, "Mobile Number should be minimum of 10 characters ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Mobile_Number_should_be_minimum), Toast.LENGTH_SHORT).show();
                 } else {
-                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -186,7 +186,7 @@ public class NewAccountActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<RegistrationModel> call, Throwable t) {
                             progressDialog.dismiss();
-                            Toast.makeText(NewAccountActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -287,7 +287,7 @@ public class NewAccountActivity extends AppCompatActivity {
                 str_edt_4 = edt_4.getText().toString();
 
                 if (isEmpty(str_edt_1)) {
-                    Toast.makeText(NewAccountActivity.this, "Please Enter OTP", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_OTP), Toast.LENGTH_SHORT).show();
                 }/* else if (isEmpty(str_edt_2)) {
                     Toast.makeText(NewAccountActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_edt_3)) {
@@ -296,7 +296,7 @@ public class NewAccountActivity extends AppCompatActivity {
                     Toast.makeText(NewAccountActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
                 }*/ else {
 
-                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -324,7 +324,7 @@ public class NewAccountActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<VerifyOTPModel> call, Throwable t) {
                             progressDialog.dismiss();
-                            Toast.makeText(NewAccountActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -340,19 +340,19 @@ public class NewAccountActivity extends AppCompatActivity {
                 str_email = edt_email.getText().toString();
                 str_password = edt_password.getText().toString();
                 if (isEmpty(str_name)) {
-                    Toast.makeText(NewAccountActivity.this, "Please Enter Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_Name), Toast.LENGTH_SHORT).show();
                 } else if (str_name.length() < 3) {
-                    Toast.makeText(NewAccountActivity.this, "Name should be  minimum of 3 characters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Name_should_be_minimum_of_three_characters), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_email)) {
-                    Toast.makeText(NewAccountActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_Email), Toast.LENGTH_SHORT).show();
                 } else if (!str_email.matches(str_email_regex)) {
-                    Toast.makeText(NewAccountActivity.this, "Please Enter Valid Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_Valid_Email), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_password)) {
-                    Toast.makeText(NewAccountActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_Password), Toast.LENGTH_SHORT).show();
                 } else if (str_password.length() < 6) {
-                    Toast.makeText(NewAccountActivity.this, "Password should be  minimum of 6 characters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Password_should_be_minimum_of_six_characters), Toast.LENGTH_SHORT).show();
                 } else {
-                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -384,7 +384,7 @@ public class NewAccountActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<RegistrationStep2Model> call, Throwable t) {
                             progressDialog.dismiss();
-                            Toast.makeText(NewAccountActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

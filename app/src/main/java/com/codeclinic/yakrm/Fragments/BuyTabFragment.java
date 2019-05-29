@@ -81,7 +81,7 @@ public class BuyTabFragment extends Fragment {
         }
 
         if (Connection_Detector.isInternetAvailable(getActivity())) {
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -181,7 +181,7 @@ public class BuyTabFragment extends Fragment {
                     @Override
                     public void onFailure(Call<AllVouchersListModel> call, Throwable t) {
                         progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
@@ -248,7 +248,7 @@ public class BuyTabFragment extends Fragment {
                                 @Override
                                 public void onFailure(Call<AllVouchersListModel> call, Throwable t) {
                                     progressDialog.dismiss();
-                                    Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                                 }
                             });
                             MainActivity.filter_array = 0;
@@ -258,12 +258,12 @@ public class BuyTabFragment extends Fragment {
                     @Override
                     public void onFailure(Call<FilterListModel> call, Throwable t) {
                         progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         } else {
-            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getResources().getString(R.string.No_Internet_Connection), Toast.LENGTH_SHORT).show();
         }
 
 

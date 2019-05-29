@@ -22,6 +22,7 @@ import com.codeclinic.yakrm.Models.GetCheckoutIDModel;
 import com.codeclinic.yakrm.Models.GetMerchantInfoModel;
 import com.codeclinic.yakrm.Models.LoginModel;
 import com.codeclinic.yakrm.Models.NotificationListModel;
+import com.codeclinic.yakrm.Models.PaymentStatusModel;
 import com.codeclinic.yakrm.Models.PaymentTransactionModel;
 import com.codeclinic.yakrm.Models.PrepareTransactionProcessModel;
 import com.codeclinic.yakrm.Models.ProfileImageUpload;
@@ -156,6 +157,11 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("remove_card_of_users")
     Call<RemoveCardModel> REMOVE_CARD_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
+
+    @Headers("Content-Type: application/json")
+    @POST("paymentstatus")
+    Call<PaymentStatusModel> PAYMENT_STATUS_MODEL_CALL(@Body String Body);
 
     @FormUrlEncoded
     @POST("/apiv3/get_merchant_info")

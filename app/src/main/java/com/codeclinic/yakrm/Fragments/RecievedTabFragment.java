@@ -84,11 +84,11 @@ public class RecievedTabFragment extends Fragment {
                 @Override
                 public void onFailure(Call<RecievedGiftListModel> call, Throwable t) {
                     progressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
-            Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getResources().getString(R.string.No_Internet_Connection), Toast.LENGTH_SHORT).show();
         }
 
 

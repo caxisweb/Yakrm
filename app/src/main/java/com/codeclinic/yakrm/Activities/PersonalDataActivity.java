@@ -141,19 +141,19 @@ public class PersonalDataActivity extends AppCompatActivity {
                 String u_mobile = tv_mobile.getText().toString();
 
                 if (isEmpty(u_name)) {
-                    Toast.makeText(PersonalDataActivity.this, "Please Enter Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Please_Enter_Name), Toast.LENGTH_SHORT).show();
                 } else if (u_name.length() < 3) {
-                    Toast.makeText(PersonalDataActivity.this, "Name should be  minimum of 3 characters", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Name_should_be_minimum_of_three_characters), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(u_email)) {
-                    Toast.makeText(PersonalDataActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Please_Enter_Email), Toast.LENGTH_SHORT).show();
                 } else if (!u_email.matches(str_email_regex)) {
-                    Toast.makeText(PersonalDataActivity.this, "Please Enter Valid Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Please_Enter_Valid_Email), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(u_mobile)) {
-                    Toast.makeText(PersonalDataActivity.this, "Please Enter Mobile Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Please_Enter_Mobile_Number), Toast.LENGTH_SHORT).show();
                 } else if (u_mobile.length() < 10) {
-                    Toast.makeText(PersonalDataActivity.this, "Mobile Number should be minimum of 10 characters ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Mobile_Number_should_be_minimum), Toast.LENGTH_SHORT).show();
                 } else {
-                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -210,7 +210,7 @@ public class PersonalDataActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<ProfileUpdateModel> call, Throwable t) {
                             progressDialog.dismiss();
-                            Toast.makeText(PersonalDataActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -226,13 +226,13 @@ public class PersonalDataActivity extends AppCompatActivity {
     }
 
     private void selectImage() {
-        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        final CharSequence[] options = {getResources().getString(R.string.Take_Photo), getResources().getString(R.string.Choose_from_Gallery), getResources().getString(R.string.Cancel)};
         AlertDialog.Builder builder = new AlertDialog.Builder(PersonalDataActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle(getResources().getString(R.string.Add_Photo));
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo")) {
+                if (options[item].equals(getResources().getString(R.string.Take_Photo))) {
                     if (isPermissionGranted()) {
                         final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Yakrm/";
                         File newdir = new File(dir);
@@ -251,7 +251,7 @@ public class PersonalDataActivity extends AppCompatActivity {
                         Toast.makeText(PersonalDataActivity.this, "Permission needed to access Camera", Toast.LENGTH_SHORT).show();
                     }
 
-                } else if (options[item].equals("Choose from Gallery")) {
+                } else if (options[item].equals(getResources().getString(R.string.Choose_from_Gallery))) {
                     if (isPermissionGranted()) {
                         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         photoPickerIntent.setType("image/*");
@@ -259,7 +259,7 @@ public class PersonalDataActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(PersonalDataActivity.this, "Permission needed to access Gallery", Toast.LENGTH_SHORT).show();
                     }
-                } else if (options[item].equals("Cancel")) {
+                } else if (options[item].equals(getResources().getString(R.string.Cancel))) {
                     dialog.dismiss();
                 }
             }

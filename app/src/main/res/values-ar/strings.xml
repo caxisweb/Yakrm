@@ -334,7 +334,26 @@
     <string name="by_visa">عن طريق التأشيرة:</string>
     <string name="by_wallet">بواسطة محفظة:</string>
     <string name="confirm_new_password">تأكيد كلمة المرور الجديدة</string>
+
     <string name="Confirm_new_password">تأكيد كلمة المرور الجديدة</string>
+
+    <string name="Please_Enter_Email">من فضلك ادخل بريد الكتروني </string>
+    <string name="Please_Enter_Password">من فضلك ادخل كلمة المرور </string>
+    <string name="Server_Error">Server Error</string>
+    <string name="Please_Wait">انتظر قليلا</string>
+    <string name="Please_Enter_Mobile_Number">من فضلك أدخل رقم الهاتف</string>
+    <string name="Mobile_Number_should_be_minimum">رقم الهاتف يجب ان لا يقل عن 10 ارقام </string>
+    <string name="Please_Enter_OTP">من فضلك ادخل كود التحقق</string>
+    <string name="Please_Enter_Name">من فضلك ادخل الاسم </string>
+    <string name="Name_should_be_minimum_of_three_characters">الاسم لايجب ان يقل عن 3 احرف </string>
+    <string name="Please_Enter_Valid_Email">من فضلك ادخل بريد الكتروني صحيح</string>
+    <string name="Password_should_be_minimum_of_six_characters">كلمة المرور  يجب ان لا تقل عن 6 احرف </string>
+    <string name="Please_Select_atleast_one_filter_category_from_above">يرجي اختيار علي الاقل فئة واحدة </string>
+    <string name="No_Internet_Connection">تحقق من الاتصال بالانترنت </string>
+    <string name="Take_Photo">التقط صورة</string>
+    <string name="Choose_from_Gallery">اختار صورة من معرض الصور </string>
+    <string name="Cancel"> الغاء</string>
+    <string name="Add_Photo">أضف صورة </string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>
