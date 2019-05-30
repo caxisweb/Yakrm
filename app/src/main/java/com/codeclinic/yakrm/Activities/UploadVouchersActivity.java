@@ -112,7 +112,16 @@ public class UploadVouchersActivity extends AppCompatActivity {
                         uploadVouchersAdapter = new UploadVouchersAdapter(arrayList, UploadVouchersActivity.this);
                         recyclerView.setAdapter(uploadVouchersAdapter);
                     } else {
-                        Toast.makeText(UploadVouchersActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        if (status.equals("0")) {
+                            arrayList = response.body().getData();
+                            uploadVouchersAdapter = new UploadVouchersAdapter(arrayList, UploadVouchersActivity.this);
+                            recyclerView.setAdapter(uploadVouchersAdapter);
+                            Toast.makeText(UploadVouchersActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            sessionManager.clearsession();
+                            sessionManager.logoutUser();
+                        }
+
                     }
                 }
 

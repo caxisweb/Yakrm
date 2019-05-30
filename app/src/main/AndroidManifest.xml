@@ -171,19 +171,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name="Activities.CustomActivity"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <data android:scheme="testmosab" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
-        </activity>
-
         <service android:name=".Utils.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

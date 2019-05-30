@@ -1,15 +1,10 @@
 package com.codeclinic.yakrm.Adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,22 +12,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.codeclinic.yakrm.Activities.CompletingPurchasingActivity;
 import com.codeclinic.yakrm.Models.GetCardListItemModel;
-import com.codeclinic.yakrm.Models.PrepareTransactionProcessModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Utils.SessionManager;
-import com.paytabs.paytabs_sdk.payment.ui.activities.SecurePaymentActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SavedCardListAdapter extends RecyclerView.Adapter<SavedCardListAdapter.Holder> {
     List<GetCardListItemModel> arrayList;
@@ -43,32 +28,29 @@ public class SavedCardListAdapter extends RecyclerView.Adapter<SavedCardListAdap
     Double price;
     String card_holder_name, card_expiry_date, card_cvv, card_no;
 
-    public SavedCardListAdapter(List<GetCardListItemModel> arrayList, Context context, API apiService, ProgressDialog progressDialog, SessionManager sessionManager, Double price) {
+    private final OnItemClickListener listener;
+
+    public SavedCardListAdapter(List<GetCardListItemModel> arrayList, Context context, API apiService, ProgressDialog progressDialog, SessionManager sessionManager, Double price, OnItemClickListener listener) {
         this.arrayList = arrayList;
         this.context = context;
         this.progressDialog = progressDialog;
         this.apiService = apiService;
         this.sessionManager = sessionManager;
         this.price = price;
+        this.listener = listener;
 
     }
 
-    @NonNull
-    @Override
-    public SavedCardListAdapter.Holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.custom_saved_card_list_view, null);
-        return new Holder(view);
-    }
-
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull SavedCardListAdapter.Holder holder, final int i) {
 
         if (arrayList.get(i).getPaymentMethod().equals("1")) {
             holder.img_visa.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_payment_csmada_icon));
         }
-
         holder.tv_card_no_visa.setText("**** **** **** " + arrayList.get(i).getCardNumber().substring(arrayList.get(i).getCardNumber().length() - 4));
-        holder.ll_card.setOnClickListener(new View.OnClickListener() {
+
+   /*     holder.ll_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.CustomDialogFragment);
@@ -142,7 +124,26 @@ public class SavedCardListAdapter extends RecyclerView.Adapter<SavedCardListAdap
                 AlertDialog alertDialog = alert.create();
                 alertDialog.show();
             }
+        });*/
+
+        holder.ll_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GetCardListItemModel getCardListItemModel = arrayList.get(i);
+                listener.onItemClick(getCardListItemModel);
+            }
         });
+    }
+
+    @NonNull
+    @Override
+    public SavedCardListAdapter.Holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.custom_saved_card_list_view, null);
+        return new Holder(view);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(GetCardListItemModel item);
     }
 
     @Override
