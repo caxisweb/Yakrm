@@ -164,6 +164,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+
                 tv_ex_date.setText(final_date.replaceAll("1", context.getResources().getString(R.string.one))
                         .replaceAll("2", context.getResources().getString(R.string.two))
                         .replaceAll("3", context.getResources().getString(R.string.three))
