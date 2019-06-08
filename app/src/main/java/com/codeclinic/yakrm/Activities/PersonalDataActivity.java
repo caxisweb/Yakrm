@@ -150,6 +150,8 @@ public class PersonalDataActivity extends AppCompatActivity {
                     Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Please_Enter_Valid_Email), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(u_mobile)) {
                     Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Please_Enter_Mobile_Number), Toast.LENGTH_SHORT).show();
+                } else if (!u_mobile.substring(0, 2).equals("05")) {
+                    Toast.makeText(PersonalDataActivity.this, "Mobile number shoul start with '05' ", Toast.LENGTH_LONG).show();
                 } else if (u_mobile.length() < 10) {
                     Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Mobile_Number_should_be_minimum), Toast.LENGTH_SHORT).show();
                 } else {

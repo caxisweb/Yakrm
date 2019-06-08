@@ -109,7 +109,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 str_number = edt_number.getText().toString();
                 if (isEmpty(str_number)) {
                     Toast.makeText(ForgetPasswordActivity.this, "Please Enter Mobile Number", Toast.LENGTH_SHORT).show();
-                } else if (str_number.length() < 10) {
+                } /*else if (!str_number.substring(0, 2).equals("05")) {
+                    Toast.makeText(ForgetPasswordActivity.this, "Mobile number shoul start with '05' ", Toast.LENGTH_LONG).show();
+                }*/ else if (str_number.length() < 10) {
                     Toast.makeText(ForgetPasswordActivity.this, "Mobile Number should be minimum of 10 characters ", Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.setMessage("Please Wait");
