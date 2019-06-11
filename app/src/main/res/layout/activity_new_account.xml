@@ -220,6 +220,26 @@
                 android:padding="10dp"
                 android:text="@string/You_do_not_own_this_mobile_change_the_number" />
 
+
+            <TextView
+                android:id="@+id/tv_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="00"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/btn_resend"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_background_button"
+                android:enabled="false"
+                android:text="Resend"
+                android:textColor="@color/colorPrimary" />
+
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

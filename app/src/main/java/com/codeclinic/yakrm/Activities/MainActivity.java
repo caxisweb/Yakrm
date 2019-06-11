@@ -498,7 +498,7 @@ public class MainActivity extends AppCompatActivity
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                gift_category_id = "";
                 if (category_classification_array != null) {
                     for (int i = 0; i < category_classification_array.size(); i++) {
                         int pos = cat_arrayList_name.indexOf(category_classification_array.get(i));
@@ -507,6 +507,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     gift_category_id = "";
                 }
+                gift_category_id = gift_category_id.substring(0, gift_category_id.length() - 1);
 
                 if (chk_e_gift.isChecked() && chk_p_gift.isChecked()) {
                     gift_type = "paper gift,electronic gift";

@@ -13,6 +13,17 @@ public class RegistrationModel {
     @SerializedName("token")
     @Expose
     private String token;
+    @SerializedName("otp")
+    @Expose
+    private int otp;
+
+    public int getOtp() {
+        return otp;
+    }
+
+    public void setOtp(int otp) {
+        this.otp = otp;
+    }
 
     public String getStatus() {
         return status;

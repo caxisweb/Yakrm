@@ -55,6 +55,7 @@ import com.oppwa.mobile.connect.service.IProviderBinder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -805,7 +806,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                     transaction_main_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
                                     JSONObject jobj = new JSONObject();
                                     try {
-                                        jobj.put("price", transaction_main_price);
+                                        jobj.put("price", formatNumber(2, transaction_main_price));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -864,6 +865,15 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                 Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public String formatNumber(int decimals, double number) {
+        StringBuilder sb = new StringBuilder(decimals + 3);
+        sb.append("#.");
+        for (int i = 0; i < decimals; i++) {
+            sb.append("0");
+        }
+        return new DecimalFormat(sb.toString()).format(number);
     }
 
     @Override

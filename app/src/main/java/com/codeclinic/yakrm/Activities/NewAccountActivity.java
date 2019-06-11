@@ -1,8 +1,10 @@
 package com.codeclinic.yakrm.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
@@ -27,6 +29,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,9 +38,9 @@ import retrofit2.Response;
 public class NewAccountActivity extends AppCompatActivity {
 
     CardView main_detail_cardview, number_verify_cardview, personal_detail_cardview;
-    Button btn_send, btn_sign_up_new, btn_verify;
+    Button btn_send, btn_sign_up_new, btn_verify, btn_resend;
     ImageView img_back;
-    TextView tv_user_agree, tv_change_number;
+    TextView tv_user_agree, tv_change_number, tv_min;
     EditText edt_number, edt_1, edt_2, edt_3, edt_4, edt_name, edt_email, edt_password;
     API apiService;
     ProgressDialog progressDialog;
@@ -46,9 +50,11 @@ public class NewAccountActivity extends AppCompatActivity {
 
     String str_email_regex = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
 
-    String str_user_token, str_number, str_edt_1, str_edt_2, str_edt_3, str_edt_4, str_name, str_email, str_password;
+    String str_otp, str_user_token, str_number, str_edt_1, str_edt_2, str_edt_3, str_edt_4, str_name, str_email, str_password;
 
     SessionManager sessionManager;
+    String language;
+    CountDownTimer countDownTimer;
 
 
     public boolean isEmpty(CharSequence character) {
@@ -64,12 +70,12 @@ public class NewAccountActivity extends AppCompatActivity {
         main_detail_cardview = findViewById(R.id.main_detail_cardview);
         number_verify_cardview = findViewById(R.id.number_verify_cardview);
         personal_detail_cardview = findViewById(R.id.personal_detail_cardview);
-
+        tv_min = findViewById(R.id.tv_min);
         progressDialog = new ProgressDialog(NewAccountActivity.this);
         sessionManager = new SessionManager(this);
 
         img_back = findViewById(R.id.img_back);
-        String language = String.valueOf(getResources().getConfiguration().locale);
+        language = String.valueOf(getResources().getConfiguration().locale);
         if (language.equals("ar")) {
             img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
         }
@@ -113,6 +119,7 @@ public class NewAccountActivity extends AppCompatActivity {
         btn_sign_up_new = findViewById(R.id.btn_sign_up_new);
         btn_verify = findViewById(R.id.btn_verify);
         btn_send = findViewById(R.id.btn_send);
+        btn_resend = findViewById(R.id.btn_resend);
 
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,9 +184,65 @@ public class NewAccountActivity extends AppCompatActivity {
                         public void onResponse(Call<RegistrationModel> call, Response<RegistrationModel> response) {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
+                                str_otp = String.valueOf(response.body().getOtp());
                                 str_user_token = String.valueOf(response.body().getToken());
                                 main_detail_cardview.setVisibility(View.GONE);
                                 number_verify_cardview.setVisibility(View.VISIBLE);
+                                if (countDownTimer != null) {
+                                    countDownTimer.cancel();
+                                }
+                                callCountDownTimer();
+                            } else {
+                                Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<RegistrationModel> call, Throwable t) {
+                            progressDialog.dismiss();
+                            Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
+        btn_resend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                str_number = edt_number.getText().toString();
+                if (isEmpty(str_number)) {
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_Mobile_Number), Toast.LENGTH_SHORT).show();
+                } else if (!str_number.substring(0, 2).equals("05")) {
+                    Toast.makeText(NewAccountActivity.this, "Mobile number shoul start with '05' ", Toast.LENGTH_LONG).show();
+                } else if (str_number.length() < 10) {
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Mobile_Number_should_be_minimum), Toast.LENGTH_SHORT).show();
+                } else {
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+
+                    try {
+                        jsonObject_register.put("country_id", "1");
+                        jsonObject_register.put("phone", str_number);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Call<RegistrationModel> registrationModelCall = apiService.REGISTRATION_MODEL_CALL(jsonObject_register.toString());
+                    registrationModelCall.enqueue(new Callback<RegistrationModel>() {
+                        @Override
+                        public void onResponse(Call<RegistrationModel> call, Response<RegistrationModel> response) {
+                            progressDialog.dismiss();
+                            if (response.body().getStatus().equals("1")) {
+                                str_otp = String.valueOf(response.body().getOtp());
+                                str_user_token = String.valueOf(response.body().getToken());
+                                main_detail_cardview.setVisibility(View.GONE);
+                                number_verify_cardview.setVisibility(View.VISIBLE);
+                                if (countDownTimer != null) {
+                                    countDownTimer.cancel();
+                                }
+                                callCountDownTimer();
                             } else {
                                 Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -283,6 +346,7 @@ public class NewAccountActivity extends AppCompatActivity {
         btn_verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 str_edt_1 = edt_1.getText().toString();
                 str_edt_2 = edt_2.getText().toString();
                 str_edt_3 = edt_3.getText().toString();
@@ -298,13 +362,20 @@ public class NewAccountActivity extends AppCompatActivity {
                     Toast.makeText(NewAccountActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
                 }*/ else {
 
+                    String temp_otp = null;
+                    if (language.equals("ar")) {
+                        temp_otp = str_edt_4 + str_edt_3 + str_edt_2 + str_edt_1;
+                    } else {
+                        temp_otp = str_edt_1 + str_edt_2 + str_edt_3 + str_edt_4;
+                    }
+
                     progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
 
                     try {
-                        jsonObject_verify.put("otp", str_edt_1 + str_edt_2 + str_edt_3 + str_edt_4);
+                        jsonObject_verify.put("otp", temp_otp);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -314,6 +385,9 @@ public class NewAccountActivity extends AppCompatActivity {
                         public void onResponse(Call<VerifyOTPModel> call, Response<VerifyOTPModel> response) {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("2")) {
+                                if (countDownTimer != null) {
+                                    countDownTimer.cancel();
+                                }
                                 str_user_token = response.body().getToken();
                                 number_verify_cardview.setVisibility(View.GONE);
                                 personal_detail_cardview.setVisibility(View.VISIBLE);
@@ -401,4 +475,30 @@ public class NewAccountActivity extends AppCompatActivity {
         });
 
     }
+
+
+    public void callCountDownTimer() {
+        btn_resend.setEnabled(false);
+        countDownTimer = new CountDownTimer(60000, 1000) {
+            @SuppressLint("DefaultLocale")
+            public void onTick(long millisUntilFinished) {
+                tv_min.setText(String.format("%02d:%02d", TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)), TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))));
+            }
+
+            public void onFinish() {
+
+                btn_resend.setEnabled(true);
+                tv_min.setText("00:00");
+            }
+        }.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
 }

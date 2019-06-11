@@ -1,7 +1,9 @@
 package com.codeclinic.yakrm.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeclinic.yakrm.Models.ForgetPasswordNumberModel;
@@ -22,23 +25,28 @@ import com.codeclinic.yakrm.Utils.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ForgetPasswordActivity extends AppCompatActivity {
     CardView main_detail_cardview, number_verify_cardview, main_change_pass_cardview;
-    Button btn_send, btn_verify, btn_change_pass;
+    Button btn_send, btn_verify, btn_change_pass, btn_resend;
     ImageView img_back;
     EditText edt_number, edt_1, edt_2, edt_3, edt_4, edt_new_pass, edt_confm_new_pass;
     API apiService;
     ProgressDialog progressDialog;
     JSONObject jsonObject_register = new JSONObject();
-    JSONObject jsonObject_verify = new JSONObject();
 
-    String str_otp, str_user_token, str_number, str_edt_1, str_edt_2, str_edt_3, str_edt_4;
+    TextView tv_min, tv_sec;
+
+    String str_otp, str_user_token, str_number, str_edt_1, str_edt_2, str_edt_3, str_edt_4, language;
 
     SessionManager sessionManager;
+
+    CountDownTimer countDownTimer;
 
 
     public boolean isEmpty(CharSequence character) {
@@ -57,8 +65,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(ForgetPasswordActivity.this);
         sessionManager = new SessionManager(this);
 
+
         img_back = findViewById(R.id.img_back);
-        String language = String.valueOf(getResources().getConfiguration().locale);
+        language = String.valueOf(getResources().getConfiguration().locale);
         if (language.equals("ar")) {
             img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
         }
@@ -73,8 +82,12 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         edt_new_pass = findViewById(R.id.edt_new_pass);
         edt_confm_new_pass = findViewById(R.id.edt_confm_new_pass);
 
+        tv_min = findViewById(R.id.tv_min);
+        tv_sec = findViewById(R.id.tv_sec);
+
         btn_verify = findViewById(R.id.btn_verify);
         btn_send = findViewById(R.id.btn_send);
+        btn_resend = findViewById(R.id.btn_resend);
         btn_change_pass = findViewById(R.id.btn_change_pass);
 
         img_back.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +147,58 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                                 str_user_token = String.valueOf(response.body().getToken());
                                 main_detail_cardview.setVisibility(View.GONE);
                                 number_verify_cardview.setVisibility(View.VISIBLE);
+                                if (countDownTimer != null) {
+                                    countDownTimer.cancel();
+                                }
+                                callCountDownTimer();
+                            } else {
+                                Toast.makeText(ForgetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ForgetPasswordNumberModel> call, Throwable t) {
+                            progressDialog.dismiss();
+                            Toast.makeText(ForgetPasswordActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
+        btn_resend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                str_number = edt_number.getText().toString();
+                if (isEmpty(str_number)) {
+                    Toast.makeText(ForgetPasswordActivity.this, "Please Enter Mobile Number", Toast.LENGTH_SHORT).show();
+                } else if (str_number.length() < 10) {
+                    Toast.makeText(ForgetPasswordActivity.this, "Mobile Number should be minimum of 10 characters ", Toast.LENGTH_SHORT).show();
+                } else {
+                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+
+                    try {
+                        jsonObject_register.put("phone", str_number);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Call<ForgetPasswordNumberModel> forgetPasswordNumberModelCall = apiService.FORGET_PASSWORD_NUMBER_MODEL_CALL(jsonObject_register.toString());
+                    forgetPasswordNumberModelCall.enqueue(new Callback<ForgetPasswordNumberModel>() {
+                        @Override
+                        public void onResponse(Call<ForgetPasswordNumberModel> call, Response<ForgetPasswordNumberModel> response) {
+                            progressDialog.dismiss();
+                            if (response.body().getStatus().equals("3")) {
+                                str_otp = String.valueOf(response.body().getOtp());
+                                str_user_token = String.valueOf(response.body().getToken());
+                                main_detail_cardview.setVisibility(View.GONE);
+                                number_verify_cardview.setVisibility(View.VISIBLE);
+                                if (countDownTimer != null) {
+                                    countDownTimer.cancel();
+                                }
+                                callCountDownTimer();
                             } else {
                                 Toast.makeText(ForgetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -251,7 +316,13 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 } else if (isEmpty(str_edt_4)) {
                     Toast.makeText(ForgetPasswordActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
                 } else {
-                    String temp_otp = str_edt_1 + str_edt_2 + str_edt_3 + str_edt_4;
+                    String temp_otp = null;
+                    if (language.equals("ar")) {
+                        temp_otp = str_edt_4 + str_edt_3 + str_edt_2 + str_edt_1;
+                    } else {
+                        temp_otp = str_edt_1 + str_edt_2 + str_edt_3 + str_edt_4;
+                    }
+
                     if (temp_otp.equals(str_otp)) {
                         number_verify_cardview.setVisibility(View.GONE);
                         main_change_pass_cardview.setVisibility(View.VISIBLE);
@@ -304,9 +375,31 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                         }
                     });
                 }
-
-
             }
         });
+    }
+
+    public void callCountDownTimer() {
+        btn_resend.setEnabled(false);
+        countDownTimer = new CountDownTimer(60000, 1000) {
+            @SuppressLint("DefaultLocale")
+            public void onTick(long millisUntilFinished) {
+                tv_min.setText(String.format("%02d:%02d", TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)), TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))));
+            }
+
+            public void onFinish() {
+
+                btn_resend.setEnabled(true);
+                tv_min.setText("00:00");
+            }
+        }.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 }
