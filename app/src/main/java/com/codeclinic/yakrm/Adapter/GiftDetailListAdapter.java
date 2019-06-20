@@ -134,6 +134,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 TextView tv_ends_on = dialogView.findViewById(R.id.tv_ends_on);
                 TextView tv_ex_date = dialogView.findViewById(R.id.tv_ex_date);
                 TextView tv_description = dialogView.findViewById(R.id.tv_description);
+                TextView tv_voucher_code = dialogView.findViewById(R.id.tv_voucher_code);
                 TextView tv_gift_type = dialogView.findViewById(R.id.tv_gift_type);
 
                 alertDialog = dialogBuilder.create();
@@ -184,7 +185,8 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                         .replaceAll("8", context.getResources().getString(R.string.eight))
                         .replaceAll("9", context.getResources().getString(R.string.nine))
                         .replaceAll("0", context.getResources().getString(R.string.zero)));
-                tv_description.setText(arrayList.get(i).getVoucherCode());
+                tv_voucher_code.setText(arrayList.get(i).getVoucherCode());
+                tv_description.setText(arrayList.get(i).getVoucher_description());
                 tv_gift_type.setText(arrayList.get(i).getVoucherType());
 
             }

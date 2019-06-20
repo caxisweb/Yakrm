@@ -19,10 +19,27 @@ public class VoucherDetailsListItemModel {
     @SerializedName("voucher_type")
     @Expose
     private String voucherType;
-
     @SerializedName("voucher_image")
     @Expose
     private String voucherImage;
+    @SerializedName("voucher_description")
+    @Expose
+    private String voucher_description;
+    @SerializedName("gift_category_name")
+    @Expose
+    private String giftCategoryName;
+    @SerializedName("expired_at")
+    @Expose
+    private String expiredAt;
+
+
+    public String getVoucher_description() {
+        return voucher_description;
+    }
+
+    public void setVoucher_description(String voucher_description) {
+        this.voucher_description = voucher_description;
+    }
 
     public String getVoucherImage() {
         return voucherImage;
@@ -31,12 +48,7 @@ public class VoucherDetailsListItemModel {
     public void setVoucherImage(String voucherImage) {
         this.voucherImage = voucherImage;
     }
-    @SerializedName("gift_category_name")
-    @Expose
-    private String giftCategoryName;
-    @SerializedName("expired_at")
-    @Expose
-    private String expiredAt;
+
 
     public String getVoucherId() {
         return voucherId;

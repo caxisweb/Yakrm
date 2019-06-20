@@ -176,6 +176,17 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/tv_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
                     <com.bottlerocketstudios.barcode.generation.ui.BarcodeView
                         android:id="@+id/generation_barcode_image"
                         android:layout_width="180dp"

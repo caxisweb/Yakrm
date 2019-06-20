@@ -402,4 +402,5 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             countDownTimer.cancel();
         }
     }
+
 }

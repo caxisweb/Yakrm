@@ -23,7 +23,7 @@ import java.util.Date;
 public class
 VoucherDetailActivity extends AppCompatActivity {
 
-    TextView tv_header_name, tv_expiredate, tv_price, tv_barcode, tv_pincode;
+    TextView tv_header_name, tv_expiredate, tv_price, tv_barcode, tv_pincode, tv_desc;
     ImageView img_back, img_voucher;
     Button btn_done;
     public static String v_payment_id, voucher_id, voucher_name, date, final_date, barcode, pincode, price, v_image, admin_voucher_discount, scan_voucher_type, scan_voucher_type_full, v_payment_type;
@@ -46,6 +46,7 @@ VoucherDetailActivity extends AppCompatActivity {
         tv_barcode = findViewById(R.id.tv_barcode);
         barcodeView = findViewById(R.id.generation_barcode_image);
         tv_pincode = findViewById(R.id.tv_pincode);
+        tv_desc = findViewById(R.id.tv_desc);
 
         tv_pincode = findViewById(R.id.tv_pincode);
         voucher_detail_activity = this;
@@ -59,6 +60,7 @@ VoucherDetailActivity extends AppCompatActivity {
         voucher_id = getIntent().getStringExtra("voucher_id");
         admin_voucher_discount = getIntent().getStringExtra("admin_voucher_discount");
         v_payment_type = getIntent().getStringExtra("v_payment_type");
+        tv_desc.setText(getIntent().getStringExtra("v_desc"));
 
         switch (getIntent().getStringExtra("scan_voucher_type")) {
             case "purchase_voucher":

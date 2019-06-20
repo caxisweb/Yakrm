@@ -49,6 +49,17 @@ public class WalletActiveListItemModel {
     @SerializedName("new_voucher_id")
     @Expose
     private String newVoucherId;
+    @SerializedName("voucher_description")
+    @Expose
+    private String voucher_description;
+
+    public String getVoucher_description() {
+        return voucher_description;
+    }
+
+    public void setVoucher_description(String voucher_description) {
+        this.voucher_description = voucher_description;
+    }
 
     public String getVoucherPaymentDetailId() {
         return voucherPaymentDetailId;
