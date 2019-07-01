@@ -197,19 +197,19 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
             public void onClick(View v) {
                 if (Connection_Detector.isInternetAvailable(EnterCardDetailsActivity.this)) {
                     if (isEmpty(edt_name.getText().toString())) {
-                        Toast.makeText(EnterCardDetailsActivity.this, "Please Enter CardHolder Name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardHolderName), Toast.LENGTH_SHORT).show();
                     } else if (!edt_name.getText().toString().matches(name_regex)) {
-                        Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Valid Name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterValidName), Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_card_no.getText().toString())) {
-                        Toast.makeText(EnterCardDetailsActivity.this, "Please Enter CardNumber", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardNumber), Toast.LENGTH_SHORT).show();
                     } else if (edt_card_no.getText().toString().length() != 16) {
-                        Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Correct Card no", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCorrectCardNo), Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_ex_date.getText().toString())) {
-                        Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Card Expiry date", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardExpirydate), Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_cvv.getText().toString())) {
-                        Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Security Number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterSecurityNumber), Toast.LENGTH_SHORT).show();
                     } else if (edt_cvv.getText().toString().length() != 3) {
-                        Toast.makeText(EnterCardDetailsActivity.this, "Please Enter Correct Security Number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCorrectSecurityNumber), Toast.LENGTH_SHORT).show();
                     } else {
                         progressDialog.setMessage("Please Wait");
                         progressDialog.setIndeterminate(true);

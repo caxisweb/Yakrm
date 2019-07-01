@@ -1,6 +1,7 @@
 package com.codeclinic.yakrm.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -222,6 +223,9 @@ public class EditCardActivity extends AppCompatActivity {
                                 String status = response.body().getStatus();
                                 if (status.equals("1")) {
                                     Toast.makeText(EditCardActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(EditCardActivity.this, MainActivity.class);// New activity
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
                                     finish();
                                 } else {
                                     Toast.makeText(EditCardActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

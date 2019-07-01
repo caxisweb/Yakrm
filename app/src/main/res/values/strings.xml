@@ -367,6 +367,13 @@
     <string name="Choose_from_Gallery">Choose from Gallery</string>
     <string name="Cancel">Cancel</string>
     <string name="Add_Photo">Add Photo!</string>
+    <string name="PleaseEnterCardHolderName">Please Enter CardHolder Name</string>
+    <string name="PleaseEnterValidName">Please Enter Valid Name</string>
+    <string name="PleaseEnterCardNumber">Please Enter CardNumber</string>
+    <string name="PleaseEnterCorrectCardNo">Please Enter Correct Card no</string>
+    <string name="PleaseEnterCardExpirydate">Please Enter Card Expiry date</string>
+    <string name="PleaseEnterSecurityNumber">Please Enter Security Number</string>
+    <string name="PleaseEnterCorrectSecurityNumber">Please Enter Correct Security Number</string>
 
 
 </resources>

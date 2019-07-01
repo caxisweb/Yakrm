@@ -80,7 +80,7 @@
                 <Spinner
                     android:id="@+id/sp_country"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:entries="@array/selectcountry">
 
                 </Spinner>
@@ -139,7 +139,7 @@
         android:layout_below="@+id/rl_action_bar"
         android:layout_margin="20dp"
         android:background="@color/white"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -292,9 +292,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/email"
-                android:textStyle="bold"
                 android:textColor="@color/text_color"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edt_email"

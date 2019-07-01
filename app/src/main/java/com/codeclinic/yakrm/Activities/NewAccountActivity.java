@@ -11,24 +11,32 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.Models.CountryListItemModel;
+import com.codeclinic.yakrm.Models.CountryListModel;
 import com.codeclinic.yakrm.Models.RegistrationModel;
 import com.codeclinic.yakrm.Models.RegistrationStep2Model;
 import com.codeclinic.yakrm.Models.VerifyOTPModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
+import com.codeclinic.yakrm.Utils.Connection_Detector;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
@@ -42,19 +50,26 @@ public class NewAccountActivity extends AppCompatActivity {
     ImageView img_back;
     TextView tv_user_agree, tv_change_number, tv_min;
     EditText edt_number, edt_1, edt_2, edt_3, edt_4, edt_name, edt_email, edt_password;
+    Spinner sp_country;
+
+
     API apiService;
     ProgressDialog progressDialog;
     JSONObject jsonObject_register = new JSONObject();
     JSONObject jsonObject_verify = new JSONObject();
     JSONObject jsonObject_signup = new JSONObject();
+    JSONObject jsonObject_country = new JSONObject();
 
     String str_email_regex = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
 
-    String str_otp, str_user_token, str_number, str_edt_1, str_edt_2, str_edt_3, str_edt_4, str_name, str_email, str_password;
+    String str_country_code, str_otp, str_user_token, str_number, str_edt_1, str_edt_2, str_edt_3, str_edt_4, str_name, str_email, str_password;
 
     SessionManager sessionManager;
     String language;
     CountDownTimer countDownTimer;
+    List<CountryListItemModel> arrayList_country = new ArrayList<>();
+    ArrayList<String> arrayList_country_name = new ArrayList<>();
+    ArrayList<String> arrayList_country_id = new ArrayList<>();
 
 
     public boolean isEmpty(CharSequence character) {
@@ -71,6 +86,7 @@ public class NewAccountActivity extends AppCompatActivity {
         number_verify_cardview = findViewById(R.id.number_verify_cardview);
         personal_detail_cardview = findViewById(R.id.personal_detail_cardview);
         tv_min = findViewById(R.id.tv_min);
+        sp_country = findViewById(R.id.sp_country);
         progressDialog = new ProgressDialog(NewAccountActivity.this);
         sessionManager = new SessionManager(this);
 
@@ -155,7 +171,6 @@ public class NewAccountActivity extends AppCompatActivity {
             }
         });
 
-
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +188,7 @@ public class NewAccountActivity extends AppCompatActivity {
                     progressDialog.show();
 
                     try {
-                        jsonObject_register.put("country_id", "1");
+                        jsonObject_register.put("country_id", str_country_code);
                         jsonObject_register.put("phone", str_number);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -473,6 +488,47 @@ public class NewAccountActivity extends AppCompatActivity {
                 startActivity(new Intent(NewAccountActivity.this, PrivayPolicyActivity.class));
             }
         });
+
+        if (Connection_Detector.isInternetAvailable(this)) {
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            Call<CountryListModel> countryListModelCall = apiService.COUNTRY_LIST_MODEL_CALL();
+            countryListModelCall.enqueue(new Callback<CountryListModel>() {
+                @Override
+                public void onResponse(Call<CountryListModel> call, Response<CountryListModel> response) {
+                    progressDialog.dismiss();
+                    arrayList_country = response.body().getData();
+                    for (int i = 0; i < arrayList_country.size(); i++) {
+                        arrayList_country_name.add(arrayList_country.get(i).getCountryName());
+                        arrayList_country_id.add(arrayList_country.get(i).getId());
+                    }
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(NewAccountActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList_country_name);
+                    sp_country.setAdapter(dataAdapter);
+                    sp_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            str_country_code = arrayList_country_id.get(position);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(Call<CountryListModel> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(NewAccountActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.err_no_internet), Toast.LENGTH_SHORT).show();
+        }
 
     }
 

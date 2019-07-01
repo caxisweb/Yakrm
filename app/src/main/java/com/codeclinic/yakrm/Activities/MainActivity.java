@@ -44,22 +44,32 @@ import com.codeclinic.yakrm.Fragments.MyWalletTabFragment;
 import com.codeclinic.yakrm.Fragments.RecievedTabFragment;
 import com.codeclinic.yakrm.Fragments.ReplaceTabFragment;
 import com.codeclinic.yakrm.Fragments.SupportContactFragment;
+import com.codeclinic.yakrm.Models.AllVouchersListModel;
 import com.codeclinic.yakrm.Models.GiftCategoryModel;
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Retrofit.API;
+import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.nex3z.flowlayout.FlowLayout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static DrawerLayout drawer;
     public static ViewPager viewPager;
     public static TextView textCartItemCount;
+    API apiService;
 
     public static ArrayList<GiftCategoryModel> arrayList = new ArrayList<>();
     public static ArrayList<String> cat_arrayList_id = new ArrayList<>();
@@ -79,7 +89,7 @@ public class MainActivity extends AppCompatActivity
     public static ArrayList<String> category_classification_array = new ArrayList<>();
     LinearLayout llayout_tab;
     CoordinatorLayout main_content;
-
+    String loging_flag = "0", str_cart_count = "0";
     SessionManager sessionManager;
 
     public boolean isEmpty(CharSequence character) {
@@ -100,6 +110,7 @@ public class MainActivity extends AppCompatActivity
 
         sessionManager = new SessionManager(this);
 
+        apiService = RestClass.getClient().create(API.class);
         viewPager = findViewById(R.id.viewpager);
         viewPager.setOffscreenPageLimit(5);
 
@@ -629,8 +640,11 @@ public class MainActivity extends AppCompatActivity
         } else {
             if (back_flag == 0) {
                 super.onBackPressed();
+                filter_array = 0;
                 finish();
+                arrayList = new ArrayList<>();
             } else {
+                //filter_array = 0;
                 back_flag = 0;
                 setTitle(getResources().getString(R.string.title_activity_main));
                 llayout_tab.setVisibility(View.VISIBLE);
@@ -841,5 +855,33 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sessionManager.isLoggedIn()) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("is_login", "1");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Call<AllVouchersListModel> allVouchersListModelCall = apiService.ALL_VOUCHERS_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+            allVouchersListModelCall.enqueue(new Callback<AllVouchersListModel>() {
+                @Override
+                public void onResponse(Call<AllVouchersListModel> call, Response<AllVouchersListModel> response) {
+//                        Log.i("user_token", sessionManager.getUserDetails().get(SessionManager.User_Token));
+                    int status = response.body().getStatus();
+                    if (status == 1) {
+                        str_cart_count = response.body().getTotal_cart_item();
+                        textCartItemCount.setText(str_cart_count);
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<AllVouchersListModel> call, Throwable t) {
+                }
+            });
+        }
+    }
 }

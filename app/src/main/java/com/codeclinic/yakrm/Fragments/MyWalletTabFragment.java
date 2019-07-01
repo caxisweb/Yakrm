@@ -4,7 +4,6 @@ package com.codeclinic.yakrm.Fragments;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -96,9 +95,10 @@ public class MyWalletTabFragment extends Fragment {
                     .replaceAll("8", getResources().getString(R.string.eight))
                     .replaceAll("9", getResources().getString(R.string.nine))
                     .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
-        } catch (Resources.NotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -158,7 +158,7 @@ public class MyWalletTabFragment extends Fragment {
                         myWalletAdapter = new MyWalletAdapter(arrayList, getActivity(), admin_discount);
                         recyclerView.setAdapter(myWalletAdapter);
                     } else {
-                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                     tv_fav_voucher.setText(response.body().getTotal_favourites());
                     tv_active_voucher.setText(response.body().getTotal_active_voucher());

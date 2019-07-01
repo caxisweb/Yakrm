@@ -20,17 +20,23 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.Models.CountryListItemModel;
+import com.codeclinic.yakrm.Models.CountryListModel;
 import com.codeclinic.yakrm.Models.ProfileImageUpload;
 import com.codeclinic.yakrm.Models.ProfileUpdateModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
+import com.codeclinic.yakrm.Utils.Connection_Detector;
 import com.codeclinic.yakrm.Utils.ImageURL;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -43,7 +49,9 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
@@ -62,19 +70,23 @@ public class PersonalDataActivity extends AppCompatActivity {
     RoundedImageView img_profile;
     TextView tv_mobile, tv_email, tv_username, tv_name, tv_change_pass;
     RelativeLayout rl_imgprofile;
+    Spinner sp_country;
+
     JSONObject jsonObject = new JSONObject();
-
     ProgressDialog progressDialog;
-
     SessionManager sessionManager;
     API apiService;
-    String user_id, user_name, user_token, user_email, user_number, user_profile, user_country_id, wallet, userType;
+    String str_country_code, user_id, user_name, user_token, user_email, user_number, user_profile, user_country_id, wallet, userType;
 
     Uri selectedImage;
     File sourceFile_sign, compressed_Image;
     boolean value;
     Compressor compressedImage;
     String str_email_regex = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
+
+    List<CountryListItemModel> arrayList_country = new ArrayList<>();
+    ArrayList<String> arrayList_country_name = new ArrayList<>();
+    ArrayList<String> arrayList_country_id = new ArrayList<>();
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;
@@ -99,6 +111,8 @@ public class PersonalDataActivity extends AppCompatActivity {
         }
         img_profile = findViewById(R.id.img_profile);
         rl_imgprofile = findViewById(R.id.rl_imgprofile);
+
+        sp_country = findViewById(R.id.sp_country);
 
         btn_modify_data = findViewById(R.id.btn_modify_data);
         apiService = RestClass.getClient().create(API.class);
@@ -164,7 +178,7 @@ public class PersonalDataActivity extends AppCompatActivity {
                         jsonObject.put("name", u_name);
                         jsonObject.put("email", u_email);
                         jsonObject.put("phone", u_mobile);
-                        jsonObject.put("country_id", sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID));
+                        jsonObject.put("country_id", str_country_code);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -178,7 +192,6 @@ public class PersonalDataActivity extends AppCompatActivity {
                             if (status.equals("1")) {
                                 user_id = sessionManager.getUserDetails().get(SessionManager.User_ID);
                                 user_token = sessionManager.getUserDetails().get(SessionManager.User_Token);
-                                user_country_id = sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID);
                                 user_name = response.body().getName();
                                 user_email = response.body().getEmail();
                                 user_number = response.body().getPhone();
@@ -191,7 +204,11 @@ public class PersonalDataActivity extends AppCompatActivity {
                                         @Override
                                         public void onResponse(Call<ProfileImageUpload> call, Response<ProfileImageUpload> response) {
                                             if (status.equals("1")) {
-                                                sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, user_country_id, response.body().getUserProfile(), wallet, userType);
+                                                if (!isEmpty(str_country_code)) {
+                                                    sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, str_country_code, response.body().getUserProfile(), wallet, userType);
+                                                } else {
+                                                    sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), response.body().getUserProfile(), wallet, userType);
+                                                }
                                             }
                                         }
 
@@ -201,7 +218,11 @@ public class PersonalDataActivity extends AppCompatActivity {
                                         }
                                     });
                                 } else {
-                                    sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, user_country_id, "", wallet, userType);
+                                    if (!isEmpty(str_country_code)) {
+                                        sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, str_country_code, "", wallet, userType);
+                                    } else {
+                                        sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), "", wallet, userType);
+                                    }
                                 }
                                 Toast.makeText(PersonalDataActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
@@ -225,6 +246,51 @@ public class PersonalDataActivity extends AppCompatActivity {
                 startActivity(new Intent(PersonalDataActivity.this, ChangePasswordActivity.class));
             }
         });
+
+        if (Connection_Detector.isInternetAvailable(this)) {
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            Call<CountryListModel> countryListModelCall = apiService.COUNTRY_LIST_MODEL_CALL();
+            countryListModelCall.enqueue(new Callback<CountryListModel>() {
+                @Override
+                public void onResponse(Call<CountryListModel> call, Response<CountryListModel> response) {
+                    progressDialog.dismiss();
+                    arrayList_country = response.body().getData();
+                    for (int i = 0; i < arrayList_country.size(); i++) {
+                        arrayList_country_name.add(arrayList_country.get(i).getCountryName());
+                        arrayList_country_id.add(arrayList_country.get(i).getId());
+                    }
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(PersonalDataActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList_country_name);
+                    sp_country.setAdapter(dataAdapter);
+                    sp_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            str_country_code = arrayList_country_id.get(position);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
+                    int pos = arrayList_country_id.indexOf(sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID));
+
+                    sp_country.setSelection(pos);
+                }
+
+                @Override
+                public void onFailure(Call<CountryListModel> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(PersonalDataActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.err_no_internet), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void selectImage() {

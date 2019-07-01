@@ -355,6 +355,14 @@
     <string name="Cancel"> الغاء</string>
     <string name="Add_Photo">أضف صورة </string>
 
+    <string name="PleaseEnterCardHolderName">الرجاء إدخال اسم حامل البطاقة</string>
+    <string name="PleaseEnterValidName">الرجاء إدخال اسم صالح</string>
+    <string name="PleaseEnterCardNumber">الرجاء إدخال رقم البطاقة</string>
+    <string name="PleaseEnterCorrectCardNo">الرجاء إدخال البطاقة الصحيحة</string>
+    <string name="PleaseEnterCardExpirydate">الرجاء إدخال تاريخ انتهاء صلاحية البطاقة</string>
+    <string name="PleaseEnterSecurityNumber">الرجاء إدخال رقم الأمان</string>
+    <string name="PleaseEnterCorrectSecurityNumber">الرجاء إدخال رقم الأمان الصحيح</string>
+
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>

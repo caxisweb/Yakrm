@@ -9,7 +9,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,7 +96,7 @@ public class BuyTabFragment extends Fragment {
                     @Override
                     public void onResponse(Call<AllVouchersListModel> call, Response<AllVouchersListModel> response) {
                         progressDialog.dismiss();
-                        Log.i("user_token", sessionManager.getUserDetails().get(SessionManager.User_Token));
+//                        Log.i("user_token", sessionManager.getUserDetails().get(SessionManager.User_Token));
                         int status = response.body().getStatus();
                         if (status == 1) {
                             if (login_flag.equals("0")) {
@@ -174,7 +173,7 @@ public class BuyTabFragment extends Fragment {
                             buyTabListAdapter = new BuyTabListAdapter(arrayList, getActivity());
                             recyclerView.setAdapter(buyTabListAdapter);
                         } else {
-                            Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -192,7 +191,7 @@ public class BuyTabFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Call<FilterListModel> filterListModelCall = apiService.FILTER_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                Call<FilterListModel> filterListModelCall = apiService.FILTER_LIST_MODEL_CALL(jsonObject.toString());
                 filterListModelCall.enqueue(new Callback<FilterListModel>() {
                     @Override
                     public void onResponse(Call<FilterListModel> call, Response<FilterListModel> response) {

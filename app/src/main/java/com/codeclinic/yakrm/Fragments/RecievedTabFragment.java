@@ -77,7 +77,7 @@ public class RecievedTabFragment extends Fragment {
                         recievedListAdapter = new RecievedListAdapter(arrayList, getActivity());
                         recyclerView.setAdapter(recievedListAdapter);
                     } else {
-                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
