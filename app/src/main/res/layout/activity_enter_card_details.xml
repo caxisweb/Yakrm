@@ -164,8 +164,8 @@
                             android:layout_height="60dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
-                            android:background="@drawable/card_details_item_background"
-                            android:src="@mipmap/ic_payment_csmada_icon" />
+                            android:padding="10dp"
+                            android:src="@drawable/hyper_pay_img" />
 
                         <ImageView
                             android:id="@+id/img_paypal_select"
