@@ -10,6 +10,7 @@ import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -193,6 +194,7 @@ public class NewAccountActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    Log.i("request_response", jsonObject_register.toString());
                     Call<RegistrationModel> registrationModelCall = apiService.REGISTRATION_MODEL_CALL(jsonObject_register.toString());
                     registrationModelCall.enqueue(new Callback<RegistrationModel>() {
                         @Override
@@ -239,11 +241,12 @@ public class NewAccountActivity extends AppCompatActivity {
                     progressDialog.show();
 
                     try {
-                        jsonObject_register.put("country_id", "1");
+                        jsonObject_register.put("country_id", str_country_code);
                         jsonObject_register.put("phone", str_number);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                     Call<RegistrationModel> registrationModelCall = apiService.REGISTRATION_MODEL_CALL(jsonObject_register.toString());
                     registrationModelCall.enqueue(new Callback<RegistrationModel>() {
                         @Override
