@@ -232,13 +232,17 @@
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_margin="5dp"
+                            android:visibility="visible"
                             android:src="@drawable/mp4_img" />
 
                         <LinearLayout
+                            android:id="@+id/llayout_video"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:layout_weight="1"
+
+                            android:visibility="visible"
                             android:orientation="vertical">
 
 

@@ -81,6 +81,7 @@ public class StartActivity extends AppCompatActivity {
         String textToHighlight = getResources().getString(R.string.log_in);
 
         sessionManager = new SessionManager(this);
+        sessionManager.setFirstTimeLaunch(false);
 
         // Construct the formatted text
         String replacedWith = "<font color='red'>" + textToHighlight + "</font>";

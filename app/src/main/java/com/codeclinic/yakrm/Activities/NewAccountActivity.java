@@ -545,7 +545,6 @@ public class NewAccountActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-
                 btn_resend.setEnabled(true);
                 tv_min.setText("00:00");
             }

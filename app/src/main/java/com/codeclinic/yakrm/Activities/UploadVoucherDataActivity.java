@@ -135,7 +135,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isEmpty(edt_voucher_no.getText().toString())) {
-                    Toast.makeText(UploadVoucherDataActivity.this, "Enter Voucher Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadVoucherDataActivity.this, getResources().getString(R.string.EnterVoucherNumber), Toast.LENGTH_SHORT).show();
                 } else {
                     String main_value = edt_voucher_no.getText().toString().substring(0, edt_voucher_no.getText().toString().length() - 1);
                     String str_v_type = edt_voucher_no.getText().toString().substring(edt_voucher_no.getText().toString().length() - 1);
@@ -234,7 +234,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case ZXING_CAMERA_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

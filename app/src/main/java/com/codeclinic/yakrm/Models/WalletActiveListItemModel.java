@@ -31,6 +31,18 @@ public class WalletActiveListItemModel {
     @SerializedName("created_at")
     @Expose
     private String createdAt;
+    @SerializedName("expired_at")
+    @Expose
+    private String expired_at;
+
+    public String getExpired_at() {
+        return expired_at;
+    }
+
+    public void setExpired_at(String expired_at) {
+        this.expired_at = expired_at;
+    }
+
     @SerializedName("voucher_image")
     @Expose
     private String voucherImage;

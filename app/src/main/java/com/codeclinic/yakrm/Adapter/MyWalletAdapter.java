@@ -62,23 +62,16 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
                 .replaceAll("8", context.getResources().getString(R.string.eight))
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + " " + context.getResources().getString(R.string.SR_currency));
-        holder.tv_active_till.setText(arrayList.get(i).getCreatedAt().replaceAll("1", context.getResources().getString(R.string.one))
-                .replaceAll("2", context.getResources().getString(R.string.two))
-                .replaceAll("3", context.getResources().getString(R.string.three))
-                .replaceAll("4", context.getResources().getString(R.string.four))
-                .replaceAll("5", context.getResources().getString(R.string.five))
-                .replaceAll("6", context.getResources().getString(R.string.six))
-                .replaceAll("7", context.getResources().getString(R.string.seven))
-                .replaceAll("8", context.getResources().getString(R.string.eight))
-                .replaceAll("9", context.getResources().getString(R.string.nine))
-                .replaceAll("0", context.getResources().getString(R.string.zero)));
+
+
+        holder.tv_active_till.setText(arrayList.get(i).getExpired_at().substring(0, arrayList.get(i).getExpired_at().indexOf(" ")));
 
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, VoucherDetailActivity.class);
                 intent.putExtra("name", arrayList.get(i).getBrandName());
-                intent.putExtra("date", arrayList.get(i).getCreatedAt());
+                intent.putExtra("date", arrayList.get(i).getExpired_at().substring(0, arrayList.get(i).getExpired_at().indexOf(" ")));
                 intent.putExtra("barcode", arrayList.get(i).getScanCode());
                 intent.putExtra("pincode", arrayList.get(i).getPinCode());
                 intent.putExtra("price", arrayList.get(i).getVoucherPrice());

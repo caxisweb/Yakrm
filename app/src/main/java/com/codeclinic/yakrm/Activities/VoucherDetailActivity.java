@@ -85,7 +85,7 @@ VoucherDetailActivity extends AppCompatActivity {
         SimpleDateFormat spf = null;
         Date newDate = null;
         try {
-            String dates = date.substring(0, date.indexOf(" "));
+            String dates = date;
             final_date = dates.trim();
             spf = new SimpleDateFormat("yyyy-MM-dd");
             newDate = spf.parse(final_date);

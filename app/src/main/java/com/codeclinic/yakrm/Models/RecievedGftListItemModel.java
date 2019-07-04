@@ -43,7 +43,7 @@ public class RecievedGftListItemModel {
     private String description;
     @SerializedName("attached_video_image")
     @Expose
-    private Object attachedVideoImage;
+    private String attachedVideoImage;
     @SerializedName("sent_user_id")
     @Expose
     private String sentUserId;
@@ -153,11 +153,11 @@ public class RecievedGftListItemModel {
         this.description = description;
     }
 
-    public Object getAttachedVideoImage() {
+    public String getAttachedVideoImage() {
         return attachedVideoImage;
     }
 
-    public void setAttachedVideoImage(Object attachedVideoImage) {
+    public void setAttachedVideoImage(String attachedVideoImage) {
         this.attachedVideoImage = attachedVideoImage;
     }
 

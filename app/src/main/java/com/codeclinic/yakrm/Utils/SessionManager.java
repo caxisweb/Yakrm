@@ -27,14 +27,17 @@ public class SessionManager {
     public static final String UserType = "userType";
 
 
+    private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     // Sharedpref file name
     private static final String PREF_NAME = "Yakrm";
     // All Shared Preferences Keys-
     private static final String IS_LOGIN = "IsLoggedIn";
     // Shared Preferences
     SharedPreferences pref;
+    SharedPreferences pref1;
     // Editor for Shared preferences
     private Editor editor;
+    private Editor editor1;
     // Context
     private Context _context;
     // Shared pref mode
@@ -45,7 +48,9 @@ public class SessionManager {
     public SessionManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        pref1 = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
+        editor1 = pref1.edit();
     }
 
     public Editor getEditor() {
@@ -59,6 +64,16 @@ public class SessionManager {
     public String getLanguage(String key, String defValue) {
         return this.pref.getString(key, defValue);
     }
+
+    public boolean isFirstTimeLaunch() {
+        return pref1.getBoolean(IS_FIRST_TIME_LAUNCH, true);
+    }
+
+    public void setFirstTimeLaunch(boolean isFirstTime) {
+        editor1.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTime);
+        editor1.commit();
+    }
+
 
     public void createLoginSession(String token, String id, String name, String email, String number, String user_country_id, String user_profile, String str_wallet, String str_userType) {
         // Storing login value as TRUE

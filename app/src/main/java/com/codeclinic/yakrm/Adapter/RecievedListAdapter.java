@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codeclinic.yakrm.Activities.MainActivity;
@@ -131,9 +132,15 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
 
+        if (isEmpty(arrayList.get(i).getAttachedVideoImage())) {
+            holder.llayout_video.setVisibility(View.INVISIBLE);
+            holder.img_mp4.setVisibility(View.INVISIBLE);
+        }
+
         holder.tv_press_watch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Uri uri = Uri.parse(ImageURL.gift_video + arrayList.get(i).getAttachedVideoImage());
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(uri, "video/*");
@@ -176,13 +183,16 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
 
     public class Holder extends RecyclerView.ViewHolder {
         CardView card_view;
-        ImageView img_wallet, voucher_image;
+        ImageView img_wallet, voucher_image, img_mp4;
         TextView tv_item_name, tv_expiry_date, tv_price, tv_discount, tv_discount_price, tv_friend_name, tv_description, tv_ends_on, tv_press_watch;
+        LinearLayout llayout_video;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
             card_view = itemView.findViewById(R.id.card_view);
             voucher_image = itemView.findViewById(R.id.voucher_image);
+            llayout_video = itemView.findViewById(R.id.llayout_video);
+            img_mp4 = itemView.findViewById(R.id.img_mp4);
             img_wallet = itemView.findViewById(R.id.img_wallet);
             tv_item_name = itemView.findViewById(R.id.tv_item_name);
             tv_expiry_date = itemView.findViewById(R.id.tv_expiry_date);

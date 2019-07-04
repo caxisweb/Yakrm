@@ -69,16 +69,16 @@ public class UploadVouchersActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(UploadVouchersActivity.this, R.style.CustomDialogFragment);
-                alert.setMessage("Are you Sure you want to logout?");
+                alert.setMessage(getResources().getString(R.string.AreYouSureToLogout));
                 alert.setCancelable(false);
-                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @SuppressLint("StaticFieldLeak")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         sessionManager.logoutUser();
                         //finish();
                     }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -128,12 +128,12 @@ public class UploadVouchersActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<BrandListModel> call, Throwable t) {
                     progressDialog.dismiss();
-                    Toast.makeText(UploadVouchersActivity.this, "Sever Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadVouchersActivity.this, getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
                 }
             });
 
         } else {
-            Toast.makeText(UploadVouchersActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UploadVouchersActivity.this, getResources().getString(R.string.No_Internet_Connection), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -142,7 +142,7 @@ public class UploadVouchersActivity extends AppCompatActivity {
         super.onResume();
         if (str_scanned.equals("1")) {
             str_scanned = "0";
-            Toast.makeText(this, "Voucher Scanned Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.VoucherScannedSuccessfully), Toast.LENGTH_SHORT).show();
         }
     }
 

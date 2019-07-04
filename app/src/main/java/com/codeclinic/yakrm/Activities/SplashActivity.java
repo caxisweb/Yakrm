@@ -42,9 +42,15 @@ public class SplashActivity extends AppCompatActivity {
                         finish();
                     }
                 } else {
-                    Intent intent = new Intent(SplashActivity.this, StartActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if (sessionManager.isFirstTimeLaunch()) {
+                        Intent intent = new Intent(SplashActivity.this, StartActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         }, 2000);

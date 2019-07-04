@@ -362,6 +362,11 @@
     <string name="PleaseEnterCardExpirydate">الرجاء إدخال تاريخ انتهاء صلاحية البطاقة</string>
     <string name="PleaseEnterSecurityNumber">الرجاء إدخال رقم الأمان</string>
     <string name="PleaseEnterCorrectSecurityNumber">الرجاء إدخال رقم الأمان الصحيح</string>
+    <string name="AreYouSureToLogout">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="yes">نعم فعلا</string>
+    <string name="no">لا</string>
+    <string name="VoucherScannedSuccessfully">تم مسح القسيمة بنجاح</string>
+    <string name="EnterVoucherNumber">أدخل رقم القسيمة</string>
 
     <string-array name="selectcountry">
         <item>السعودية </item>

@@ -374,6 +374,11 @@
     <string name="PleaseEnterCardExpirydate">Please Enter Card Expiry date</string>
     <string name="PleaseEnterSecurityNumber">Please Enter Security Number</string>
     <string name="PleaseEnterCorrectSecurityNumber">Please Enter Correct Security Number</string>
+    <string name="AreYouSureToLogout">Are you Sure you want to logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="VoucherScannedSuccessfully">Voucher Scanned Successfully</string>
+    <string name="EnterVoucherNumber">Enter Voucher Number</string>
 
 
 </resources>

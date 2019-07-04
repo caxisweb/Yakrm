@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.yakrm.codeclinic.com.codeclinic.yakrm.Activities.VoucherDetailActivity">
 
     <ImageView
@@ -70,8 +70,7 @@
                         android:id="@+id/img_voucher"
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/demo_img_1" />
+                        android:layout_gravity="center" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -116,7 +115,6 @@
                                 android:id="@+id/tv_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/New_Sr"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="12dp" />
                         </LinearLayout>
@@ -141,7 +139,6 @@
                             android:id="@+id/tv_barcode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="#2556 21 9852 2541"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:textColor="@color/black"
@@ -168,7 +165,6 @@
                             android:id="@+id/tv_pincode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="#562177"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:textColor="@color/black"
@@ -190,8 +186,8 @@
                     <com.bottlerocketstudios.barcode.generation.ui.BarcodeView
                         android:id="@+id/generation_barcode_image"
                         android:layout_width="180dp"
-                        android:layout_gravity="center"
                         android:layout_height="60dp"
+                        android:layout_gravity="center"
                         android:layout_marginTop="20dp"
                         app:barcode_format="code_128" />
 
