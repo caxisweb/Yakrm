@@ -67,7 +67,7 @@ public class ScanBarcodeActivity extends BaseScannerActivity implements ZXingSca
             case "p":
                 str_v_type = "@purchase_voucher";
                 break;
-            case "replace_voucher":
+            case "r":
                 str_v_type = "@replace_voucher";
                 break;
             default:

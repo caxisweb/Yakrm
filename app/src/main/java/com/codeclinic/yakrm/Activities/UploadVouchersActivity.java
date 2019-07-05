@@ -20,6 +20,8 @@ import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Utils.Connection_Detector;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +34,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class UploadVouchersActivity extends AppCompatActivity {
+    public static String str_scanned = "0";
     RecyclerView recyclerView;
     ImageView img_back;
     UploadVouchersAdapter uploadVouchersAdapter;
-    public static String str_scanned = "0";
     List<BrandListItemModel> arrayList = new ArrayList<>();
     API apiService;
     TextView tv_signout;
     ProgressDialog progressDialog;
     SessionManager sessionManager;
+    TextView txt_name, txt_email, txt_phone;
+    RoundedImageView vendor_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +99,12 @@ public class UploadVouchersActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
 
+        txt_name = findViewById(R.id.tv_vendor_name);
+        txt_email = findViewById(R.id.tv_vendor_email);
+        txt_phone = findViewById(R.id.tv_vendor_phone);
+
+        vendor_image = findViewById(R.id.img_vendor);
+
         if (Connection_Detector.isInternetAvailable(this)) {
             progressDialog.setMessage("Please Wait");
             progressDialog.setIndeterminate(true);
@@ -108,6 +118,13 @@ public class UploadVouchersActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
+
+                        txt_name.setText(response.body().getVendorName());
+                        txt_email.setText(response.body().getVendorEmail());
+                        txt_phone.setText(response.body().getVendorMobile());
+
+                        Picasso.with(UploadVouchersActivity.this).load("http://test.yakrm.com/assets/uploads/vendor_images/" + response.body().getVendorImage()).into(vendor_image);
+
                         arrayList = response.body().getData();
                         uploadVouchersAdapter = new UploadVouchersAdapter(arrayList, UploadVouchersActivity.this);
                         recyclerView.setAdapter(uploadVouchersAdapter);
@@ -148,7 +165,7 @@ public class UploadVouchersActivity extends AppCompatActivity {
 
     public static class RestClasses {
 
-        private static final String BASE_URL = "http://yakrm.com/api_salesmen/";
+        private static final String BASE_URL = "http://test.yakrm.com/api_salesmen/";
         private static Retrofit retrofit = null;
 
         public static Retrofit getClient() {

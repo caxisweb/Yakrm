@@ -137,18 +137,14 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
                 if (isEmpty(edt_voucher_no.getText().toString())) {
                     Toast.makeText(UploadVoucherDataActivity.this, getResources().getString(R.string.EnterVoucherNumber), Toast.LENGTH_SHORT).show();
                 } else {
-                    String main_value = edt_voucher_no.getText().toString().substring(0, edt_voucher_no.getText().toString().length() - 1);
+                    String main_value = edt_voucher_no.getText().toString();
                     String str_v_type = edt_voucher_no.getText().toString().substring(edt_voucher_no.getText().toString().length() - 1);
-                    switch (str_v_type) {
-                        case "p":
-                            str_v_type = "@purchase_voucher";
-                            break;
-                        case "replace_voucher":
-                            str_v_type = "@replace_voucher";
-                            break;
-                        default:
-                            str_v_type = "@gift_voucher";
-                            break;
+                    if (main_value.contains("P")) {
+                        str_v_type = "@purchase_voucher";
+                    } else if (main_value.contains("R")) {
+                        str_v_type = "@replace_voucher";
+                    } else {
+                        str_v_type = "@gift_voucher";
                     }
                     try {
                         jsonObject.put("scan_code", main_value + str_v_type + "@" + brand_id);
