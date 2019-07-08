@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class WalletActiveListItemModel {
+    @SerializedName("voucher_gift_send_id")
+    @Expose
+    private String vouchergiftsendid;
     @SerializedName("voucher_payment_detail_id")
     @Expose
     private String voucherPaymentDetailId;
@@ -34,15 +37,6 @@ public class WalletActiveListItemModel {
     @SerializedName("expired_at")
     @Expose
     private String expired_at;
-
-    public String getExpired_at() {
-        return expired_at;
-    }
-
-    public void setExpired_at(String expired_at) {
-        this.expired_at = expired_at;
-    }
-
     @SerializedName("voucher_image")
     @Expose
     private String voucherImage;
@@ -64,6 +58,22 @@ public class WalletActiveListItemModel {
     @SerializedName("voucher_description")
     @Expose
     private String voucher_description;
+
+    public String getVouchergiftsendid() {
+        return vouchergiftsendid;
+    }
+
+    public void setVouchergiftsendid(String vouchergiftsendid) {
+        this.vouchergiftsendid = vouchergiftsendid;
+    }
+
+    public String getExpired_at() {
+        return expired_at;
+    }
+
+    public void setExpired_at(String expired_at) {
+        this.expired_at = expired_at;
+    }
 
     public String getVoucher_description() {
         return voucher_description;

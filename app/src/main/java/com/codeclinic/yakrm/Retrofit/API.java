@@ -16,7 +16,6 @@ import com.codeclinic.yakrm.Models.FavouritesListModel;
 import com.codeclinic.yakrm.Models.FeedBackModel;
 import com.codeclinic.yakrm.Models.FilterListModel;
 import com.codeclinic.yakrm.Models.ForgetPasswordNumberModel;
-import com.codeclinic.yakrm.Models.ForgotPasswordOTPModel;
 import com.codeclinic.yakrm.Models.FriendMobileNumberModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.GetCheckoutIDModel;
@@ -33,6 +32,7 @@ import com.codeclinic.yakrm.Models.RegistrationModel;
 import com.codeclinic.yakrm.Models.RegistrationStep2Model;
 import com.codeclinic.yakrm.Models.RemoveCardModel;
 import com.codeclinic.yakrm.Models.RemoveCartItemModel;
+import com.codeclinic.yakrm.Models.ReplaceGiftVoucherModel;
 import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
 import com.codeclinic.yakrm.Models.ReturnVoucherModel;
 import com.codeclinic.yakrm.Models.ScanVoucherModel;
@@ -229,8 +229,8 @@ public interface API {
     Call<ForgetPasswordNumberModel> FORGET_PASSWORD_NUMBER_MODEL_CALL(@Body String Body);
 
     @Headers("Content-Type: application/json")
-    @POST("forgot_and_change_new_password")
-    Call<ForgotPasswordOTPModel> FORGOT_PASSWORD_OTP_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+    @POST("replace_gift_voucher")
+    Call<ReplaceGiftVoucherModel> REPLACE_GIFT_VOUCHER_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
 
 }

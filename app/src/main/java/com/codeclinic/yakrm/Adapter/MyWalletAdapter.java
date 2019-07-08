@@ -91,6 +91,7 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
                 }
                 intent.putExtra("admin_voucher_discount", admin_discount);
                 intent.putExtra("scan_voucher_type", arrayList.get(i).getScanVoucherType());
+                intent.putExtra("voucher_gift_send_id", arrayList.get(i).getVouchergiftsendid());
                 context.startActivity(intent);
             }
         });

@@ -20,16 +20,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class
-VoucherDetailActivity extends AppCompatActivity {
+public class VoucherDetailActivity extends AppCompatActivity {
 
+    public static String v_payment_id, voucher_id, voucher_name, date, final_date, barcode, pincode, price, v_image, admin_voucher_discount, scan_voucher_type, scan_voucher_type_full, v_payment_type, voucher_gift_send_id;
+    public static Activity voucher_detail_activity;
     TextView tv_header_name, tv_expiredate, tv_price, tv_barcode, tv_pincode, tv_desc;
     ImageView img_back, img_voucher;
     Button btn_done;
-    public static String v_payment_id, voucher_id, voucher_name, date, final_date, barcode, pincode, price, v_image, admin_voucher_discount, scan_voucher_type, scan_voucher_type_full, v_payment_type;
     BarcodeView barcodeView;
-
-    public static Activity voucher_detail_activity;
 
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
@@ -71,7 +69,6 @@ VoucherDetailActivity extends AppCompatActivity {
                 break;
             default:
                 scan_voucher_type = "g";
-                btn_done.setEnabled(false);
                 break;
         }
         barcode = getIntent().getStringExtra("barcode");
@@ -80,6 +77,7 @@ VoucherDetailActivity extends AppCompatActivity {
         tv_barcode.setText(barcode);
         barcode = barcode + scan_voucher_type;
         scan_voucher_type_full = getIntent().getStringExtra("scan_voucher_type");
+        voucher_gift_send_id = getIntent().getStringExtra("voucher_gift_send_id");
         barcodeView.setBarcodeText(barcode);
 
         SimpleDateFormat spf = null;
