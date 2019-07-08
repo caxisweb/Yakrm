@@ -10,15 +10,9 @@ public class GiftCategoryModel {
     @SerializedName("gift_category_name")
     @Expose
     private String giftCategoryName;
-    @SerializedName("is_active")
+    @SerializedName("arab_gift_category_name")
     @Expose
-    private String isActive;
-    @SerializedName("created_at")
-    @Expose
-    private String createdAt;
-    @SerializedName("updated_at")
-    @Expose
-    private String updatedAt;
+    private String arabGiftCategoryName;
 
     public String getId() {
         return id;
@@ -36,27 +30,11 @@ public class GiftCategoryModel {
         this.giftCategoryName = giftCategoryName;
     }
 
-    public String getIsActive() {
-        return isActive;
+    public String getArabGiftCategoryName() {
+        return arabGiftCategoryName;
     }
 
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setArabGiftCategoryName(String arabGiftCategoryName) {
+        this.arabGiftCategoryName = arabGiftCategoryName;
     }
 }

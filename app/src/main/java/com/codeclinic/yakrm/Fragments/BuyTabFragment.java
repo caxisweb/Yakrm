@@ -42,6 +42,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.codeclinic.yakrm.Activities.MainActivity.cat_arrayList_id;
+import static com.codeclinic.yakrm.Activities.MainActivity.cat_arrayList_name;
+import static com.codeclinic.yakrm.Activities.MainActivity.category_classification_array;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,7 +100,6 @@ public class BuyTabFragment extends Fragment {
                     @Override
                     public void onResponse(Call<AllVouchersListModel> call, Response<AllVouchersListModel> response) {
                         progressDialog.dismiss();
-//                        Log.i("user_token", sessionManager.getUserDetails().get(SessionManager.User_Token));
                         int status = response.body().getStatus();
                         if (status == 1) {
                             if (login_flag.equals("0")) {
@@ -105,10 +108,14 @@ public class BuyTabFragment extends Fragment {
                                 MainActivity.textCartItemCount.setText(response.body().getTotal_cart_item());
                             }
                             arrayList = response.body().getData();
+                            MainActivity.arrayList.clear();
+                            cat_arrayList_id.clear();
+                            cat_arrayList_name.clear();
+                            category_classification_array.clear();
                             if (MainActivity.arrayList.size() == 0) {
                                 MainActivity.arrayList = (ArrayList<GiftCategoryModel>) response.body().getGiftCategory();
                                 for (int k = 0; k < MainActivity.arrayList.size(); k++) {
-                                    MainActivity.cat_arrayList_id.add(MainActivity.arrayList.get(k).getId());
+                                    cat_arrayList_id.add(MainActivity.arrayList.get(k).getId());
                                     MainActivity.cat_arrayList_name.add(MainActivity.arrayList.get(k).getGiftCategoryName());
                                 }
                                 MainActivity.btn = new Button[MainActivity.arrayList.size()];
@@ -124,7 +131,11 @@ public class BuyTabFragment extends Fragment {
                                     MainActivity.btn[i].setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
                                     MainActivity.btn[i].setTextColor(getResources().getColor(R.color.white));
                                     MainActivity.btn[i].setTextSize(10);
-                                    MainActivity.btn[i].setText(MainActivity.arrayList.get(i).getGiftCategoryName());
+                                    if (sessionManager.getLanguage("Language", "en").equals("en")) {
+                                        MainActivity.btn[i].setText(MainActivity.arrayList.get(i).getGiftCategoryName());
+                                    } else {
+                                        MainActivity.btn[i].setText(MainActivity.arrayList.get(i).getArabGiftCategoryName());
+                                    }
                                     MainActivity.btn[i].setTextColor(getResources().getColor(R.color.black));
 
                                     final Handler mHandler = new Handler();
@@ -141,11 +152,11 @@ public class BuyTabFragment extends Fragment {
                                             if (newPressed) {
                                                 button.setTextColor(getResources().getColor(R.color.white));
                                                 button.setBackground(getResources().getDrawable(R.drawable.flow_layout_pressed_background));
-                                                MainActivity.category_classification_array.add(button.getText().toString());
+                                                category_classification_array.add(button.getText().toString());
                                             } else {
                                                 button.setTextColor(getResources().getColor(R.color.black));
                                                 button.setBackground(getResources().getDrawable(R.drawable.flow_layout_text_background));
-                                                MainActivity.category_classification_array.remove(button.getText().toString());
+                                                category_classification_array.remove(button.getText().toString());
                                             }
                                             // setTag to store state
                                             view.setTag(newPressed);
@@ -163,7 +174,6 @@ public class BuyTabFragment extends Fragment {
                                     });
                                     MainActivity.flowLayout.addView(MainActivity.btn[i]);
                                 }
-
                             }
                             int spanCount = 2; // 3 columns
                             int spacing = 10; // 50px
@@ -228,7 +238,7 @@ public class BuyTabFragment extends Fragment {
                                         if (MainActivity.arrayList != null) {
                                             MainActivity.arrayList = (ArrayList<GiftCategoryModel>) response.body().getGiftCategory();
                                             for (int k = 0; k < MainActivity.arrayList.size(); k++) {
-                                                MainActivity.cat_arrayList_id.add(MainActivity.arrayList.get(k).getId());
+                                                cat_arrayList_id.add(MainActivity.arrayList.get(k).getId());
                                                 MainActivity.cat_arrayList_name.add(MainActivity.arrayList.get(k).getGiftCategoryName());
                                             }
                                         }

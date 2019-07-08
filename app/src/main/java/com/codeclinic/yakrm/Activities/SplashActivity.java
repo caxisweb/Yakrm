@@ -14,7 +14,6 @@ import io.fabric.sdk.android.Fabric;
 public class SplashActivity extends AppCompatActivity {
 
     SessionManager sessionManager;
-    public static String language_name = "ar";
 
     public void forceCrash() {
         throw new RuntimeException("This is a crash");
@@ -26,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash);
         sessionManager = new SessionManager(this);
-
+        sessionManager.putLanguage("Language", "en");
 
         new Handler().postDelayed(new Runnable() {
             @Override

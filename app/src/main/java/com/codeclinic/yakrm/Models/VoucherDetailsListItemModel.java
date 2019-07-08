@@ -22,33 +22,21 @@ public class VoucherDetailsListItemModel {
     @SerializedName("voucher_image")
     @Expose
     private String voucherImage;
-    @SerializedName("voucher_description")
-    @Expose
-    private String voucher_description;
     @SerializedName("gift_category_name")
     @Expose
     private String giftCategoryName;
+    @SerializedName("arab_gift_category_name")
+    @Expose
+    private String arabGiftCategoryName;
     @SerializedName("expired_at")
     @Expose
     private String expiredAt;
-
-
-    public String getVoucher_description() {
-        return voucher_description;
-    }
-
-    public void setVoucher_description(String voucher_description) {
-        this.voucher_description = voucher_description;
-    }
-
-    public String getVoucherImage() {
-        return voucherImage;
-    }
-
-    public void setVoucherImage(String voucherImage) {
-        this.voucherImage = voucherImage;
-    }
-
+    @SerializedName("voucher_description")
+    @Expose
+    private String voucherDescription;
+    @SerializedName("arab_voucher_description")
+    @Expose
+    private String arabVoucherDescription;
 
     public String getVoucherId() {
         return voucherId;
@@ -90,6 +78,14 @@ public class VoucherDetailsListItemModel {
         this.voucherType = voucherType;
     }
 
+    public String getVoucherImage() {
+        return voucherImage;
+    }
+
+    public void setVoucherImage(String voucherImage) {
+        this.voucherImage = voucherImage;
+    }
+
     public String getGiftCategoryName() {
         return giftCategoryName;
     }
@@ -98,12 +94,36 @@ public class VoucherDetailsListItemModel {
         this.giftCategoryName = giftCategoryName;
     }
 
+    public String getArabGiftCategoryName() {
+        return arabGiftCategoryName;
+    }
+
+    public void setArabGiftCategoryName(String arabGiftCategoryName) {
+        this.arabGiftCategoryName = arabGiftCategoryName;
+    }
+
     public String getExpiredAt() {
         return expiredAt;
     }
 
     public void setExpiredAt(String expiredAt) {
         this.expiredAt = expiredAt;
+    }
+
+    public String getVoucherDescription() {
+        return voucherDescription;
+    }
+
+    public void setVoucherDescription(String voucherDescription) {
+        this.voucherDescription = voucherDescription;
+    }
+
+    public String getArabVoucherDescription() {
+        return arabVoucherDescription;
+    }
+
+    public void setArabVoucherDescription(String arabVoucherDescription) {
+        this.arabVoucherDescription = arabVoucherDescription;
     }
 
 }

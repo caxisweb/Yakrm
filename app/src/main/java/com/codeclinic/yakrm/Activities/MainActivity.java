@@ -38,7 +38,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codeclinic.yakrm.Fragments.AuctionTabFragment;
 import com.codeclinic.yakrm.Fragments.BuyTabFragment;
 import com.codeclinic.yakrm.Fragments.MyWalletTabFragment;
 import com.codeclinic.yakrm.Fragments.RecievedTabFragment;
@@ -499,6 +498,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+
         if (tv_language_version.getText().equals("النسخة العربية")) {
             setTitle("Main");
         } else {
@@ -608,17 +608,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tv_item3.setText(getResources().getString(R.string.Replace));
         tabLayout.getTabAt(2).setCustomView(view3);
 
-        final View view4 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
+        /*final View view4 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
         view4.findViewById(R.id.icon).setBackgroundResource(R.mipmap.ic_auctionetab_icon);
         TextView tv_item4 = view4.findViewById(R.id.tv_item);
         tv_item4.setText(getResources().getString(R.string.Auction));
-        tabLayout.getTabAt(3).setCustomView(view4);
+        tabLayout.getTabAt(3).setCustomView(view4);*/
 
         final View view5 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
         view5.findViewById(R.id.icon).setBackgroundResource(R.mipmap.ic_wallettab_icon);
         TextView tv_item5 = view5.findViewById(R.id.tv_item);
         tv_item5.setText(getResources().getString(R.string.My_Wallet));
-        tabLayout.getTabAt(4).setCustomView(view5);
+        tabLayout.getTabAt(3).setCustomView(view5);
 
     }
 
@@ -627,7 +627,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter.addFrag(new BuyTabFragment(), getResources().getString(R.string.Buy));
         adapter.addFrag(new RecievedTabFragment(), getResources().getString(R.string.Received));
         adapter.addFrag(new ReplaceTabFragment(), getResources().getString(R.string.Replace));
-        adapter.addFrag(new AuctionTabFragment(), getResources().getString(R.string.Auction));
+        //adapter.addFrag(new AuctionTabFragment(), getResources().getString(R.string.Auction));
         adapter.addFrag(new MyWalletTabFragment(), getResources().getString(R.string.My_Wallet));
         viewPager.setAdapter(adapter);
     }

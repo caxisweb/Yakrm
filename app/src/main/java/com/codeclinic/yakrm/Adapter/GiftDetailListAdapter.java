@@ -141,7 +141,11 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 alertDialog.show();
 
                 Picasso.with(context).load(ImageURL.Vendor_voucher_image + arrayList.get(i).getVoucherImage()).into(img_brand_img);
-                tv_brand_name.setText(arrayList.get(i).getGiftCategoryName());
+                if (sessionManager.getLanguage("Language", "en").equals("en")) {
+                    tv_brand_name.setText(arrayList.get(i).getGiftCategoryName());
+                } else {
+                    tv_brand_name.setText(arrayList.get(i).getArabGiftCategoryName());
+                }
                 try {
                     date_array = arrayList.get(i).getExpiredAt().split(" ");
                     String date = date_array[0];
@@ -185,8 +189,13 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                         .replaceAll("8", context.getResources().getString(R.string.eight))
                         .replaceAll("9", context.getResources().getString(R.string.nine))
                         .replaceAll("0", context.getResources().getString(R.string.zero)));
-                tv_voucher_code.setText(arrayList.get(i).getVoucherCode());
-                tv_description.setText(arrayList.get(i).getVoucher_description());
+                tv_voucher_code.setText("Voucher Code : " + arrayList.get(i).getVoucherCode());
+
+                if (sessionManager.getLanguage("Language", "en").equals("en")) {
+                    tv_description.setText(arrayList.get(i).getVoucherDescription());
+                } else {
+                    tv_description.setText(arrayList.get(i).getArabVoucherDescription());
+                }
                 tv_gift_type.setText(arrayList.get(i).getVoucherType());
 
             }
