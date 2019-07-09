@@ -16,6 +16,7 @@ import com.codeclinic.yakrm.Models.FavouritesListModel;
 import com.codeclinic.yakrm.Models.FeedBackModel;
 import com.codeclinic.yakrm.Models.FilterListModel;
 import com.codeclinic.yakrm.Models.ForgetPasswordNumberModel;
+import com.codeclinic.yakrm.Models.ForgotPasswordOTPModel;
 import com.codeclinic.yakrm.Models.FriendMobileNumberModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.GetCheckoutIDModel;
@@ -227,6 +228,11 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("checked_mobile_for_forgetpassword")
     Call<ForgetPasswordNumberModel> FORGET_PASSWORD_NUMBER_MODEL_CALL(@Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("forgot_and_change_new_password")
+    Call<ForgotPasswordOTPModel> FORGOT_PASSWORD_OTP_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
+
 
     @Headers("Content-Type: application/json")
     @POST("replace_gift_voucher")

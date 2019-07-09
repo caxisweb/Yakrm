@@ -30,6 +30,7 @@ public class SessionManager {
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     // Sharedpref file name
     private static final String PREF_NAME = "Yakrm";
+    private static final String PREF_NAME_FIRST = "Yakrmfirst";
     // All Shared Preferences Keys-
     private static final String IS_LOGIN = "IsLoggedIn";
     // Shared Preferences
@@ -43,12 +44,11 @@ public class SessionManager {
     // Shared pref mode
     private int PRIVATE_MODE = 0;
 
-
     // Constructor
     public SessionManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        pref1 = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        pref1 = _context.getSharedPreferences(PREF_NAME_FIRST, PRIVATE_MODE);
         editor = pref.edit();
         editor1 = pref1.edit();
     }

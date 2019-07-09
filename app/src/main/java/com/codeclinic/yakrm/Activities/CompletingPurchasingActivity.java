@@ -218,7 +218,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                             progressDialog.setCancelable(false);
                             progressDialog.show();
                             if (flag_cart.equals("3")) {
-
                                 try {
                                     replace_gift_voucher.put("replace_active_gift_voucher_id", voucher_id);
                                     replace_gift_voucher.put("voucher_gift_id", voucher_gift_send_id);
@@ -230,7 +229,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
                                 CallReplaceGiftVoucher();
 
                             } else {
@@ -295,7 +293,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                         CallReplaceGiftVoucher();
 
                     } else {
@@ -340,7 +337,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                     ExchangeAddBalanceActivity.replace_price = 0;
                                     ExchangeAddBalanceActivity.temp_price = 0;
                                     startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
-                                    finish();
+                                    finishAffinity();
                                     ExchangeAddBalanceActivity.exchange_activity.finish();
                                     ExchangeVoucherActivity.ex_activity.finish();
                                     VoucherDetailActivity.voucher_detail_activity.finish();
@@ -552,9 +549,9 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                         replace_gift_voucher.put("card_id", card_ID);
                         replace_gift_voucher.put("wallet", Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)));
                         if (Double.parseDouble(main_price) > Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet))) {
-                            jsonObject.put("transaction_price", Double.parseDouble(main_price) - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)));
+                            replace_gift_voucher.put("transaction_price", Double.parseDouble(main_price) - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)));
                         } else {
-                            jsonObject.put("transaction_price", Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)) - Double.parseDouble(main_price));
+                            replace_gift_voucher.put("transaction_price", Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)) - Double.parseDouble(main_price));
                         }
 
                     } catch (JSONException e) {
@@ -576,7 +573,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                             jsonObject.put("transaction_price", "0");
                             jsonObject.put("wallet", sessionManager.getUserDetails().get(SessionManager.Wallet));
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -761,7 +757,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     }
 
     public void CallReplaceGiftVoucher() {
-
 
         Call<ReplaceGiftVoucherModel> replaceGiftVoucherModelCall = apiService.REPLACE_GIFT_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), replace_gift_voucher.toString());
 
