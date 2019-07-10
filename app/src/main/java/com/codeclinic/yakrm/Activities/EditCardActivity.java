@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -245,7 +246,10 @@ public class EditCardActivity extends AppCompatActivity {
             }
         });
 
-        edt_ex_date.addTextChangedListener(new TwoDigitsCardTextWatcher(edt_ex_date));
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        edt_ex_date.addTextChangedListener(new TwoDigitsCardTextWatcher(edt_ex_date, month, year));
         //getAllcardList();
     }
 }

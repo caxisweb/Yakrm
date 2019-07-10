@@ -14,9 +14,13 @@ public class TwoDigitsCardTextWatcher implements TextWatcher {
     private static final String SPACE = "/";
     private EditText mEditText;
     private int mLength;
+    private int Mmonth;
+    private int Myear;
 
-    public TwoDigitsCardTextWatcher(EditText editText) {
+    public TwoDigitsCardTextWatcher(EditText editText, int month, int year) {
         mEditText = editText;
+        Mmonth = month;
+        Myear = year;
     }
 
     @Override
@@ -44,9 +48,9 @@ public class TwoDigitsCardTextWatcher implements TextWatcher {
         if (s.length() == 1 && !isNumberChar(String.valueOf(s.charAt(0)))) {
             mEditText.setText(DEFAULT_MONTH + SPACE);
         } else if (s.length() == 1 && !isCharValidMonth(s.charAt(0))) {
-            mEditText.setText(INITIAL_MONTH_ADD_ON + String.valueOf(s.charAt(0)) + SPACE);
+            mEditText.setText(INITIAL_MONTH_ADD_ON + s.charAt(0) + SPACE);
         } else if (s.length() == 2 && String.valueOf(s.charAt(s.length() - 1)).equals(SPACE)) {
-            mEditText.setText(INITIAL_MONTH_ADD_ON + String.valueOf(s));
+            mEditText.setText(INITIAL_MONTH_ADD_ON + s);
         } else if (!ignoreBecauseIsDeleting &&
                 (s.length() == 2 && !String.valueOf(s.charAt(s.length() - 1)).equals(SPACE))) {
             mEditText.setText(mEditText.getText().toString() + SPACE);
