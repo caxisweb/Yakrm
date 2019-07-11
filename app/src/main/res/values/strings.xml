@@ -165,7 +165,7 @@
 
     <string name="Upload_Voucher">Upload Voucher</string>
     <string name="Your_current_balance">Your current balance</string>
-    <string name="Discount_vouchers">Discount vouchers</string>
+    <string name="Discount_vouchers">Active vouchers</string>
     <string name="Active">Active</string>
     <string name="Vendors_of_vouchers">Vendors of vouchers</string>
     <string name="Favorite">Favorite</string>
@@ -250,7 +250,7 @@
     <string name="Vouchers_Will_end_Very_Soon">Vouchers Will end Very Soon</string>
     <string name="Available_till_date">Available till 13/12/2018</string>
     <string name="For_The_Coming_Days_Only">(For The Coming 2 Days Only)</string>
-    <string name="Vouchers_That_Have_Ended">Vouchers That Have Already Ended</string>
+    <string name="Vouchers_That_Have_Ended">Vouchers Already Ended</string>
 
 
     <string name="Notifications">Notifications</string>
@@ -379,6 +379,10 @@
     <string name="no">No</string>
     <string name="VoucherScannedSuccessfully">Voucher Scanned Successfully</string>
     <string name="EnterVoucherNumber">Enter Voucher Number</string>
-
+    <string name="recordvideofromcamera">Record video from camera</string>
+    <string name="selectvideofromgallery">Select video from gallery</string>
+    <string name="addvideo">Add Video!</string>
+    <string name="pleasecheckexpirydate">Please Check Expiry Date</string>
+    <string name="pleaseentervalidcardnumber">Please Enter Valid Card Number</string>
 
 </resources>

@@ -57,6 +57,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
 
     Button btn_add, btn_add_another;
     ArrayList<String> listOfPattern = new ArrayList<>();
+    String str_card_status = "0";
 
     public ArrayList<String> listOfPattern() {
 
@@ -181,15 +182,19 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
                         if (ccNum.matches(p)) {
                             if (p.equals("^4[0-9]{6,}$")) {
                                 edt_card_no.setCompoundDrawablesWithIntrinsicBounds(0, 0, imageArray[0], 0);
+                                str_card_status = "1";
                             } else if (p.equals("^5[1-5][0-9]{5,}$")) {
                                 edt_card_no.setCompoundDrawablesWithIntrinsicBounds(0, 0, imageArray[1], 0);
+                                str_card_status = "1";
                             } else {
                                 edt_card_no.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                             }
                             break;
                         }
                     }
+
                 } else {
+                    str_card_status = "0";
                     edt_card_no.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }
             }
@@ -199,67 +204,65 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
             @Override
             public void onClick(View v) {
                 try {
-                    if (Integer.parseInt(edt_ex_date.getText().toString().substring(3, 5)) >= Integer.parseInt(String.valueOf(year).substring(2, 4))) {
-                        if (Integer.parseInt(edt_ex_date.getText().toString().substring(0, 2)) >= month + 1) {
-                            if (Connection_Detector.isInternetAvailable(EnterCardDetailsActivity.this)) {
-                                if (isEmpty(edt_name.getText().toString())) {
-                                    Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardHolderName), Toast.LENGTH_SHORT).show();
-                                } else if (!edt_name.getText().toString().matches(name_regex)) {
-                                    Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterValidName), Toast.LENGTH_SHORT).show();
-                                } else if (isEmpty(edt_card_no.getText().toString())) {
-                                    Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardNumber), Toast.LENGTH_SHORT).show();
-                                } else if (edt_card_no.getText().toString().length() != 16) {
-                                    Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCorrectCardNo), Toast.LENGTH_SHORT).show();
-                                } else if (isEmpty(edt_ex_date.getText().toString())) {
-                                    Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardExpirydate), Toast.LENGTH_SHORT).show();
-                                } else if (isEmpty(edt_cvv.getText().toString())) {
-                                    Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterSecurityNumber), Toast.LENGTH_SHORT).show();
-                                } else if (edt_cvv.getText().toString().length() != 3) {
-                                    Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCorrectSecurityNumber), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    progressDialog.setMessage("Please Wait");
-                                    progressDialog.setIndeterminate(true);
-                                    progressDialog.setCancelable(false);
-                                    progressDialog.show();
-                                    try {
-                                        jsonObject.put("payment_method", card_select);
-                                        jsonObject.put("holder_name", edt_name.getText().toString());
-                                        jsonObject.put("card_number", edt_card_no.getText().toString());
-                                        jsonObject.put("expiry_date", edt_ex_date.getText().toString());
-                                        jsonObject.put("security_number", edt_cvv.getText().toString());
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    Call<AddCardDetailsModel> addCardDetailsModelCall = apiService.ADD_CARD_DETAILS_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
-                                    addCardDetailsModelCall.enqueue(new Callback<AddCardDetailsModel>() {
-                                        @Override
-                                        public void onResponse(Call<AddCardDetailsModel> call, Response<AddCardDetailsModel> response) {
-                                            progressDialog.dismiss();
-                                            String status = response.body().getStatus();
-                                            if (status.equals("1")) {
-                                                Toast.makeText(EnterCardDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                                finish();
-                                            } else {
-                                                Toast.makeText(EnterCardDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<AddCardDetailsModel> call, Throwable t) {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(EnterCardDetailsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            } else {
-                                Toast.makeText(EnterCardDetailsActivity.this, R.string.err_no_internet, Toast.LENGTH_SHORT).show();
-                            }
+                    if (Connection_Detector.isInternetAvailable(EnterCardDetailsActivity.this)) {
+                        if (isEmpty(edt_name.getText().toString())) {
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardHolderName), Toast.LENGTH_SHORT).show();
+                        } else if (!edt_name.getText().toString().matches(name_regex)) {
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterValidName), Toast.LENGTH_SHORT).show();
+                        } else if (isEmpty(edt_card_no.getText().toString())) {
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardNumber), Toast.LENGTH_SHORT).show();
+                        } else if (edt_card_no.getText().toString().length() != 16) {
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCorrectCardNo), Toast.LENGTH_SHORT).show();
+                        } else if (str_card_status.equals("0")) {
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.pleaseentervalidcardnumber), Toast.LENGTH_SHORT).show();
+                        } else if (isEmpty(edt_ex_date.getText().toString())) {
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardExpirydate), Toast.LENGTH_SHORT).show();
+                        } else if (Integer.parseInt(edt_ex_date.getText().toString().substring(3, 5)) >= Integer.parseInt(String.valueOf(year).substring(2, 4))) {
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.pleasecheckexpirydate), Toast.LENGTH_SHORT).show();
+                        } else if (Integer.parseInt(edt_ex_date.getText().toString().substring(0, 2)) >= month + 1) {
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.pleasecheckexpirydate), Toast.LENGTH_SHORT).show();
+                        } else if (isEmpty(edt_cvv.getText().toString())) {
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterSecurityNumber), Toast.LENGTH_SHORT).show();
+                        } else if (edt_cvv.getText().toString().length() != 3) {
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCorrectSecurityNumber), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(EnterCardDetailsActivity.this, "Please Check Expiry Date!!!", Toast.LENGTH_SHORT).show();
+                            progressDialog.setMessage("Please Wait");
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setCancelable(false);
+                            progressDialog.show();
+                            try {
+                                jsonObject.put("payment_method", card_select);
+                                jsonObject.put("holder_name", edt_name.getText().toString());
+                                jsonObject.put("card_number", edt_card_no.getText().toString());
+                                jsonObject.put("expiry_date", edt_ex_date.getText().toString());
+                                jsonObject.put("security_number", edt_cvv.getText().toString());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            Call<AddCardDetailsModel> addCardDetailsModelCall = apiService.ADD_CARD_DETAILS_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                            addCardDetailsModelCall.enqueue(new Callback<AddCardDetailsModel>() {
+                                @Override
+                                public void onResponse(Call<AddCardDetailsModel> call, Response<AddCardDetailsModel> response) {
+                                    progressDialog.dismiss();
+                                    String status = response.body().getStatus();
+                                    if (status.equals("1")) {
+                                        Toast.makeText(EnterCardDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    } else {
+                                        Toast.makeText(EnterCardDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<AddCardDetailsModel> call, Throwable t) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(EnterCardDetailsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     } else {
-                        Toast.makeText(EnterCardDetailsActivity.this, "Please Check Expiry Date!!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnterCardDetailsActivity.this, R.string.err_no_internet, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

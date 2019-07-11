@@ -2,6 +2,7 @@ package com.codeclinic.yakrm.Activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,20 +14,42 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.Models.ReturnVoucherModel;
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Retrofit.API;
+import com.codeclinic.yakrm.Retrofit.RestClass;
+import com.codeclinic.yakrm.Utils.ImageURL;
+import com.codeclinic.yakrm.Utils.SessionManager;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.codeclinic.yakrm.Activities.VoucherDetailActivity.admin_voucher_discount;
+import static com.codeclinic.yakrm.Activities.VoucherDetailActivity.barcode;
+import static com.codeclinic.yakrm.Activities.VoucherDetailActivity.scan_voucher_type_full;
+import static com.codeclinic.yakrm.Activities.VoucherDetailActivity.v_image;
+import static com.codeclinic.yakrm.Activities.VoucherDetailActivity.voucher_name;
 
 
 public class ExchangeVoucherActivity extends AppCompatActivity {
 
+    public static Activity ex_activity;
     TextView tv_item_name;
     ImageView img_back;
-
     LinearLayout llayout_send_friend, llayout_add_balance, llayout_display_voucher, llayout_return_voucher;
-
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
+    ProgressDialog progressDialog;
+    SessionManager sessionManager;
+    ImageView imageView;
 
-    public static Activity ex_activity;
+    API apiService;
+    JSONObject jsonObject = new JSONObject();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +57,8 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exchange_voucher);
 
         ex_activity = this;
+        sessionManager = new SessionManager(this);
+        apiService = RestClass.getClient().create(API.class);
 
         img_back = findViewById(R.id.img_back);
         String language = String.valueOf(getResources().getConfiguration().locale);
@@ -42,6 +67,7 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
         }
         tv_item_name = findViewById(R.id.tv_item_name);
 
+        imageView = findViewById(R.id.img_voucher);
         llayout_send_friend = findViewById(R.id.llayout_send_friend);
         llayout_add_balance = findViewById(R.id.llayout_add_balance);
         llayout_display_voucher = findViewById(R.id.llayout_display_voucher);
@@ -56,6 +82,8 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
             }
         });
 
+        Picasso.with(this).load(ImageURL.Vendor_voucher_image + v_image).into(imageView);
+
         llayout_send_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +94,7 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
         llayout_add_balance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (VoucherDetailActivity.scan_voucher_type_full.equals("replace_voucher")) {
+                if (scan_voucher_type_full.equals("replace_voucher")) {
                     Toast.makeText(ExchangeVoucherActivity.this, "Voucher Already been replaced,you can't replace it again", Toast.LENGTH_LONG).show();
                 } else {
                     startActivity(new Intent(ExchangeVoucherActivity.this, ExchangeAddBalanceActivity.class));
@@ -77,7 +105,66 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
         llayout_return_voucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ExchangeVoucherActivity.this, ReturnVoucherActivity.class));
+
+                dialogBuilder = new AlertDialog.Builder(ExchangeVoucherActivity.this);
+                final View dialogView = getLayoutInflater().inflate(R.layout.custom_return_voucher_view, null);
+                dialogBuilder.setView(dialogView);
+                dialogBuilder.setCancelable(true);
+
+                ImageView brand_image = dialogView.findViewById(R.id.brand_image);
+                TextView txt_item_name = dialogView.findViewById(R.id.tv_item_name);
+                TextView txt_price = dialogView.findViewById(R.id.tv_price);
+                TextView tv_price_wallet = dialogView.findViewById(R.id.tv_price_wallet);
+                Button btn_return = dialogView.findViewById(R.id.btn_return);
+                alertDialog = dialogBuilder.create();
+                alertDialog.show();
+
+                Picasso.with(ExchangeVoucherActivity.this).load(ImageURL.Vendor_voucher_image + v_image).into(brand_image);
+                txt_item_name.setText(voucher_name);
+                txt_price.setText(VoucherDetailActivity.price);
+                double price_wallet = Double.parseDouble(VoucherDetailActivity.price);
+                double deducted_value = price_wallet * (Double.parseDouble(admin_voucher_discount) / 100);
+                price_wallet = price_wallet - deducted_value;
+                tv_price_wallet.setText(String.valueOf(price_wallet));
+
+                btn_return.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            jsonObject.put("scan_voucher_type", scan_voucher_type_full);
+                            jsonObject.put("scan_code", barcode.substring(0, barcode.length() - 1));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        progressDialog = new ProgressDialog(ExchangeVoucherActivity.this);
+                        progressDialog.setMessage("Please Wait");
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        Call<ReturnVoucherModel> returnVoucherModelCall = apiService.RETURN_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                        returnVoucherModelCall.enqueue(new Callback<ReturnVoucherModel>() {
+                            @Override
+                            public void onResponse(Call<ReturnVoucherModel> call, Response<ReturnVoucherModel> response) {
+                                progressDialog.dismiss();
+                                if (response.body().getStatus().equals("1")) {
+                                    sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
+                                    startActivity(new Intent(ExchangeVoucherActivity.this, MainActivity.class));
+                                    finishAffinity();
+                                } else {
+                                    Toast.makeText(ExchangeVoucherActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ReturnVoucherModel> call, Throwable t) {
+                                progressDialog.dismiss();
+                                Toast.makeText(ExchangeVoucherActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                });
+                //startActivity(new Intent(ExchangeVoucherActivity.this, ReturnVoucherActivity.class));
             }
         });
 

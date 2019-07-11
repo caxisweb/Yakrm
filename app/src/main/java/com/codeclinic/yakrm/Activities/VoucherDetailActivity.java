@@ -71,6 +71,7 @@ public class VoucherDetailActivity extends AppCompatActivity {
                 scan_voucher_type = "g";
                 break;
         }
+
         barcode = getIntent().getStringExtra("barcode");
 
         Picasso.with(this).load(ImageURL.Vendor_voucher_image + v_image).into(img_voucher);

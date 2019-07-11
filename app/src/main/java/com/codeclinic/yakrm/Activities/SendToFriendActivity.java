@@ -8,17 +8,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -34,7 +30,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.codeclinic.yakrm.Models.FriendMobileNumberModel;
 import com.codeclinic.yakrm.Models.SendVoucherToFriendModel;
@@ -62,14 +57,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import id.zelory.compressor.Compressor;
 import life.knowledge4.videotrimmer.utils.FileUtils;
@@ -83,15 +73,17 @@ import retrofit2.Response;
 
 public class SendToFriendActivity extends AppCompatActivity {
 
+    public static final String FRAGMENT_TAG = "camera";
+    static final String EXTRA_VIDEO_PATH = "Video";
+    private static final String VIDEO_DIRECTORY = "/yakrm/";
+    private static final int REQUEST_VIDEO_TRIMMER = 0x01;
+    private static final int REQUEST_CAMERA_PERMISSIONS = 931;
+    public static File sourceFile_sign, compressed_Image;
+    public static CountDownTimer countDownTimer;
     Button btn_complete;
     ImageView img_back, img_voucher, img_search;
-    private final int CAMERA_IMAGE = 1;
     EditText edt_mobile, ed_description;
-    private final int PICK_IMAGE_GALLERY = 3;
-    private static final String VIDEO_DIRECTORY = "/yakrm/";
-    String camera_or_gallery = "0", mediatype;
     TextView tv_itemname, tv_price, tv_name, tv_email, tv_sending_date, tv_add_video, recordDurationText, recordSizeText;
-    String decodableString;
     MediaActionSwitchView mediaActionSwitchView;
     CameraSwitchView cameraSwitchView;
     RelativeLayout cameraLayout;
@@ -100,31 +92,16 @@ public class SendToFriendActivity extends AppCompatActivity {
     FlashSwitchView flashSwitchView;
     LinearLayout main_llayout;
     FrameLayout content;
-
-    private static final int REQUEST_VIDEO_TRIMMER = 0x01;
-    private static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 101;
-    static final String EXTRA_VIDEO_PATH = "Video";
-
-
     API apiService;
     JSONObject jsonObject_mobile = new JSONObject();
     JSONObject jsonObject = new JSONObject();
     SessionManager sessionManager;
     ProgressDialog progressDialog;
-
-
     String mobile_number;
-    public static final String FRAGMENT_TAG = "camera";
-    private static final int REQUEST_CAMERA_PERMISSIONS = 931;
-    Uri selectedImage;
-    public static File sourceFile_sign, compressed_Image;
     boolean value;
-    private int GALLERY = 1, CAMERA = 2;
     Compressor compressedImage;
     MultipartBody.Part body = null;
-    private VideoView videoView;
-
-    public static CountDownTimer countDownTimer;
+    private int GALLERY = 1, CAMERA = 2;
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;
@@ -143,7 +120,6 @@ public class SendToFriendActivity extends AppCompatActivity {
         apiService = RestClass.getClient().create(API.class);
 
 
-        videoView = findViewById(R.id.vv);
         btn_complete = findViewById(R.id.btn_complete);
         cameraLayout = findViewById(R.id.cameraLayout);
         recordButton = findViewById(R.id.record_button);
@@ -384,7 +360,7 @@ public class SendToFriendActivity extends AppCompatActivity {
                                                                    Toast.makeText(getBaseContext(), "onPhotoTaken " + filePath, Toast.LENGTH_SHORT).show();
                                                                }
                                                            },
-                            String.valueOf(Environment.getExternalStorageDirectory() + "/Video/"),
+                            Environment.getExternalStorageDirectory() + "/Video/",
                             String.valueOf(Calendar.getInstance().getTimeInMillis()));
                 }
             }
@@ -466,19 +442,6 @@ public class SendToFriendActivity extends AppCompatActivity {
                 .commitAllowingStateLoss();
 
         if (cameraFragment != null) {
-            //cameraFragment.setResultListener(new CameraFragmentResultListener() {
-            //    @Override
-            //    public void onVideoRecorded(String filePath) {
-            //        Intent intent = PreviewActivity.newIntentVideo(CameraFragmentMainActivity.this, filePath);
-            //        startActivityForResult(intent, REQUEST_PREVIEW_CODE);
-            //    }
-//
-            //    @Override
-            //    public void onPhotoTaken(byte[] bytes, String filePath) {
-            //        Intent intent = PreviewActivity.newIntentPhoto(CameraFragmentMainActivity.this, filePath);
-            //        startActivityForResult(intent, REQUEST_PREVIEW_CODE);
-            //    }
-            //});
 
             cameraFragment.setStateListener(new CameraFragmentStateAdapter() {
 
@@ -624,46 +587,31 @@ public class SendToFriendActivity extends AppCompatActivity {
     }
 
     private void selectImage() {
-        final CharSequence[] options = {"Record video from camera", "Select video from gallery", "Cancel"};
+        final CharSequence[] options = {getResources().getString(R.string.recordvideofromcamera), getResources().getString(R.string.selectvideofromgallery), getString(R.string.cancel)};
         AlertDialog.Builder builder = new AlertDialog.Builder(SendToFriendActivity.this);
-        builder.setTitle("Add Video!");
+        builder.setTitle(getResources().getString(R.string.addvideo));
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @SuppressLint("IntentReset")
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Record video from camera")) {
+                if (options[item].equals(getResources().getString(R.string.recordvideofromcamera))) {
                     if (isPermissionGranted()) {
                         addCamera();
                     } else {
                         Toast.makeText(SendToFriendActivity.this, "Permission needed to access Camera", Toast.LENGTH_SHORT).show();
                     }
-                } else if (options[item].equals("Select video from gallery")) {
+                } else if (options[item].equals(getResources().getString(R.string.selectvideofromgallery))) {
                     if (isPermissionGranted()) {
                         pickFromGallery();
                     } else {
                         Toast.makeText(SendToFriendActivity.this, "Permission needed to access Gallery", Toast.LENGTH_SHORT).show();
                     }
-                } else if (options[item].equals("Cancel")) {
+                } else if (options[item].equals(getString(R.string.cancel))) {
                     dialog.dismiss();
                 }
             }
         });
         builder.show();
-    }
-
-    public void chooseVideoFromGallary() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY);
-    }
-
-    private void takeVideoFromCamera() {
-
-        try {
-            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-            startActivityForResult(intent, CAMERA);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void startTrimActivity(@NonNull Uri uri) {
@@ -681,22 +629,6 @@ public class SendToFriendActivity extends AppCompatActivity {
         if (resultCode == RESULT_CANCELED) {
             return;
         }
-
-      /*  if (requestCode == GALLERY || requestCode == CAMERA) {
-            Uri selectedVideo = data.getData();
-            String[] filePathColumn = {MediaStore.Video.Media.DATA};
-            Cursor cursor = getContentResolver().query(selectedVideo, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            decodableString = cursor.getString(columnIndex);
-            cursor.close();
-            mediatype = getContentResolver().getType(selectedVideo);
-            sourceFile_sign = new File(decodableString);
-            videoView.setVisibility(View.VISIBLE);
-            videoView.setVideoURI(Uri.fromFile(sourceFile_sign));
-            videoView.requestFocus();
-            videoView.start();
-        }*/
         if (requestCode == REQUEST_VIDEO_TRIMMER) {
             final Uri selectedUri = data.getData();
             if (selectedUri != null) {
@@ -706,116 +638,6 @@ public class SendToFriendActivity extends AppCompatActivity {
             }
         }
 
-    }
-
-    private void saveVideoToInternalStorage(String filePath) {
-
-        File newfile;
-        try {
-
-            File currentFile = new File(filePath);
-            File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + VIDEO_DIRECTORY);
-            wallpaperDirectory.mkdirs();
-            sourceFile_sign = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".mp4");
-
-
-            if (currentFile.exists()) {
-
-                InputStream in = new FileInputStream(currentFile);
-                OutputStream out = new FileOutputStream(sourceFile_sign);
-
-                // Copy the bits from instream to outstream
-                byte[] buf = new byte[1024];
-                int len;
-
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                in.close();
-                out.close();
-                Log.v("vii", "Video file saved successfully.");
-            } else {
-                Log.v("vii", "Video saving failed. Source file missing.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-      /*  if (camera_or_gallery.equals("0")) {
-
-            try {
-
-                File currentFile = new File(filePath);
-                File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + VIDEO_DIRECTORY);
-                sourceFile_sign = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".mp4");
-                wallpaperDirectory.mkdirs();
-
-                if (currentFile.exists()) {
-
-                    InputStream in = new FileInputStream(currentFile);
-                    OutputStream out = new FileOutputStream(sourceFile_sign);
-
-                    // Copy the bits from instream to outstream
-                    byte[] buf = new byte[1024];
-                    int len;
-
-                    while ((len = in.read(buf)) > 0) {
-                        out.write(buf, 0, len);
-                    }
-                    in.close();
-                    out.close();
-                    Log.v("vii", "Video file saved successfully.");
-                } else {
-                    Log.v("vii", "Video saving failed. Source file missing.");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-
-                File currentFile = new File(filePath);
-                File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + VIDEO_DIRECTORY);
-                sourceFile_sign = new File(wallpaperDirectory, Calendar.getInstance().getTimeInMillis() + ".mp4");
-                wallpaperDirectory.mkdirs();
-
-                if (currentFile.exists()) {
-
-                    InputStream in = new FileInputStream(currentFile);
-                    OutputStream out = new FileOutputStream(sourceFile_sign);
-
-                    // Copy the bits from instream to outstream
-                    byte[] buf = new byte[1024];
-                    int len;
-
-                    while ((len = in.read(buf)) > 0) {
-                        out.write(buf, 0, len);
-                    }
-                    in.close();
-                    out.close();
-                    Log.v("vii", "Video file saved successfully.");
-                } else {
-                    Log.v("vii", "Video saving failed. Source file missing.");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }*/
-
-    }
-
-    public String getPath(Uri uri) {
-        String[] projection = {MediaStore.Video.Media.DATA};
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        if (cursor != null) {
-            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
-            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } else
-            return null;
     }
 
     public boolean isPermissionGranted() {

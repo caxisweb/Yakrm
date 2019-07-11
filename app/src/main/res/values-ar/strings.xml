@@ -151,7 +151,7 @@
     <string name="Sent_By_Your_Friend_Mahmoud_Abd_El_Rahman">مرسلة من صديقك </string>
     <string name="Hello_Friend_I_Am_SendingThis_Voucher_To_Express_My_Love">هلا حبيبي، بأرسلك هذه الهدية لأعبر عن اعتزازي بك كصديق عزيز</string>
     <string name="I_Hope_That_You_Will_Be_Happy_During_Every">وتمني لك السعادة والتميز في حياتك كلها </string>
-    <string name="Attached_Video">Attached Video</string>
+    <string name="Attached_Video"> ارفاق فيديو</string>
     <string name="Press_To_Watch">اضغط للمشاهدة </string>
 
 
@@ -201,7 +201,7 @@
 
     <string name="Send_to_a_friend">إرسال لصديق</string>
     <string name="Friend_mobile_number">أدخل رقم جوال صديقك </string>
-    <string name="Friend_information">Friend information</string>
+    <string name="Friend_information">بيانات صديقك</string>
     <string name="Name">الإسم:  </string>
     <string name="Mahmoud_Abd_El_Mot_al"> محمود عبد المتعال </string>
     <string name="Email_Address">البريد الإلكتروني :</string>
@@ -253,7 +253,7 @@
     <string name="Any_Questions_Ideas_Or_Evaluations">هل لديك أسئلة أو أفكار أو تقييم؟</string>
     <string name="Contact_With_And_Send_To_Us">تواصل معنا وأرسل لنا </string>
     <string name="Message_Title">موضوع الرسالة </string>
-    <string name="Message_Details">Message Details</string>
+    <string name="Message_Details">تفاصيل الرسالة</string>
 
     <string name="Exchange_Instructions">تعليمات الإستبدال </string>
     <string name="Received_Vouchers">هنا تجد كروت الهدايا المرسلة من أصدقائك </string>
@@ -294,15 +294,15 @@
     <string name="The_Number_Of_The_Auctions">عدد المزايدات: 18</string>
     <string name="Abed_El_Rahman_Fawzi_Wins_The_Auction_The_Value_Is">فاز بالمزاد عبدالرحمن فوزي بقيمة 75 ر.س </string>
     <string name="User_Agreement_And_Privacy_Policy">اتفاقية الإستخدام وسياسة الخصوصية </string>
-    <string name="User_Agreement">User Agreement</string>
-    <string name="Privacy_Policy">Privacy Policy</string>
-    <string name="discount_till">Discount till</string>
+    <string name="User_Agreement">اتفاقية المستخدم</string>
+    <string name="Privacy_Policy">سياسة خاصة</string>
+    <string name="discount_till">خصم ل</string>
     <string name="Endingon">تنتهي في</string>
 
 
     <string name="_0_sr">٠ ريال</string>
 
-    <string name="Payment_method">طرق الدفع </string>
+    <string name="Payment_method">قائمة البطاقات</string>
     <string name="there_is_no_any_payment_method_added_in_your_account">لا يوجد طرق للدفع مسجلة لديك </string>
     <string name="Adding_A_Payment_Method">إضافة طريقة دفع </string>
     <string name="Card_Holder_Name">اسم صاحب البطاقة </string>
@@ -368,6 +368,11 @@
     <string name="VoucherScannedSuccessfully">تم مسح القسيمة بنجاح</string>
     <string name="EnterVoucherNumber">أدخل رقم القسيمة</string>
 
+    <string name="recordvideofromcamera">تسجيل الفيديو من الكاميرا</string>
+    <string name="selectvideofromgallery">اختر الفيديو من المعرض</string>
+    <string name="addvideo">أضف فيديو!</string>
+    <string name="pleasecheckexpirydate">يرجى التحقق من تاريخ انتهاء الصلاحية</string>
+    <string name="pleaseentervalidcardnumber">الرجاء إدخال رقم البطاقة ساري المفعول</string>
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>

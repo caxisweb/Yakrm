@@ -80,7 +80,6 @@
                             android:background="@color/cardview_shadow_end_color"
                             android:src="@drawable/demo_img_1" />
 
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -97,7 +96,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="14dp" />
 
-
                             <TextView
                                 android:id="@+id/tv_price"
                                 android:layout_width="wrap_content"
@@ -107,9 +105,7 @@
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="14dp" />
 
-
                         </LinearLayout>
-
 
                         <ImageView
                             android:id="@+id/img_logo"
@@ -119,7 +115,6 @@
                             android:layout_alignParentBottom="true"
                             android:layout_margin="5dp"
                             android:src="@drawable/app_logo" />
-
 
                     </LinearLayout>
 
@@ -153,7 +148,6 @@
                             android:layout_height="35dp"
                             android:src="@mipmap/ic_search_icon"
                             android:tint="@color/colorPrimary" />
-
 
                     </LinearLayout>
 
@@ -235,6 +229,7 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/light_grey_border_background"
                         android:hint="@string/Sending_Date"
+                        android:visibility="gone"
                         android:textColorHint="@color/text_color"
                         android:textSize="14dp" />
 

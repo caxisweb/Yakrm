@@ -68,28 +68,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static DrawerLayout drawer;
     public static ViewPager viewPager;
     public static TextView textCartItemCount;
-    API apiService;
-
     public static ArrayList<GiftCategoryModel> arrayList = new ArrayList<>();
     public static ArrayList<String> cat_arrayList_id = new ArrayList<>();
     public static ArrayList<String> cat_arrayList_name = new ArrayList<>();
     public static Button[] btn;
     public static NavigationView navigationView2;
-    int i;
-    AlertDialog.Builder dialogBuilder;
-    AlertDialog alertDialog;
-
-    private TabLayout tabLayout;
-    Drawable drawable;
     public static FlowLayout flowLayout;
-
     public static int back_flag = 0, filter_array = 0;
     public static String gift_category_id = "", gift_type = "", gift_order = "";
     public static ArrayList<String> category_classification_array = new ArrayList<>();
+    API apiService;
+    int i;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog alertDialog;
+    Drawable drawable;
     LinearLayout llayout_tab;
     CoordinatorLayout main_content;
     String loging_flag = "0", str_cart_count = "0";
     SessionManager sessionManager;
+    private TabLayout tabLayout;
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;
@@ -271,6 +268,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
                     findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                     setTitle(getResources().getString(R.string.title_activity_main));
+                } else {
+                    viewPager.setCurrentItem(0);
                 }
 
 
@@ -644,7 +643,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 finish();
                 arrayList = new ArrayList<>();
             } else {
-                //filter_array = 0;
                 back_flag = 0;
                 setTitle(getResources().getString(R.string.title_activity_main));
                 llayout_tab.setVisibility(View.VISIBLE);
@@ -826,35 +824,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFrag(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
-
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onResume() {
@@ -882,6 +851,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void onFailure(Call<AllVouchersListModel> call, Throwable t) {
                 }
             });
+        }
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFrag(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 }
