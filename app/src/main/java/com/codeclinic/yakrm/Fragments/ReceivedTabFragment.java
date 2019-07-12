@@ -30,7 +30,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecievedTabFragment extends Fragment {
+public class ReceivedTabFragment extends Fragment {
 
 
     RecyclerView recyclerView;
@@ -40,7 +40,7 @@ public class RecievedTabFragment extends Fragment {
     API apiService;
     SessionManager sessionManager;
 
-    public RecievedTabFragment() {
+    public ReceivedTabFragment() {
 
     }
 
@@ -90,9 +90,6 @@ public class RecievedTabFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), getResources().getString(R.string.No_Internet_Connection), Toast.LENGTH_SHORT).show();
         }
-
-
         return view;
     }
-
 }

@@ -40,7 +40,7 @@ import android.widget.Toast;
 
 import com.codeclinic.yakrm.Fragments.BuyTabFragment;
 import com.codeclinic.yakrm.Fragments.MyWalletTabFragment;
-import com.codeclinic.yakrm.Fragments.RecievedTabFragment;
+import com.codeclinic.yakrm.Fragments.ReceivedTabFragment;
 import com.codeclinic.yakrm.Fragments.ReplaceTabFragment;
 import com.codeclinic.yakrm.Fragments.SupportContactFragment;
 import com.codeclinic.yakrm.Models.AllVouchersListModel;
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Drawable drawable;
     LinearLayout llayout_tab;
     CoordinatorLayout main_content;
-    String loging_flag = "0", str_cart_count = "0";
+    String str_cart_count = "0";
     SessionManager sessionManager;
     private TabLayout tabLayout;
 
@@ -241,21 +241,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         LinearLayout llayout_english = header1.findViewById(R.id.llayout_english);
         final TextView tv_language_version = header1.findViewById(R.id.tv_language_version);
-
-      /*arrayList.add(getResources().getString(R.string.Cuisine));
-        arrayList.add(getResources().getString(R.string.books_and_magazines));
-        arrayList.add(getResources().getString(R.string.coffee));
-        arrayList.add(getResources().getString(R.string.Stores_and_groceries));
-        arrayList.add(getResources().getString(R.string.children_toys));
-        arrayList.add(getResources().getString(R.string.fashion_and_uniforms));
-        arrayList.add(getResources().getString(R.string.Care_and_makeup_centers));
-        arrayList.add(getResources().getString(R.string.Hotels_and_tourism));
-        arrayList.add(getResources().getString(R.string.Sport_clothes));
-        arrayList.add(getResources().getString(R.string.phones_and_electronics));
-        arrayList.add(getResources().getString(R.string.sport_tools));
-        arrayList.add(getResources().getString(R.string.Clothes));
-        arrayList.add(getResources().getString(R.string.jewelries_and_golden));
-        arrayList.add(getResources().getString(R.string.others));*/
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -624,7 +609,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new BuyTabFragment(), getResources().getString(R.string.Buy));
-        adapter.addFrag(new RecievedTabFragment(), getResources().getString(R.string.Received));
+        adapter.addFrag(new ReceivedTabFragment(), getResources().getString(R.string.Received));
         adapter.addFrag(new ReplaceTabFragment(), getResources().getString(R.string.Replace));
         //adapter.addFrag(new AuctionTabFragment(), getResources().getString(R.string.Auction));
         adapter.addFrag(new MyWalletTabFragment(), getResources().getString(R.string.My_Wallet));

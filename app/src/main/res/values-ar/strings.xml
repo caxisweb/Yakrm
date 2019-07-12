@@ -373,6 +373,7 @@
     <string name="addvideo">أضف فيديو!</string>
     <string name="pleasecheckexpirydate">يرجى التحقق من تاريخ انتهاء الصلاحية</string>
     <string name="pleaseentervalidcardnumber">الرجاء إدخال رقم البطاقة ساري المفعول</string>
+    <string name="youcannotsendgifted">لا يمكنك إرسال قسيمة الموهوبين إلى صديق.</string>
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>

@@ -22,6 +22,8 @@ import com.codeclinic.yakrm.Utils.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +39,8 @@ public class SupportContactFragment extends android.app.Fragment {
     ProgressDialog progressDialog;
     JSONObject jsonObject = new JSONObject();
     SessionManager sessionManager;
+
+    HashMap<String, String> user_detail = new HashMap<>();
 
     public SupportContactFragment() {
         // Required empty public constructor
@@ -59,6 +63,8 @@ public class SupportContactFragment extends android.app.Fragment {
         apiService = RestClass.getClient().create(API.class);
         progressDialog = new ProgressDialog(getActivity());
         sessionManager = new SessionManager(getActivity());
+        user_detail = sessionManager.getUserDetails();
+        edt_email.setText(user_detail.get(SessionManager.User_Email));
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override

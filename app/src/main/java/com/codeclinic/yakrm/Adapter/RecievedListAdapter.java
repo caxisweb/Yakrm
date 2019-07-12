@@ -77,6 +77,7 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         try {
             holder.tv_expiry_date.setText(final_date.replaceAll("1", context.getResources().getString(R.string.one))
                     .replaceAll("2", context.getResources().getString(R.string.two))
@@ -111,6 +112,7 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
                 .replaceAll("8", context.getResources().getString(R.string.eight))
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
+
         holder.tv_discount.setText(arrayList.get(i).getDiscount().replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
                 .replaceAll("3", context.getResources().getString(R.string.three))
@@ -121,6 +123,7 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
                 .replaceAll("8", context.getResources().getString(R.string.eight))
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + "%");
+
         holder.tv_discount_price.setText(String.valueOf(Float.parseFloat(arrayList.get(i).getVoucherPrice())).replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
                 .replaceAll("3", context.getResources().getString(R.string.three))
@@ -170,6 +173,7 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
                 intent.putExtra("voucher_id", arrayList.get(i).getVoucherId());
                 intent.putExtra("admin_voucher_discount", arrayList.get(i).getDiscount());
                 intent.putExtra("scan_voucher_type", arrayList.get(i).getScanVoucherType());
+                intent.putExtra("voucher_gift_send_id", arrayList.get(i).getVoucherGiftSendId());
                 context.startActivity(intent);
             }
         });

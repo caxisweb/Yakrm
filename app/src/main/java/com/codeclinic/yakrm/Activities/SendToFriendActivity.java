@@ -70,15 +70,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class SendToFriendActivity extends AppCompatActivity {
 
     public static final String FRAGMENT_TAG = "camera";
     static final String EXTRA_VIDEO_PATH = "Video";
-    private static final String VIDEO_DIRECTORY = "/yakrm/";
     private static final int REQUEST_VIDEO_TRIMMER = 0x01;
     private static final int REQUEST_CAMERA_PERMISSIONS = 931;
-    public static File sourceFile_sign, compressed_Image;
+    public static File sourceFile_sign;
     public static CountDownTimer countDownTimer;
     Button btn_complete;
     ImageView img_back, img_voucher, img_search;
@@ -101,7 +99,6 @@ public class SendToFriendActivity extends AppCompatActivity {
     boolean value;
     Compressor compressedImage;
     MultipartBody.Part body = null;
-    private int GALLERY = 1, CAMERA = 2;
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;

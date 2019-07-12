@@ -87,7 +87,10 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
         llayout_send_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ExchangeVoucherActivity.this, SendToFriendActivity.class));
+                if (!VoucherDetailActivity.scan_voucher_type.equals("g"))
+                    startActivity(new Intent(ExchangeVoucherActivity.this, SendToFriendActivity.class));
+                else
+                    Toast.makeText(ExchangeVoucherActivity.this, getResources().getString(R.string.youcannotsendgifted), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -164,7 +167,6 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
                         });
                     }
                 });
-                //startActivity(new Intent(ExchangeVoucherActivity.this, ReturnVoucherActivity.class));
             }
         });
 

@@ -384,5 +384,6 @@
     <string name="addvideo">Add Video!</string>
     <string name="pleasecheckexpirydate">Please Check Expiry Date</string>
     <string name="pleaseentervalidcardnumber">Please Enter Valid Card Number</string>
+    <string name="youcannotsendgifted">You can\'t send gifted voucher to a friend.</string>
 
 </resources>

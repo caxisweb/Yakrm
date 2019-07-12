@@ -43,7 +43,6 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
     EditText edt_ex_date, edt_card_no, edt_cvv, edt_name;
     String card_select = "3";
     Integer[] imageArray = {R.drawable.visa, R.drawable.mastercard};
-    String ex_date = "/^(0[1-9]|1[0-2])\\/?([0-9]{4}|[0-9]{2})$/";
     String name_regex = "^((?:[A-Za-z]+ ?){1,3})$";
     List<GetCardListItemModel> arrayList = new ArrayList<>();
     RecyclerView recyclerView;
