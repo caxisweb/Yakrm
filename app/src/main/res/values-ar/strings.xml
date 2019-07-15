@@ -159,7 +159,7 @@
     <string name="Your_current_balance">رصيدك الحالي</string>
     <string name="Discount_vouchers">قسائم الخصم</string>
     <string name="Active">النشطة</string>
-    <string name="Vendors_of_vouchers">بائعي القسائم</string>
+    <string name="Vendors_of_vouchers">القسائم المفضلة</string>
     <string name="Favorite">المفضلين</string>
     <string name="Vouchers_ended">قسائم انتهت</string>
     <string name="Already_valid">بالفعل صلاحيتها</string>
@@ -238,7 +238,7 @@
     <string name="Vouchers_Will_end_Very_Soon">قسائم قرب إنتهاءها </string>
     <string name="Available_till_date">صالحة حتى 13/13/2018</string>
     <string name="For_The_Coming_Days_Only">(For The Coming 2 Days Only)</string>
-    <string name="Vouchers_That_Have_Ended">قسائم انتهت بالفعل صلاحيتها </string>
+    <string name="Vouchers_That_Have_Ended">قسائم قرب انتهائها </string>
 
     <string name="Notifications">الإشعارات </string>
     <string name="New">جديد</string>
@@ -374,6 +374,7 @@
     <string name="pleasecheckexpirydate">يرجى التحقق من تاريخ انتهاء الصلاحية</string>
     <string name="pleaseentervalidcardnumber">الرجاء إدخال رقم البطاقة ساري المفعول</string>
     <string name="youcannotsendgifted">لا يمكنك إرسال قسيمة الموهوبين إلى صديق.</string>
+    <string name="PleaseEnterValidCardNo">الرجاء إدخال رقم البطاقة ساري المفعول</string>
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>

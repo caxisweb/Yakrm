@@ -202,6 +202,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 try {
                     if (Connection_Detector.isInternetAvailable(EnterCardDetailsActivity.this)) {
                         if (isEmpty(edt_name.getText().toString())) {
@@ -213,12 +214,12 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
                         } else if (edt_card_no.getText().toString().length() != 16) {
                             Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCorrectCardNo), Toast.LENGTH_SHORT).show();
                         } else if (str_card_status.equals("0")) {
-                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.pleaseentervalidcardnumber), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterValidCardNo), Toast.LENGTH_SHORT).show();
                         } else if (isEmpty(edt_ex_date.getText().toString())) {
                             Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardExpirydate), Toast.LENGTH_SHORT).show();
-                        } else if (Integer.parseInt(edt_ex_date.getText().toString().substring(3, 5)) >= Integer.parseInt(String.valueOf(year).substring(2, 4))) {
+                        } else if (Integer.parseInt(edt_ex_date.getText().toString().substring(3, 5)) < Integer.parseInt(String.valueOf(year).substring(2, 4))) {
                             Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.pleasecheckexpirydate), Toast.LENGTH_SHORT).show();
-                        } else if (Integer.parseInt(edt_ex_date.getText().toString().substring(0, 2)) >= month + 1) {
+                        } else if (Integer.parseInt(edt_ex_date.getText().toString().substring(0, 2)) < month + 1 && Integer.parseInt(edt_ex_date.getText().toString().substring(3, 5)) == Integer.parseInt(String.valueOf(year).substring(2, 4))) {
                             Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.pleasecheckexpirydate), Toast.LENGTH_SHORT).show();
                         } else if (isEmpty(edt_cvv.getText().toString())) {
                             Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterSecurityNumber), Toast.LENGTH_SHORT).show();
