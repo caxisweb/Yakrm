@@ -238,7 +238,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/border_background_button"
                 android:enabled="false"
-                android:text="Resend"
+                android:text="@string/resend"
                 android:textColor="@color/colorPrimary" />
 
         </LinearLayout>

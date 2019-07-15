@@ -386,5 +386,6 @@
     <string name="pleaseentervalidcardnumber">Please Enter Valid Card Number</string>
     <string name="youcannotsendgifted">You can\'t send gifted voucher to a friend.</string>
     <string name="PleaseEnterValidCardNo">Please Enter Valid Card Number</string>
+    <string name="resend">Resend</string>
 
 </resources>

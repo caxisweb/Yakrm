@@ -375,6 +375,7 @@
     <string name="pleaseentervalidcardnumber">الرجاء إدخال رقم البطاقة ساري المفعول</string>
     <string name="youcannotsendgifted">لا يمكنك إرسال قسيمة الموهوبين إلى صديق.</string>
     <string name="PleaseEnterValidCardNo">الرجاء إدخال رقم البطاقة ساري المفعول</string>
+    <string name="resend">اعادة ارسال</string>
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>
