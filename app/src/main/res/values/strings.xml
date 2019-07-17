@@ -349,7 +349,7 @@
     <string name="by_visa">By Visa :</string>
     <string name="by_wallet">By Wallet :</string>
     <string name="confirm_new_password">Confirm New password</string>
-    <string name="Confirm_new_password">Confirm new password</string>
+    <string name="Confirm_new_password">Enter Confirm password</string>
     <string name="Please_Enter_Email">Please Enter Email</string>
     <string name="Please_Enter_Password">Please Enter Password</string>
     <string name="Server_Error">Server Error</string>

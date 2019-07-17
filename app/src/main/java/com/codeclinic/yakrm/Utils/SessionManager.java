@@ -31,6 +31,11 @@ public class SessionManager {
     // Sharedpref file name
     private static final String PREF_NAME = "Yakrm";
     private static final String PREF_NAME_FIRST = "Yakrmfirst";
+
+    private static final String reminderStatus = "reminderStatus";
+    private static final String hour = "hour";
+    private static final String min = "min";
+
     // All Shared Preferences Keys-
     private static final String IS_LOGIN = "IsLoggedIn";
     // Shared Preferences
@@ -63,6 +68,37 @@ public class SessionManager {
 
     public String getLanguage(String key, String defValue) {
         return this.pref.getString(key, defValue);
+    }
+
+    public boolean getReminderStatus() {
+        return pref.getBoolean(reminderStatus, false);
+    }
+
+    public void setReminderStatus(boolean status) {
+        editor.putBoolean(reminderStatus, status);
+        editor.commit();
+    }
+
+    // Settings Page Reminder Time (Hour)
+
+    public int get_hour() {
+        return pref.getInt(hour, 20);
+    }
+
+    public void set_hour(int h) {
+        editor.putInt(hour, h);
+        editor.commit();
+    }
+
+    // Settings Page Reminder Time (Minutes)
+
+    public int get_min() {
+        return pref.getInt(min, 0);
+    }
+
+    public void set_min(int m) {
+        editor.putInt(min, m);
+        editor.commit();
     }
 
     public boolean isFirstTimeLaunch() {

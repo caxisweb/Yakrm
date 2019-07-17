@@ -14,7 +14,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.codeclinic.yakrm.Activities.MainActivity;
+import com.codeclinic.yakrm.Activities.NotificationsActivity;
 import com.codeclinic.yakrm.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -74,7 +74,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void Notification(String messageBody) {
         if (sessionManager.isLoggedIn()) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, NotificationsActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

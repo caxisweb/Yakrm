@@ -100,7 +100,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                 if (status.equals("1")) {
                                     Toast.makeText(ChangePasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     finish();
-                                    sessionManager.logoutUser();
                                 } else {
                                     Toast.makeText(ChangePasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 }

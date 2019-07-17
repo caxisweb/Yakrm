@@ -43,6 +43,7 @@ import com.codeclinic.yakrm.Fragments.MyWalletTabFragment;
 import com.codeclinic.yakrm.Fragments.ReceivedTabFragment;
 import com.codeclinic.yakrm.Fragments.ReplaceTabFragment;
 import com.codeclinic.yakrm.Fragments.SupportContactFragment;
+import com.codeclinic.yakrm.LocalNotification.NotificationHelper;
 import com.codeclinic.yakrm.Models.AllVouchersListModel;
 import com.codeclinic.yakrm.Models.GiftCategoryModel;
 import com.codeclinic.yakrm.R;
@@ -836,6 +837,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void onFailure(Call<AllVouchersListModel> call, Throwable t) {
                 }
             });
+
+            if (Integer.parseInt(str_cart_count) > 0) {
+                sessionManager.setReminderStatus(true);
+                NotificationHelper.scheduleRepeatingElapsedNotification(getApplicationContext());
+                NotificationHelper.enableBootReceiver(getApplicationContext());
+            } else {
+                sessionManager.setReminderStatus(true);
+                NotificationHelper.cancelAlarmElapsed();
+                NotificationHelper.disableBootReceiver(getApplicationContext());
+            }
+        } else {
+            sessionManager.setReminderStatus(false);
+            NotificationHelper.cancelAlarmElapsed();
+            NotificationHelper.disableBootReceiver(getApplicationContext());
         }
     }
 

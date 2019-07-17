@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,9 +73,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     public static String card_ID;
     CardView main_pay_cardview, succesful_cardview, error_cardview;
     Button btn_cmplt_pay;
-    ScrollView scrollview_pay;
+    LinearLayout scrollview_pay;
     LinearLayout payment_layout;
-    LinearLayout rl_pay_pal;
     TextView tv_total_price, tv_sc_total_price, tv_wallet_amount;
     RecyclerView recyclerView;
     JSONObject jsonObject = new JSONObject();
@@ -128,7 +126,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
         scrollview_pay = findViewById(R.id.scrollview_pay);
         btn_cmplt_pay = findViewById(R.id.btn_cmplt_pay);
 
-        rl_pay_pal = findViewById(R.id.rl_pay_pal);
         recyclerView = findViewById(R.id.recyclerView);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -252,6 +249,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                         progressDialog.dismiss();
                                         String status = response.body().getStatus();
                                         if (status.equals("1")) {
+
                                             sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
                                             VoucherDetailActivity.voucher_name = "";
                                             VoucherDetailActivity.date = "";
@@ -298,6 +296,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                         String status = response.body().getStatus();
                                         progressDialog.dismiss();
                                         if (status.equals("1")) {
+                                            sessionManager.setReminderStatus(false);
                                             sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
                                             succesful_cardview.setVisibility(View.VISIBLE);
                                             scrollview_pay.setVisibility(View.GONE);
@@ -332,7 +331,44 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
 
                 } else if (Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)) == price) {
 
-                    if (flag_cart.equals("3")) {
+                    if (flag_cart.equals("1")) {
+                        try {
+                            jsonObject.put("transaction_id", DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString());
+                            jsonObject.put("amount_from_wallet", sessionManager.getUserDetails().get(SessionManager.Wallet));
+                            jsonObject.put("amount_from_bank", "0");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Call<PaymentTransactionModel> paymentTransactionModelCall = apiService.PAYMENT_TRANSACTION_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                        paymentTransactionModelCall.enqueue(new Callback<PaymentTransactionModel>() {
+                            @Override
+                            public void onResponse(Call<PaymentTransactionModel> call, Response<PaymentTransactionModel> response) {
+                                String status = response.body().getStatus();
+                                progressDialog.dismiss();
+                                if (status.equals("1")) {
+                                    sessionManager.setReminderStatus(false);
+                                    sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
+                                    succesful_cardview.setVisibility(View.VISIBLE);
+                                    scrollview_pay.setVisibility(View.GONE);
+                                    Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    finishAffinity();
+                                    startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
+                                } else {
+                                    scrollview_pay.setVisibility(View.GONE);
+                                    error_cardview.setVisibility(View.VISIBLE);
+                                    Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<PaymentTransactionModel> call, Throwable t) {
+                                progressDialog.dismiss();
+                                scrollview_pay.setVisibility(View.GONE);
+                                error_cardview.setVisibility(View.VISIBLE);
+                                Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else if (flag_cart.equals("3")) {
 
                         try {
                             replace_gift_voucher.put("replace_active_gift_voucher_id", voucher_id);
@@ -570,6 +606,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                             String status = response.body().getStatus();
                             progressDialog.dismiss();
                             if (status.equals("1")) {
+                                sessionManager.setReminderStatus(false);
                                 sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
                                 succesful_cardview.setVisibility(View.VISIBLE);
                                 scrollview_pay.setVisibility(View.GONE);

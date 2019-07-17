@@ -191,159 +191,96 @@
 
     </android.support.v7.widget.CardView>
 
-    <ScrollView
+    <LinearLayout
         android:id="@+id/scrollview_pay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_action_bar"
-        android:fillViewport="true"
+        android:orientation="vertical"
         android:visibility="gone">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@color/white"
+            android:visibility="visible">
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rl_action_bar"
-                android:layout_margin="20dp"
-                android:background="@color/white"
-                android:visibility="visible">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/not_enough_amount_background"
+                    android:gravity="center"
+                    android:text="@string/Your_Current_Amount_Is_Not_Enough_To_Carry_Out_Purchasing_Process"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14dp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/not_enough_amount_background"
-                        android:gravity="center"
-                        android:text="@string/Your_Current_Amount_Is_Not_Enough_To_Carry_Out_Purchasing_Process"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="14dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="@string/Total_Amount"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="@string/Total_Amount"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-
-                    <TextView
-                        android:id="@+id/tv_sc_total_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="81.5"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="14dp" />
+                <TextView
+                    android:id="@+id/tv_sc_total_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="81.5"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14dp" />
 
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="@string/The_Amount_Will_Be_Deduced_From_Your_Current_Account"
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/The_Amount_Will_Be_Deduced_From_Your_Current_Account"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
 
 
-                </LinearLayout>
+            </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/payment_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rl_action_bar"
-                android:layout_margin="20dp"
-                android:background="@color/white"
-                android:visibility="visible">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <LinearLayout
-                    android:id="@+id/payment_layout"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Charge_Your_Account_Balance"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="14dp"
-                        android:visibility="gone" />
+            </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/rl_pay_pal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/light_grey_border_background"
-                        android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:visibility="gone">
+        </android.support.v7.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/img_paypal"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:padding="5dp"
-                            android:src="@drawable/paypal_img" />
+    </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/By_Using_Pay_Pal"
-                                android:textColor="@color/black"
-                                android:textSize="10dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="email@domian.dlt"
-                                android:textColor="@color/black"
-                                android:textSize="10dp" />
-
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/right_arrow" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-        </LinearLayout>
-
-    </ScrollView>
 
 </RelativeLayout>

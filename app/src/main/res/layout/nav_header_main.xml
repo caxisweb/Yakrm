@@ -208,7 +208,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/layout" />
+                android:background="@color/layout"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/llayout_auctions"
@@ -216,7 +217,8 @@
                 android:layout_height="wrap_content"
                 android:background="?android:selectableItemBackground"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:padding="5dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="25dp"
