@@ -62,26 +62,12 @@ public class NotificationHelper {
      * @param context
      */
     public static void scheduleRepeatingElapsedNotification(Context context) {
-        //Setting intent to class where notification will be handled
         Intent intent = new Intent(context, AlarmReceiver.class);
-
-        //Setting pending intent to respond to broadcast sent by AlarmManager everyday at 8am
         alarmIntentElapsed = PendingIntent.getBroadcast(context, ALARM_TYPE_ELAPSED, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        //getting instance of AlarmManager service
         alarmManagerElapsed = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-
-        //Inexact alarm everyday since device is booted up. This is a better choice and
-        //scales well when device time settings/locale is changed
-        //We're setting alarm to fire notification after 15 minutes, and every 15 minutes there on
-        /*alarmManagerElapsed.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntentElapsed);*/
-
-        alarmManagerElapsed.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime() + 1 * 60 * 1000,
-                1 * 60 * 1000, alarmIntentElapsed);
+        alarmManagerElapsed.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 10 * 60000, alarmIntentElapsed);
     }
+
 
     public static void cancelAlarmRTC() {
         if (alarmManagerRTC != null) {

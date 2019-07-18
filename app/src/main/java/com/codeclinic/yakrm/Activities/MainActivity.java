@@ -432,6 +432,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                                 setTitle(getResources().getString(R.string.title_activity_main));
                             }
+
+                            sessionManager.setReminderStatus(false);
+                            NotificationHelper.cancelAlarmElapsed();
+                            NotificationHelper.disableBootReceiver(getApplicationContext());
+
                             sessionManager.logoutUser();
                             finish();
                         }
@@ -839,11 +844,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
 
             if (Integer.parseInt(str_cart_count) > 0) {
-                sessionManager.setReminderStatus(true);
-                NotificationHelper.scheduleRepeatingElapsedNotification(getApplicationContext());
-                NotificationHelper.enableBootReceiver(getApplicationContext());
+                if (!sessionManager.getReminderStatus()) {
+                    sessionManager.setReminderStatus(true);
+                    NotificationHelper.scheduleRepeatingElapsedNotification(getApplicationContext());
+                    NotificationHelper.enableBootReceiver(getApplicationContext());
+                }
             } else {
-                sessionManager.setReminderStatus(true);
+                sessionManager.setReminderStatus(false);
                 NotificationHelper.cancelAlarmElapsed();
                 NotificationHelper.disableBootReceiver(getApplicationContext());
             }

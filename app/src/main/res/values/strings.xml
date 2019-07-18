@@ -387,5 +387,7 @@
     <string name="youcannotsendgifted">You can\'t send gifted voucher to a friend.</string>
     <string name="PleaseEnterValidCardNo">Please Enter Valid Card Number</string>
     <string name="resend">Resend</string>
+    <string name="You_have_few_items_in_the_cart_to_purchase">You have few items in the cart to purchase</string>
+    <string name="Purchase_Voucher">Purchase Voucher</string>
 
 </resources>
