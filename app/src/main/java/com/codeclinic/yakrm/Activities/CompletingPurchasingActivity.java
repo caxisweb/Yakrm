@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeclinic.yakrm.Adapter.SavedCardListAdapter;
+import com.codeclinic.yakrm.LocalNotification.NotificationHelper;
 import com.codeclinic.yakrm.Models.GetCardListItemModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.GetCheckoutIDModel;
@@ -297,6 +298,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                         progressDialog.dismiss();
                                         if (status.equals("1")) {
                                             sessionManager.setReminderStatus(false);
+                                            NotificationHelper.cancelAlarmElapsed();
+                                            NotificationHelper.disableBootReceiver(getApplicationContext());
                                             sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
                                             succesful_cardview.setVisibility(View.VISIBLE);
                                             scrollview_pay.setVisibility(View.GONE);
@@ -347,6 +350,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                 progressDialog.dismiss();
                                 if (status.equals("1")) {
                                     sessionManager.setReminderStatus(false);
+                                    NotificationHelper.cancelAlarmElapsed();
+                                    NotificationHelper.disableBootReceiver(getApplicationContext());
                                     sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
                                     succesful_cardview.setVisibility(View.VISIBLE);
                                     scrollview_pay.setVisibility(View.GONE);
@@ -607,6 +612,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                             progressDialog.dismiss();
                             if (status.equals("1")) {
                                 sessionManager.setReminderStatus(false);
+                                NotificationHelper.cancelAlarmElapsed();
+                                NotificationHelper.disableBootReceiver(getApplicationContext());
                                 sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
                                 succesful_cardview.setVisibility(View.VISIBLE);
                                 scrollview_pay.setVisibility(View.GONE);
