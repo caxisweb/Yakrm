@@ -376,7 +376,7 @@
     <string name="youcannotsendgifted">لا يمكنك إرسال قسيمة الموهوبين إلى صديق.</string>
     <string name="PleaseEnterValidCardNo">الرجاء إدخال رقم البطاقة ساري المفعول</string>
     <string name="resend">اعادة ارسال</string>
-    <string name="You_have_few_items_in_the_cart_to_purchase">لديك بعض العناصر في السلة للشراء</string>
+    <string name="You_have_few_items_in_the_cart_to_purchase">لديك منتج في السلة</string>
     <string name="Purchase_Voucher">شراء قسيمة</string>
     <string-array name="selectcountry">
         <item>السعودية </item>

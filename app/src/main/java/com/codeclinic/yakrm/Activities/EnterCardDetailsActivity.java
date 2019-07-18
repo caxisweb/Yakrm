@@ -39,6 +39,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EnterCardDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final int CARD_NUMBER_TOTAL_SYMBOLS = 19; // size of pattern 0000-0000-0000-0000
+    private static final int CARD_NUMBER_TOTAL_DIGITS = 16; // max numbers of digits in pattern: 0000 x 4
+    private static final int CARD_NUMBER_DIVIDER_MODULO = 5; // means divider position is every 5th symbol beginning with 1
+    private static final int CARD_NUMBER_DIVIDER_POSITION = CARD_NUMBER_DIVIDER_MODULO - 1; // means divider position is every 4th symbol beginning with 0
+    private static final char CARD_NUMBER_DIVIDER = '-';
+
     ImageView img_back, img_mada_select, img_paypal_select, img_visa_select;
     EditText edt_ex_date, edt_card_no, edt_cvv, edt_name;
     String card_select = "3";
@@ -61,6 +68,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
     public ArrayList<String> listOfPattern() {
 
         String ptVisa = "^4[0-9]{6,}$";
+        //String ptVisa = "^4[0-9]{12}{3}$";
 
         listOfPattern.add(ptVisa);
 
@@ -196,7 +204,10 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
                     str_card_status = "0";
                     edt_card_no.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 }
+
             }
+
+
         });
 
         btn_add.setOnClickListener(new View.OnClickListener() {
@@ -301,4 +312,45 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
     public void onClick(View v) {
 
     }
+
+    private boolean isInputCorrect(Editable s, int size, int dividerPosition, char divider) {
+        boolean isCorrect = s.length() <= size;
+        for (int i = 0; i < s.length(); i++) {
+            if (i > 0 && (i + 1) % dividerPosition == 0) {
+                isCorrect &= divider == s.charAt(i);
+            } else {
+                isCorrect &= Character.isDigit(s.charAt(i));
+            }
+        }
+        return isCorrect;
+    }
+
+    private String concatString(char[] digits, int dividerPosition, char divider) {
+        final StringBuilder formatted = new StringBuilder();
+
+        for (int i = 0; i < digits.length; i++) {
+            if (digits[i] != 0) {
+                formatted.append(digits[i]);
+                if ((i > 0) && (i < (digits.length - 1)) && (((i + 1) % dividerPosition) == 0)) {
+                    formatted.append(divider);
+                }
+            }
+        }
+
+        return formatted.toString();
+    }
+
+    private char[] getDigitArray(final Editable s, final int size) {
+        char[] digits = new char[size];
+        int index = 0;
+        for (int i = 0; i < s.length() && index < size; i++) {
+            char current = s.charAt(i);
+            if (Character.isDigit(current)) {
+                digits[index] = current;
+                index++;
+            }
+        }
+        return digits;
+    }
+
 }
