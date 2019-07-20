@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.LocalNotification.NotificationHelper;
 import com.codeclinic.yakrm.Models.CartListItemModel;
 import com.codeclinic.yakrm.Models.RemoveCartItemModel;
 import com.codeclinic.yakrm.R;
@@ -164,6 +165,9 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
                                 progressDialog.dismiss();
                                 String status = response.body().getStatus();
                                 if (status.equals("1")) {
+                                    sessionManager.setReminderStatus(false);
+                                    NotificationHelper.cancelAlarmElapsed();
+                                    NotificationHelper.disableBootReceiver(context);
                                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     ((Activity) context).recreate();
                                 } else {

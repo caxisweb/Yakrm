@@ -39,7 +39,7 @@ public class VoucherAboutToEndAdaper extends RecyclerView.Adapter<VoucherAboutTo
     @Override
     public void onBindViewHolder(@NonNull VoucherAboutToEndAdaper.Holder holder, int i) {
         holder.tv_item_name.setText(arrayList.get(i).getBrandName());
-        holder.tv_expiry_date.setText(arrayList.get(i).getDiscount());
+        holder.tv_discount_vouchers.setText(arrayList.get(i).getDiscount());
         holder.tv_price.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
                 .replaceAll("3", context.getResources().getString(R.string.three))
