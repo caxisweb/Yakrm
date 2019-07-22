@@ -34,29 +34,4 @@ public class RestClass {
     }
 
 
-/*    private static OkHttpClient Client() {
-
-
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-
-                // Request customization: add request headers
-                Request.Builder requestBuilder = original.newBuilder()
-                        .header("Header Keys", "")
-                        .header("Consumer Key", "")
-                        .header("Consumer Secret", "")
-                        .header("Access Token", "")
-                        .header("Access Token Secret", ""); // <-- this is the important line
-
-                Request request = requestBuilder.build();
-                return chain.proceed(request);
-            }
-        });
-
-        return httpClient.build();
-
-    }*/
-
 }

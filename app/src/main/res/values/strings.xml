@@ -389,5 +389,6 @@
     <string name="resend">Resend</string>
     <string name="You_have_few_items_in_the_cart_to_purchase">You have product in the basket</string>
     <string name="Purchase_Voucher">Purchase Voucher</string>
+    <string name="Mobile_number_should_start_with_05">Mobile number should start with \'05\'</string>
 
 </resources>

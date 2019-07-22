@@ -231,7 +231,7 @@ public class NewAccountActivity extends AppCompatActivity {
                 if (isEmpty(str_number)) {
                     Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_Mobile_Number), Toast.LENGTH_SHORT).show();
                 } else if (!str_number.substring(0, 2).equals("05")) {
-                    Toast.makeText(NewAccountActivity.this, "Mobile number shoul start with '05' ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Mobile_number_should_start_with_05), Toast.LENGTH_LONG).show();
                 } else if (str_number.length() < 10) {
                     Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Mobile_Number_should_be_minimum), Toast.LENGTH_SHORT).show();
                 } else {
@@ -253,6 +253,7 @@ public class NewAccountActivity extends AppCompatActivity {
                         public void onResponse(Call<RegistrationModel> call, Response<RegistrationModel> response) {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
+                                Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 str_otp = String.valueOf(response.body().getOtp());
                                 str_user_token = String.valueOf(response.body().getToken());
                                 main_detail_cardview.setVisibility(View.GONE);
@@ -372,13 +373,13 @@ public class NewAccountActivity extends AppCompatActivity {
 
                 if (isEmpty(str_edt_1)) {
                     Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_OTP), Toast.LENGTH_SHORT).show();
-                }/* else if (isEmpty(str_edt_2)) {
-                    Toast.makeText(NewAccountActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
+                } else if (isEmpty(str_edt_2)) {
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_OTP), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_edt_3)) {
-                    Toast.makeText(NewAccountActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_OTP), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_edt_4)) {
-                    Toast.makeText(NewAccountActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
-                }*/ else {
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_OTP), Toast.LENGTH_SHORT).show();
+                } else {
 
                     String temp_otp = null;
                     if (language.equals("ar")) {

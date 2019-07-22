@@ -333,7 +333,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                     alertDialog.show();
 
                 } else if (Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)) == price) {
-
                     if (flag_cart.equals("1")) {
                         try {
                             jsonObject.put("transaction_id", DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString());
@@ -374,7 +373,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                             }
                         });
                     } else if (flag_cart.equals("3")) {
-
                         try {
                             replace_gift_voucher.put("replace_active_gift_voucher_id", voucher_id);
                             replace_gift_voucher.put("voucher_gift_id", voucher_gift_send_id);
@@ -406,7 +404,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                         Call<ReplaceVoucherModel> replaceVoucherModelCall = apiService.REPLACE_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
                         replaceVoucherModelCall.enqueue(new Callback<ReplaceVoucherModel>() {
                             @Override
@@ -455,47 +452,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
         });
 
         getAllcardList();
-    }
-
-    public void getCheckoutId() {
-        JSONObject jobj = new JSONObject();
-        try {
-            jobj.put("price", 50.00);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        Call<GetCheckoutIDModel> getCheckoutIDModelCall = apiService.GET_CHECKOUT_ID_MODEL_CALL(jobj.toString());
-        getCheckoutIDModelCall.enqueue(new Callback<GetCheckoutIDModel>() {
-            @Override
-            public void onResponse(Call<GetCheckoutIDModel> call, Response<GetCheckoutIDModel> response) {
-                checkoutId = response.body().getId();
-                checkcredit = "VISA";
-                try {
-                    PaymentParams paymentParams = new CardPaymentParams(
-                            checkoutId,
-                            checkcredit,
-                            "4111111111111111",
-                            "mosab",
-                            "11",
-                            "2021",
-                            "123"
-                    );
-
-                    Transaction transaction = new Transaction(paymentParams);
-                    binder.submitTransaction(transaction);
-
-
-                } catch (PaymentException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetCheckoutIDModel> call, Throwable t) {
-                Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override

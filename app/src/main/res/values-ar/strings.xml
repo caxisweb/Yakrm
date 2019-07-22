@@ -343,7 +343,7 @@
     <string name="Please_Wait">انتظر قليلا</string>
     <string name="Please_Enter_Mobile_Number">من فضلك أدخل رقم الهاتف</string>
     <string name="Mobile_Number_should_be_minimum">رقم الهاتف يجب ان لا يقل عن 10 ارقام </string>
-    <string name="Please_Enter_OTP">من فضلك ادخل كود التحقق</string>
+    <string name="Please_Enter_OTP">يرجي ادخال كود التحقق</string>
     <string name="Please_Enter_Name">من فضلك ادخل الاسم </string>
     <string name="Name_should_be_minimum_of_three_characters">الاسم لايجب ان يقل عن 3 احرف </string>
     <string name="Please_Enter_Valid_Email">من فضلك ادخل بريد الكتروني صحيح</string>
@@ -378,6 +378,7 @@
     <string name="resend">اعادة ارسال</string>
     <string name="You_have_few_items_in_the_cart_to_purchase">لديك منتج في السلة</string>
     <string name="Purchase_Voucher">شراء قسيمة</string>
+    <string name="Mobile_number_should_start_with_05">يجب أن يبدأ رقم الجوال بـ 05</string>
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>
