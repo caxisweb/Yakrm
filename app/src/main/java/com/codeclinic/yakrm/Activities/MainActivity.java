@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -38,6 +39,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.BuildConfig;
 import com.codeclinic.yakrm.Fragments.BuyTabFragment;
 import com.codeclinic.yakrm.Fragments.MyWalletTabFragment;
 import com.codeclinic.yakrm.Fragments.ReceivedTabFragment;
@@ -577,7 +579,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
     private void createTabIcons() {
 
         final View view1 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
@@ -729,6 +730,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void doShareLink() {
+        String shareMessage = "Let me recommend you this application";
+        String link = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        Intent chooserIntent = Intent.createChooser(shareIntent, "Share Via");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage + " " + link);
+            Bundle bundle = new Bundle();
+            bundle.putString(Intent.EXTRA_TEXT, link);
+            Bundle replacement = new Bundle();
+            chooserIntent.putExtra(Intent.EXTRA_REPLACEMENT_EXTRAS, replacement);
+        } else {
+            shareIntent.putExtra(Intent.EXTRA_TEXT, link);
+        }
+        chooserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(chooserIntent);
     }
 
     @Override

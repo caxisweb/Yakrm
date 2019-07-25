@@ -390,5 +390,13 @@
     <string name="You_have_few_items_in_the_cart_to_purchase">You have product in the basket</string>
     <string name="Purchase_Voucher">Purchase Voucher</string>
     <string name="Mobile_number_should_start_with_05">Mobile number should start with \'05\'</string>
+    <string name="More">...more</string>
+    <string name="Less">...less</string>
+    <string name="Debited">DEBITED</string>
+    <string name="Credited">CREDITED</string>
+    <string name="ReturnedVoucher">Returned Voucher</string>
+    <string name="PurchasedVoucher">Purchased Voucher</string>
+    <string name="ReplacedVoucher">Replaced Voucher</string>
+    <string name="GiftedVoucher">Gifted Voucher</string>
 
 </resources>

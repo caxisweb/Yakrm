@@ -1,16 +1,19 @@
 package com.codeclinic.yakrm.Activities;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeclinic.yakrm.Adapter.GiftDetailListAdapter;
+import com.codeclinic.yakrm.BuildConfig;
 import com.codeclinic.yakrm.Models.AddToFavouritesModel;
 import com.codeclinic.yakrm.Models.VoucherDetailsListItemModel;
 import com.codeclinic.yakrm.Models.VoucherDetailsListModel;
@@ -51,9 +55,10 @@ public class GiftDetailsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     SessionManager sessionManager;
     Button btn_complete;
-    TextView tv_brand_name, tv_description, tv_brand_type;
+    TextView tv_brand_name, tv_description, tv_brand_type, tv_more;
     ImageView img_brand_img, img_back, img_fav, img_share;
     String brand_id, token, is_fav;
+    int status_expand = 0;
 
     LinearLayout bottom_layout;
     ArrayList<String> arrayList_type = new ArrayList<>();
@@ -72,6 +77,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gift_details);
 
+        tv_more = findViewById(R.id.tv_more);
         recyclerView = findViewById(R.id.recyclerView);
         img_back = findViewById(R.id.img_back);
         String language = String.valueOf(getResources().getConfiguration().locale);
@@ -183,14 +189,36 @@ public class GiftDetailsActivity extends AppCompatActivity {
         img_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final LayoutInflater inflater = getLayoutInflater();
+                /*final LayoutInflater inflater = getLayoutInflater();
                 dialogBuilder = new AlertDialog.Builder(GiftDetailsActivity.this);
                 final View dialogView = inflater.inflate(R.layout.custom_share_layout, null);
                 dialogBuilder.setView(dialogView);
                 dialogBuilder.setCancelable(true);
 
+                ImageView img_facebook = dialogView.findViewById(R.id.img_facebook);
+                ImageView img_twitter = dialogView.findViewById(R.id.img_twitter);
+                ImageView img_sms = dialogView.findViewById(R.id.img_sms);
+                ImageView img_mail = dialogView.findViewById(R.id.img_mail);
+                ImageView img_contact = dialogView.findViewById(R.id.img_contact);
+
+                img_facebook.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent mIntent = new Intent(Intent.ACTION_SEND);
+                        mIntent.setType("text/plain");
+                        mIntent.setPackage("com.facebook.katana");
+                        mIntent.putExtra(Intent.EXTRA_TEXT, "Let me recommend you this application");
+                        try {
+                            startActivity(mIntent);
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(GiftDetailsActivity.this, "Facebook Not installed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
                 alertDialog = dialogBuilder.create();
-                alertDialog.show();
+                alertDialog.show();*/
+                doShareLink();
             }
         });
 
@@ -287,6 +315,67 @@ public class GiftDetailsActivity extends AppCompatActivity {
             }
         });
 
+        tv_more.setText(getResources().getString(R.string.More));
+        status_expand = 0;
+        CollapsedByMaxLines(tv_description, 2);
+
+        tv_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (status_expand == 0) {
+                    status_expand = 1;
+                    expandByMaxLines(tv_description);
+                    tv_more.setText(getResources().getString(R.string.Less));
+                } else {
+                    tv_more.setText(getResources().getString(R.string.More));
+                    status_expand = 0;
+                    CollapsedByMaxLines(tv_description, 2);
+                }
+            }
+        });
+
+    }
+
+    private void doShareLink() {
+        String shareMessage = "Let me recommend you this application";
+        String link = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        Intent chooserIntent = Intent.createChooser(shareIntent, "Share Via");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage + " " + link);
+            Bundle bundle = new Bundle();
+            bundle.putString(Intent.EXTRA_TEXT, link);
+            Bundle replacement = new Bundle();
+            chooserIntent.putExtra(Intent.EXTRA_REPLACEMENT_EXTRAS, replacement);
+        } else {
+            shareIntent.putExtra(Intent.EXTRA_TEXT, link);
+        }
+        chooserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(chooserIntent);
+    }
+
+    @SuppressLint("Range")
+    public void expandByMaxLines(@NonNull final TextView text) {
+        final int height = text.getMeasuredHeight();
+        text.setHeight(height);
+        text.setMaxLines(Integer.MAX_VALUE); //expand fully
+        text.measure(View.MeasureSpec.makeMeasureSpec(text.getMeasuredWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED));
+        final int newHeight = text.getMeasuredHeight();
+        ObjectAnimator animation = ObjectAnimator.ofInt(text, "height", height, newHeight);
+        animation.setDuration(250).start();
+    }
+
+    @SuppressLint("Range")
+    public void CollapsedByMaxLines(@NonNull final TextView text, int line) {
+        final int height = text.getMeasuredHeight();
+        text.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        text.setMaxLines(line); //expand fully
+        text.measure(View.MeasureSpec.makeMeasureSpec(text.getMeasuredWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED));
+        final int newHeight = text.getMeasuredHeight();
+        ObjectAnimator animation = ObjectAnimator.ofInt(text, "maxLines", line);
+        animation.setDuration(250).start();
     }
 
 }

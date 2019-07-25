@@ -93,6 +93,18 @@ public class FinancialTransactionsRecordActivity extends AppCompatActivity {
                                 .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
 
                         arrayList = response.body().getData();
+                   /*     for (int i = 0; i < 5; i++) {
+                            TransactionsListItemModel transactionsListItemModel = new TransactionsListItemModel();
+                            transactionsListItemModel.setAmountFromBank(arrayList.get(0).getAmountFromBank());
+                            transactionsListItemModel.setAmountFromWallet(arrayList.get(0).getAmountFromWallet());
+                            transactionsListItemModel.setId(arrayList.get(0).getId());
+                            transactionsListItemModel.setScanVoucherType(arrayList.get(0).getScanVoucherType());
+                            transactionsListItemModel.setTotalPrice(arrayList.get(0).getTotalPrice());
+                            transactionsListItemModel.setTransactionId(arrayList.get(0).getTransactionId());
+                            transactionsListItemModel.setUpdatedAt(arrayList.get(0).getUpdatedAt());
+                            arrayList.add(transactionsListItemModel);
+                        }
+*/
                         financialRecordAdapter = new FinancialRecordAdapter(arrayList, FinancialTransactionsRecordActivity.this);
                         recyclerView.setAdapter(financialRecordAdapter);
                     } else {

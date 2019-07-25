@@ -182,7 +182,6 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
                             }
                         });
 
-
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override

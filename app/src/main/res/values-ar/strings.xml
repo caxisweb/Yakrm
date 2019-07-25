@@ -331,7 +331,7 @@
     <string name="zero">٠</string>
     <string name="CVV">CVV</string>
     <string name="wallet_amount_is_0_and_ammount_to_be_paid_is"> مبلغ المحفظة هو 0 والمبلغ الواجب دفعه هو :</string>
-    <string name="by_visa">عن طريق التأشيرة:</string>
+    <string name="by_visa">بواسطة الفيزا:</string>
     <string name="by_wallet">بواسطة محفظة:</string>
     <string name="confirm_new_password">تأكيد كلمة المرور الجديدة</string>
 
@@ -379,6 +379,15 @@
     <string name="You_have_few_items_in_the_cart_to_purchase">لديك منتج في السلة</string>
     <string name="Purchase_Voucher">شراء قسيمة</string>
     <string name="Mobile_number_should_start_with_05">يجب أن يبدأ رقم الجوال بـ 05</string>
+    <string name="More">...أكثر من</string>
+    <string name="Less">...أقل</string>
+
+    <string name="Debited">تم الخصم</string>
+    <string name="Credited">تم السحب</string>
+    <string name="ReturnedVoucher">قسيمة الإرجاع</string>
+    <string name="PurchasedVoucher">شراء قسيمة</string>
+    <string name="ReplacedVoucher">استبدال قسيمة</string>
+    <string name="GiftedVoucher">قسيمة الموهوبين</string>
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>

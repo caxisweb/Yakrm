@@ -68,13 +68,15 @@
         <activity
             android:name=".Activities.CartActivity"
             android:theme="@style/No_action_bar" />
+
+
         <activity
             android:name=".Activities.CompletingPurchasingActivity"
             android:launchMode="singleTask"
             android:theme="@style/No_action_bar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <data android:scheme="testmosab" />
+                <data android:scheme="livemosab" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />

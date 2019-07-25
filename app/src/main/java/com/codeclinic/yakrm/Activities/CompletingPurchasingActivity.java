@@ -94,24 +94,10 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     String[] card_date;
     double transaction_main_price;
     private IProviderBinder binder;
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            binder = (IProviderBinder) service;
-            binder.addTransactionListener(CompletingPurchasingActivity.this);
-            /* we have a connection to the service */
-            try {
-                binder.initializeProvider(Connect.ProviderMode.TEST);
-            } catch (PaymentException ee) {
 
-            }
-        }
+    String ptVisa = "^4[0-9]{6,}$";
+    String ptMasterCard = "^5[1-5][0-9]{5,}$";
 
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            binder = null;
-        }
-    };
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -454,6 +440,26 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
         getAllcardList();
     }
 
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            binder = (IProviderBinder) service;
+            binder.addTransactionListener(CompletingPurchasingActivity.this);
+            /* we have a connection to the service */
+            try {
+                binder.initializeProvider(Connect.ProviderMode.LIVE);
+            } catch (PaymentException ee) {
+
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            binder = null;
+        }
+    };
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -498,14 +504,13 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     @Override
     public void transactionCompleted(Transaction transaction) {
         if (transaction == null) {
-
             return;
         }
 
         if (transaction.getTransactionType() == TransactionType.SYNC) {
             getpaystatus();
         } else {
-            /* wait for the callback in the onNewIntent() */
+            //wait for the callback in the onNewIntent()
             Uri uri = Uri.parse(transaction.getRedirectUrl());
             Intent intent2 = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent2);
@@ -521,7 +526,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (intent.getScheme().equals("testmosab")) {
+        if (intent.getScheme().equals("livemosab")) {
             resourcePath = intent.getData().getQueryParameter("id");
             getpaystatus();
         }
@@ -531,7 +536,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
 
         JSONObject jobj = new JSONObject();
         try {
-            jobj.put("checkout_id", resourcePath);
+            //jobj.put("checkout_id", resourcePath);
+            jobj.put("checkout_id", checkoutId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -540,7 +546,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
         paymentStatusModelCall.enqueue(new Callback<PaymentStatusModel>() {
             @Override
             public void onResponse(Call<PaymentStatusModel> call, Response<PaymentStatusModel> response) {
-                Toast.makeText(CompletingPurchasingActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 progressDialog.setMessage("Please Wait");
                 progressDialog.setIndeterminate(true);
                 progressDialog.setCancelable(false);
@@ -732,6 +737,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                     transaction_main_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
                                     JSONObject jobj = new JSONObject();
                                     try {
+                                        //jobj.put("price", formatNumber(2, transaction_main_price));
                                         jobj.put("price", formatNumber(2, transaction_main_price));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -742,16 +748,23 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                         @Override
                                         public void onResponse(Call<GetCheckoutIDModel> call, Response<GetCheckoutIDModel> response) {
                                             checkoutId = response.body().getId();
-                                            checkcredit = "VISA";
+                                            if (card_no.matches(ptVisa)) {
+                                                checkcredit = "VISA";
+                                            } else if (card_no.matches(ptMasterCard)) {
+                                                checkcredit = "MASTER";
+                                            } else {
+                                                checkcredit = "VISA";
+                                            }
+
                                             try {
                                                 PaymentParams paymentParams = new CardPaymentParams(
                                                         checkoutId,
                                                         checkcredit,
-                                                        "4111111111111111",
-                                                        "mosab",
-                                                        "05",
-                                                        "2021",
-                                                        "111"
+                                                        card_no,
+                                                        card_holder_name,
+                                                        card_date[0],
+                                                        card_date[1],
+                                                        card_cvv
                                                 );
 
                                                 Transaction transaction = new Transaction(paymentParams);

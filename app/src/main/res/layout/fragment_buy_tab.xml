@@ -22,6 +22,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
+                android:visibility="invisible"
                 android:text="@string/The_most_popular_gifts"
                 android:textColor="@color/black"
                 android:textSize="14dp" />

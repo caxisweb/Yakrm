@@ -43,15 +43,17 @@ public class FinancialRecordAdapter extends RecyclerView.Adapter<FinancialRecord
         holder.tv_by_wallet.setText(arrayList.get(i).getAmountFromWallet() + " " + context.getResources().getString(R.string.SR_currency));
 
         if (arrayList.get(i).getScanVoucherType().equals("purchase_voucher")) {
-            holder.tv_itemname.setText("DEBITED");
-            holder.tv_itemname.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            holder.tv_itemname.setText(context.getResources().getString(R.string.Debited));
             holder.view.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+            //holder.tv_itemname.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            holder.tv_price.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+
         } else {
-            holder.tv_itemname.setText("CREDITED");
-            holder.tv_itemname.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            holder.tv_itemname.setText(context.getResources().getString(R.string.Credited));
+            //holder.tv_itemname.setTextColor(context.getResources().getColor(R.color.digit_color));
             holder.view.setBackgroundColor(context.getResources().getColor(R.color.digit_color));
+            holder.tv_price.setTextColor(context.getResources().getColor(R.color.digit_color));
         }
-        //holder.tv_vendor_name.setText(arrayList.get(i).getVendorName());
 
         SimpleDateFormat spf = null;
         Date newDate = null;
@@ -68,6 +70,17 @@ public class FinancialRecordAdapter extends RecyclerView.Adapter<FinancialRecord
 
         holder.tv_date.setText(final_date);
 
+        if (arrayList.get(i).getScanVoucherType().equals("return_voucher")) {
+            holder.tv_transaction_type.setText(context.getResources().getString(R.string.ReturnedVoucher));
+        } else if (arrayList.get(i).getScanVoucherType().equals("purchase_voucher")) {
+            holder.tv_transaction_type.setText(context.getResources().getString(R.string.PurchasedVoucher));
+        } else if (arrayList.get(i).getScanVoucherType().equals("replace_voucher")) {
+            holder.tv_transaction_type.setText(context.getResources().getString(R.string.ReplacedVoucher));
+        } else {
+            holder.tv_transaction_type.setText(context.getResources().getString(R.string.GiftedVoucher));
+        }
+
+
     }
 
     @Override
@@ -76,7 +89,7 @@ public class FinancialRecordAdapter extends RecyclerView.Adapter<FinancialRecord
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        TextView tv_itemname, tv_price, tv_by_visa, tv_by_wallet, tv_date;
+        TextView tv_itemname, tv_price, tv_by_visa, tv_by_wallet, tv_date, tv_transaction_type;
         View view;
 
         public Holder(@NonNull View itemView) {
@@ -87,6 +100,7 @@ public class FinancialRecordAdapter extends RecyclerView.Adapter<FinancialRecord
             tv_by_visa = itemView.findViewById(R.id.tv_by_visa);
             tv_by_wallet = itemView.findViewById(R.id.tv_by_wallet);
             tv_date = itemView.findViewById(R.id.tv_date);
+            tv_transaction_type = itemView.findViewById(R.id.tv_transaction_type);
         }
     }
 }
