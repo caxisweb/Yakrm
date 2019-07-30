@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.codeclinic.yakrm.Activities.FavouritesActivity;
 import com.codeclinic.yakrm.Activities.MainActivity;
+import com.codeclinic.yakrm.Activities.StartActivity;
 import com.codeclinic.yakrm.Activities.UploadVouchersActivity;
 import com.codeclinic.yakrm.Activities.VoucherAboutToEndActivity;
 import com.codeclinic.yakrm.Activities.VoucherEndedActivity;
@@ -56,39 +57,44 @@ public class MyWalletTabFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            if (Connection_Detector.isInternetAvailable(getActivity())) {
-                progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
-                progressDialog.setIndeterminate(true);
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-                Call<WalletActiveListModel> walletActiveListModelCall = apiService.WALLET_ACTIVE_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
-                walletActiveListModelCall.enqueue(new Callback<WalletActiveListModel>() {
-                    @Override
-                    public void onResponse(Call<WalletActiveListModel> call, Response<WalletActiveListModel> response) {
-                        progressDialog.dismiss();
-                        String status = response.body().getStatus();
-                        if (status.equals("1")) {
-                            arrayList = response.body().getData();
-                            admin_discount = response.body().getAdminProfitDis();
-                            myWalletAdapter = new MyWalletAdapter(arrayList, getActivity(), admin_discount);
-                            recyclerView.setAdapter(myWalletAdapter);
-                        } else {
-                            //Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+            if (sessionManager.isLoggedIn()) {
+                if (Connection_Detector.isInternetAvailable(getActivity())) {
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    Call<WalletActiveListModel> walletActiveListModelCall = apiService.WALLET_ACTIVE_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+                    walletActiveListModelCall.enqueue(new Callback<WalletActiveListModel>() {
+                        @Override
+                        public void onResponse(Call<WalletActiveListModel> call, Response<WalletActiveListModel> response) {
+                            progressDialog.dismiss();
+                            String status = response.body().getStatus();
+                            if (status.equals("1")) {
+                                arrayList = response.body().getData();
+                                admin_discount = response.body().getAdminProfitDis();
+                                myWalletAdapter = new MyWalletAdapter(arrayList, getActivity(), admin_discount);
+                                recyclerView.setAdapter(myWalletAdapter);
+                            } else {
+                                //Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                            tv_fav_voucher.setText(response.body().getTotal_favourites());
+                            tv_active_voucher.setText(response.body().getTotal_active_voucher());
+                            tv_voucher_about_end.setText(response.body().getVoucher_end_soon());
+                            tv_voucher_ended.setText(response.body().getVoucher_ended());
                         }
-                        tv_fav_voucher.setText(response.body().getTotal_favourites());
-                        tv_active_voucher.setText(response.body().getTotal_active_voucher());
-                        tv_voucher_about_end.setText(response.body().getVoucher_end_soon());
-                        tv_voucher_ended.setText(response.body().getVoucher_ended());
-                    }
 
-                    @Override
-                    public void onFailure(Call<WalletActiveListModel> call, Throwable t) {
-                        progressDialog.dismiss();
-                        Toast.makeText(getActivity(), getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<WalletActiveListModel> call, Throwable t) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), getResources().getString(R.string.Server_Error), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.No_Internet_Connection), Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(getActivity(), getResources().getString(R.string.No_Internet_Connection), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), StartActivity.class));
+                getActivity().finish();
             }
         }
     }

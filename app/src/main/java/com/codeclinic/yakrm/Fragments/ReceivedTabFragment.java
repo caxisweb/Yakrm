@@ -2,6 +2,7 @@ package com.codeclinic.yakrm.Fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.Activities.StartActivity;
 import com.codeclinic.yakrm.Adapter.RecievedListAdapter;
 import com.codeclinic.yakrm.Models.RecievedGftListItemModel;
 import com.codeclinic.yakrm.Models.RecievedGiftListModel;
@@ -92,4 +94,16 @@ public class ReceivedTabFragment extends Fragment {
         }
         return view;
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (!sessionManager.isLoggedIn()) {
+                startActivity(new Intent(getActivity(), StartActivity.class));
+                getActivity().finish();
+            }
+        }
+    }
+
 }

@@ -1,23 +1,15 @@
 package com.codeclinic.yakrm.Activities;
 
 import android.app.ProgressDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.codeclinic.yakrm.Adapter.BuyTabListAdapter;
-import com.codeclinic.yakrm.Adapter.FilterListAdapter;
 import com.codeclinic.yakrm.Adapter.SearchListAdapter;
-import com.codeclinic.yakrm.Models.AllVoucherListItemModel;
-import com.codeclinic.yakrm.Models.AllVouchersListModel;
-import com.codeclinic.yakrm.Models.FilterListItemModel;
-import com.codeclinic.yakrm.Models.GiftCategoryModel;
 import com.codeclinic.yakrm.Models.SearchListItemModel;
 import com.codeclinic.yakrm.Models.SearchListModel;
 import com.codeclinic.yakrm.R;
@@ -88,11 +80,11 @@ public class SearchedVoucherActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     if (response.body().getStatus().equals("1")) {
                         arrayList = response.body().getData();
-
                         SearchListAdapter searchListAdapter = new SearchListAdapter(arrayList, SearchedVoucherActivity.this);
                         recyclerView.setAdapter(searchListAdapter);
                     } else {
-                        Toast.makeText(SearchedVoucherActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SearchedVoucherActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 }
 

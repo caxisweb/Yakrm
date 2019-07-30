@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                     startActivity(new Intent(MainActivity.this, PersonalDataActivity.class));
                 } else {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    startActivity(new Intent(MainActivity.this, StartActivity.class));
                 }
             }
         });
@@ -510,7 +510,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else {
                     gift_category_id = "";
                 }
-                gift_category_id = gift_category_id.substring(0, gift_category_id.length() - 1);
+                try {
+                    gift_category_id = gift_category_id.substring(0, gift_category_id.length() - 1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 if (chk_e_gift.isChecked() && chk_p_gift.isChecked()) {
                     gift_type = "paper gift,electronic gift";
@@ -724,7 +728,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (sessionManager.isLoggedIn()) {
                 startActivity(new Intent(MainActivity.this, PersonalDataActivity.class));
             } else {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, StartActivity.class));
             }
             return true;
         }

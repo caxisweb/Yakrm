@@ -1,9 +1,12 @@
 package com.codeclinic.yakrm.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SearchListItemModel {
+public class SearchListItemModel implements Parcelable {
     @SerializedName("voucher_id")
     @Expose
     private String voucherId;
@@ -40,6 +43,33 @@ public class SearchListItemModel {
     @SerializedName("gift_category_name")
     @Expose
     private String giftCategoryName;
+
+    public static final Creator<SearchListItemModel> CREATOR = new Creator<SearchListItemModel>() {
+        @Override
+        public SearchListItemModel createFromParcel(Parcel in) {
+            return new SearchListItemModel(in);
+        }
+
+        @Override
+        public SearchListItemModel[] newArray(int size) {
+            return new SearchListItemModel[size];
+        }
+    };
+
+    protected SearchListItemModel(Parcel in) {
+        voucherId = in.readString();
+        vendorId = in.readString();
+        voucherCode = in.readString();
+        discount = in.readString();
+        voucherPrice = in.readString();
+        voucherType = in.readString();
+        expiredAt = in.readString();
+        brandId = in.readString();
+        brandName = in.readString();
+        brandImage = in.readString();
+        description = in.readString();
+        giftCategoryName = in.readString();
+    }
 
     public String getVoucherId() {
         return voucherId;
@@ -135,5 +165,26 @@ public class SearchListItemModel {
 
     public void setGiftCategoryName(String giftCategoryName) {
         this.giftCategoryName = giftCategoryName;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(voucherId);
+        dest.writeString(vendorId);
+        dest.writeString(voucherCode);
+        dest.writeString(discount);
+        dest.writeString(voucherPrice);
+        dest.writeString(voucherType);
+        dest.writeString(expiredAt);
+        dest.writeString(brandId);
+        dest.writeString(brandName);
+        dest.writeString(brandImage);
+        dest.writeString(description);
+        dest.writeString(giftCategoryName);
     }
 }
