@@ -172,6 +172,9 @@ public class BuyTabFragment extends Fragment {
                                         }
                                     });
                                     MainActivity.flowLayout.addView(MainActivity.btn[i]);
+                                    if (!sessionManager.getLanguage("Language", "en").equals("en")) {
+                                        MainActivity.flowLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+                                    }
                                 }
                             }
                             int spanCount = 2; // 3 columns

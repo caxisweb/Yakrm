@@ -226,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LinearLayout llayout_about_app = header1.findViewById(R.id.llayout_about_app);
         LinearLayout llayout_instruction_conditions = header1.findViewById(R.id.llayout_instruction_conditions);
         LinearLayout llayout_signout = header1.findViewById(R.id.llayout_signout);
+        LinearLayout llayout_share = header1.findViewById(R.id.llayout_share);
         TextView tv_signout = header1.findViewById(R.id.tv_signout);
 
         final CheckBox chk_e_gift = header2.findViewById(R.id.chk_e_gift);
@@ -491,6 +492,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        llayout_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doShareLink();
+            }
+        });
+
         if (tv_language_version.getText().equals("النسخة العربية")) {
             setTitle("Main");
         } else {
@@ -533,10 +541,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else if (rb_brand_names.isChecked()) {
                     gift_order = "3";
                 } else {
-                    gift_order = "";
+                    gift_order = "0";
                 }
 
-                if (!isEmpty(gift_category_id) && !isEmpty(gift_type) && !isEmpty(gift_order)) {
+                if (!isEmpty(gift_category_id) && !isEmpty(gift_type)) {
                     filter_array = 1;
                     drawer.closeDrawer(GravityCompat.END);
                     setupViewPager(viewPager);
@@ -582,6 +590,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     }
+
 
     private void createTabIcons() {
 
@@ -710,12 +719,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             return true;
         } else if (id == R.id.action_notification) {
-            startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
-          /*  if (sessionManager.isLoggedIn()) {
+            if (sessionManager.isLoggedIn()) {
                 startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
             } else {
                 startActivity(new Intent(MainActivity.this, StartActivity.class));
-            }*/
+            }
             return true;
         } else if (id == R.id.action_basket) {
             if (sessionManager.isLoggedIn()) {

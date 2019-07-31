@@ -76,8 +76,8 @@
 
 
     <string name="Gift_type">نوع الهدايا </string>
-    <string name="Electronic_gift">هدايا إلكترونية </string>
-    <string name="Paper_gift">هدايا ورقية </string>
+    <string name="Electronic_gift">قسائم الكترونية </string>
+    <string name="Paper_gift">قسائم ورقية </string>
 
 
     <string name="Gift_order">ترتيب الهدايا </string>
@@ -108,7 +108,7 @@
     <string name="Compete_the_purchase">إتمام الشراء </string>
 
     <string name="Research">بحث </string>
-    <string name="Enter_the_brand_name">أدخل اسم البراند أو الماركة </string>
+    <string name="Enter_the_brand_name">ادخل اسم العلامة التجارية </string>
 
 
     <string name="Sharing">مشاركة </string>
@@ -230,7 +230,7 @@
     <string name="Instructions_And_Conditions">التعليمات والشروط </string>
     <string name="Sign_Out">تسجيل الخروج </string>
     <string name="English_Version">English Version</string>
-    <string name="Share_With_Your_Friends">Share With Your Friends</string>
+    <string name="Share_With_Your_Friends">شارك الموضوع مع أصدقائك</string>
 
 
     <string name="Favorite_Brands_Of_Vouchers">بائعي القسائم المفضلين </string>
