@@ -2,7 +2,6 @@ package com.codeclinic.yakrm.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.paytabs.paytabs_sdk.http.PayerAuthEnrollReply;
 
 public class PrepareTransactionProcessModel {
     @SerializedName("merchantReferenceCode")

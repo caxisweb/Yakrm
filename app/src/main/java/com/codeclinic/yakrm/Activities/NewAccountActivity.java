@@ -531,7 +531,7 @@ public class NewAccountActivity extends AppCompatActivity {
             });
 
         } else {
-            Toast.makeText(this, getResources().getString(R.string.err_no_internet), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, getResources().getString(R.string.), Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -388,6 +388,7 @@
     <string name="PurchasedVoucher">شراء قسيمة</string>
     <string name="ReplacedVoucher">استبدال قسيمة</string>
     <string name="GiftedVoucher">قسيمة الموهوبين</string>
+    <string name="no_internet_connection">لا يوجد اتصال بالإنترنت</string>
     <string-array name="selectcountry">
         <item>السعودية </item>
     </string-array>

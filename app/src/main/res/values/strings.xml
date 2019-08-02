@@ -398,5 +398,6 @@
     <string name="PurchasedVoucher">Purchased Voucher</string>
     <string name="ReplacedVoucher">Replaced Voucher</string>
     <string name="GiftedVoucher">Gifted Voucher</string>
+    <string name="no_internet_connection">no internet connection</string>
 
 </resources>

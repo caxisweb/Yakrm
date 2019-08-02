@@ -289,7 +289,7 @@ public class PersonalDataActivity extends AppCompatActivity {
             });
 
         } else {
-            Toast.makeText(this, getResources().getString(R.string.err_no_internet), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
     }
 

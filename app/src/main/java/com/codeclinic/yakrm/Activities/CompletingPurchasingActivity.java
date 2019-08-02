@@ -491,7 +491,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     @Override
     public void paymentConfigRequestSucceeded(CheckoutInfo checkoutInfo) {
         resourcePath = checkoutInfo.getResourcePath();
-        /* get the tokens */
         Token[] tokens = checkoutInfo.getTokens();
         Log.e("tokenss", tokens.toString());
     }
@@ -506,8 +505,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
         if (transaction == null) {
             return;
         }
-
         if (transaction.getTransactionType() == TransactionType.SYNC) {
+            checkoutId = transaction.getPaymentParams().getCheckoutId();
             getpaystatus();
         } else {
             //wait for the callback in the onNewIntent()
@@ -715,7 +714,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                 String status = response.body().getStatus();
                 if (status.equals("1")) {
                     arrayList = response.body().getData();
-                    //SavedCardListAdapter savedCardListAdapter = new SavedCardListAdapter(arrayList, CompletingPurchasingActivity.this, apiInterface, progressDialog, sessionManager, price);
                     recyclerView.setAdapter(new SavedCardListAdapter(arrayList, CompletingPurchasingActivity.this, apiInterface, progressDialog, sessionManager, price, new SavedCardListAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(final GetCardListItemModel item) {
@@ -726,7 +724,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                 @SuppressLint("StaticFieldLeak")
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    /*getCheckoutId();*/
                                     card_ID = item.getId();
                                     card_cvv = item.getSecurityNumber();
                                     card_holder_name = item.getHolderName();
@@ -735,9 +732,9 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                     card_date[0] = card_date[0].trim();
                                     card_no = item.getCardNumber();
                                     transaction_main_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
+
                                     JSONObject jobj = new JSONObject();
                                     try {
-                                        //jobj.put("price", formatNumber(2, transaction_main_price));
                                         jobj.put("price", formatNumber(2, transaction_main_price));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -763,11 +760,13 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                                         card_no,
                                                         card_holder_name,
                                                         card_date[0],
-                                                        card_date[1],
+                                                        "20" + card_date[1],
                                                         card_cvv
                                                 );
 
+
                                                 Transaction transaction = new Transaction(paymentParams);
+                                                binder.addTransactionListener(CompletingPurchasingActivity.this);
                                                 binder.submitTransaction(transaction);
 
 

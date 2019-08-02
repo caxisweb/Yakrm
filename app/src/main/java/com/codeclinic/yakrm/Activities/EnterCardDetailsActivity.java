@@ -273,7 +273,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
                             });
                         }
                     } else {
-                        Toast.makeText(EnterCardDetailsActivity.this, R.string.err_no_internet, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
