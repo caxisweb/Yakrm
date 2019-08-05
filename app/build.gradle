@@ -19,7 +19,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.codeclinic.yakrm"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -68,7 +68,7 @@ dependencies {
     implementation('com.bottlerocketstudios:barcode:1.0.3@aar') {
         transitive = true
     }
-    implementation project(':oppwa.mobile')
+    implementation project(':oppwa.mobile-2.40.0')
     implementation project(':Cardlibrary')
     implementation project(':camerafragment')
     implementation project(':k4l-video-trimmer')

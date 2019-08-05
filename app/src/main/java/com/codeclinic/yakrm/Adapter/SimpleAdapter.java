@@ -44,7 +44,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
-        if (sessionManager.getLanguage("Language", "en").equals("en")) {
+      /*  if (sessionManager.getLanguage("Language", "en").equals("en")) {
             holder.tv_notification_Title.setText(mData.get(position).getSubject());
         } else {
             if (mData.get(position).getSubject().equals("Wallet Deduction")) {
@@ -58,7 +58,10 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
                 holder.tv_notification.setText("لقد استبدلت بنجاح قسيمة جديدة");
             }
 
-        }
+        }*/
+
+        holder.tv_notification_Title.setText(mData.get(position).getSubject());
+        holder.tv_notification.setText(mData.get(position).getDescription());
 
         // holder.tv_notification.setText(mData.get(position).getDescription());
         holder.tv_notification.setOnClickListener(new View.OnClickListener() {

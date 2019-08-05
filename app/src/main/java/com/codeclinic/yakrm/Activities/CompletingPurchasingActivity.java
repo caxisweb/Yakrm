@@ -469,6 +469,15 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        unbindService(serviceConnection);
+        stopService(new Intent(this, ConnectService.class));
+    }
+
+
+
+    @Override
     public void brandsValidationRequestSucceeded(BrandsValidation brandsValidation) {
 
     }
@@ -698,7 +707,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
 
                 Log.e("errorrr2", String.valueOf(error.getErrorCode()));
 
-                Log.e("errorrr3", String.valueOf(error.getErrorMessage()));
+                Log.e("errorrr3", error.getErrorMessage());
 
                 Log.e("errorrr4", String.valueOf(error.describeContents()));
 
@@ -763,6 +772,8 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                                         "20" + card_date[1],
                                                         card_cvv
                                                 );
+
+                                                paymentParams.setShopperResultUrl("livemosab://result");
 
 
                                                 Transaction transaction = new Transaction(paymentParams);
