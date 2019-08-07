@@ -475,7 +475,107 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
         stopService(new Intent(this, ConnectService.class));
     }
 
+    public void getAllcardList() {
+        Log.i("token_session", sessionManager.getUserDetails().get(SessionManager.User_Token));
+        Call<GetCardListModel> getCardListModelCall = apiService.GET_CARD_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
+        getCardListModelCall.enqueue(new Callback<GetCardListModel>() {
+            @Override
+            public void onResponse(Call<GetCardListModel> call, Response<GetCardListModel> response) {
+                String status = response.body().getStatus();
+                if (status.equals("1")) {
+                    arrayList = response.body().getData();
+                    recyclerView.setAdapter(new SavedCardListAdapter(arrayList, CompletingPurchasingActivity.this, apiInterface, progressDialog, sessionManager, price, new SavedCardListAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(final GetCardListItemModel item) {
+                            AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.CustomDialogFragment);
+                            alert.setMessage("Are you Sure?");
+                            alert.setCancelable(false);
+                            alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                @SuppressLint("StaticFieldLeak")
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    card_ID = item.getId();
+                                    card_cvv = item.getSecurityNumber();
+                                    card_holder_name = item.getHolderName();
+                                    card_expiry_date = item.getExpiryDate();
+                                    card_date = card_expiry_date.split("/");
+                                    card_date[0] = card_date[0].trim();
+                                    card_no = item.getCardNumber();
+                                    transaction_main_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
 
+                                    JSONObject jobj = new JSONObject();
+                                    try {
+                                        jobj.put("price", formatNumber(2, transaction_main_price));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    Call<GetCheckoutIDModel> getCheckoutIDModelCall = apiService.GET_CHECKOUT_ID_MODEL_CALL(jobj.toString());
+                                    getCheckoutIDModelCall.enqueue(new Callback<GetCheckoutIDModel>() {
+                                        @Override
+                                        public void onResponse(Call<GetCheckoutIDModel> call, Response<GetCheckoutIDModel> response) {
+                                            checkoutId = response.body().getId();
+                                            if (card_no.matches(ptVisa)) {
+                                                checkcredit = "VISA";
+                                            } else if (card_no.matches(ptMasterCard)) {
+                                                checkcredit = "MASTER";
+                                            } else {
+                                                checkcredit = "VISA";
+                                            }
+
+                                            try {
+                                                PaymentParams paymentParams = new CardPaymentParams(
+                                                        checkoutId,
+                                                        checkcredit,
+                                                        card_no,
+                                                        card_holder_name,
+                                                        card_date[0],
+                                                        "20" + card_date[1],
+                                                        card_cvv
+                                                );
+
+                                                paymentParams.setShopperResultUrl("livemosab://result");
+
+
+                                                Transaction transaction = new Transaction(paymentParams);
+                                                binder.addTransactionListener(CompletingPurchasingActivity.this);
+                                                binder.submitTransaction(transaction);
+
+
+                                            } catch (PaymentException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetCheckoutIDModel> call, Throwable t) {
+                                            Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                }
+                            }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            AlertDialog alertDialog = alert.create();
+                            alertDialog.show();
+                        }
+                    }));
+                } else {
+                    arrayList = null;
+                    startActivity(new Intent(CompletingPurchasingActivity.this, EnterCardDetailsActivity.class));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetCardListModel> call, Throwable t) {
+                Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     public void brandsValidationRequestSucceeded(BrandsValidation brandsValidation) {
@@ -714,107 +814,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
         }
     }
 
-    public void getAllcardList() {
-        Log.i("token_session", sessionManager.getUserDetails().get(SessionManager.User_Token));
-        Call<GetCardListModel> getCardListModelCall = apiService.GET_CARD_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
-        getCardListModelCall.enqueue(new Callback<GetCardListModel>() {
-            @Override
-            public void onResponse(Call<GetCardListModel> call, Response<GetCardListModel> response) {
-                String status = response.body().getStatus();
-                if (status.equals("1")) {
-                    arrayList = response.body().getData();
-                    recyclerView.setAdapter(new SavedCardListAdapter(arrayList, CompletingPurchasingActivity.this, apiInterface, progressDialog, sessionManager, price, new SavedCardListAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(final GetCardListItemModel item) {
-                            AlertDialog.Builder alert = new AlertDialog.Builder(CompletingPurchasingActivity.this, R.style.CustomDialogFragment);
-                            alert.setMessage("Are you Sure?");
-                            alert.setCancelable(false);
-                            alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                @SuppressLint("StaticFieldLeak")
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    card_ID = item.getId();
-                                    card_cvv = item.getSecurityNumber();
-                                    card_holder_name = item.getHolderName();
-                                    card_expiry_date = item.getExpiryDate();
-                                    card_date = card_expiry_date.split("/");
-                                    card_date[0] = card_date[0].trim();
-                                    card_no = item.getCardNumber();
-                                    transaction_main_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
 
-                                    JSONObject jobj = new JSONObject();
-                                    try {
-                                        jobj.put("price", formatNumber(2, transaction_main_price));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    Call<GetCheckoutIDModel> getCheckoutIDModelCall = apiService.GET_CHECKOUT_ID_MODEL_CALL(jobj.toString());
-                                    getCheckoutIDModelCall.enqueue(new Callback<GetCheckoutIDModel>() {
-                                        @Override
-                                        public void onResponse(Call<GetCheckoutIDModel> call, Response<GetCheckoutIDModel> response) {
-                                            checkoutId = response.body().getId();
-                                            if (card_no.matches(ptVisa)) {
-                                                checkcredit = "VISA";
-                                            } else if (card_no.matches(ptMasterCard)) {
-                                                checkcredit = "MASTER";
-                                            } else {
-                                                checkcredit = "VISA";
-                                            }
-
-                                            try {
-                                                PaymentParams paymentParams = new CardPaymentParams(
-                                                        checkoutId,
-                                                        checkcredit,
-                                                        card_no,
-                                                        card_holder_name,
-                                                        card_date[0],
-                                                        "20" + card_date[1],
-                                                        card_cvv
-                                                );
-
-                                                paymentParams.setShopperResultUrl("livemosab://result");
-
-
-                                                Transaction transaction = new Transaction(paymentParams);
-                                                binder.addTransactionListener(CompletingPurchasingActivity.this);
-                                                binder.submitTransaction(transaction);
-
-
-                                            } catch (PaymentException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<GetCheckoutIDModel> call, Throwable t) {
-                                            Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-                                }
-                            }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-                            AlertDialog alertDialog = alert.create();
-                            alertDialog.show();
-                        }
-                    }));
-                } else {
-                    arrayList = null;
-                    startActivity(new Intent(CompletingPurchasingActivity.this, EnterCardDetailsActivity.class));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetCardListModel> call, Throwable t) {
-                Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     public String formatNumber(int decimals, double number) {
         StringBuilder sb = new StringBuilder(decimals + 3);
