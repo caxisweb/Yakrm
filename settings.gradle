@@ -1,1 +1,1 @@
-include ':app', ':Cardlibrary', ':camerafragment', ':k4l-video-trimmer', ':oppwa.mobile-2.40.0'
+include ':app', ':Cardlibrary', ':camerafragment', ':k4l-video-trimmer'

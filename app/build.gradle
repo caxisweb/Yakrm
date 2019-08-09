@@ -68,7 +68,8 @@ dependencies {
     implementation('com.bottlerocketstudios:barcode:1.0.3@aar') {
         transitive = true
     }
-    implementation project(':oppwa.mobile-2.40.0')
+    //implementation project(':oppwa.mobile-2.40.0')
+    implementation files('lib/oppwa.mobile-2.40.0.aar')
     implementation project(':Cardlibrary')
     implementation project(':camerafragment')
     implementation project(':k4l-video-trimmer')

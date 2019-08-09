@@ -11,7 +11,6 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeclinic.yakrm.Adapter.SavedCardListAdapter;
+import com.codeclinic.yakrm.Hyperpay_checkout.BasePaymentActivity;
+import com.codeclinic.yakrm.Hyperpay_checkout.Constants;
 import com.codeclinic.yakrm.LocalNotification.NotificationHelper;
 import com.codeclinic.yakrm.Models.GetCardListItemModel;
 import com.codeclinic.yakrm.Models.GetCardListModel;
@@ -45,7 +46,6 @@ import com.oppwa.mobile.connect.payment.CheckoutInfo;
 import com.oppwa.mobile.connect.payment.ImagesRequest;
 import com.oppwa.mobile.connect.payment.PaymentParams;
 import com.oppwa.mobile.connect.payment.card.CardPaymentParams;
-import com.oppwa.mobile.connect.payment.token.Token;
 import com.oppwa.mobile.connect.provider.Connect;
 import com.oppwa.mobile.connect.provider.ITransactionListener;
 import com.oppwa.mobile.connect.provider.Transaction;
@@ -69,7 +69,7 @@ import static com.codeclinic.yakrm.Activities.VoucherDetailActivity.voucher_gift
 import static com.codeclinic.yakrm.Activities.VoucherDetailActivity.voucher_id;
 
 
-public class CompletingPurchasingActivity extends AppCompatActivity implements ITransactionListener {
+public class CompletingPurchasingActivity extends BasePaymentActivity implements ITransactionListener {
 
     public static String card_ID;
     CardView main_pay_cardview, succesful_cardview, error_cardview;
@@ -502,11 +502,16 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                     card_date = card_expiry_date.split("/");
                                     card_date[0] = card_date[0].trim();
                                     card_no = item.getCardNumber();
+
                                     transaction_main_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
+
+                                    //requestCheckoutId(String.valueOf(transaction_main_price));
+
 
                                     JSONObject jobj = new JSONObject();
                                     try {
-                                        jobj.put("price", formatNumber(2, transaction_main_price));
+                                        //jobj.put("price", formatNumber(2, transaction_main_price));
+                                        jobj.put("price", formatNumber(2, 10.00));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -516,6 +521,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                         @Override
                                         public void onResponse(Call<GetCheckoutIDModel> call, Response<GetCheckoutIDModel> response) {
                                             checkoutId = response.body().getId();
+
                                             if (card_no.matches(ptVisa)) {
                                                 checkcredit = "VISA";
                                             } else if (card_no.matches(ptMasterCard)) {
@@ -525,7 +531,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                             }
 
                                             try {
-                                                PaymentParams paymentParams = new CardPaymentParams(
+                                                /*PaymentParams paymentParams = new CardPaymentParams(
                                                         checkoutId,
                                                         checkcredit,
                                                         card_no,
@@ -533,14 +539,15 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                                         card_date[0],
                                                         "20" + card_date[1],
                                                         card_cvv
-                                                );
+                                                );*/
 
                                                 //paymentParams.setShopperResultUrl("livemosab://result");
 
+                                                binder.requestCheckoutInfo(checkoutId);
 
-                                                Transaction transaction = new Transaction(paymentParams);
+                                                /*Transaction transaction = new Transaction(paymentParams);
                                                 binder.addTransactionListener(CompletingPurchasingActivity.this);
-                                                binder.submitTransaction(transaction);
+                                                binder.submitTransaction(transaction);*/
 
 
                                             } catch (PaymentException e) {
@@ -579,27 +586,160 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     }
 
     @Override
-    public void paymentConfigRequestSucceeded(CheckoutInfo checkoutInfo) {
-        resourcePath = checkoutInfo.getResourcePath();
-        Token[] tokens = checkoutInfo.getTokens();
-        Log.e("tokenss", tokens.toString());
+    public void onCheckoutIdReceived(String checkoutId) {
+        super.onCheckoutIdReceived(checkoutId);
+
+        if (checkoutId != null) {
+            this.checkoutId = checkoutId;
+            requestCheckoutInfo(checkoutId);
+        }
+    }
+
+    private void requestCheckoutInfo(String checkoutId) {
+        if (binder != null) {
+            try {
+                binder.requestCheckoutInfo(checkoutId);
+                showProgressDialog(R.string.progress_message_checkout_info);
+            } catch (PaymentException e) {
+                showAlertDialog(e.getMessage());
+            }
+        }
+    }
+
+    private void pay(String checkoutId) {
+        try {
+
+            PaymentParams paymentParams = createPaymentParams(checkoutId);
+            //paymentParams.setShopperResultUrl(getString(R.string.custom_ui_callback_scheme) + "://result");
+            Transaction transaction = new Transaction(paymentParams);
+
+            binder.submitTransaction(transaction);
+            showProgressDialog(R.string.progress_message_processing_payment);
+
+        } catch (PaymentException e) {
+            showErrorDialog(e.getError());
+        }
+    }
+
+    private PaymentParams createPaymentParams(String checkoutId) throws PaymentException {
+
+
+        return new CardPaymentParams(
+                checkoutId,
+                Constants.Config.CARD_BRAND,
+                card_no,
+                card_holder_name,
+                card_date[0],
+                "20" + card_date[1],
+                card_cvv
+        );
+    }
+
+    @Override
+    public void brandsValidationRequestSucceeded(BrandsValidation brandsValidation) {
+
+    }
+
+    @Override
+    public void brandsValidationRequestFailed(PaymentError paymentError) {
+
+    }
+
+    @Override
+    public void imagesRequestSucceeded(ImagesRequest imagesRequest) {
+
+    }
+
+    @Override
+    public void imagesRequestFailed() {
+
+    }
+
+    @Override
+    public void paymentConfigRequestSucceeded(final CheckoutInfo checkoutInfo) {
+        hideProgressDialog();
+
+        if (checkoutInfo == null) {
+            //showErrorDialog(getString(R.string.error_message));
+            showErrorDialog(getString(R.string.error_message));
+
+            return;
+        }
+
+        /* Get the resource path from checkout info to request the payment status later. */
+        //resourcePath = checkoutInfo.getResourcePath();
+        resourcePath = checkoutId;
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showConfirmationDialog(
+                        String.valueOf(checkoutInfo.getAmount()),
+                        checkoutInfo.getCurrencyCode()
+                );
+            }
+        });
+    }
+
+    private void showConfirmationDialog(String amount, String currency) {
+        new android.support.v7.app.AlertDialog.Builder(this)
+                .setMessage(String.format(getString(R.string.message_payment_confirmation), amount, currency))
+                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        pay(checkoutId);
+                    }
+                })
+                .setNegativeButton(R.string.button_cancel, null)
+                .setCancelable(false)
+                .show();
+    }
+
+    @Override
+    public void paymentConfigRequestFailed(PaymentError paymentError) {
+        hideProgressDialog();
+        showErrorDialog(paymentError);
     }
 
     @Override
     public void transactionCompleted(Transaction transaction) {
+        hideProgressDialog();
+
         if (transaction == null) {
+            //showErrorDialog(getString(R.string.error_message));
+            showErrorDialog(transaction.getRedirectUrl());
             return;
         }
+
         if (transaction.getTransactionType() == TransactionType.SYNC) {
-            checkoutId = transaction.getPaymentParams().getCheckoutId();
+            /* check the status of synchronous transaction */
+            //requestPaymentStatus(resourcePath);
             getpaystatus();
         } else {
-            //wait for the callback in the onNewIntent()
-            Uri uri = Uri.parse(transaction.getRedirectUrl());
-            Intent intent2 = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent2);
+            /* wait for the callback in the onNewIntent() */
+            showProgressDialog(R.string.progress_message_please_wait);
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(transaction.getRedirectUrl())));
         }
+    }
 
+    @Override
+    public void transactionFailed(Transaction transaction, PaymentError paymentError) {
+        hideProgressDialog();
+        showErrorDialog(paymentError);
+    }
+
+    private void showErrorDialog(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showAlertDialog(message);
+            }
+        });
+    }
+
+    private void showErrorDialog(PaymentError paymentError) {
+        showErrorDialog(paymentError.getErrorMessage());
     }
 
     private void getpaystatus() {
@@ -616,7 +756,12 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
         paymentStatusModelCall.enqueue(new Callback<PaymentStatusModel>() {
             @Override
             public void onResponse(Call<PaymentStatusModel> call, Response<PaymentStatusModel> response) {
-                progressDialog.setMessage("Please Wait");
+
+                Log.i("response", response.body().getResult().toString());
+
+                Toast.makeText(getApplicationContext(), response.body().getDescriptor(), Toast.LENGTH_LONG).show();
+
+                /*progressDialog.setMessage("Please Wait");
                 progressDialog.setIndeterminate(true);
                 progressDialog.setCancelable(false);
                 progressDialog.show();
@@ -634,6 +779,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                     Call<PaymentTransactionModel> paymentTransactionModelCall = apiService.PAYMENT_TRANSACTION_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
                     paymentTransactionModelCall.enqueue(new Callback<PaymentTransactionModel>() {
                         @Override
@@ -728,7 +874,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                             Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
+                }*/
             }
 
             @Override
@@ -802,35 +948,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
         getAllcardList();
     }
 
-    @Override
-    public void paymentConfigRequestFailed(PaymentError paymentError) {
-        Toast.makeText(this, paymentError.getErrorMessage(), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void transactionFailed(Transaction transaction, PaymentError paymentError) {
-        Toast.makeText(this, paymentError.getErrorMessage(), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void brandsValidationRequestSucceeded(BrandsValidation brandsValidation) {
-
-    }
-
-    @Override
-    public void brandsValidationRequestFailed(PaymentError paymentError) {
-
-    }
-
-    @Override
-    public void imagesRequestSucceeded(ImagesRequest imagesRequest) {
-
-    }
-
-    @Override
-    public void imagesRequestFailed() {
-
-    }
 
     public void CallReplaceGiftVoucher() {
 
@@ -863,4 +980,5 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
         });
 
     }
+
 }

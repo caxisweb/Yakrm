@@ -167,7 +167,7 @@
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
                             android:padding="10dp"
-                            android:src="@drawable/hyper_pay_img" />
+                            android:src="@drawable/payment_type_csmada_icon" />
 
                         <ImageView
                             android:id="@+id/img_paypal_select"
