@@ -504,7 +504,7 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
                                     JSONObject jobj = new JSONObject();
                                     try {
                                         //jobj.put("price", formatNumber(2, transaction_main_price));
-                                        jobj.put("price", formatNumber(2, transaction_main_price));
+                                        jobj.put("price", formatNumber(2, 1.00));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
