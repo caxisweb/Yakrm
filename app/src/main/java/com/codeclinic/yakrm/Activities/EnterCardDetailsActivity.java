@@ -222,7 +222,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
                             Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterValidName), Toast.LENGTH_SHORT).show();
                         } else if (isEmpty(edt_card_no.getText().toString())) {
                             Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCardNumber), Toast.LENGTH_SHORT).show();
-                        } else if (edt_card_no.getText().toString().length() != 16) {
+                        } else if (edt_card_no.getText().toString().length() > 19 || edt_card_no.getText().toString().length() < 7) {
                             Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCorrectCardNo), Toast.LENGTH_SHORT).show();
                         } else if (str_card_status.equals("0")) {
                             Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterValidCardNo), Toast.LENGTH_SHORT).show();

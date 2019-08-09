@@ -494,6 +494,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                 @SuppressLint("StaticFieldLeak")
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+
                                     card_ID = item.getId();
                                     card_cvv = item.getSecurityNumber();
                                     card_holder_name = item.getHolderName();
@@ -534,7 +535,7 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
                                                         card_cvv
                                                 );
 
-                                                paymentParams.setShopperResultUrl("livemosab://result");
+                                                //paymentParams.setShopperResultUrl("livemosab://result");
 
 
                                                 Transaction transaction = new Transaction(paymentParams);
@@ -578,35 +579,10 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     }
 
     @Override
-    public void brandsValidationRequestSucceeded(BrandsValidation brandsValidation) {
-
-    }
-
-    @Override
-    public void brandsValidationRequestFailed(PaymentError paymentError) {
-
-    }
-
-    @Override
-    public void imagesRequestSucceeded(ImagesRequest imagesRequest) {
-
-    }
-
-    @Override
-    public void imagesRequestFailed() {
-
-    }
-
-    @Override
     public void paymentConfigRequestSucceeded(CheckoutInfo checkoutInfo) {
         resourcePath = checkoutInfo.getResourcePath();
         Token[] tokens = checkoutInfo.getTokens();
         Log.e("tokenss", tokens.toString());
-    }
-
-    @Override
-    public void paymentConfigRequestFailed(PaymentError paymentError) {
-
     }
 
     @Override
@@ -624,20 +600,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
             startActivity(intent2);
         }
 
-    }
-
-    @Override
-    public void transactionFailed(Transaction transaction, PaymentError paymentError) {
-
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (intent.getScheme().equals("livemosab")) {
-            resourcePath = intent.getData().getQueryParameter("id");
-            getpaystatus();
-        }
     }
 
     private void getpaystatus() {
@@ -777,6 +739,16 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getScheme().equals("livemosab")) {
+            checkoutId = intent.getData().getQueryParameter("id");
+            getpaystatus();
+        }
+    }
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case CheckoutActivity.RESULT_OK:
@@ -815,7 +787,6 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     }
 
 
-
     public String formatNumber(int decimals, double number) {
         StringBuilder sb = new StringBuilder(decimals + 3);
         sb.append("#.");
@@ -829,6 +800,36 @@ public class CompletingPurchasingActivity extends AppCompatActivity implements I
     protected void onResume() {
         super.onResume();
         getAllcardList();
+    }
+
+    @Override
+    public void paymentConfigRequestFailed(PaymentError paymentError) {
+        Toast.makeText(this, paymentError.getErrorMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void transactionFailed(Transaction transaction, PaymentError paymentError) {
+        Toast.makeText(this, paymentError.getErrorMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void brandsValidationRequestSucceeded(BrandsValidation brandsValidation) {
+
+    }
+
+    @Override
+    public void brandsValidationRequestFailed(PaymentError paymentError) {
+
+    }
+
+    @Override
+    public void imagesRequestSucceeded(ImagesRequest imagesRequest) {
+
+    }
+
+    @Override
+    public void imagesRequestFailed() {
+
     }
 
     public void CallReplaceGiftVoucher() {

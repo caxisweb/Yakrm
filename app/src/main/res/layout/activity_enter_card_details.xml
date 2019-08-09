@@ -243,7 +243,7 @@
                                 android:layout_weight="1"
                                 android:background="@android:color/transparent"
                                 android:inputType="number"
-                                android:maxLength="16" />
+                                android:maxLength="19" />
 
                         </LinearLayout>
 

@@ -185,6 +185,7 @@ public class EditCardActivity extends AppCompatActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (Connection_Detector.isInternetAvailable(EditCardActivity.this)) {
                     if (isEmpty(edt_name.getText().toString())) {
                         Toast.makeText(EditCardActivity.this, "Please Enter CardHolder Name", Toast.LENGTH_SHORT).show();
@@ -192,7 +193,7 @@ public class EditCardActivity extends AppCompatActivity {
                         Toast.makeText(EditCardActivity.this, "Please Enter Valid Name", Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_card_no.getText().toString())) {
                         Toast.makeText(EditCardActivity.this, "Please Enter CardNumber", Toast.LENGTH_SHORT).show();
-                    } else if (edt_card_no.getText().toString().length() != 16) {
+                    } else if (edt_card_no.getText().toString().length() > 19 || edt_card_no.getText().toString().length() < 7) {
                         Toast.makeText(EditCardActivity.this, "Please Enter Correct Card no", Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_ex_date.getText().toString())) {
                         Toast.makeText(EditCardActivity.this, "Please Enter Card Expiry date", Toast.LENGTH_SHORT).show();
