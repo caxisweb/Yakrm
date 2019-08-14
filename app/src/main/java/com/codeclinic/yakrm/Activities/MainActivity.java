@@ -544,7 +544,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     gift_order = "0";
                 }
 
-                if (!isEmpty(gift_category_id) && !isEmpty(gift_type)) {
+                /*    if (!isEmpty(gift_category_id) && !isEmpty(gift_type)) {*/
+                if (!isEmpty(gift_category_id) || !isEmpty(gift_type) || !isEmpty(gift_order)) {
                     filter_array = 1;
                     drawer.closeDrawer(GravityCompat.END);
                     setupViewPager(viewPager);
