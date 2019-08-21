@@ -302,13 +302,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         llayout_active_voucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawer.closeDrawer(GravityCompat.START);
+               /* drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
                 if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
                     findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                     setTitle(getResources().getString(R.string.title_activity_main));
                 }
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(2);*/
+                if (sessionManager.isLoggedIn()) {
+                    startActivity(new Intent(MainActivity.this, AllActiveVouchersActivity.class));
+                } else {
+                    startActivity(new Intent(MainActivity.this, StartActivity.class));
+                }
             }
         });
 

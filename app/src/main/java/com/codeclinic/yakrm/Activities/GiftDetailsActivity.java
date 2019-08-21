@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.codeclinic.yakrm.Adapter.GiftDetailListAdapter;
 import com.codeclinic.yakrm.BuildConfig;
+import com.codeclinic.yakrm.LocalNotification.NotificationHelper;
 import com.codeclinic.yakrm.Models.AddToFavouritesModel;
 import com.codeclinic.yakrm.Models.VoucherDetailsListItemModel;
 import com.codeclinic.yakrm.Models.VoucherDetailsListModel;
@@ -309,6 +310,9 @@ public class GiftDetailsActivity extends AppCompatActivity {
                     Toasty.custom(GiftDetailsActivity.this, getResources().getString(R.string.Added_to_the_buying_basket_successfully), getResources().getDrawable(R.mipmap.ic_tick_inside), getResources().getColor(R.color.toast_color), 2000, true, true).show();
                     startActivity(new Intent(GiftDetailsActivity.this, CartActivity.class));
                     complete_purchase = 0;
+                    sessionManager.setReminderStatus(true);
+                    NotificationHelper.scheduleRepeatingElapsedNotification(getApplicationContext());
+                    NotificationHelper.enableBootReceiver(getApplicationContext());
                 } else {
                     Toast.makeText(GiftDetailsActivity.this, "Please add item to the cart", Toast.LENGTH_SHORT).show();
                 }

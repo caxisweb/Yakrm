@@ -65,7 +65,7 @@ public class NotificationHelper {
         Intent intent = new Intent(context, AlarmReceiver.class);
         alarmIntentElapsed = PendingIntent.getBroadcast(context, ALARM_TYPE_ELAPSED, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManagerElapsed = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManagerElapsed.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 10 * 60000, alarmIntentElapsed);
+        alarmManagerElapsed.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 5 * 60000, alarmIntentElapsed);
     }
 
 

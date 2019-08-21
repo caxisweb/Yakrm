@@ -26,7 +26,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:theme,android:icon,android:roundIcon,android:allowBackup">
-
+        <activity
+            android:name=".Activities.AllActiveVouchersActivity"
+            android:theme="@style/No_action_bar" />
         <activity
             android:name=".Activities.SplashActivity"
             android:theme="@style/No_action_bar">
@@ -68,22 +70,21 @@
         <activity
             android:name=".Activities.CartActivity"
             android:theme="@style/No_action_bar" />
-
-
         <activity
             android:name=".Activities.CompletingPurchasingActivity"
             android:launchMode="singleTask"
             android:theme="@style/No_action_bar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <data android:scheme="livemosab" />
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Activities.RecievedActivity"
             android:theme="@style/No_action_bar" />
@@ -174,7 +175,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".Utils.CheckoutBroadcastReceiver"
             android:exported="false">
