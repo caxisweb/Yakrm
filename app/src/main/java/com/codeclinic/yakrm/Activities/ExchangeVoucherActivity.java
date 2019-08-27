@@ -150,6 +150,7 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
                             public void onResponse(Call<ReturnVoucherModel> call, Response<ReturnVoucherModel> response) {
                                 progressDialog.dismiss();
                                 if (response.body().getStatus().equals("1")) {
+                                    Toast.makeText(ExchangeVoucherActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                                     sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
                                     startActivity(new Intent(ExchangeVoucherActivity.this, MainActivity.class));
                                     finishAffinity();

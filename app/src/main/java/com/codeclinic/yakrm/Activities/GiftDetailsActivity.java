@@ -71,7 +71,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     int fav_value = 0;
-    public static int complete_purchase = 0;
+    public int complete_purchase = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +145,8 @@ public class GiftDetailsActivity extends AppCompatActivity {
                         Picasso.with(GiftDetailsActivity.this).load(ImageURL.Vendor_brand_image + response.body().getBrandImage()).into(img_brand_img);
                         tv_brand_name.setText(response.body().getBrandName());
                         tv_description.setText(response.body().getDescription());
+
+
                         arrayList = response.body().getData();
                         for (int j = 0; j < arrayList.size(); j++) {
                             if (arrayList_type.size() == 0) {
@@ -168,6 +170,11 @@ public class GiftDetailsActivity extends AppCompatActivity {
                             for (int i = 0; i < arrayList.size(); i++) {
                                 ar_add_cart_value.add("0");
                             }
+                        }
+                        if (countChar(response.body().getDescription()) > 55) {
+                            tv_more.setVisibility(View.VISIBLE);
+                        } else {
+                            tv_more.setVisibility(View.GONE);
                         }
                         giftDetailListAdapter = new GiftDetailListAdapter(arrayList, GiftDetailsActivity.this, apiService, ar_add_cart_value, sessionManager);
                         recyclerView.setAdapter(giftDetailListAdapter);
@@ -319,6 +326,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
             }
         });
 
+
         tv_more.setText(getResources().getString(R.string.More));
         status_expand = 0;
         CollapsedByMaxLines(tv_description, 2);
@@ -338,6 +346,17 @@ public class GiftDetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    public int countChar(String str) {
+        int count = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            count++;
+        }
+
+        return count;
     }
 
     private void doShareLink() {

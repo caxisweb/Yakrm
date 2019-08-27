@@ -151,7 +151,7 @@
     <string name="Sent_By_Your_Friend_Mahmoud_Abd_El_Rahman">مرسلة من صديقك </string>
     <string name="Hello_Friend_I_Am_SendingThis_Voucher_To_Express_My_Love">هلا حبيبي، بأرسلك هذه الهدية لأعبر عن اعتزازي بك كصديق عزيز</string>
     <string name="I_Hope_That_You_Will_Be_Happy_During_Every">وتمني لك السعادة والتميز في حياتك كلها </string>
-    <string name="Attached_Video"> ارفاق فيديو</string>
+    <string name="Attached_Video">بيانات صديقك</string>
     <string name="Press_To_Watch">اضغط للمشاهدة </string>
 
 
@@ -201,7 +201,7 @@
 
     <string name="Send_to_a_friend">إرسال لصديق</string>
     <string name="Friend_mobile_number">أدخل رقم جوال صديقك </string>
-    <string name="Friend_information">بيانات صديقك</string>
+    <string name="Friend_information">ارفاق فيديو</string>
     <string name="Name">الإسم:  </string>
     <string name="Mahmoud_Abd_El_Mot_al"> محمود عبد المتعال </string>
     <string name="Email_Address">البريد الإلكتروني :</string>
@@ -257,7 +257,7 @@
 
     <string name="Exchange_Instructions">تعليمات الإستبدال </string>
     <string name="Received_Vouchers">هنا تجد كروت الهدايا المرسلة من أصدقائك </string>
-    <string name="You_Can_Transform_It_Ito_Walet_Cards_And_Use_It_In_purchasing_And_Discount_Process">You Can Transform It Into Wallet Cards And Use It In purchasing And Discount Process</string>
+    <string name="You_Can_Transform_It_Ito_Walet_Cards_And_Use_It_In_purchasing_And_Discount_Process">ويمكنك نقلها إلى محفظة الكروت واستغلالها في الشراء والخصومات</string>
     <string name="Auctions_Instructions">تعليمات المزادات </string>
     <string name="Here_You_Find_Voucher_Cards_Friend">هنا تجد كروت الهدايا المرسلة من أصدقائك </string>
     <string name="Other_Instructions">تعليمات أخرى </string>

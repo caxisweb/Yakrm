@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.codeclinic.yakrm.Activities.StartActivity;
@@ -41,6 +42,7 @@ public class ReceivedTabFragment extends Fragment {
     ProgressDialog progressDialog;
     API apiService;
     SessionManager sessionManager;
+    LinearLayout llayout_text;
 
     public ReceivedTabFragment() {
 
@@ -57,6 +59,7 @@ public class ReceivedTabFragment extends Fragment {
         progressDialog = new ProgressDialog(getActivity());
         recyclerView = view.findViewById(R.id.recyclerView);
 
+        llayout_text = view.findViewById(R.id.llayout_text);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
