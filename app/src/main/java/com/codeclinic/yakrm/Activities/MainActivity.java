@@ -473,6 +473,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         llayout_english.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 drawer.closeDrawer(GravityCompat.START);
                 llayout_tab.setVisibility(View.VISIBLE);
                 if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {

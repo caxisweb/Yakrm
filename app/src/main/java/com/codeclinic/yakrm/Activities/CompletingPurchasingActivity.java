@@ -503,8 +503,8 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
                                     //requestCheckoutId(String.valueOf(transaction_main_price));
                                     JSONObject jobj = new JSONObject();
                                     try {
-                                        //jobj.put("price", formatNumber(2, transaction_main_price));
-                                        jobj.put("price", formatNumber(2, 1.00));
+                                        jobj.put("price", formatNumber(2, transaction_main_price));
+                                        //jobj.put("price", formatNumber(2, 1.00));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }

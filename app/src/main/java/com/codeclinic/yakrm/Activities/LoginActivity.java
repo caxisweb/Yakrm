@@ -124,10 +124,13 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 }
-
                                 finish();
                             } else {
-                                Toast.makeText(LoginActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                                    Toast.makeText(LoginActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "بريد إلكتروني أو كلمة مرور خاطئة", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
 

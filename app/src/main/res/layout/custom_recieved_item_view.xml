@@ -26,7 +26,7 @@
                 <ImageView
                     android:id="@+id/voucher_image"
                     android:layout_width="140dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="110dp"
                     android:layout_gravity="center_horizontal"
                     android:adjustViewBounds="true"
                     android:background="@color/cardview_shadow_end_color"

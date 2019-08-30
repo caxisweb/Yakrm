@@ -263,7 +263,11 @@ public class NewAccountActivity extends AppCompatActivity {
                                 }
                                 callCountDownTimer();
                             } else {
-                                Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                                    Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(NewAccountActivity.this, "هذا الرقم موجود بالفعل", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
 
@@ -412,7 +416,12 @@ public class NewAccountActivity extends AppCompatActivity {
                                 personal_detail_cardview.setVisibility(View.VISIBLE);
                                 Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                                    Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(NewAccountActivity.this, "يرجي ادخال رقم صحيح", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                         }
 
