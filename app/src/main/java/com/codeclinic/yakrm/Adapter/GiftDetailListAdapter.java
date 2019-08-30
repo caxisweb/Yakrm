@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codeclinic.yakrm.Activities.GiftDetailsActivity;
 import com.codeclinic.yakrm.Activities.StartActivity;
 import com.codeclinic.yakrm.Models.AddVoucherToCartModel;
 import com.codeclinic.yakrm.Models.VoucherDetailsListItemModel;
@@ -49,15 +48,17 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
     String final_date;
     LayoutInflater inflater;
     String[] date_array;
+    int complete_purchase;
 
 
-    public GiftDetailListAdapter(List<VoucherDetailsListItemModel> arrayList, Context context, API apiService, ArrayList<String> ar_add_cart_value, SessionManager sessionManager) {
+    public GiftDetailListAdapter(List<VoucherDetailsListItemModel> arrayList, Context context, API apiService, ArrayList<String> ar_add_cart_value, SessionManager sessionManager, int complete_purchase) {
         this.arrayList = arrayList;
         this.context = context;
         this.apiService = apiService;
         this.ar_add_cart_value = ar_add_cart_value;
         this.sessionManager = sessionManager;
         inflater = LayoutInflater.from(context);
+        this.complete_purchase = complete_purchase;
     }
 
     @NonNull
@@ -220,7 +221,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                                 public void onResponse(Call<AddVoucherToCartModel> call, Response<AddVoucherToCartModel> response) {
                                     String status = response.body().getStatus();
                                     if (status.equals("1")) {
-                                        GiftDetailsActivity.complete_purchase = 1;
+                                        complete_purchase = 1;
                                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();

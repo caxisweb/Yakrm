@@ -176,7 +176,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
                         } else {
                             tv_more.setVisibility(View.GONE);
                         }
-                        giftDetailListAdapter = new GiftDetailListAdapter(arrayList, GiftDetailsActivity.this, apiService, ar_add_cart_value, sessionManager);
+                        giftDetailListAdapter = new GiftDetailListAdapter(arrayList, GiftDetailsActivity.this, apiService, ar_add_cart_value, sessionManager, complete_purchase);
                         recyclerView.setAdapter(giftDetailListAdapter);
                     } else {
                         Toast.makeText(GiftDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
