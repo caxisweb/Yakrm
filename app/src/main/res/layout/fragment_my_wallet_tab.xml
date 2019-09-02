@@ -149,7 +149,7 @@
                             android:layout_gravity="center_vertical"
                             android:gravity="center"
                             android:src="@drawable/doller_img"
-                            android:text="12"
+                            android:text="0"
                             android:textColor="@color/digit_color2"
                             android:textSize="32dp"
                             android:textStyle="bold" />

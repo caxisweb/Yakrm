@@ -246,6 +246,8 @@ public class SendToFriendActivity extends AppCompatActivity {
                 if (Connection_Detector.isInternetAvailable(SendToFriendActivity.this)) {
                     if (isEmpty(mobile_number)) {
                         Toast.makeText(SendToFriendActivity.this, "Please verify your friends mobile number", Toast.LENGTH_SHORT).show();
+                    } else if (isEmpty(tv_sending_date.getText().toString())) {
+                        Toast.makeText(SendToFriendActivity.this, "Please Select Date", Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(ed_description.getText().toString())) {
                         Toast.makeText(SendToFriendActivity.this, "Please Enter Description", Toast.LENGTH_SHORT).show();
                     } else {
@@ -256,6 +258,7 @@ public class SendToFriendActivity extends AppCompatActivity {
 
                         RequestBody voucherID = RequestBody.create(MediaType.parse("text/plain"), VoucherDetailActivity.voucher_id);
                         RequestBody mobile = RequestBody.create(MediaType.parse("text/plain"), mobile_number);
+                        RequestBody date = RequestBody.create(MediaType.parse("text/plain"), tv_sending_date.getText().toString());
                         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), ed_description.getText().toString());
                         RequestBody voucher_payment_id = RequestBody.create(MediaType.parse("text/plain"), VoucherDetailActivity.v_payment_id);
                         RequestBody scan_v_type = null;
@@ -274,7 +277,7 @@ public class SendToFriendActivity extends AppCompatActivity {
                             RequestBody reqFile = RequestBody.create(MediaType.parse("*/*"), sourceFile_sign);
                             body = MultipartBody.Part.createFormData("video_or_image", sourceFile_sign.getName(), reqFile);
                         }
-                        Call<SendVoucherToFriendModel> sendVoucherToFriendModelCall = apiService.SEND_VOUCHER_TO_FRIEND_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), voucherID, mobile, description, voucher_payment_id, scan_v_type, body);
+                        Call<SendVoucherToFriendModel> sendVoucherToFriendModelCall = apiService.SEND_VOUCHER_TO_FRIEND_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), voucherID, mobile, description, date, voucher_payment_id, scan_v_type, body);
                         sendVoucherToFriendModelCall.enqueue(new Callback<SendVoucherToFriendModel>() {
                             @Override
                             public void onResponse(Call<SendVoucherToFriendModel> call, Response<SendVoucherToFriendModel> response) {

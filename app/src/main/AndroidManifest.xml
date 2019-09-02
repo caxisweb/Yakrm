@@ -27,6 +27,9 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:theme,android:icon,android:roundIcon,android:allowBackup">
         <activity
+            android:name=".Activities.ReplaceActiveVouchersActivity"
+            android:theme="@style/No_action_bar" />
+        <activity
             android:name=".Activities.AllActiveVouchersActivity"
             android:theme="@style/No_action_bar" />
         <activity

@@ -71,7 +71,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
     AlertDialog.Builder dialogBuilder;
     AlertDialog alertDialog;
     int fav_value = 0;
-    public int complete_purchase = 0;
+    public static int complete_purchase = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,7 +176,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
                         } else {
                             tv_more.setVisibility(View.GONE);
                         }
-                        giftDetailListAdapter = new GiftDetailListAdapter(arrayList, GiftDetailsActivity.this, apiService, ar_add_cart_value, sessionManager, complete_purchase);
+                        giftDetailListAdapter = new GiftDetailListAdapter(arrayList, GiftDetailsActivity.this, progressDialog, apiService, ar_add_cart_value, sessionManager);
                         recyclerView.setAdapter(giftDetailListAdapter);
                     } else {
                         Toast.makeText(GiftDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -401,4 +401,9 @@ public class GiftDetailsActivity extends AppCompatActivity {
         animation.setDuration(250).start();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        complete_purchase = 0;
+    }
 }

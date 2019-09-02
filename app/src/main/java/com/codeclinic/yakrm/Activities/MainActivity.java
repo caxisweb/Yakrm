@@ -36,14 +36,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeclinic.yakrm.BuildConfig;
 import com.codeclinic.yakrm.Fragments.BuyTabFragment;
-import com.codeclinic.yakrm.Fragments.MyWalletTabFragment;
-import com.codeclinic.yakrm.Fragments.ReceivedTabFragment;
-import com.codeclinic.yakrm.Fragments.ReplaceTabFragment;
 import com.codeclinic.yakrm.Fragments.SupportContactFragment;
 import com.codeclinic.yakrm.LocalNotification.NotificationHelper;
 import com.codeclinic.yakrm.Models.AllVouchersListModel;
@@ -80,6 +78,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static int back_flag = 0, filter_array = 0;
     public static String gift_category_id = "", gift_type = "", gift_order = "";
     public static ArrayList<String> category_classification_array = new ArrayList<>();
+
+    RelativeLayout rl_buy;
+    LinearLayout llayout_recieved, llayout_replace, llayout_my_wallet;
+
+
     API apiService;
     int i;
     AlertDialog.Builder dialogBuilder;
@@ -103,6 +106,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        rl_buy = findViewById(R.id.rl_buy);
+        llayout_recieved = findViewById(R.id.llayout_recieved);
+        llayout_replace = findViewById(R.id.llayout_replace);
+        llayout_my_wallet = findViewById(R.id.llayout_my_wallet);
+
+
         drawer = findViewById(R.id.drawer_layout);
         main_content = findViewById(R.id.main_content);
         llayout_tab = findViewById(R.id.llayout_tab);
@@ -111,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         apiService = RestClass.getClient().create(API.class);
         viewPager = findViewById(R.id.viewpager);
-        viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(1);
 
         tabLayout = findViewById(R.id.tablayout);
 
@@ -356,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                     setTitle(getResources().getString(R.string.title_activity_main));
                 }
-                viewPager.setCurrentItem(3);
+                //viewPager.setCurrentItem(3);
             }
         });
 
@@ -596,6 +606,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView2.setNavigationItemSelectedListener(this);
 
 
+        llayout_recieved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, RecievedActivity.class));
+            }
+        });
+        llayout_replace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ReplaceActiveVouchersActivity.class));
+            }
+        });
+        llayout_my_wallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MyWalletActivity.class));
+            }
+        });
+
+
     }
 
 
@@ -607,7 +637,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tv_item1.setText(getResources().getString(R.string.Buy));
         tabLayout.getTabAt(0).setCustomView(view1);
 
-        final View view2 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
+    /*    final View view2 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
         view2.findViewById(R.id.icon).setBackgroundResource(R.mipmap.ic_recievedtab_icon);
         TextView tv_item2 = view2.findViewById(R.id.tv_item);
         tv_item2.setText(getResources().getString(R.string.Received));
@@ -619,27 +649,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tv_item3.setText(getResources().getString(R.string.Replace));
         tabLayout.getTabAt(2).setCustomView(view3);
 
-        /*final View view4 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
+        *//*final View view4 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
         view4.findViewById(R.id.icon).setBackgroundResource(R.mipmap.ic_auctionetab_icon);
         TextView tv_item4 = view4.findViewById(R.id.tv_item);
         tv_item4.setText(getResources().getString(R.string.Auction));
-        tabLayout.getTabAt(3).setCustomView(view4);*/
+        tabLayout.getTabAt(3).setCustomView(view4);*//*
 
         final View view5 = getLayoutInflater().inflate(R.layout.custom_tab_view, null);
         view5.findViewById(R.id.icon).setBackgroundResource(R.mipmap.ic_wallettab_icon);
         TextView tv_item5 = view5.findViewById(R.id.tv_item);
         tv_item5.setText(getResources().getString(R.string.My_Wallet));
-        tabLayout.getTabAt(3).setCustomView(view5);
+        tabLayout.getTabAt(3).setCustomView(view5);*/
 
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new BuyTabFragment(), getResources().getString(R.string.Buy));
-        adapter.addFrag(new ReceivedTabFragment(), getResources().getString(R.string.Received));
+       /* adapter.addFrag(new ReceivedTabFragment(), getResources().getString(R.string.Received));
         adapter.addFrag(new ReplaceTabFragment(), getResources().getString(R.string.Replace));
         //adapter.addFrag(new AuctionTabFragment(), getResources().getString(R.string.Auction));
-        adapter.addFrag(new MyWalletTabFragment(), getResources().getString(R.string.My_Wallet));
+        adapter.addFrag(new MyWalletTabFragment(), getResources().getString(R.string.My_Wallet));*/
         viewPager.setAdapter(adapter);
     }
 

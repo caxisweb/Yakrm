@@ -2,6 +2,7 @@ package com.codeclinic.yakrm.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codeclinic.yakrm.Activities.GiftDetailsActivity;
 import com.codeclinic.yakrm.Activities.StartActivity;
 import com.codeclinic.yakrm.Models.AddVoucherToCartModel;
 import com.codeclinic.yakrm.Models.VoucherDetailsListItemModel;
@@ -48,17 +50,17 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
     String final_date;
     LayoutInflater inflater;
     String[] date_array;
-    int complete_purchase;
+    ProgressDialog progressDialog;
 
 
-    public GiftDetailListAdapter(List<VoucherDetailsListItemModel> arrayList, Context context, API apiService, ArrayList<String> ar_add_cart_value, SessionManager sessionManager, int complete_purchase) {
+    public GiftDetailListAdapter(List<VoucherDetailsListItemModel> arrayList, Context context, ProgressDialog progressDialog, API apiService, ArrayList<String> ar_add_cart_value, SessionManager sessionManager) {
         this.arrayList = arrayList;
         this.context = context;
         this.apiService = apiService;
         this.ar_add_cart_value = ar_add_cart_value;
         this.sessionManager = sessionManager;
         inflater = LayoutInflater.from(context);
-        this.complete_purchase = complete_purchase;
+        this.progressDialog = progressDialog;
     }
 
     @NonNull
@@ -208,6 +210,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 if (sessionManager.isLoggedIn()) {
                     if (!arrayList.get(i).getVoucherType().equals("paper gift")) {
                         if (ar_add_cart_value.get(i).equals("0")) {
+                            progressDialog.show();
                             ar_add_cart_value.set(i, "1");
                             customViewHolder.img_view.setImageResource(R.mipmap.ic_fillcart_icon);
                             try {
@@ -219,17 +222,20 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                             addVoucherToCartModelCall.enqueue(new Callback<AddVoucherToCartModel>() {
                                 @Override
                                 public void onResponse(Call<AddVoucherToCartModel> call, Response<AddVoucherToCartModel> response) {
+                                    progressDialog.dismiss();
                                     String status = response.body().getStatus();
                                     if (status.equals("1")) {
-                                        complete_purchase = 1;
+                                        GiftDetailsActivity.complete_purchase = 1;
                                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     } else {
+                                        GiftDetailsActivity.complete_purchase = 1;
                                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<AddVoucherToCartModel> call, Throwable t) {
+                                    progressDialog.dismiss();
                                     Toast.makeText(context, "Server Error", Toast.LENGTH_SHORT).show();
                                 }
                             });
