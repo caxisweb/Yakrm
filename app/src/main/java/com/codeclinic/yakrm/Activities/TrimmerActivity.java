@@ -3,8 +3,8 @@ package com.codeclinic.yakrm.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.codeclinic.yakrm.R;
@@ -35,12 +35,12 @@ public class TrimmerActivity extends AppCompatActivity implements OnTrimVideoLis
         mProgressDialog.setCancelable(false);
         mProgressDialog.setMessage("Trimming your video...");
 
-        mVideoTrimmer = ((K4LVideoTrimmer) findViewById(R.id.timeLine));
+        mVideoTrimmer = findViewById(R.id.timeLine);
         if (mVideoTrimmer != null) {
-            mVideoTrimmer.setMaxDuration(15);
+            mVideoTrimmer.setMaxDuration(14);
             mVideoTrimmer.setOnTrimVideoListener(this);
             mVideoTrimmer.setOnK4LVideoListener(this);
-            //mVideoTrimmer.setDestinationPath("/storage/emulated/0/DCIM/CameraCustom/");
+            //mVideoTrimmer.setDestinationPath(Environment.getExternalStorageDirectory().getAbsolutePath());
             mVideoTrimmer.setVideoURI(Uri.parse(path));
             mVideoTrimmer.setVideoInformationVisibility(true);
         }
