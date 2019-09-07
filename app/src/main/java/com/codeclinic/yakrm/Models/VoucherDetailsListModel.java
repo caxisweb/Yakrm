@@ -25,12 +25,23 @@ public class VoucherDetailsListModel {
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("brand_description_arab")
+    @Expose
+    private String brand_description_arab;
     @SerializedName("is_favourite")
     @Expose
     private String isFavourite;
     @SerializedName("data")
     @Expose
     private List<VoucherDetailsListItemModel> data = null;
+
+    public String getBrand_description_arab() {
+        return brand_description_arab;
+    }
+
+    public void setBrand_description_arab(String brand_description_arab) {
+        this.brand_description_arab = brand_description_arab;
+    }
 
     public String getStatus() {
         return status;

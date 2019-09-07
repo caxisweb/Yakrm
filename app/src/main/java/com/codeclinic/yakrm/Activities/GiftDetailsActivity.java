@@ -144,7 +144,16 @@ public class GiftDetailsActivity extends AppCompatActivity {
                     if (status.equals("1")) {
                         Picasso.with(GiftDetailsActivity.this).load(ImageURL.Vendor_brand_image + response.body().getBrandImage()).into(img_brand_img);
                         tv_brand_name.setText(response.body().getBrandName());
-                        tv_description.setText(response.body().getDescription());
+                        String language = String.valueOf(getResources().getConfiguration().locale);
+                        if (language.equals("ar")) {
+                            if (response.body().getBrand_description_arab() != null) {
+                                tv_description.setText(response.body().getBrand_description_arab());
+                            } else {
+                                tv_description.setText(response.body().getDescription());
+                            }
+                        } else {
+                            tv_description.setText(response.body().getDescription());
+                        }
 
 
                         arrayList = response.body().getData();
@@ -197,35 +206,6 @@ public class GiftDetailsActivity extends AppCompatActivity {
         img_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*final LayoutInflater inflater = getLayoutInflater();
-                dialogBuilder = new AlertDialog.Builder(GiftDetailsActivity.this);
-                final View dialogView = inflater.inflate(R.layout.custom_share_layout, null);
-                dialogBuilder.setView(dialogView);
-                dialogBuilder.setCancelable(true);
-
-                ImageView img_facebook = dialogView.findViewById(R.id.img_facebook);
-                ImageView img_twitter = dialogView.findViewById(R.id.img_twitter);
-                ImageView img_sms = dialogView.findViewById(R.id.img_sms);
-                ImageView img_mail = dialogView.findViewById(R.id.img_mail);
-                ImageView img_contact = dialogView.findViewById(R.id.img_contact);
-
-                img_facebook.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent mIntent = new Intent(Intent.ACTION_SEND);
-                        mIntent.setType("text/plain");
-                        mIntent.setPackage("com.facebook.katana");
-                        mIntent.putExtra(Intent.EXTRA_TEXT, "Let me recommend you this application");
-                        try {
-                            startActivity(mIntent);
-                        } catch (android.content.ActivityNotFoundException ex) {
-                            Toast.makeText(GiftDetailsActivity.this, "Facebook Not installed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                alertDialog = dialogBuilder.create();
-                alertDialog.show();*/
                 doShareLink();
             }
         });
