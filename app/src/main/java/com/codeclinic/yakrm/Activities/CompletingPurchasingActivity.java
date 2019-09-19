@@ -298,20 +298,24 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
                                     public void onResponse(Call<PaymentTransactionModel> call, Response<PaymentTransactionModel> response) {
                                         String status = response.body().getStatus();
                                         progressDialog.dismiss();
-                                        if (status.equals("1")) {
-                                            sessionManager.setReminderStatus(false);
-                                            NotificationHelper.cancelAlarmElapsed();
-                                            NotificationHelper.disableBootReceiver(getApplicationContext());
-                                            sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
-                                            succesful_cardview.setVisibility(View.VISIBLE);
-                                            scrollview_pay.setVisibility(View.GONE);
-                                            Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                            finishAffinity();
-                                            startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
+                                        if (response.isSuccessful()) {
+                                            if (status.equals("1")) {
+                                                sessionManager.setReminderStatus(false);
+                                                NotificationHelper.cancelAlarmElapsed();
+                                                NotificationHelper.disableBootReceiver(getApplicationContext());
+                                                sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
+                                                succesful_cardview.setVisibility(View.VISIBLE);
+                                                scrollview_pay.setVisibility(View.GONE);
+                                                Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                finishAffinity();
+                                                startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
+                                            } else {
+                                                scrollview_pay.setVisibility(View.GONE);
+                                                error_cardview.setVisibility(View.VISIBLE);
+                                                Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
                                         } else {
-                                            scrollview_pay.setVisibility(View.GONE);
-                                            error_cardview.setVisibility(View.VISIBLE);
-                                            Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                                         }
                                     }
 
