@@ -15,6 +15,8 @@ public class BrandListModel {
     @SerializedName("vendor_name")
     @Expose
     private String vendorName;
+
+
     @SerializedName("vendor_email")
     @Expose
     private String vendorEmail;

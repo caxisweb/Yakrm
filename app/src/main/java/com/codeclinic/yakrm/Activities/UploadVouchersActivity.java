@@ -24,6 +24,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -126,6 +127,13 @@ public class UploadVouchersActivity extends AppCompatActivity {
                         Picasso.with(UploadVouchersActivity.this).load("http://test.yakrm.com/assets/uploads/vendor_images/" + response.body().getVendorImage()).into(vendor_image);
 
                         arrayList = response.body().getData();
+                        Iterator itr = arrayList.iterator();
+                        while (itr.hasNext()) {
+                            BrandListItemModel x = (BrandListItemModel) itr.next();
+
+                            if (x.getTotalVoucher().equals("0"))
+                                itr.remove();
+                        }
                         uploadVouchersAdapter = new UploadVouchersAdapter(arrayList, UploadVouchersActivity.this);
                         recyclerView.setAdapter(uploadVouchersAdapter);
                     } else {
