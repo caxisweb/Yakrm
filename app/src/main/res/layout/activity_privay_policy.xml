@@ -53,82 +53,12 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tv_terms_condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/User_Agreement"
                 android:textColor="@color/black"
                 android:textSize="14dp"
                 android:textStyle="bold" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Here_You_Find_Voucher_Cards_Friend"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/You_Can_Transform_It_Ito_Walet_Cards_And_Use_It_In_purchasing_And_Discount_Process"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/Here_You_Find_Voucher_Cards_Friend"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/You_Can_Transform_It_Ito_Walet_Cards_And_Use_It_In_purchasing_And_Discount_Process"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/Privacy_Policy"
-                android:textColor="@color/black"
-                android:textSize="14dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Here_You_Find_Voucher_Cards_Friend"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/You_Can_Transform_It_Ito_Walet_Cards_And_Use_It_In_purchasing_And_Discount_Process"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/Here_You_Find_Voucher_Cards_Friend"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/You_Can_Transform_It_Ito_Walet_Cards_And_Use_It_In_purchasing_And_Discount_Process"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
-
 
         </LinearLayout>
 

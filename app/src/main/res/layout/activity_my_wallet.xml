@@ -161,7 +161,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:gravity="center"
                                 android:src="@drawable/doller_img"
-                                android:text="12"
+                                android:text="0"
                                 android:textColor="@color/digit_color2"
                                 android:textSize="32dp"
                                 android:textStyle="bold" />
@@ -213,7 +213,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:src="@drawable/doller_img"
-                                android:text="25"
+                                android:text="0"
                                 android:textColor="@color/digit_color"
                                 android:textSize="32dp"
                                 android:textStyle="bold" />
@@ -272,7 +272,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:src="@drawable/doller_img"
-                                android:text="08"
+                                android:text="0"
                                 android:textColor="@color/digit_color3"
                                 android:textSize="32dp"
                                 android:textStyle="bold" />
@@ -326,7 +326,7 @@
                                 android:id="@+id/tv_voucher_ended"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="05"
+                                android:text="0"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="32dp"
                                 android:textStyle="bold" />

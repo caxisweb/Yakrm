@@ -504,11 +504,9 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
                                     card_no = item.getCardNumber();
 
                                     transaction_main_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
-                                    //requestCheckoutId(String.valueOf(transaction_main_price));
                                     JSONObject jobj = new JSONObject();
                                     try {
                                         jobj.put("price", formatNumber(2, transaction_main_price));
-                                        //jobj.put("price", formatNumber(2, 1.00));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -528,28 +526,12 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
                                             }
 
                                             try {
-                                                /*PaymentParams paymentParams = new CardPaymentParams(
-                                                        checkoutId,
-                                                        checkcredit,
-                                                        card_no,
-                                                        card_holder_name,
-                                                        card_date[0],
-                                                        "20" + card_date[1],
-                                                        card_cvv
-                                                );*/
-
-                                                //paymentParams.setShopperResultUrl("livemosab://result");
-
                                                 binder.requestCheckoutInfo(checkoutId);
-
-                                                /*Transaction transaction = new Transaction(paymentParams);
-                                                binder.addTransactionListener(CompletingPurchasingActivity.this);
-                                                binder.submitTransaction(transaction);*/
-
 
                                             } catch (PaymentException e) {
                                                 e.printStackTrace();
                                             }
+
                                         }
 
                                         @Override
@@ -763,6 +745,7 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
                     progressDialog.setCancelable(false);
                     progressDialog.show();
                     if (flag_cart.equals("1")) {
+
                         try {
                             jsonObject.put("transaction_id", response.body().getId());
                             jsonObject.put("card_id", card_ID);
@@ -776,41 +759,9 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-                        Call<PaymentTransactionModel> paymentTransactionModelCall = apiService.PAYMENT_TRANSACTION_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
-                        paymentTransactionModelCall.enqueue(new Callback<PaymentTransactionModel>() {
-                            @Override
-                            public void onResponse(Call<PaymentTransactionModel> call, Response<PaymentTransactionModel> response) {
-                                Log.i("main_message", response.body().getMessage());
-                                String status = response.body().getStatus();
-                                progressDialog.dismiss();
-                                if (status.equals("1")) {
-                                    sessionManager.setReminderStatus(false);
-                                    NotificationHelper.cancelAlarmElapsed();
-                                    NotificationHelper.disableBootReceiver(getApplicationContext());
-                                    sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
-                                    succesful_cardview.setVisibility(View.VISIBLE);
-                                    scrollview_pay.setVisibility(View.GONE);
-                                    Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
-                                    finish();
-
-                                } else {
-                                    scrollview_pay.setVisibility(View.GONE);
-                                    error_cardview.setVisibility(View.VISIBLE);
-                                    Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<PaymentTransactionModel> call, Throwable t) {
-                                progressDialog.dismiss();
-                                scrollview_pay.setVisibility(View.GONE);
-                                error_cardview.setVisibility(View.VISIBLE);
-                                Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        callSimplePurcahaseVoucher();
                     } else if (flag_cart.equals("3")) {
+
                         try {
                             replace_gift_voucher.put("replace_active_gift_voucher_id", voucher_id);
                             replace_gift_voucher.put("voucher_gift_id", voucher_gift_send_id);
@@ -846,31 +797,7 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-                        Call<ReplaceVoucherModel> replaceVoucherModelCall = apiService.REPLACE_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
-                        replaceVoucherModelCall.enqueue(new Callback<ReplaceVoucherModel>() {
-                            @Override
-                            public void onResponse(Call<ReplaceVoucherModel> call, Response<ReplaceVoucherModel> response) {
-                                Log.i("response_main", response.body().getStatus());
-                                progressDialog.dismiss();
-                                String status = response.body().getStatus();
-                                if (status.equals("1")) {
-                                    sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
-                                    finishAffinity();
-                                    startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
-
-                                    Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ReplaceVoucherModel> call, Throwable t) {
-                                progressDialog.dismiss();
-                                Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        callReplaceVoucher();
                     }
                 } else {
                     showErrorDialog(response.body().getResult().getDescription());
@@ -948,6 +875,41 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
         getAllcardList();
     }
 
+    public void callSimplePurcahaseVoucher() {
+        Call<PaymentTransactionModel> paymentTransactionModelCall = apiService.PAYMENT_TRANSACTION_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+        paymentTransactionModelCall.enqueue(new Callback<PaymentTransactionModel>() {
+            @Override
+            public void onResponse(Call<PaymentTransactionModel> call, Response<PaymentTransactionModel> response) {
+                Log.i("main_message", response.body().getMessage());
+                String status = response.body().getStatus();
+                progressDialog.dismiss();
+                if (status.equals("1")) {
+                    sessionManager.setReminderStatus(false);
+                    NotificationHelper.cancelAlarmElapsed();
+                    NotificationHelper.disableBootReceiver(getApplicationContext());
+                    sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
+                    succesful_cardview.setVisibility(View.VISIBLE);
+                    scrollview_pay.setVisibility(View.GONE);
+                    Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
+                    finish();
+
+                } else {
+                    scrollview_pay.setVisibility(View.GONE);
+                    error_cardview.setVisibility(View.VISIBLE);
+                    Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PaymentTransactionModel> call, Throwable t) {
+                progressDialog.dismiss();
+                scrollview_pay.setVisibility(View.GONE);
+                error_cardview.setVisibility(View.VISIBLE);
+                Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     public void CallReplaceGiftVoucher() {
 
@@ -979,6 +941,171 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
             }
         });
 
+    }
+
+    public void callReplaceVoucher() {
+        Call<ReplaceVoucherModel> replaceVoucherModelCall = apiService.REPLACE_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+        replaceVoucherModelCall.enqueue(new Callback<ReplaceVoucherModel>() {
+            @Override
+            public void onResponse(Call<ReplaceVoucherModel> call, Response<ReplaceVoucherModel> response) {
+                Log.i("response_main", response.body().getStatus());
+                progressDialog.dismiss();
+                String status = response.body().getStatus();
+                if (status.equals("1")) {
+                    sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
+                    finishAffinity();
+                    startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
+
+                    Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReplaceVoucherModel> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void testPurchase() {
+        JSONObject jobj = new JSONObject();
+        try {
+            //jobj.put("checkout_id", resourcePath);
+            jobj.put("checkout_id", checkoutId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Call<PaymentStatusModel> paymentStatusModelCall = apiService.PAYMENT_STATUS_MODEL_CALL(jobj.toString());
+        paymentStatusModelCall.enqueue(new Callback<PaymentStatusModel>() {
+            @Override
+            public void onResponse(Call<PaymentStatusModel> call, Response<PaymentStatusModel> response) {
+
+                progressDialog.setMessage("Please Wait");
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                if (flag_cart.equals("1")) {
+                    try {
+                        jsonObject.put("transaction_id", response.body().getId());
+                        jsonObject.put("card_id", card_ID);
+                        jsonObject.put("amount_from_wallet", sessionManager.getUserDetails().get(SessionManager.Wallet));
+                        if (price > Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet))) {
+                            jsonObject.put("amount_from_bank", price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)));
+                        } else {
+                            jsonObject.put("amount_from_bank", Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)) - price);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    Call<PaymentTransactionModel> paymentTransactionModelCall = apiService.PAYMENT_TRANSACTION_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                    paymentTransactionModelCall.enqueue(new Callback<PaymentTransactionModel>() {
+                        @Override
+                        public void onResponse(Call<PaymentTransactionModel> call, Response<PaymentTransactionModel> response) {
+                            Log.i("main_message", response.body().getMessage());
+                            String status = response.body().getStatus();
+                            progressDialog.dismiss();
+                            if (status.equals("1")) {
+                                sessionManager.setReminderStatus(false);
+                                NotificationHelper.cancelAlarmElapsed();
+                                NotificationHelper.disableBootReceiver(getApplicationContext());
+                                sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
+                                succesful_cardview.setVisibility(View.VISIBLE);
+                                scrollview_pay.setVisibility(View.GONE);
+                                Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
+                                finish();
+
+                            } else {
+                                scrollview_pay.setVisibility(View.GONE);
+                                error_cardview.setVisibility(View.VISIBLE);
+                                Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<PaymentTransactionModel> call, Throwable t) {
+                            progressDialog.dismiss();
+                            scrollview_pay.setVisibility(View.GONE);
+                            error_cardview.setVisibility(View.VISIBLE);
+                            Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else if (flag_cart.equals("3")) {
+                    try {
+                        replace_gift_voucher.put("replace_active_gift_voucher_id", voucher_id);
+                        replace_gift_voucher.put("voucher_gift_id", voucher_gift_send_id);
+                        replace_gift_voucher.put("replace_voucher_id", ExchangeAddBalanceActivity.voucher_id);
+                        replace_gift_voucher.put("transaction_id", response.body().getId());
+                        replace_gift_voucher.put("card_id", card_ID);
+                        replace_gift_voucher.put("wallet", Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)));
+                        if (Double.parseDouble(main_price) > Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet))) {
+                            replace_gift_voucher.put("transaction_price", Double.parseDouble(main_price) - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)));
+                        } else {
+                            replace_gift_voucher.put("transaction_price", Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet)) - Double.parseDouble(main_price));
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    CallReplaceGiftVoucher();
+                } else {
+                    try {
+                        jsonObject.put("replace_active_voucher_id", voucher_id);
+                        jsonObject.put("voucher_payment_detail_id", VoucherDetailActivity.v_payment_id);
+                        jsonObject.put("replace_voucher_id", ExchangeAddBalanceActivity.voucher_id);
+                        jsonObject.put("card_id", card_ID);
+                        jsonObject.put("transaction_id", response.body().getId());
+                        if (Double.parseDouble(main_price) > Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet))) {
+                            jsonObject.put("transaction_price", Double.parseDouble(main_price));
+                            jsonObject.put("wallet", "0");
+                        } else {
+                            jsonObject.put("transaction_price", "0");
+                            jsonObject.put("wallet", sessionManager.getUserDetails().get(SessionManager.Wallet));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    Call<ReplaceVoucherModel> replaceVoucherModelCall = apiService.REPLACE_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
+                    replaceVoucherModelCall.enqueue(new Callback<ReplaceVoucherModel>() {
+                        @Override
+                        public void onResponse(Call<ReplaceVoucherModel> call, Response<ReplaceVoucherModel> response) {
+                            Log.i("response_main", response.body().getStatus());
+                            progressDialog.dismiss();
+                            String status = response.body().getStatus();
+                            if (status.equals("1")) {
+                                sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
+                                finishAffinity();
+                                startActivity(new Intent(CompletingPurchasingActivity.this, MainActivity.class));
+
+                                Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(CompletingPurchasingActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ReplaceVoucherModel> call, Throwable t) {
+                            progressDialog.dismiss();
+                            Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<PaymentStatusModel> call, Throwable t) {
+                Toast.makeText(CompletingPurchasingActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

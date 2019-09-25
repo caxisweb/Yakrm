@@ -101,9 +101,9 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        layouts = new int[]{R.layout.intro_screen1, R.layout.intro_screen2, R.layout.intro_screen3, R.layout.intro_screen4, R.layout.intro_screen5, R.layout.intro_screen6};
+        layouts = new int[]{R.layout.intro_screen1};
 
-        addBottomDots(0);
+        //addBottomDots(0);
 
         myViewPagerAdapter = new MyViewPagerAdapter();
         view_pager.setAdapter(myViewPagerAdapter);

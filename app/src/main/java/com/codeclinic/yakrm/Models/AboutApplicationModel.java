@@ -23,6 +23,28 @@ public class AboutApplicationModel {
     @SerializedName("terms_and_condition_english")
     @Expose
     private String termsAndConditionEnglish;
+    @SerializedName("instruction_arab")
+    @Expose
+    private String instruction_arab;
+    @SerializedName("instruction_english")
+    @Expose
+    private String instruction_english;
+
+    public String getInstruction_arab() {
+        return instruction_arab;
+    }
+
+    public void setInstruction_arab(String instruction_arab) {
+        this.instruction_arab = instruction_arab;
+    }
+
+    public String getInstruction_english() {
+        return instruction_english;
+    }
+
+    public void setInstruction_english(String instruction_english) {
+        this.instruction_english = instruction_english;
+    }
 
     public String getStatus() {
         return status;
