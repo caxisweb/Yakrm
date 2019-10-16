@@ -165,27 +165,9 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
 
         if (price > Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet))) {
             double t_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
-            tv_total_price.setText(String.valueOf(t_price).replaceAll("1", getResources().getString(R.string.one))
-                    .replaceAll("2", getResources().getString(R.string.two))
-                    .replaceAll("3", getResources().getString(R.string.three))
-                    .replaceAll("4", getResources().getString(R.string.four))
-                    .replaceAll("5", getResources().getString(R.string.five))
-                    .replaceAll("6", getResources().getString(R.string.six))
-                    .replaceAll("7", getResources().getString(R.string.seven))
-                    .replaceAll("8", getResources().getString(R.string.eight))
-                    .replaceAll("9", getResources().getString(R.string.nine))
-                    .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+            tv_total_price.setText(String.format("%.2f", t_price) + getResources().getString(R.string.SR_currency));
 
-            tv_sc_total_price.setText(String.valueOf(t_price).replaceAll("1", getResources().getString(R.string.one))
-                    .replaceAll("2", getResources().getString(R.string.two))
-                    .replaceAll("3", getResources().getString(R.string.three))
-                    .replaceAll("4", getResources().getString(R.string.four))
-                    .replaceAll("5", getResources().getString(R.string.five))
-                    .replaceAll("6", getResources().getString(R.string.six))
-                    .replaceAll("7", getResources().getString(R.string.seven))
-                    .replaceAll("8", getResources().getString(R.string.eight))
-                    .replaceAll("9", getResources().getString(R.string.nine))
-                    .replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
+            tv_sc_total_price.setText(String.format("%.2f", t_price) + " " + getResources().getString(R.string.SR_currency));
         } else {
             String t_price = "0";
             tv_total_price.setText(t_price.replaceAll("0", getResources().getString(R.string.zero)) + " " + getResources().getString(R.string.SR_currency));
@@ -505,11 +487,21 @@ public class CompletingPurchasingActivity extends BasePaymentActivity implements
 
                                     transaction_main_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
                                     JSONObject jobj = new JSONObject();
-                                    try {
-                                        jobj.put("price", formatNumber(2, transaction_main_price));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                                    String checkValue = String.valueOf(transaction_main_price);
+                                    if (checkValue.substring(0, 1).equals("0")) {
+                                        try {
+                                            jobj.put("price", 0 + formatNumber(2, transaction_main_price));
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        try {
+                                            jobj.put("price", formatNumber(2, transaction_main_price));
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
+
 
                                     Call<GetCheckoutIDModel> getCheckoutIDModelCall = apiService.GET_CHECKOUT_ID_MODEL_CALL(jobj.toString());
                                     getCheckoutIDModelCall.enqueue(new Callback<GetCheckoutIDModel>() {

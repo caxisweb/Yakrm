@@ -236,7 +236,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:text="81.5"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14dp" />
 
