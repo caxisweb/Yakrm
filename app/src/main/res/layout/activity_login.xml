@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/email_address"
+                android:text="@string/Mobile_number"
                 android:textColor="@color/text_color"
                 android:textSize="14dp" />
 
@@ -79,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/light_grey_border_background"
-                android:inputType="textEmailAddress"
+                android:inputType="number"
+                android:maxLength="12"
                 android:padding="6dp"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
