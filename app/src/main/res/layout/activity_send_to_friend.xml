@@ -240,7 +240,7 @@
                         android:layout_marginTop="10dp"
                         android:background="@drawable/light_grey_border_background"
                         android:gravity="top"
-                        android:hint="@string/Hello_Friend_I_Am_Sending_You_This_Voucher_To_Express_My_Love_And_Gratitude"
+                        android:text="@string/Hello_Friend_I_Am_Sending_You_This_Voucher_To_Express_My_Love_And_Gratitude"
                         android:inputType="textMultiLine"
                         android:singleLine="false"
                         android:textColorHint="@color/text_color"

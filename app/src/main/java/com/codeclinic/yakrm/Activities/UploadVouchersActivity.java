@@ -134,13 +134,20 @@ public class UploadVouchersActivity extends AppCompatActivity {
                             if (x.getTotalVoucher().equals("0"))
                                 itr.remove();
                         }
-                        uploadVouchersAdapter = new UploadVouchersAdapter(arrayList, UploadVouchersActivity.this);
-                        recyclerView.setAdapter(uploadVouchersAdapter);
+
+                        if (arrayList != null) {
+                            if (arrayList.size() != 0) {
+                                uploadVouchersAdapter = new UploadVouchersAdapter(arrayList, UploadVouchersActivity.this);
+                                recyclerView.setAdapter(uploadVouchersAdapter);
+                            }
+                        }
                     } else {
                         if (status.equals("0")) {
                             arrayList = response.body().getData();
-                            uploadVouchersAdapter = new UploadVouchersAdapter(arrayList, UploadVouchersActivity.this);
-                            recyclerView.setAdapter(uploadVouchersAdapter);
+                            if (arrayList != null) {
+                                uploadVouchersAdapter = new UploadVouchersAdapter(arrayList, UploadVouchersActivity.this);
+                                recyclerView.setAdapter(uploadVouchersAdapter);
+                            }
                             Toast.makeText(UploadVouchersActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
                             sessionManager.clearsession();

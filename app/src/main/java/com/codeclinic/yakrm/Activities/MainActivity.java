@@ -557,7 +557,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 } else if (rb_brand_names.isChecked()) {
                     gift_order = "3";
                 } else {
-                    gift_order = "0";
+                    gift_order = "";
                 }
 
                 /*    if (!isEmpty(gift_category_id) && !isEmpty(gift_type)) {*/

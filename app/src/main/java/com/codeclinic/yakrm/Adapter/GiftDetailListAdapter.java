@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -73,9 +74,10 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final GiftDetailListAdapter.CustomViewHolder customViewHolder, @SuppressLint("RecyclerView") final int i) {
+        float voucher_actual_price = Float.parseFloat(arrayList.get(i).getVoucherPrice());
         float voucher_discount = Float.parseFloat(arrayList.get(i).getDiscount()) / 100;
-        float voucher_disount_price = Integer.parseInt(arrayList.get(i).getVoucherPrice()) * voucher_discount;
-        float voucher_value = Float.parseFloat(arrayList.get(i).getVoucherPrice()) + voucher_disount_price;
+        float voucher_disount_price = voucher_actual_price * voucher_discount;
+        float voucher_value = voucher_actual_price + voucher_disount_price;
         customViewHolder.tv_value.setText(String.valueOf(voucher_value).replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
                 .replaceAll("3", context.getResources().getString(R.string.three))
@@ -86,7 +88,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 .replaceAll("8", context.getResources().getString(R.string.eight))
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
-        int voucher_price = Integer.parseInt(arrayList.get(i).getVoucherPrice());
+
 
         customViewHolder.tv_discount.setText(arrayList.get(i).getDiscount().replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
@@ -99,7 +101,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + "%");
 
-        if (voucher_price != 0) {
+        if (voucher_actual_price != 0) {
             customViewHolder.tv_pay.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
                     .replaceAll("2", context.getResources().getString(R.string.two))
                     .replaceAll("3", context.getResources().getString(R.string.three))
@@ -229,7 +231,18 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                                         Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                     } else {
                                         GiftDetailsActivity.complete_purchase = 1;
-                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.CustomDialogFragment);
+                                        alert.setMessage(response.body().getMessage());
+                                        alert.setCancelable(false);
+                                        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            @SuppressLint("StaticFieldLeak")
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        });
+                                        AlertDialog alertDialog = alert.create();
+                                        alertDialog.show();
                                     }
                                 }
 

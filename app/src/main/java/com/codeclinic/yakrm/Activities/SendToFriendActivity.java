@@ -163,6 +163,8 @@ public class SendToFriendActivity extends AppCompatActivity {
         tv_itemname.setText(VoucherDetailActivity.voucher_name);
         tv_price.setText(VoucherDetailActivity.price + " " + getResources().getString(R.string.SR_currency));
 
+
+        selectTodaysDate();
         tv_sending_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -618,6 +620,16 @@ public class SendToFriendActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TrimmerActivity.class);
         intent.putExtra(EXTRA_VIDEO_PATH, FileUtils.getPath(this, uri));
         startActivity(intent);
+    }
+
+    public void selectTodaysDate() {
+        Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        final int mDay = c.get(Calendar.DAY_OF_MONTH);
+        int m = mMonth + 1;
+
+        tv_sending_date.setText(mYear + "-" + m + "-" + mDay);
     }
 
     @Override
