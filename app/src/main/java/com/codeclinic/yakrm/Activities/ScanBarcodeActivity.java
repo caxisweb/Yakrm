@@ -80,7 +80,7 @@ public class ScanBarcodeActivity extends BaseScannerActivity implements ZXingSca
             e.printStackTrace();
         }
         Log.i("details", jsonObject.toString());
-        progressDialog.setMessage("Please Wait");
+        progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -97,7 +97,12 @@ public class ScanBarcodeActivity extends BaseScannerActivity implements ZXingSca
                     UploadVoucherDataActivity.pin_number = response.body().getPinCode();
                     UploadVoucherDataActivity.exp_date = response.body().getExpiredAt();
                     finish();
-                    Toast.makeText(ScanBarcodeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    String language = String.valueOf(getResources().getConfiguration().locale);
+                    if (language.equals("ar")) {
+                        Toast.makeText(ScanBarcodeActivity.this, "لقد تم بنجاح مسح القسيمة", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ScanBarcodeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
@@ -106,7 +111,12 @@ public class ScanBarcodeActivity extends BaseScannerActivity implements ZXingSca
                             mScannerView.resumeCameraPreview(ScanBarcodeActivity.this);
                         }
                     }, 2000);
-                    Toast.makeText(ScanBarcodeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    String language = String.valueOf(getResources().getConfiguration().locale);
+                    if (language.equals("ar")) {
+                        Toast.makeText(ScanBarcodeActivity.this, "لقد تم استخدام القسيمة", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ScanBarcodeActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

@@ -177,9 +177,9 @@ public class SendToFriendActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (isEmpty(edt_mobile.getText().toString())) {
-                    Toast.makeText(SendToFriendActivity.this, "Please verify your friends mobile number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SendToFriendActivity.this, getResources().getString(R.string.please_verify_friends_mobile_number), Toast.LENGTH_SHORT).show();
                 } else {
-                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setMessage(getResources().getString(R.string.please_wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -247,13 +247,13 @@ public class SendToFriendActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (Connection_Detector.isInternetAvailable(SendToFriendActivity.this)) {
                     if (isEmpty(mobile_number)) {
-                        Toast.makeText(SendToFriendActivity.this, "Please verify your friends mobile number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SendToFriendActivity.this, getResources().getString(R.string.please_verify_friends_mobile_number), Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(tv_sending_date.getText().toString())) {
-                        Toast.makeText(SendToFriendActivity.this, "Please Select Date", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SendToFriendActivity.this, getResources().getString(R.string.please_select_date), Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(ed_description.getText().toString())) {
-                        Toast.makeText(SendToFriendActivity.this, "Please Enter Description", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SendToFriendActivity.this, getResources().getString(R.string.please_enter_description), Toast.LENGTH_SHORT).show();
                     } else {
-                        progressDialog.setMessage("Please Wait");
+                        progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -295,7 +295,16 @@ public class SendToFriendActivity extends AppCompatActivity {
                                 VoucherDetailActivity.v_image = "";
                                 VoucherDetailActivity.scan_voucher_type = "";
                                 startActivity(new Intent(SendToFriendActivity.this, MainActivity.class));
-                                Toast.makeText(SendToFriendActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                String language = String.valueOf(getResources().getConfiguration().locale);
+                                if (language.equals("ar")) {
+                                    if (response.body().getArab_message() != null) {
+                                        Toast.makeText(SendToFriendActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(SendToFriendActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(SendToFriendActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                                 VoucherDetailActivity.voucher_detail_activity.finish();
                                 ExchangeVoucherActivity.ex_activity.finish();
                                 finish();
@@ -310,7 +319,7 @@ public class SendToFriendActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(SendToFriendActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SendToFriendActivity.this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
             }
         });

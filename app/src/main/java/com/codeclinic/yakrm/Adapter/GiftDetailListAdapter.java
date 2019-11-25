@@ -228,7 +228,16 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                                     String status = response.body().getStatus();
                                     if (status.equals("1")) {
                                         GiftDetailsActivity.complete_purchase = 1;
-                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        String language = String.valueOf(context.getResources().getConfiguration().locale);
+                                        if (language.equals("ar")) {
+                                            if (response.body().getArab_message() != null) {
+                                                Toast.makeText(context, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
                                     } else {
                                         GiftDetailsActivity.complete_purchase = 1;
                                         AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.CustomDialogFragment);

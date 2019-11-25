@@ -51,7 +51,7 @@ public class AboutApplicationActivity extends AppCompatActivity {
         });
 
         if (Connection_Detector.isInternetAvailable(this)) {
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();

@@ -66,7 +66,7 @@ public class FavouritesActivity extends AppCompatActivity {
         });
 
         if (Connection_Detector.isInternetAvailable(this)) {
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -82,7 +82,16 @@ public class FavouritesActivity extends AppCompatActivity {
                         favListAdapter = new FavListAdapter(arrayList, FavouritesActivity.this, apiService, sessionManager);
                         recyclerView.setAdapter(favListAdapter);
                     } else {
-                        Toast.makeText(FavouritesActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        String language = String.valueOf(getResources().getConfiguration().locale);
+                        if (language.equals("ar")) {
+                            if (response.body().getArab_message() != null) {
+                                Toast.makeText(FavouritesActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(FavouritesActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(FavouritesActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 

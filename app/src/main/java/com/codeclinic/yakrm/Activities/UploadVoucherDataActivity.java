@@ -2,7 +2,6 @@ package com.codeclinic.yakrm.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -45,7 +44,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
     Button btn_add_note1, btn_done;
     public static String name, brand_id, voucher_number, pin_number, voucher_value, exp_date;
     EditText edt_voucher_no;
-    public static Activity pre_activity;
+
     TextView tv_item_name, tv_enter_manualy, tv_voucher_no, tv_pin_no, tv_voucher_price, tv_exp_date;
     JSONObject jsonObject = new JSONObject();
     ProgressDialog progressDialog;
@@ -152,7 +151,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     Log.i("details", jsonObject.toString());
-                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();

@@ -83,6 +83,7 @@ public class BuyTabFragment extends Fragment {
         }
 
         if (Connection_Detector.isInternetAvailable(getActivity())) {
+
             progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
@@ -252,7 +253,16 @@ public class BuyTabFragment extends Fragment {
                                         buyTabListAdapter = new BuyTabListAdapter(arrayList, getActivity());
                                         recyclerView.setAdapter(buyTabListAdapter);
                                     } else {
-                                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        String language = String.valueOf(getResources().getConfiguration().locale);
+                                        if (language.equals("ar")) {
+                                            if (response.body().getArab_message() != null) {
+                                                Toast.makeText(getActivity(), response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 }
 

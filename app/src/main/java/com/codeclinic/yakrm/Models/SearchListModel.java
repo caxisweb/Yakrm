@@ -16,6 +16,14 @@ public class SearchListModel {
     @SerializedName("data")
     @Expose
     private List<SearchListItemModel> data = null;
+    @SerializedName("arab_message")
+    @Expose
+    private String arab_message;
+
+    public String getArab_message() {
+        return arab_message;
+    }
+
 
     public String getStatus() {
         return status;

@@ -438,9 +438,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 if (sessionManager.isLoggedIn()) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.CustomDialogFragment);
-                    alert.setMessage("Are you Sure you want to logout?");
+                    alert.setMessage(getResources().getString(R.string.AreYouSureToLogout));
                     alert.setCancelable(false);
-                    alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    alert.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @SuppressLint("StaticFieldLeak")
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -458,7 +458,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             sessionManager.logoutUser();
                             finish();
                         }
-                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    }).setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();

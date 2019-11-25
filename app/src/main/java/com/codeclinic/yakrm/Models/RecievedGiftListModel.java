@@ -13,6 +13,13 @@ public class RecievedGiftListModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("arab_message")
+    @Expose
+    private String arab_message;
+
+    public String getArab_message() {
+        return arab_message;
+    }
     @SerializedName("data")
     @Expose
     private List<RecievedGftListItemModel> data = null;

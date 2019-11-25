@@ -23,6 +23,14 @@ public class ProfileUpdateModel {
     @SerializedName("country_id")
     @Expose
     private String countryId;
+    @SerializedName("arab_message")
+    @Expose
+    private String arab_message;
+
+    public String getArab_message() {
+        return arab_message;
+    }
+
 
     public String getStatus() {
         return status;

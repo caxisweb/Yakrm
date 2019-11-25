@@ -66,7 +66,7 @@ public class RecievedActivity extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
 
         if (Connection_Detector.isInternetAvailable(this)) {
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -81,7 +81,16 @@ public class RecievedActivity extends AppCompatActivity {
                         recievedListAdapter = new RecievedListAdapter(arrayList, RecievedActivity.this);
                         recyclerView.setAdapter(recievedListAdapter);
                     } else {
-                        //Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        String language = String.valueOf(getResources().getConfiguration().locale);
+                        if (language.equals("ar")) {
+                            if (response.body().getArab_message() != null) {
+                                Toast.makeText(RecievedActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(RecievedActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(RecievedActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 

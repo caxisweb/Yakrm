@@ -80,7 +80,16 @@ public class ReplaceActiveVouchersActivity extends AppCompatActivity {
                         myWalletAdapter = new MyWalletAdapter(arrayList, ReplaceActiveVouchersActivity.this, admin_discount);
                         recyclerView.setAdapter(myWalletAdapter);
                     } else {
-                        // Toast.makeText(this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        String language = String.valueOf(getResources().getConfiguration().locale);
+                        if (language.equals("ar")) {
+                            if (response.body().getArab_message() != null) {
+                                Toast.makeText(ReplaceActiveVouchersActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ReplaceActiveVouchersActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(ReplaceActiveVouchersActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 

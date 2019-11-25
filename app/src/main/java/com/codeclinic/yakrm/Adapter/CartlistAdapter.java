@@ -140,14 +140,14 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.CustomDialogFragment);
-                alert.setMessage("Are you Sure?");
+                alert.setMessage(context.getResources().getString(R.string.are_you_sure));
                 alert.setCancelable(false);
-                alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton(context.getResources().getString(R.string.Delete), new DialogInterface.OnClickListener() {
                     @SuppressLint("StaticFieldLeak")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         progressDialog = new ProgressDialog(context);
-                        progressDialog.setMessage("Please Wait");
+                        progressDialog.setMessage(context.getResources().getString(R.string.Please_Wait));
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -168,7 +168,16 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
                                     sessionManager.setReminderStatus(false);
                                     NotificationHelper.cancelAlarmElapsed();
                                     NotificationHelper.disableBootReceiver(context);
-                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    String language = String.valueOf(context.getResources().getConfiguration().locale);
+                                    if (language.equals("ar")) {
+                                        if (response.body().getArab_message() != null) {
+                                            Toast.makeText(context, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                     ((Activity) context).recreate();
                                 } else {
                                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -183,7 +192,7 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
                         });
 
                     }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(context.getResources().getString(R.string.New_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

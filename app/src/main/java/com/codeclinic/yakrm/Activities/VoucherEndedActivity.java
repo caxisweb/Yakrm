@@ -9,11 +9,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.codeclinic.yakrm.Adapter.MyWalletAdapter;
 import com.codeclinic.yakrm.Adapter.VoucherWillEndAdapter;
 import com.codeclinic.yakrm.Models.EndedVoucherListItemModel;
 import com.codeclinic.yakrm.Models.EndedVoucherListModel;
-import com.codeclinic.yakrm.Models.WalletActiveListModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
@@ -65,7 +63,7 @@ public class VoucherEndedActivity extends AppCompatActivity {
 
 
         if (Connection_Detector.isInternetAvailable(this)) {
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -93,7 +91,7 @@ public class VoucherEndedActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(VoucherEndedActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(VoucherEndedActivity.this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
 
     }

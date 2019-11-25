@@ -66,7 +66,6 @@ public class PersonalDataActivity extends AppCompatActivity {
     private final int CAMERA_IMAGE = 1;
     Button btn_modify_data;
     private final int PICK_IMAGE_GALLERY = 3;
-    String str_mobile, str_email;
     RoundedImageView img_profile;
     TextView tv_mobile, tv_email, tv_username, tv_name, tv_change_pass;
     RelativeLayout rl_imgprofile;
@@ -165,7 +164,7 @@ public class PersonalDataActivity extends AppCompatActivity {
                 } else if (isEmpty(u_mobile)) {
                     Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Please_Enter_Mobile_Number), Toast.LENGTH_SHORT).show();
                 } else if (!u_mobile.substring(0, 2).equals("05")) {
-                    Toast.makeText(PersonalDataActivity.this, "Mobile number shoul start with '05' ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Mobile_number_should_start_with_05), Toast.LENGTH_LONG).show();
                 } else if (u_mobile.length() < 10) {
                     Toast.makeText(PersonalDataActivity.this, getResources().getString(R.string.Mobile_Number_should_be_minimum), Toast.LENGTH_SHORT).show();
                 } else {
@@ -224,7 +223,16 @@ public class PersonalDataActivity extends AppCompatActivity {
                                         sessionManager.createLoginSession(user_token, user_id, user_name, user_email, user_number, sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), "", wallet, userType);
                                     }
                                 }
-                                Toast.makeText(PersonalDataActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                String language = String.valueOf(getResources().getConfiguration().locale);
+                                if (language.equals("ar")) {
+                                    if (response.body().getArab_message() != null) {
+                                        Toast.makeText(PersonalDataActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(PersonalDataActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(PersonalDataActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
                             } else {
                                 Toast.makeText(PersonalDataActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }

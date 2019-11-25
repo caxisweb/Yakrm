@@ -15,6 +15,13 @@ public class AllVouchersListModel {
     @SerializedName("total_cart_item")
     @Expose
     private String total_cart_item;
+    @SerializedName("arab_message")
+    @Expose
+    private String arab_message;
+
+    public String getArab_message() {
+        return arab_message;
+    }
     @SerializedName("data")
     @Expose
     private List<AllVoucherListItemModel> data = null;

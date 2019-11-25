@@ -98,7 +98,7 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (scan_voucher_type_full.equals("replace_voucher")) {
-                    Toast.makeText(ExchangeVoucherActivity.this, "Voucher Already been replaced,you can't replace it again", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ExchangeVoucherActivity.this, getResources().getString(R.string.voucher_already_replaced_you_cant_replaced), Toast.LENGTH_LONG).show();
                 } else {
                     startActivity(new Intent(ExchangeVoucherActivity.this, ExchangeAddBalanceActivity.class));
                 }
@@ -140,7 +140,7 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         progressDialog = new ProgressDialog(ExchangeVoucherActivity.this);
-                        progressDialog.setMessage("Please Wait");
+                        progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -150,7 +150,16 @@ public class ExchangeVoucherActivity extends AppCompatActivity {
                             public void onResponse(Call<ReturnVoucherModel> call, Response<ReturnVoucherModel> response) {
                                 progressDialog.dismiss();
                                 if (response.body().getStatus().equals("1")) {
-                                    Toast.makeText(ExchangeVoucherActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                    String language = String.valueOf(getResources().getConfiguration().locale);
+                                    if (language.equals("ar")) {
+                                        if (response.body().getArab_message() != null) {
+                                            Toast.makeText(ExchangeVoucherActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(ExchangeVoucherActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(ExchangeVoucherActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                     sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
                                     startActivity(new Intent(ExchangeVoucherActivity.this, MainActivity.class));
                                     finishAffinity();

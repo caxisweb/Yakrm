@@ -154,7 +154,7 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -180,7 +180,7 @@ public class ExchangeAddBalanceActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(ExchangeAddBalanceActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ExchangeAddBalanceActivity.this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
 
         btn_complete.setOnClickListener(new View.OnClickListener() {

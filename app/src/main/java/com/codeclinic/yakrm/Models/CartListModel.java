@@ -14,7 +14,7 @@ public class CartListModel {
     private String message;
     @SerializedName("total_price")
     @Expose
-    private Integer totalPrice;
+    private Float totalPrice;
     @SerializedName("data")
     @Expose
     private List<CartListItemModel> data = null;
@@ -35,11 +35,11 @@ public class CartListModel {
         this.message = message;
     }
 
-    public Integer getTotalPrice() {
+    public Float getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(Float totalPrice) {
         this.totalPrice = totalPrice;
     }
 

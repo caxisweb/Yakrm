@@ -71,13 +71,13 @@ public class SupportContactFragment extends android.app.Fragment {
             public void onClick(View v) {
                 if (Connection_Detector.isInternetAvailable(getActivity())) {
                     if (isEmpty(edt_email.getText().toString())) {
-                        Toast.makeText(getActivity(), "Enter Email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getResources().getString(R.string.Please_Enter_Email), Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_msg_title.getText().toString())) {
-                        Toast.makeText(getActivity(), "Enter Message Title", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getResources().getString(R.string.Enter_message_title), Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_description.getText().toString())) {
-                        Toast.makeText(getActivity(), "Enter Message Description", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getResources().getString(R.string.Enter_messgae_description), Toast.LENGTH_SHORT).show();
                     } else {
-                        progressDialog.setMessage("Please Wait");
+                        progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -109,7 +109,7 @@ public class SupportContactFragment extends android.app.Fragment {
                         });
                     }
                 } else {
-                    Toast.makeText(getActivity(), "No Internet connection", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
             }
         });

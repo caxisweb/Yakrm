@@ -237,7 +237,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
                         } else if (edt_cvv.getText().toString().length() != 3) {
                             Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.PleaseEnterCorrectSecurityNumber), Toast.LENGTH_SHORT).show();
                         } else {
-                            progressDialog.setMessage("Please Wait");
+                            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                             progressDialog.setIndeterminate(true);
                             progressDialog.setCancelable(false);
                             progressDialog.show();
@@ -258,7 +258,18 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
                                     progressDialog.dismiss();
                                     String status = response.body().getStatus();
                                     if (status.equals("1")) {
-                                        Toast.makeText(EnterCardDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                        String language = String.valueOf(getResources().getConfiguration().locale);
+                                        if (language.equals("ar")) {
+                                            if (response.body().getArab_message() != null) {
+                                                Toast.makeText(EnterCardDetailsActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(EnterCardDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(EnterCardDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+
                                         finish();
                                     } else {
                                         Toast.makeText(EnterCardDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -297,7 +308,7 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
                     StoredCardListAdapter storedCardListAdapter = new StoredCardListAdapter(arrayList, EnterCardDetailsActivity.this);
                     recyclerView.setAdapter(storedCardListAdapter);
                 } else {
-                    Toast.makeText(EnterCardDetailsActivity.this, "No Card is Added yet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnterCardDetailsActivity.this, getResources().getString(R.string.no_card_added_yet), Toast.LENGTH_SHORT).show();
                 }
             }
 

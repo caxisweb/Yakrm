@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (isEmpty(str_email)) {
                     Toast.makeText(LoginActivity.this, getResources().getString(R.string.Please_Enter_Mobile_Number), Toast.LENGTH_SHORT).show();
                 } else if (!str_email.substring(0, 2).equals("05")) {
-                    Toast.makeText(LoginActivity.this, "Mobile number should start with '05' ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.Mobile_number_should_start_with_05), Toast.LENGTH_LONG).show();
                 } else if (str_email.length() < 10) {
                     Toast.makeText(LoginActivity.this, getResources().getString(R.string.Mobile_Number_should_be_minimum), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_password)) {

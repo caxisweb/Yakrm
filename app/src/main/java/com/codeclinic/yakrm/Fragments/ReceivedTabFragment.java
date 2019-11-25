@@ -67,7 +67,7 @@ public class ReceivedTabFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
 
         if (Connection_Detector.isInternetAvailable(getActivity())) {
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();

@@ -53,7 +53,7 @@ public class ExcahangeInstructionsActivity extends AppCompatActivity {
         });
 
         if (Connection_Detector.isInternetAvailable(this)) {
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.please_wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -88,7 +88,7 @@ public class ExcahangeInstructionsActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "No internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
     }
 }

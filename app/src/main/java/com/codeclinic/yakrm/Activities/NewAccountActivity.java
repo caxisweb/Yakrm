@@ -179,7 +179,7 @@ public class NewAccountActivity extends AppCompatActivity {
                 if (isEmpty(str_number)) {
                     Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Please_Enter_Mobile_Number), Toast.LENGTH_SHORT).show();
                 } else if (!str_number.substring(0, 2).equals("05")) {
-                    Toast.makeText(NewAccountActivity.this, "Mobile number shoul start with '05' ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Mobile_number_should_start_with_05), Toast.LENGTH_LONG).show();
                 } else if (str_number.length() < 10) {
                     Toast.makeText(NewAccountActivity.this, getResources().getString(R.string.Mobile_Number_should_be_minimum), Toast.LENGTH_SHORT).show();
                 } else {

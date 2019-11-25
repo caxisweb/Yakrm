@@ -121,13 +121,13 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 str_number = edt_number.getText().toString();
                 if (isEmpty(str_number)) {
-                    Toast.makeText(ForgetPasswordActivity.this, "Please Enter Mobile Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, getResources().getString(R.string.Please_Enter_Mobile_Number), Toast.LENGTH_SHORT).show();
                 } /*else if (!str_number.substring(0, 2).equals("05")) {
                     Toast.makeText(ForgetPasswordActivity.this, "Mobile number shoul start with '05' ", Toast.LENGTH_LONG).show();
                 }*/ else if (str_number.length() < 10) {
-                    Toast.makeText(ForgetPasswordActivity.this, "Mobile Number should be minimum of 10 characters ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, getResources().getString(R.string.Mobile_Number_should_be_minimum), Toast.LENGTH_SHORT).show();
                 } else {
-                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -171,11 +171,11 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 str_number = edt_number.getText().toString();
                 if (isEmpty(str_number)) {
-                    Toast.makeText(ForgetPasswordActivity.this, "Please Enter Mobile Number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, getResources().getString(R.string.Please_Enter_Mobile_Number), Toast.LENGTH_SHORT).show();
                 } else if (str_number.length() < 10) {
-                    Toast.makeText(ForgetPasswordActivity.this, "Mobile Number should be minimum of 10 characters ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, getResources().getString(R.string.Mobile_Number_should_be_minimum), Toast.LENGTH_SHORT).show();
                 } else {
-                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -308,7 +308,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 str_edt_4 = edt_4.getText().toString();
 
                 if (isEmpty(str_edt_1)) {
-                    Toast.makeText(ForgetPasswordActivity.this, "Please Enter OTP", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, getResources().getString(R.string.Please_Enter_OTP), Toast.LENGTH_SHORT).show();
+
                 } else if (isEmpty(str_edt_2)) {
                     Toast.makeText(ForgetPasswordActivity.this, "Enter Code", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(str_edt_3)) {
@@ -338,13 +339,13 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isEmpty(edt_new_pass.getText().toString())) {
-                    Toast.makeText(ForgetPasswordActivity.this, "Please Enter New Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, getResources().getString(R.string.Enter_New_password), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(edt_confm_new_pass.getText().toString())) {
-                    Toast.makeText(ForgetPasswordActivity.this, "Please Enter Confirm Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, getResources().getString(R.string.Confirm_new_password), Toast.LENGTH_SHORT).show();
                 } else if (!edt_confm_new_pass.getText().toString().matches(edt_confm_new_pass.getText().toString())) {
                     Toast.makeText(ForgetPasswordActivity.this, "Please Enter correct Password", Toast.LENGTH_SHORT).show();
                 } else {
-                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();

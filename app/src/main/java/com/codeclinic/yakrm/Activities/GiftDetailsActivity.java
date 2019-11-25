@@ -117,7 +117,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
 
 
         if (Connection_Detector.isInternetAvailable(this)) {
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -199,7 +199,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -224,9 +224,9 @@ public class GiftDetailsActivity extends AppCompatActivity {
                         fav_value = 0;
                         jsonObject_fav.put("is_favourite", fav_value);
                         AlertDialog.Builder alert = new AlertDialog.Builder(GiftDetailsActivity.this, R.style.CustomDialogFragment);
-                        alert.setMessage("Are you sure you want to remove from Favourites?");
+                        alert.setMessage(getResources().getString(R.string.are_you_sure_to_remove_favourites));
                         alert.setCancelable(false);
-                        alert.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+                        alert.setPositiveButton(getResources().getString(R.string.remove), new DialogInterface.OnClickListener() {
                             @SuppressLint("StaticFieldLeak")
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -238,7 +238,17 @@ public class GiftDetailsActivity extends AppCompatActivity {
                                         if (status.equals("1")) {
                                             is_fav = "false";
                                             img_fav.setImageDrawable(getResources().getDrawable(R.mipmap.ic_fav_icon));
-                                            Toast.makeText(GiftDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            String language = String.valueOf(getResources().getConfiguration().locale);
+                                            if (language.equals("ar")) {
+                                                if (response.body().getArab_message() != null) {
+                                                    Toast.makeText(GiftDetailsActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(GiftDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            } else {
+                                                Toast.makeText(GiftDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+
                                         } else {
                                             Toast.makeText(GiftDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
@@ -250,7 +260,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                        }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton(getResources().getString(R.string.New_cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
@@ -270,7 +280,16 @@ public class GiftDetailsActivity extends AppCompatActivity {
                                 if (status.equals("1")) {
                                     is_fav = "true";
                                     img_fav.setImageDrawable(getResources().getDrawable(R.drawable.fav_filled));
-                                    Toast.makeText(GiftDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    String language = String.valueOf(getResources().getConfiguration().locale);
+                                    if (language.equals("ar")) {
+                                        if (response.body().getArab_message() != null) {
+                                            Toast.makeText(GiftDetailsActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(GiftDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(GiftDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 } else {
                                     Toast.makeText(GiftDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
@@ -301,7 +320,7 @@ public class GiftDetailsActivity extends AppCompatActivity {
                     NotificationHelper.scheduleRepeatingElapsedNotification(getApplicationContext());
                     NotificationHelper.enableBootReceiver(getApplicationContext());
                 } else {
-                    Toast.makeText(GiftDetailsActivity.this, "Please add item to the cart", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GiftDetailsActivity.this, getResources().getString(R.string.please_add_item_to_cart), Toast.LENGTH_SHORT).show();
                 }
             }
         });

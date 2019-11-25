@@ -51,7 +51,7 @@ public class PrivayPolicyActivity extends AppCompatActivity {
 
         if (Connection_Detector.isInternetAvailable(this)) {
 
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -87,7 +87,7 @@ public class PrivayPolicyActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "No internet Connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
     }
 }

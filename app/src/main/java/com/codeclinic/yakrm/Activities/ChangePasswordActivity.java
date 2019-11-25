@@ -70,17 +70,17 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isEmpty(edt_old_pass.getText().toString())) {
-                    Toast.makeText(ChangePasswordActivity.this, "Please Enter Old Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangePasswordActivity.this, getResources().getString(R.string.please_enter_old_password), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(edt_new_pass.getText().toString())) {
-                    Toast.makeText(ChangePasswordActivity.this, "Please Enter New Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangePasswordActivity.this, getResources().getString(R.string.please_enter_new_password), Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(edt_confm_new_pass.getText().toString())) {
-                    Toast.makeText(ChangePasswordActivity.this, "Please Confirm New Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangePasswordActivity.this, getResources().getString(R.string.confirm_new_password), Toast.LENGTH_SHORT).show();
                 } else if (!edt_confm_new_pass.getText().toString().matches(edt_new_pass.getText().toString())) {
                     Toast.makeText(ChangePasswordActivity.this, "Confirm Password not matched", Toast.LENGTH_SHORT).show();
                 } else {
 
                     if (Connection_Detector.isInternetAvailable(ChangePasswordActivity.this)) {
-                        progressDialog.setMessage("Please Wait");
+                        progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -98,10 +98,28 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 String status = response.body().getStatus();
                                 if (status.equals("1")) {
-                                    Toast.makeText(ChangePasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    String language = String.valueOf(getResources().getConfiguration().locale);
+                                    if (language.equals("ar")) {
+                                        if (response.body().getArab_message() != null) {
+                                            Toast.makeText(ChangePasswordActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(ChangePasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(ChangePasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                     finish();
                                 } else {
-                                    Toast.makeText(ChangePasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    String language = String.valueOf(getResources().getConfiguration().locale);
+                                    if (language.equals("ar")) {
+                                        if (response.body().getArab_message() != null) {
+                                            Toast.makeText(ChangePasswordActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(ChangePasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(ChangePasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
 
@@ -112,7 +130,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                             }
                         });
                     } else {
-                        Toast.makeText(ChangePasswordActivity.this, "No internet available", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChangePasswordActivity.this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                     }
                 }
             }

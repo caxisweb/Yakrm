@@ -127,7 +127,7 @@ public class ReturnVoucherListAdapter extends RecyclerView.Adapter<ReturnVoucher
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        progressDialog.setMessage("Please Wait");
+                        progressDialog.setMessage(context.getResources().getString(R.string.Please_Wait));
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
                         progressDialog.show();

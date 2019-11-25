@@ -87,7 +87,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:singleLine="false"
-        android:text="You will recieve this amount in your Wallet by returning this Voucher"
+        android:text="@string/you_will_recieve_this_amount_in_your_wallet_by_returning_this_voucher"
         android:textColor="@color/black" />
 
     <TextView

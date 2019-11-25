@@ -73,9 +73,9 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.Holder> 
                     e.printStackTrace();
                 }
                 AlertDialog.Builder alert = new AlertDialog.Builder(context, R.style.CustomDialogFragment);
-                alert.setMessage("Are you sure you want to remove from Favourites?");
+                alert.setMessage(context.getResources().getString(R.string.are_you_sure_to_remove_favourites));
                 alert.setCancelable(false);
-                alert.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton(context.getResources().getString(R.string.remove), new DialogInterface.OnClickListener() {
                     @SuppressLint("StaticFieldLeak")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -85,7 +85,16 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.Holder> 
                             public void onResponse(Call<AddToFavouritesModel> call, Response<AddToFavouritesModel> response) {
                                 String status = response.body().getStatus();
                                 if (status.equals("1")) {
-                                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    String language = String.valueOf(context.getResources().getConfiguration().locale);
+                                    if (language.equals("ar")) {
+                                        if (response.body().getArab_message() != null) {
+                                            Toast.makeText(context, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                     ((Activity) context).recreate();
                                 } else {
                                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -98,7 +107,7 @@ public class FavListAdapter extends RecyclerView.Adapter<FavListAdapter.Holder> 
                             }
                         });
                     }
-                }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(context.getResources().getString(R.string.New_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

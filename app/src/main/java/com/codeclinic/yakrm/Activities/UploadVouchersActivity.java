@@ -107,7 +107,7 @@ public class UploadVouchersActivity extends AppCompatActivity {
         vendor_image = findViewById(R.id.img_vendor);
 
         if (Connection_Detector.isInternetAvailable(this)) {
-            progressDialog.setMessage("Please Wait");
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
             progressDialog.show();

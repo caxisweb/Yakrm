@@ -188,21 +188,21 @@ public class EditCardActivity extends AppCompatActivity {
 
                 if (Connection_Detector.isInternetAvailable(EditCardActivity.this)) {
                     if (isEmpty(edt_name.getText().toString())) {
-                        Toast.makeText(EditCardActivity.this, "Please Enter CardHolder Name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditCardActivity.this, getResources().getString(R.string.PleaseEnterCardHolderName), Toast.LENGTH_SHORT).show();
                     } else if (!edt_name.getText().toString().matches(name_regex)) {
-                        Toast.makeText(EditCardActivity.this, "Please Enter Valid Name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditCardActivity.this, getResources().getString(R.string.PleaseEnterValidName), Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_card_no.getText().toString())) {
-                        Toast.makeText(EditCardActivity.this, "Please Enter CardNumber", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditCardActivity.this, getResources().getString(R.string.PleaseEnterCardNumber), Toast.LENGTH_SHORT).show();
                     } else if (edt_card_no.getText().toString().length() > 19 || edt_card_no.getText().toString().length() < 7) {
-                        Toast.makeText(EditCardActivity.this, "Please Enter Correct Card no", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditCardActivity.this, getResources().getString(R.string.PleaseEnterCorrectCardNo), Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_ex_date.getText().toString())) {
-                        Toast.makeText(EditCardActivity.this, "Please Enter Card Expiry date", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditCardActivity.this, getResources().getString(R.string.PleaseEnterCardExpirydate), Toast.LENGTH_SHORT).show();
                     } else if (isEmpty(edt_cvv.getText().toString())) {
-                        Toast.makeText(EditCardActivity.this, "Please Enter Security Number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditCardActivity.this, getResources().getString(R.string.PleaseEnterSecurityNumber), Toast.LENGTH_SHORT).show();
                     } else if (edt_cvv.getText().toString().length() != 3) {
-                        Toast.makeText(EditCardActivity.this, "Please Enter Correct Security Number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditCardActivity.this, getResources().getString(R.string.PleaseEnterCorrectSecurityNumber), Toast.LENGTH_SHORT).show();
                     } else {
-                        progressDialog.setMessage("Please Wait");
+                        progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                         progressDialog.setIndeterminate(true);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
@@ -242,7 +242,7 @@ public class EditCardActivity extends AppCompatActivity {
                         });
                     }
                 } else {
-                    Toast.makeText(EditCardActivity.this, "No internet available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditCardActivity.this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
             }
         });

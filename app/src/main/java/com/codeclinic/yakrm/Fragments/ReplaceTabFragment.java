@@ -76,6 +76,7 @@ public class ReplaceTabFragment extends Fragment {
                         admin_discount = response.body().getAdminProfitDis();
                         myWalletAdapter = new MyWalletAdapter(arrayList, getActivity(), admin_discount);
                         recyclerView.setAdapter(myWalletAdapter);
+                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         // Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
