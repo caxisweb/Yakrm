@@ -115,8 +115,14 @@ public class BuyTabFragment extends Fragment {
                             if (MainActivity.arrayList.size() == 0) {
                                 MainActivity.arrayList = (ArrayList<GiftCategoryModel>) response.body().getGiftCategory();
                                 for (int k = 0; k < MainActivity.arrayList.size(); k++) {
+                                    String language = String.valueOf(getResources().getConfiguration().locale);
                                     cat_arrayList_id.add(MainActivity.arrayList.get(k).getId());
-                                    MainActivity.cat_arrayList_name.add(MainActivity.arrayList.get(k).getGiftCategoryName());
+                                    if (language.equals("ar")) {
+                                        MainActivity.cat_arrayList_name.add(MainActivity.arrayList.get(k).getArabGiftCategoryName());
+                                    } else {
+                                        MainActivity.cat_arrayList_name.add(MainActivity.arrayList.get(k).getGiftCategoryName());
+                                    }
+
                                 }
                                 MainActivity.btn = new Button[MainActivity.arrayList.size()];
                                 for (int i = 0; i < MainActivity.arrayList.size(); i++) {

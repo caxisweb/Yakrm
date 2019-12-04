@@ -199,7 +199,13 @@ public class SendToFriendActivity extends AppCompatActivity {
                                 tv_email.setText(response.body().getEmail());
                                 mobile_number = edt_mobile.getText().toString();
                             } else {
-                                Toast.makeText(SendToFriendActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                String language = String.valueOf(getResources().getConfiguration().locale);
+                                if (language.equals("ar")) {
+                                    Toast.makeText(SendToFriendActivity.this, "الرقم غير صحيح", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(SendToFriendActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                         }
 
