@@ -454,5 +454,6 @@
     <string name="please_add_item_to_cart">Please add item to the cart</string>
     <string name="please_enter_old_password">Please Enter Old Password</string>
     <string name="please_enter_new_password">Please Enter New Password</string>
+    <string name="iPay">I Pay</string>
 
 </resources>

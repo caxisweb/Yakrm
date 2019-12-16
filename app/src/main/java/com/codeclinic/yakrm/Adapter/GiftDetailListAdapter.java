@@ -101,7 +101,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                 .replaceAll("9", context.getResources().getString(R.string.nine))
                 .replaceAll("0", context.getResources().getString(R.string.zero)) + "%");
 
-        if (voucher_actual_price != 0) {
+        /*if (voucher_actual_price != 0) {
             customViewHolder.tv_pay.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
                     .replaceAll("2", context.getResources().getString(R.string.two))
                     .replaceAll("3", context.getResources().getString(R.string.three))
@@ -123,6 +123,14 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                     .replaceAll("8", context.getResources().getString(R.string.eight))
                     .replaceAll("9", context.getResources().getString(R.string.nine))
                     .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
+        }
+*/
+        customViewHolder.tv_pay.setText(context.getResources().getString(R.string.iPay) + " " + arrayList.get(i).getVoucherPrice() + " " + context.getResources().getString(R.string.SR_currency) + "  (" + arrayList.get(i).getDiscount() + " % " + context.getResources().getString(R.string.discount) + ")");
+        if (sessionManager.getLanguage("Language", "en").equals("en")) {
+            customViewHolder.tv_desc.setText(arrayList.get(i).getVoucherDescription());
+
+        } else {
+            customViewHolder.tv_desc.setText(arrayList.get(i).getArabVoucherDescription());
         }
 
         customViewHolder.llayout_main.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +214,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
             }
         });
 
+
         customViewHolder.img_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,7 +290,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_value, tv_discount, tv_pay;
+        TextView tv_value, tv_discount, tv_pay, tv_desc;
         ImageView img_view;
         LinearLayout llayout_main;
 
@@ -290,6 +299,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
             tv_value = itemView.findViewById(R.id.tv_value);
             tv_discount = itemView.findViewById(R.id.tv_discount);
             tv_pay = itemView.findViewById(R.id.tv_pay);
+            tv_desc = itemView.findViewById(R.id.tv_desc);
             img_view = itemView.findViewById(R.id.img_view);
             llayout_main = itemView.findViewById(R.id.llayout_main);
         }
