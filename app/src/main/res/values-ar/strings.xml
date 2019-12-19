@@ -52,7 +52,7 @@
     <string name="My_Wallet">محفظتي</string>
 
 
-    <string name="filter_the_results">تصفية النتائج </string>
+    <string name="filter_the_results">بحث متقدم</string>
     <string name="The_most_popular_gifts">الهدايا الأكثر شعبية </string>
     <string name="brand_address_is_here_discount_till_4">عنوان البراند هنا، توفير حتى 4%</string>
 
@@ -408,7 +408,7 @@
         <item>السعودية </item>
     </string-array>
 
-    <string name="iPay">أنا أدفع</string>
+    <string name="iPay">أدفع</string>
 
 
 </resources>

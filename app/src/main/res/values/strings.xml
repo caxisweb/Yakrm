@@ -67,7 +67,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="filter_the_results">Filter the results</string>
+    <string name="filter_the_results">advanced search</string>
     <string name="The_most_popular_gifts">The most popular gifts</string>
     <string name="brand_address_is_here_discount_till_4">(brand address is here, discount till 4%)</string>
     <string name="Gifts_classification">Gifts classification</string>
@@ -454,6 +454,6 @@
     <string name="please_add_item_to_cart">Please add item to the cart</string>
     <string name="please_enter_old_password">Please Enter Old Password</string>
     <string name="please_enter_new_password">Please Enter New Password</string>
-    <string name="iPay">I Pay</string>
+    <string name="iPay">Pay</string>
 
 </resources>
