@@ -125,7 +125,7 @@ public class GiftDetailListAdapter extends RecyclerView.Adapter<GiftDetailListAd
                     .replaceAll("0", context.getResources().getString(R.string.zero)) + context.getResources().getString(R.string.SR_currency));
         }
 */
-        customViewHolder.tv_pay.setText(context.getResources().getString(R.string.iPay) + " " + arrayList.get(i).getVoucherPrice() + " " + context.getResources().getString(R.string.SR_currency) + "  (" + arrayList.get(i).getDiscount() + " % " + context.getResources().getString(R.string.discount) + ")");
+        customViewHolder.tv_pay.setText(context.getResources().getString(R.string.iPay) + " " + arrayList.get(i).getVoucherPrice() + " " + context.getResources().getString(R.string.and_get) + "  (" + arrayList.get(i).getDiscount() + " % " + context.getResources().getString(R.string.discount) + ")");
         if (sessionManager.getLanguage("Language", "en").equals("en")) {
             customViewHolder.tv_desc.setText(arrayList.get(i).getVoucherDescription());
 

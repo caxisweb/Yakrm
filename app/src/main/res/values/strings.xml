@@ -455,5 +455,6 @@
     <string name="please_enter_old_password">Please Enter Old Password</string>
     <string name="please_enter_new_password">Please Enter New Password</string>
     <string name="iPay">Pay</string>
+    <string name="and_get">SAR and get</string>
 
 </resources>
