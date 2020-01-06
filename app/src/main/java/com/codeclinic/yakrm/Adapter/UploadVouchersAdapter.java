@@ -16,18 +16,23 @@ import com.codeclinic.yakrm.Activities.UploadVoucherDataActivity;
 import com.codeclinic.yakrm.Models.BrandListItemModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.ImageURL;
+import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static android.text.TextUtils.isEmpty;
 
 public class UploadVouchersAdapter extends RecyclerView.Adapter<UploadVouchersAdapter.Holder> {
 
     List<BrandListItemModel> arrayList;
     Context context;
+    SessionManager sessionManager;
 
     public UploadVouchersAdapter(List<BrandListItemModel> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
+        sessionManager = new SessionManager(context);
     }
 
     @NonNull
@@ -40,6 +45,16 @@ public class UploadVouchersAdapter extends RecyclerView.Adapter<UploadVouchersAd
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull UploadVouchersAdapter.Holder holder, final int i) {
+
+        if (sessionManager.getLanguage("Language", "en").equals("en")) {
+            holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+        } else {
+            if (isEmpty(arrayList.get(i).getBrand_name_arab())) {
+                holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+            } else {
+                holder.tv_item_name.setText(arrayList.get(i).getBrand_name_arab());
+            }
+        }
         holder.tv_item_name.setText(arrayList.get(i).getBrandName());
         Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage()).into(holder.img_brand);
         holder.tv_discount.setText(arrayList.get(i).getTotalVoucher() + " " + context.getResources().getString(R.string.Discount_Voucher).replaceAll("1", context.getResources().getString(R.string.one))

@@ -10,6 +10,9 @@ public class BrandListItemModel {
     @SerializedName("brand_name")
     @Expose
     private String brandName;
+    @SerializedName("brand_name_arab")
+    @Expose
+    private String brand_name_arab;
     @SerializedName("brand_image")
     @Expose
     private String brandImage;
@@ -19,6 +22,10 @@ public class BrandListItemModel {
     @SerializedName("total_voucher")
     @Expose
     private String totalVoucher;
+
+    public String getBrand_name_arab() {
+        return brand_name_arab;
+    }
 
     public String getId() {
         return id;

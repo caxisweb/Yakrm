@@ -10,6 +10,9 @@ public class CartListItemModel {
     @SerializedName("brand_name")
     @Expose
     private String brandName;
+    @SerializedName("brand_name_arab")
+    @Expose
+    private String brand_name_arab;
     @SerializedName("brand_image")
     @Expose
     private String brandImage;
@@ -28,6 +31,10 @@ public class CartListItemModel {
     @SerializedName("expired_at")
     @Expose
     private String expiredAt;
+
+    public String getBrand_name_arab() {
+        return brand_name_arab;
+    }
 
     public String getCartId() {
         return cartId;

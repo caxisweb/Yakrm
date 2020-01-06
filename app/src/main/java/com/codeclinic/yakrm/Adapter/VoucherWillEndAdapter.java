@@ -2,7 +2,6 @@ package com.codeclinic.yakrm.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,23 +11,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.codeclinic.yakrm.Activities.VoucherDetailActivity;
 import com.codeclinic.yakrm.Models.EndedVoucherListItemModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.ImageURL;
+import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static android.text.TextUtils.isEmpty;
 
 public class VoucherWillEndAdapter extends RecyclerView.Adapter<VoucherWillEndAdapter.Holder> {
 
     List<EndedVoucherListItemModel> arrayList;
     Context context;
+    SessionManager sessionManager;
 
     public VoucherWillEndAdapter(List<EndedVoucherListItemModel> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
+        sessionManager = new SessionManager(context);
     }
 
     @NonNull
@@ -41,7 +43,15 @@ public class VoucherWillEndAdapter extends RecyclerView.Adapter<VoucherWillEndAd
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull VoucherWillEndAdapter.Holder holder, final int i) {
-        holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+        if (sessionManager.getLanguage("Language", "en").equals("en")) {
+            holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+        } else {
+            if (isEmpty(arrayList.get(i).getBrand_name_arab())) {
+                holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+            } else {
+                holder.tv_item_name.setText(arrayList.get(i).getBrand_name_arab() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+            }
+        }
         holder.tv_expiry_date.setText(arrayList.get(i).getDiscount());
         holder.tv_price.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))

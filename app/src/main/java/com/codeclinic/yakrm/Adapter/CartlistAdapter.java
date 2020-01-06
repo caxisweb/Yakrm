@@ -36,6 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.text.TextUtils.isEmpty;
+
 public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder> {
     List<CartListItemModel> arrayList;
     Context context;
@@ -64,7 +66,17 @@ public class CartlistAdapter extends RecyclerView.Adapter<CartlistAdapter.Holder
     @Override
     public void onBindViewHolder(@NonNull CartlistAdapter.Holder holder, @SuppressLint("RecyclerView") final int i) {
         Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage()).into(holder.brand_images);
-        holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+
+        if (sessionManager.getLanguage("Language", "en").equals("en")) {
+            holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+        } else {
+            if (isEmpty(arrayList.get(i).getBrand_name_arab())) {
+                holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+            } else {
+                holder.tv_item_name.setText(arrayList.get(i).getBrand_name_arab() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+            }
+        }
+
         try {
             date_array = arrayList.get(i).getExpiredAt().split(" ");
             String date = date_array[0];

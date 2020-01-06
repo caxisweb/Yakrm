@@ -14,18 +14,23 @@ import android.widget.TextView;
 import com.codeclinic.yakrm.Models.VoucherAboutToEndListItemModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.ImageURL;
+import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static android.text.TextUtils.isEmpty;
 
 public class VoucherAboutToEndAdaper extends RecyclerView.Adapter<VoucherAboutToEndAdaper.Holder> {
 
     List<VoucherAboutToEndListItemModel> arrayList;
     Context context;
+    SessionManager sessionManager;
 
     public VoucherAboutToEndAdaper(List<VoucherAboutToEndListItemModel> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
+        sessionManager = new SessionManager(context);
     }
 
     @NonNull
@@ -38,7 +43,15 @@ public class VoucherAboutToEndAdaper extends RecyclerView.Adapter<VoucherAboutTo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull VoucherAboutToEndAdaper.Holder holder, int i) {
-        holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+        if (sessionManager.getLanguage("Language", "en").equals("en")) {
+            holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+        } else {
+            if (isEmpty(arrayList.get(i).getBrand_name_arab())) {
+                holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+            } else {
+                holder.tv_item_name.setText(arrayList.get(i).getBrand_name_arab() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+            }
+        }
         holder.tv_discount_vouchers.setText(arrayList.get(i).getDiscount());
         holder.tv_price.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))

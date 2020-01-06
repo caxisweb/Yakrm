@@ -143,15 +143,22 @@ public class GiftDetailsActivity extends AppCompatActivity {
                     String status = response.body().getStatus();
                     if (status.equals("1")) {
                         Picasso.with(GiftDetailsActivity.this).load(ImageURL.Vendor_brand_image + response.body().getBrandImage()).into(img_brand_img);
-                        tv_brand_name.setText(response.body().getBrandName());
+
                         String language = String.valueOf(getResources().getConfiguration().locale);
                         if (language.equals("ar")) {
+                            if (response.body().getBrand_name_arab() != null) {
+                                tv_brand_name.setText(response.body().getBrand_name_arab());
+                            } else {
+                                tv_brand_name.setText(response.body().getBrandName());
+                            }
                             if (response.body().getBrand_description_arab() != null) {
                                 tv_description.setText(response.body().getBrand_description_arab());
                             } else {
+
                                 tv_description.setText(response.body().getDescription());
                             }
                         } else {
+                            tv_brand_name.setText(response.body().getBrandName());
                             tv_description.setText(response.body().getDescription());
                         }
 

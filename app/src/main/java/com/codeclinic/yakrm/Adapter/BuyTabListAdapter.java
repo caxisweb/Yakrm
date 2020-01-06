@@ -16,17 +16,23 @@ import com.codeclinic.yakrm.Activities.GiftDetailsActivity;
 import com.codeclinic.yakrm.Models.AllVoucherListItemModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.ImageURL;
+import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static android.text.TextUtils.isEmpty;
 
 public class BuyTabListAdapter extends RecyclerView.Adapter<BuyTabListAdapter.CustomViewHolder> {
     List<AllVoucherListItemModel> arrayList;
     Context context;
 
+    SessionManager sessionManager;
+
     public BuyTabListAdapter(List<AllVoucherListItemModel> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
+        sessionManager = new SessionManager(context);
     }
 
     @NonNull
@@ -40,7 +46,16 @@ public class BuyTabListAdapter extends RecyclerView.Adapter<BuyTabListAdapter.Cu
     @Override
     public void onBindViewHolder(@NonNull BuyTabListAdapter.CustomViewHolder customViewHolder, final int i) {
 
-        customViewHolder.tv_item_name.setText(arrayList.get(i).getBrandName());
+        if (sessionManager.getLanguage("Language", "en").equals("en")) {
+            customViewHolder.tv_item_name.setText(arrayList.get(i).getBrandName());
+        } else {
+            if (isEmpty(arrayList.get(i).getBrand_name_arab())) {
+                customViewHolder.tv_item_name.setText(arrayList.get(i).getBrandName());
+            } else {
+                customViewHolder.tv_item_name.setText(arrayList.get(i).getBrand_name_arab());
+            }
+        }
+
         customViewHolder.tv_discount_percent.setText(arrayList.get(i).getDiscount().replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
                 .replaceAll("3", context.getResources().getString(R.string.three))

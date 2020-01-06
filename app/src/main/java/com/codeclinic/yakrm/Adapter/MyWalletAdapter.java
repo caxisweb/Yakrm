@@ -16,6 +16,7 @@ import com.codeclinic.yakrm.Activities.VoucherDetailActivity;
 import com.codeclinic.yakrm.Models.WalletActiveListItemModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.ImageURL;
+import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,11 +25,13 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
     List<WalletActiveListItemModel> arrayList;
     Context context;
     String admin_discount;
+    SessionManager sessionManager;
 
     public MyWalletAdapter(List<WalletActiveListItemModel> arrayList, Context context, String admin_discount) {
         this.arrayList = arrayList;
         this.context = context;
         this.admin_discount = admin_discount;
+        sessionManager = new SessionManager(context);
     }
 
     public boolean isEmpty(CharSequence character) {
@@ -46,10 +49,30 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
     @Override
     public void onBindViewHolder(@NonNull MyWalletAdapter.Holder holder, @SuppressLint("RecyclerView") final int i) {
         Picasso.with(context).load(ImageURL.Vendor_voucher_image + arrayList.get(i).getVoucherImage()).into(holder.voucher_image);
-        if (arrayList.get(i).getScanVoucherType().equals("gift_voucher")) {
-            holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " (Gifted)");
+
+
+        if (sessionManager.getLanguage("Language", "en").equals("en")) {
+            if (arrayList.get(i).getScanVoucherType().equals("gift_voucher")) {
+                holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " (Gifted)");
+            } else {
+                holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+            }
+
         } else {
-            holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+
+            if (isEmpty(arrayList.get(i).getBrand_name_arab())) {
+                if (arrayList.get(i).getScanVoucherType().equals("gift_voucher")) {
+                    holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " (Gifted)");
+                } else {
+                    holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+                }
+            } else {
+                if (arrayList.get(i).getScanVoucherType().equals("gift_voucher")) {
+                    holder.tv_item_name.setText(arrayList.get(i).getBrand_name_arab() + " (Gifted)");
+                } else {
+                    holder.tv_item_name.setText(arrayList.get(i).getBrand_name_arab());
+                }
+            }
         }
 
         holder.tv_price.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
@@ -70,7 +93,17 @@ public class MyWalletAdapter extends RecyclerView.Adapter<MyWalletAdapter.Holder
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, VoucherDetailActivity.class);
-                intent.putExtra("name", arrayList.get(i).getBrandName());
+                if (sessionManager.getLanguage("Language", "en").equals("en")) {
+                    intent.putExtra("name", arrayList.get(i).getBrandName());
+                } else {
+
+                    if (isEmpty(arrayList.get(i).getBrand_name_arab())) {
+                        intent.putExtra("name", arrayList.get(i).getBrandName());
+                    } else {
+                        intent.putExtra("name", arrayList.get(i).getBrand_name_arab());
+                    }
+                }
+                //intent.putExtra("name", arrayList.get(i).getBrandName());
                 intent.putExtra("date", arrayList.get(i).getExpired_at().substring(0, arrayList.get(i).getExpired_at().indexOf(" ")));
                 intent.putExtra("barcode", arrayList.get(i).getScanCode());
                 intent.putExtra("pincode", arrayList.get(i).getPinCode());

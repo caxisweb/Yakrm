@@ -32,6 +32,9 @@ public class RecievedGftListItemModel {
     @SerializedName("brand_name")
     @Expose
     private String brandName;
+    @SerializedName("brand_name_arab")
+    @Expose
+    private String brand_name_arab;
     @SerializedName("scan_code")
     @Expose
     private String scanCode;
@@ -56,6 +59,10 @@ public class RecievedGftListItemModel {
     @SerializedName("scan_voucher_type")
     @Expose
     private String scanVoucherType;
+
+    public String getBrand_name_arab() {
+        return brand_name_arab;
+    }
 
     public String getVoucherGiftSendId() {
         return voucherGiftSendId;

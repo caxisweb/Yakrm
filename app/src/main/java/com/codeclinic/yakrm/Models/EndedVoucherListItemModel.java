@@ -13,6 +13,9 @@ public class EndedVoucherListItemModel {
     @SerializedName("brand_name")
     @Expose
     private String brandName;
+    @SerializedName("brand_name_arab")
+    @Expose
+    private String brand_name_arab;
     @SerializedName("vendor_name")
     @Expose
     private String vendorName;
@@ -43,6 +46,10 @@ public class EndedVoucherListItemModel {
     @SerializedName("scan_voucher_type")
     @Expose
     private String scanVoucherType;
+
+    public String getBrand_name_arab() {
+        return brand_name_arab;
+    }
 
     public String getVoucherPaymentDetailId() {
         return voucherPaymentDetailId;

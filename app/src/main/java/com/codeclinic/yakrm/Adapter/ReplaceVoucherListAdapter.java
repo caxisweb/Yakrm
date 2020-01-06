@@ -22,6 +22,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import static android.text.TextUtils.isEmpty;
+
 public class ReplaceVoucherListAdapter extends RecyclerView.Adapter<ReplaceVoucherListAdapter.Holder> {
 
     List<AllVoucherListItemModel> arrayList;
@@ -57,7 +59,15 @@ public class ReplaceVoucherListAdapter extends RecyclerView.Adapter<ReplaceVouch
     public void onBindViewHolder(@NonNull ReplaceVoucherListAdapter.Holder holder, final int i) {
         Picasso.with(context).load(ImageURL.Vendor_brand_image + arrayList.get(i).getBrandImage()).into(holder.voucher_image);
 
-        holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+        if (sessionManager.getLanguage("Language", "en").equals("en")) {
+            holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+        } else {
+            if (isEmpty(arrayList.get(i).getBrand_name_arab())) {
+                holder.tv_item_name.setText(arrayList.get(i).getBrandName());
+            } else {
+                holder.tv_item_name.setText(arrayList.get(i).getBrand_name_arab());
+            }
+        }
 
         holder.tv_price.setText(arrayList.get(i).getVoucherPrice().replaceAll("1", context.getResources().getString(R.string.one))
                 .replaceAll("2", context.getResources().getString(R.string.two))
@@ -117,16 +127,16 @@ public class ReplaceVoucherListAdapter extends RecyclerView.Adapter<ReplaceVouch
                        /* ExchangeAddBalanceActivity.main_price = wallet_amt - ExchangeAddBalanceActivity.main_price;
                         tv_price.setText(String.valueOf(ExchangeAddBalanceActivity.main_price) + " " + context.getResources().getString(R.string.SR_currency));*/
                         ExchangeAddBalanceActivity.main_price = 0;
-                        tv_price.setText(String.valueOf(ExchangeAddBalanceActivity.main_price) + " " + context.getResources().getString(R.string.SR_currency));
+                        tv_price.setText(ExchangeAddBalanceActivity.main_price + " " + context.getResources().getString(R.string.SR_currency));
 
                     } else {
                         ExchangeAddBalanceActivity.main_price = ExchangeAddBalanceActivity.main_price - wallet_amt;
-                        tv_price.setText(String.valueOf(ExchangeAddBalanceActivity.main_price) + " " + context.getResources().getString(R.string.SR_currency));
+                        tv_price.setText(ExchangeAddBalanceActivity.main_price + " " + context.getResources().getString(R.string.SR_currency));
                     }
                 } else {
                     //ExchangeAddBalanceActivity.main_price = ExchangeAddBalanceActivity.replace_price - ExchangeAddBalanceActivity.voucher_price;
                     ExchangeAddBalanceActivity.main_price = 0;
-                    tv_price.setText(String.valueOf(0 + " " + context.getResources().getString(R.string.SR_currency)));
+                    tv_price.setText(0 + " " + context.getResources().getString(R.string.SR_currency));
                   /*  if (wallet_amt > ExchangeAddBalanceActivity.main_price) {
                         ExchangeAddBalanceActivity.main_price = wallet_amt - ExchangeAddBalanceActivity.main_price;
                         tv_price.setText(String.valueOf(wallet_amt - ExchangeAddBalanceActivity.main_price) + " " + context.getResources().getString(R.string.SR_currency));

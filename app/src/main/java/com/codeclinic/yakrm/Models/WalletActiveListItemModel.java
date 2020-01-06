@@ -16,6 +16,9 @@ public class WalletActiveListItemModel {
     @SerializedName("brand_name")
     @Expose
     private String brandName;
+    @SerializedName("brand_name_arab")
+    @Expose
+    private String brand_name_arab;
     @SerializedName("vendor_name")
     @Expose
     private String vendorName;
@@ -58,6 +61,10 @@ public class WalletActiveListItemModel {
     @SerializedName("voucher_description")
     @Expose
     private String voucher_description;
+
+    public String getBrand_name_arab() {
+        return brand_name_arab;
+    }
 
     public String getVouchergiftsendid() {
         return vouchergiftsendid;

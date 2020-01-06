@@ -19,6 +19,7 @@ import com.codeclinic.yakrm.Activities.VoucherDetailActivity;
 import com.codeclinic.yakrm.Models.RecievedGftListItemModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Utils.ImageURL;
+import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -30,10 +31,12 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
     Context context;
     String final_date;
     String[] date_array;
+    SessionManager sessionManager;
 
     public RecievedListAdapter(List<RecievedGftListItemModel> arrayList, Context context) {
         this.arrayList = arrayList;
         this.context = context;
+        sessionManager = new SessionManager(context);
     }
 
 
@@ -53,6 +56,17 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
     public void onBindViewHolder(@NonNull RecievedListAdapter.Holder holder, final int i) {
         holder.tv_description.setText(arrayList.get(i).getDescription());
         holder.tv_friend_name.setText(arrayList.get(i).getName());
+
+        if (sessionManager.getLanguage("Language", "en").equals("en")) {
+            holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+        } else {
+            if (isEmpty(arrayList.get(i).getBrand_name_arab())) {
+                holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+            } else {
+                holder.tv_item_name.setText(arrayList.get(i).getBrand_name_arab() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
+            }
+        }
+
         holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
         Picasso.with(context).load(ImageURL.Vendor_voucher_image + arrayList.get(i).getVoucherImage()).into(holder.voucher_image);
         try {
@@ -162,7 +176,17 @@ public class RecievedListAdapter extends RecyclerView.Adapter<RecievedListAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, VoucherDetailActivity.class);
-                intent.putExtra("name", arrayList.get(i).getBrandName());
+                if (sessionManager.getLanguage("Language", "en").equals("en")) {
+                    intent.putExtra("name", arrayList.get(i).getBrandName());
+                } else {
+
+                    if (isEmpty(arrayList.get(i).getBrand_name_arab())) {
+                        intent.putExtra("name", arrayList.get(i).getBrandName());
+                    } else {
+                        intent.putExtra("name", arrayList.get(i).getBrand_name_arab());
+                    }
+                }
+                //intent.putExtra("name", arrayList.get(i).getBrandName());
                 intent.putExtra("date", arrayList.get(i).getExpiredAt());
                 intent.putExtra("barcode", arrayList.get(i).getScanCode());
                 intent.putExtra("pincode", arrayList.get(i).getPinCode());
