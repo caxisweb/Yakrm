@@ -147,6 +147,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
                     }
                     try {
                         jsonObject.put("scan_code", main_value + str_v_type + "@" + brand_id);
+                        jsonObject.put("is_scan", false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

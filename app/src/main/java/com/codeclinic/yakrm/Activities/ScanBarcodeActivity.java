@@ -76,6 +76,7 @@ public class ScanBarcodeActivity extends BaseScannerActivity implements ZXingSca
         }
         try {
             jsonObject.put("scan_code", main_value + str_v_type + "@" + UploadVoucherDataActivity.brand_id);
+            jsonObject.put("is_scan", true);
         } catch (JSONException e) {
             e.printStackTrace();
         }

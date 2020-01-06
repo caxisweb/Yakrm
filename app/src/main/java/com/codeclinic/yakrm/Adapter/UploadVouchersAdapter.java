@@ -51,7 +51,7 @@ public class UploadVouchersAdapter extends RecyclerView.Adapter<UploadVouchersAd
                 .replaceAll("7", context.getResources().getString(R.string.seven))
                 .replaceAll("8", context.getResources().getString(R.string.eight))
                 .replaceAll("9", context.getResources().getString(R.string.nine))
-                .replaceAll("0", context.getResources().getString(R.string.zero)) + " " + context.getResources().getString(R.string.SR_currency));
+                .replaceAll("0", context.getResources().getString(R.string.zero)));
 
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
