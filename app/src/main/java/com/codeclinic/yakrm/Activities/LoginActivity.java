@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                         jsonObject.put("phone", str_email);
                         jsonObject.put("password", str_password);
                         jsonObject.put("gcm_id", FirebaseInstanceId.getInstance().getToken());
+                        //jsonObject.put("gcm_id","1");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
