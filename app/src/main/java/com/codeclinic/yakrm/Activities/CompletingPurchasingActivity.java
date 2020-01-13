@@ -69,7 +69,8 @@ import static com.codeclinic.yakrm.Activities.VoucherDetailActivity.voucher_gift
 import static com.codeclinic.yakrm.Activities.VoucherDetailActivity.voucher_id;
 
 
-public class CompletingPurchasingActivity extends BasePaymentActivity implements ITransactionListener {
+public class
+CompletingPurchasingActivity extends BasePaymentActivity implements ITransactionListener {
 
     public static String card_ID;
     CardView main_pay_cardview, succesful_cardview, error_cardview;
