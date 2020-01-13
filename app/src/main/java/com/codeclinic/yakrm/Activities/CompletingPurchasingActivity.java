@@ -60,6 +60,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -489,15 +490,18 @@ CompletingPurchasingActivity extends BasePaymentActivity implements ITransaction
                                     transaction_main_price = price - Double.parseDouble(sessionManager.getUserDetails().get(SessionManager.Wallet));
                                     JSONObject jobj = new JSONObject();
                                     String checkValue = String.valueOf(transaction_main_price);
+
                                     if (checkValue.substring(0, 1).equals("0")) {
+
                                         try {
-                                            jobj.put("price", 0 + formatNumber(2, transaction_main_price));
+
+                                            jobj.put("price", 0 + String.format(Locale.US, "%.2f", transaction_main_price));
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
                                     } else {
                                         try {
-                                            jobj.put("price", formatNumber(2, transaction_main_price));
+                                            jobj.put("price", String.format(Locale.US, "%.2f", transaction_main_price));
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
