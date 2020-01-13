@@ -43,6 +43,7 @@ public class VoucherAboutToEndAdaper extends RecyclerView.Adapter<VoucherAboutTo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull VoucherAboutToEndAdaper.Holder holder, int i) {
+
         if (sessionManager.getLanguage("Language", "en").equals("en")) {
             holder.tv_item_name.setText(arrayList.get(i).getBrandName() + " " + "(" + arrayList.get(i).getVoucherType() + ")");
         } else {
