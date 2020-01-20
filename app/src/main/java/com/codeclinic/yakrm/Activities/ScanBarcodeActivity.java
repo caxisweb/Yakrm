@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.codeclinic.yakrm.Models.ScanVoucherModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
+import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.BaseScannerActivity;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.google.zxing.Result;
@@ -39,7 +40,7 @@ public class ScanBarcodeActivity extends BaseScannerActivity implements ZXingSca
         mScannerView = new ZXingScannerView(this);
         contentFrame.addView(mScannerView);
 
-        apiService = UploadVouchersActivity.RestClasses.getClient().create(API.class);
+        apiService = RestClass.getSalesmanClient().create(API.class);
         sessionManager = new SessionManager(this);
         progressDialog = new ProgressDialog(this);
 

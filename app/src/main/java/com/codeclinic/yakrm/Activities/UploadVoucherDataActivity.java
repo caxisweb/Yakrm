@@ -22,6 +22,7 @@ import com.bottlerocketstudios.barcode.generation.ui.BarcodeView;
 import com.codeclinic.yakrm.Models.ScanVoucherModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
+import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.ImageURL;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.squareup.picasso.Picasso;
@@ -66,7 +67,7 @@ public class UploadVoucherDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_voucher_data);
 
-        apiService = UploadVouchersActivity.RestClasses.getClient().create(API.class);
+        apiService = RestClass.getSalesmanClient().create(API.class);
 
         tv_item_name = findViewById(R.id.tv_item_name);
         tv_enter_manualy = findViewById(R.id.tv_enter_manualy);
