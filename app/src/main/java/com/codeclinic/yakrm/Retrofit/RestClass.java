@@ -13,10 +13,23 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RestClass {
 
-    //public static final String BASE_URL = "http://test.yakrm.com/";//http://www.codeclinic.in/demo/yakrm/api/ http://yakrm.com/api/
     public static final String BASE_URL = "https://www.yakrm.com/api/";//http://www.codeclinic.in/demo/yakrm/api/ http://yakrm.com/api/
     //public static final String BASE_URL = "http://test.yakrm.com/api/";//http://www.codeclinic.in/demo/yakrm/api/ http://yakrm.com/api/
     private static Retrofit retrofit = null;
+
+    private static final String SALESMAN_BASE_URL = "http://yakrm.com/api_salesmen/";
+    private static Retrofit retrofit_salesman = null;
+
+    public static Retrofit getSalesmanClient() {
+        if (retrofit_salesman == null) {
+            retrofit_salesman = new Retrofit.Builder()
+                    .baseUrl(SALESMAN_BASE_URL)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit_salesman;
+    }
 
     public static Retrofit getClient() {
         OkHttpClient httpClient = new OkHttpClient.Builder().connectTimeout(40, TimeUnit.SECONDS)
@@ -34,6 +47,5 @@ public class RestClass {
         }
         return retrofit;
     }
-
 
 }

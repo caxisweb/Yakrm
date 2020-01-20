@@ -18,6 +18,7 @@ import com.codeclinic.yakrm.Models.BrandListItemModel;
 import com.codeclinic.yakrm.Models.BrandListModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
+import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.Connection_Detector;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -30,9 +31,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class UploadVouchersActivity extends AppCompatActivity {
     public static String str_scanned = "0";
@@ -52,7 +50,7 @@ public class UploadVouchersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_vouchers);
 
-        apiService = RestClasses.getClient().create(API.class);
+        apiService = RestClass.getSalesmanClient().create(API.class);
         sessionManager = new SessionManager(this);
         progressDialog = new ProgressDialog(this);
 
@@ -124,7 +122,7 @@ public class UploadVouchersActivity extends AppCompatActivity {
                         txt_email.setText(response.body().getVendorEmail());
                         txt_phone.setText(response.body().getVendorMobile());
 
-                        Picasso.with(UploadVouchersActivity.this).load("http://test.yakrm.com/assets/uploads/vendor_images/" + response.body().getVendorImage()).into(vendor_image);
+                        Picasso.with(UploadVouchersActivity.this).load("http://yakrm.com/assets/uploads/vendor_images/" + response.body().getVendorImage()).into(vendor_image);
 
                         arrayList = response.body().getData();
                         Iterator itr = arrayList.iterator();
@@ -175,23 +173,6 @@ public class UploadVouchersActivity extends AppCompatActivity {
         if (str_scanned.equals("1")) {
             str_scanned = "0";
             Toast.makeText(this, getResources().getString(R.string.VoucherScannedSuccessfully), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public static class RestClasses {
-
-        private static final String BASE_URL = "http://test.yakrm.com/api_salesmen/";
-        private static Retrofit retrofit = null;
-
-        public static Retrofit getClient() {
-            if (retrofit == null) {
-                retrofit = new Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-            }
-            return retrofit;
         }
     }
 }
