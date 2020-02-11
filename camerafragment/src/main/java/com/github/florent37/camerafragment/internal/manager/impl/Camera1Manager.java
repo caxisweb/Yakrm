@@ -7,11 +7,12 @@ import android.media.CamcorderProfile;
 import android.media.ExifInterface;
 import android.media.MediaRecorder;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
+
+import androidx.annotation.Nullable;
 
 import com.github.florent37.camerafragment.configuration.Configuration;
 import com.github.florent37.camerafragment.configuration.ConfigurationProvider;

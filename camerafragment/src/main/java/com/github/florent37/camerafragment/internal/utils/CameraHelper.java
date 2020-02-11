@@ -8,9 +8,10 @@ import android.hardware.camera2.CameraManager;
 import android.media.CamcorderProfile;
 import android.os.Build;
 import android.os.Environment;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.github.florent37.camerafragment.configuration.Configuration;
 

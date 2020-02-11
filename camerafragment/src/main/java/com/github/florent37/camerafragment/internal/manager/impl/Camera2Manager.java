@@ -20,14 +20,15 @@ import android.media.CamcorderProfile;
 import android.media.ImageReader;
 import android.media.MediaRecorder;
 import android.os.Build;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.WindowManager;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 
 import com.github.florent37.camerafragment.configuration.Configuration;
 import com.github.florent37.camerafragment.configuration.ConfigurationProvider;

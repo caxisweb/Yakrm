@@ -3,12 +3,13 @@ package com.codeclinic.yakrm.Activities;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.codeclinic.yakrm.Models.AboutApplicationModel;
 import com.codeclinic.yakrm.R;

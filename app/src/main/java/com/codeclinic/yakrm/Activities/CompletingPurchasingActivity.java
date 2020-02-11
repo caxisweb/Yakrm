@@ -11,9 +11,6 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.codeclinic.yakrm.Adapter.SavedCardListAdapter;
 import com.codeclinic.yakrm.Hyperpay_checkout.BasePaymentActivity;
@@ -661,7 +662,7 @@ CompletingPurchasingActivity extends BasePaymentActivity implements ITransaction
     }
 
     private void showConfirmationDialog(String amount, String currency) {
-        new android.support.v7.app.AlertDialog.Builder(this)
+        new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setMessage(String.format(getString(R.string.message_payment_confirmation), amount, currency))
                 .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                     @Override

@@ -4,13 +4,15 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatImageButton;
+
 import com.github.florent37.camerafragment.R;
 
 /*
  * Created by memfis on 8/23/16.
  * Updated by amadeu01 on 17/04/17
  */
-public class CameraSettingsView extends android.support.v7.widget.AppCompatImageButton {
+public class CameraSettingsView extends AppCompatImageButton {
 
     public CameraSettingsView(Context context) {
         this(context, null);

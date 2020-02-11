@@ -1,13 +1,14 @@
 package com.github.florent37.camerafragment.internal.controller;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
-import java.io.File;
+import androidx.annotation.Nullable;
 
 import com.github.florent37.camerafragment.configuration.Configuration;
 import com.github.florent37.camerafragment.internal.manager.CameraManager;
 import com.github.florent37.camerafragment.listeners.CameraFragmentResultListener;
+
+import java.io.File;
 
 /*
  * Created by memfis on 7/6/16.

@@ -3,7 +3,8 @@ package com.codeclinic.yakrm.Hyperpay_checkout;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.codeclinic.yakrm.R;
 import com.google.android.gms.wallet.PaymentDataRequest;

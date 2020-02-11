@@ -6,8 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.codeclinic.yakrm.Activities.EditCardActivity;
 import com.codeclinic.yakrm.Models.GetCardListItemModel;
@@ -72,6 +73,14 @@ public class StoredCardListAdapter extends RecyclerView.Adapter<StoredCardListAd
                 context.startActivity(intent);
             }
         });
+
+        if (arrayList.get(i).getPaymentMethod().equals("1")) {
+            holder.img_card.setImageResource(R.drawable.mada);
+            holder.tv_card_type_name.setText(context.getResources().getString(R.string.By_Using_Mada_Card));
+        } else {
+            holder.tv_card_type_name.setText(context.getResources().getString(R.string.By_Using_Visa_Card));
+        }
+
 
         holder.img_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,16 +146,17 @@ public class StoredCardListAdapter extends RecyclerView.Adapter<StoredCardListAd
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        TextView tv_card_no, tv_user_name;
-        ImageView img_edit, img_delete;
+        TextView tv_card_no, tv_card_type_name;
+        ImageView img_edit, img_delete, img_card;
         RelativeLayout main_rl;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
             main_rl = itemView.findViewById(R.id.main_rl);
-            tv_user_name = itemView.findViewById(R.id.tv_user_name);
+            tv_card_type_name = itemView.findViewById(R.id.tv_card_type_name);
             tv_card_no = itemView.findViewById(R.id.tv_card_no);
             img_edit = itemView.findViewById(R.id.img_edit);
+            img_card = itemView.findViewById(R.id.img_card);
             img_delete = itemView.findViewById(R.id.img_delete);
         }
     }

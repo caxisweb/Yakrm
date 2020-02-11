@@ -1,6 +1,7 @@
 package com.github.florent37.camerafragment;
 
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.github.florent37.camerafragment.internal.ui.model.PhotoQualityOption;
 import com.github.florent37.camerafragment.listeners.CameraFragmentControlsListener;

@@ -3,13 +3,14 @@ package com.codeclinic.yakrm.Fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.codeclinic.yakrm.Activities.MainActivity;
 import com.codeclinic.yakrm.Models.FeedBackModel;
@@ -31,7 +32,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SupportContactFragment extends android.app.Fragment {
+public class SupportContactFragment extends Fragment {
 
     EditText edt_msg_title, edt_description, edt_email;
     Button btn_send;

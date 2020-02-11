@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -19,13 +16,16 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 
-import java.io.File;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.github.florent37.camerafragment.configuration.Configuration;
 import com.github.florent37.camerafragment.internal.enums.MediaAction;
 import com.github.florent37.camerafragment.internal.ui.view.AspectFrameLayout;
 import com.github.florent37.camerafragment.internal.utils.ImageLoader;
 import com.github.florent37.camerafragment.internal.utils.Utils;
+
+import java.io.File;
 
 /*
  * Created by memfis on 7/6/16.
@@ -89,7 +89,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         ratioLabels = new String[]{originalRatioLabel, "1:1", "4:3", "16:9"};
         ratios = new float[]{0f, 1f, 4f / 3f, 16f / 9f};
 
-        surfaceView = (SurfaceView) findViewById(R.id.video_preview);
+        surfaceView = findViewById(R.id.video_preview);
         surfaceView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -105,14 +105,14 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        videoPreviewContainer = (AspectFrameLayout) findViewById(R.id.previewAspectFrameLayout);
-        photoPreviewContainer = (FrameLayout) findViewById(R.id.photo_preview_container);
-        buttonPanel = (ViewGroup) findViewById(R.id.preview_control_panel);
+        videoPreviewContainer = findViewById(R.id.previewAspectFrameLayout);
+        photoPreviewContainer = findViewById(R.id.photo_preview_container);
+        buttonPanel = findViewById(R.id.preview_control_panel);
         View confirmMediaResult = findViewById(R.id.confirm_media_result);
         View reTakeMedia = findViewById(R.id.re_take_media);
         View cancelMediaAction = findViewById(R.id.cancel_media_action);
         cropMediaAction = findViewById(R.id.crop_image);
-        ratioChanger = (TextView) findViewById(R.id.ratio_image);
+        ratioChanger = findViewById(R.id.ratio_image);
         ratioChanger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

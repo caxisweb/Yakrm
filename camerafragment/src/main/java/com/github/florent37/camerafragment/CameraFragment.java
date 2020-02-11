@@ -1,7 +1,8 @@
 package com.github.florent37.camerafragment;
 
 import android.Manifest;
-import android.support.annotation.RequiresPermission;
+
+import androidx.annotation.RequiresPermission;
 
 import com.github.florent37.camerafragment.configuration.Configuration;
 import com.github.florent37.camerafragment.internal.ui.BaseAnncaFragment;

@@ -1,12 +1,13 @@
 package com.codeclinic.yakrm.Adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -22,8 +23,7 @@ public class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Rec
     private SparseArray<Section> mSections = new SparseArray<Section>();
 
 
-    public SimpleSectionedRecyclerViewAdapter(Context context, int sectionResourceId, int textResourceId,
-                                              RecyclerView.Adapter baseAdapter) {
+    public SimpleSectionedRecyclerViewAdapter(Context context, int sectionResourceId, int textResourceId, RecyclerView.Adapter baseAdapter) {
 
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSectionResourceId = sectionResourceId;

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.core.content.ContextCompat;
 
 import com.github.florent37.camerafragment.R;
 
@@ -15,7 +17,7 @@ import com.github.florent37.camerafragment.R;
  * Created by memfis on 7/6/16.
  * Updated by amadeu01 on 17/04/17
  */
-public class FlashSwitchView extends android.support.v7.widget.AppCompatImageButton {
+public class FlashSwitchView extends AppCompatImageButton {
 
     private Drawable flashOnDrawable;
     private Drawable flashOffDrawable;

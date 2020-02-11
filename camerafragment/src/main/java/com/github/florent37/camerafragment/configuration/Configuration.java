@@ -1,7 +1,10 @@
 package com.github.florent37.camerafragment.configuration;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.IntRange;
+
+import android.annotation.SuppressLint;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.IntRange;
 
 import java.io.Serializable;
 import java.lang.annotation.Retention;
@@ -80,6 +83,7 @@ public final class Configuration implements Serializable {
     public @interface DeviceDefaultOrientation {
     }
 
+    @SuppressLint("WrongConstant")
     @MediaAction
     private int mediaAction = -1;
 
@@ -98,6 +102,24 @@ public final class Configuration implements Serializable {
     @FlashMode
     private int flashMode = FLASH_MODE_AUTO;
 
+    @SuppressLint("WrongConstant")
+    @MediaAction
+    public int getMediaAction() {
+        return
+                mediaAction;
+    }
+
+    @SuppressLint("WrongConstant")
+    public int getMediaQuality() {
+        return mediaQuality;
+    }
+
+    @SuppressLint("WrongConstant")
+    @CameraFace
+    public int getCameraFace() {
+        return cameraFace;
+    }
+
     public static class Builder {
 
         private Configuration configuration;
@@ -106,11 +128,13 @@ public final class Configuration implements Serializable {
             configuration = new Configuration();
         }
 
+        @SuppressLint("WrongConstant")
         public Builder setMediaAction(@MediaAction int mediaAction) {
             configuration.mediaAction = mediaAction;
             return this;
         }
 
+        @SuppressLint("WrongConstant")
         public Builder setMediaQuality(@MediaQuality int mediaQuality) {
             configuration.mediaQuality = mediaQuality;
             return this;
@@ -149,11 +173,13 @@ public final class Configuration implements Serializable {
             return this;
         }
 
+        @SuppressLint("WrongConstant")
         public Builder setCamera(@CameraFace int camera){
             configuration.cameraFace = camera;
             return this;
         }
 
+        @SuppressLint("WrongConstant")
         public Configuration build() throws IllegalArgumentException {
             if (configuration.mediaQuality == MEDIA_QUALITY_AUTO && configuration.minimumVideoDuration < 0) {
                 throw new IllegalStateException("Please provide minimum video duration in milliseconds to use auto quality.");
@@ -162,20 +188,6 @@ public final class Configuration implements Serializable {
             return configuration;
         }
 
-    }
-
-    @MediaAction
-    public int getMediaAction() {
-        return mediaAction;
-    }
-
-    public int getMediaQuality() {
-        return mediaQuality;
-    }
-
-    @CameraFace
-    public int getCameraFace() {
-        return cameraFace;
     }
 
     public int getVideoDuration() {

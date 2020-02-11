@@ -145,7 +145,8 @@
     <string name="Your_Current_Amount_Is_Not_Enough_To_Carry_Out_Purchasing_Process">رصيدك الحالي غير كافي لإتمام عملية الشراء </string>
     <string name="Charge_Your_Account_Balance">شحن رصيد لحسابك </string>
     <string name="By_Using_Pay_Pal">By Using Pay Pal</string>
-    <string name="By_Using_Mada_Card">بواسطة بطاقة مدى </string>
+    <string name="By_Using_Mada_Card">عن طريق بطاقة مدي</string>
+    <string name="By_Using_Visa_Card">عن طريق بطاقة ائتمان</string>
     <string name="digits">**** **** **** 5678</string>
     <string name="By_Using_Credit_Card">بواسطة بطاقة الدفع</string>
     <string name="Sent_By_Your_Friend_Mahmoud_Abd_El_Rahman">مرسلة من صديقك </string>
@@ -157,7 +158,7 @@
 
     <string name="Upload_Voucher">رفع قسيمة </string>
     <string name="Your_current_balance">رصيدك الحالي</string>
-    <string name="Discount_vouchers">قسائم الخصم</string>
+    <string name="Discount_vouchers">القسائم النشطة</string>
     <string name="Active">النشطة</string>
     <string name="Vendors_of_vouchers">القسائم المفضلة</string>
     <string name="Favorite">المفضلين</string>
