@@ -67,6 +67,7 @@ public class FavouritesActivity extends AppCompatActivity {
         });
 
         if (Connection_Detector.isInternetAvailable(this)) {
+
             progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
