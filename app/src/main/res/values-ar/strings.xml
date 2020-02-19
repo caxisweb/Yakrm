@@ -411,6 +411,8 @@
 
     <string name="iPay">أدفع</string>
     <string name="and_get"> ريال و احصل علي</string>
+    <string name="PasswordsNotMatch">كلمة السر ليست متطابقة </string>
+    <string name="SuccessfullySetNewPassword">لقد تم تغير كلمة السر بنجاح من فضلك حاول الدخول مرة اخري </string>
 
 
 </resources>

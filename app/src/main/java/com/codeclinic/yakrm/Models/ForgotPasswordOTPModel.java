@@ -10,6 +10,13 @@ public class ForgotPasswordOTPModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("arab_message")
+    @Expose
+    private String arab_message;
+
+    public String getArab_message() {
+        return arab_message;
+    }
 
     public String getStatus() {
         return status;

@@ -358,7 +358,7 @@
     <string name="Please_Enter_Mobile_Number">Please Enter Mobile Number</string>
     <string name="Mobile_Number_should_be_minimum">Mobile Number should be minimum of 10 characters</string>
     <string name="Please_Enter_OTP">Please Enter OTP</string>
-    <string name="Please_Enter_Name">Please Enter Name</string>
+    <string name="Please_Enter_Name">Please Enter Full Name</string>
     <string name="Name_should_be_minimum_of_three_characters">Name should be  minimum of 3 characters</string>
     <string name="Please_Enter_Valid_Email">Please Enter Valid Email</string>
     <string name="Password_should_be_minimum_of_six_characters">Password should be  minimum of 6 characters</string>
@@ -457,5 +457,7 @@
     <string name="please_enter_new_password">Please Enter New Password</string>
     <string name="iPay">Pay</string>
     <string name="and_get">SAR and get</string>
+    <string name="PasswordsNotMatch">The passwords not matched</string>
+    <string name="SuccessfullySetNewPassword">Successfully set your new passwords, please login again</string>
 
 </resources>

@@ -344,7 +344,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 } else if (isEmpty(edt_confm_new_pass.getText().toString())) {
                     Toast.makeText(ForgetPasswordActivity.this, getResources().getString(R.string.Confirm_new_password), Toast.LENGTH_SHORT).show();
                 } else if (!edt_confm_new_pass.getText().toString().matches(edt_confm_new_pass.getText().toString())) {
-                    Toast.makeText(ForgetPasswordActivity.this, "Please Enter correct Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, getResources().getString(R.string.PasswordsNotMatch), Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                     progressDialog.setIndeterminate(true);
@@ -365,6 +365,14 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
                                 finish();
+                                String language = String.valueOf(getResources().getConfiguration().locale);
+                                if (language.equals("ar")) {
+                                    if (response.body().getArab_message() != null) {
+                                        Toast.makeText(ForgetPasswordActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(ForgetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
                             } else {
                                 Toast.makeText(ForgetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             }
