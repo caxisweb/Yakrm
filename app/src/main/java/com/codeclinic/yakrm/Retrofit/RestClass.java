@@ -13,8 +13,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RestClass {
 
-    //public static final String BASE_URL = "https://www.yakrm.com/api/";//http://www.codeclinic.in/demo/yakrm/api/ http://yakrm.com/api/
-    public static final String BASE_URL = "http://test.yakrm.com/api/";//http://www.codeclinic.in/demo/yakrm/api/ http://yakrm.com/api/
+    public static final String BASE_URL = "https://www.yakrm.com/api/";//http://www.codeclinic.in/demo/yakrm/api/ http://yakrm.com/api/
+    //public static final String BASE_URL = "http://test.yakrm.com/api/";//http://www.codeclinic.in/demo/yakrm/api/ http://yakrm.com/api/
     private static Retrofit retrofit = null;
 
     private static final String SALESMAN_BASE_URL = "http://yakrm.com/api_salesmen/";
