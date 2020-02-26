@@ -87,6 +87,7 @@ public class BuyTabFragment extends Fragment {
             progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
             progressDialog.setCancelable(false);
+            progressDialog.setIcon(getActivity().getResources().getDrawable(R.drawable.small_logo_icon));
             progressDialog.show();
             if (MainActivity.filter_array == 0) {
                 JSONObject jsonObject = new JSONObject();
