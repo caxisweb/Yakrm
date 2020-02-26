@@ -17,7 +17,8 @@ public class RestClass {
     public static final String BASE_URL = "http://test.yakrm.com/api/";//http://www.codeclinic.in/demo/yakrm/api/ http://yakrm.com/api/
     private static Retrofit retrofit = null;
 
-    private static final String SALESMAN_BASE_URL = "http://yakrm.com/api_salesmen/";
+    //private static final String SALESMAN_BASE_URL = "http://yakrm.com/api_salesmen/";
+    private static final String SALESMAN_BASE_URL = "http://test.yakrm.com/api_salesmen/";
     private static Retrofit retrofit_salesman = null;
 
     public static Retrofit getSalesmanClient() {
