@@ -44,7 +44,6 @@ import com.codeclinic.yakrm.Fragments.BuyTabFragment;
 import com.codeclinic.yakrm.Fragments.SupportContactFragment;
 import com.codeclinic.yakrm.LocalNotification.NotificationHelper;
 import com.codeclinic.yakrm.Models.AllVouchersListModel;
-import com.codeclinic.yakrm.Models.GiftCategoryModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static DrawerLayout drawer;
     public static ViewPager viewPager;
     public static TextView textCartItemCount;
-    public static ArrayList<GiftCategoryModel> arrayList = new ArrayList<>();
     public static ArrayList<String> cat_arrayList_id = new ArrayList<>();
     public static ArrayList<String> cat_arrayList_name = new ArrayList<>();
     public static Button[] btn;
@@ -83,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RelativeLayout rl_buy;
     LinearLayout llayout_recieved, llayout_replace, llayout_my_wallet;
 
+    BuyTabFragment buyTabFragment = new BuyTabFragment();
+
 
     API apiService;
     int i;
@@ -94,6 +94,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String str_cart_count = "0";
     SessionManager sessionManager;
     private TabLayout tabLayout;
+
+    CheckBox chk_e_gift;
+    CheckBox chk_p_gift;
+
+    RadioButton rb_m_popular;
+    RadioButton rb_high_discounted;
+    RadioButton rb_brand_names;
+
+    Button btn_filter;
+    Button btn_delete;
 
     public boolean isEmpty(CharSequence character) {
         return character == null || character.length() == 0;
@@ -240,15 +250,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LinearLayout llayout_share = header1.findViewById(R.id.llayout_share);
         TextView tv_signout = header1.findViewById(R.id.tv_signout);
 
-        final CheckBox chk_e_gift = header2.findViewById(R.id.chk_e_gift);
-        final CheckBox chk_p_gift = header2.findViewById(R.id.chk_p_gift);
+        chk_e_gift = header2.findViewById(R.id.chk_e_gift);
+        chk_p_gift = header2.findViewById(R.id.chk_p_gift);
 
-        final RadioButton rb_m_popular = header2.findViewById(R.id.rb_m_popular);
-        final RadioButton rb_high_discounted = header2.findViewById(R.id.rb_high_discounted);
-        final RadioButton rb_brand_names = header2.findViewById(R.id.rb_brand_names);
+        rb_m_popular = header2.findViewById(R.id.rb_m_popular);
+        rb_high_discounted = header2.findViewById(R.id.rb_high_discounted);
+        rb_brand_names = header2.findViewById(R.id.rb_brand_names);
 
-        Button btn_filter = header2.findViewById(R.id.btn_filter);
-        Button btn_delete = header2.findViewById(R.id.btn_delete);
+        btn_filter = header2.findViewById(R.id.btn_filter);
+        btn_delete = header2.findViewById(R.id.btn_delete);
 
 
         if (!sessionManager.isLoggedIn()) {
@@ -526,75 +536,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btn_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gift_category_id = "";
-                if (category_classification_array != null) {
-                    for (int i = 0; i < category_classification_array.size(); i++) {
-                        int pos = cat_arrayList_name.indexOf(category_classification_array.get(i));
-                        gift_category_id = gift_category_id + cat_arrayList_id.get(pos) + ",";
-                    }
-                } else {
-                    gift_category_id = "";
-                }
-                try {
-                    gift_category_id = gift_category_id.substring(0, gift_category_id.length() - 1);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if (chk_e_gift.isChecked() && chk_p_gift.isChecked()) {
-                    gift_type = "paper gift,electronic gift";
-                } else if (chk_e_gift.isChecked()) {
-                    gift_type = "electronic gift";
-                } else if (chk_p_gift.isChecked()) {
-                    gift_type = "paper gift";
-                } else {
-                    gift_type = "";
-                }
-
-                if (rb_m_popular.isChecked()) {
-                    gift_order = "0";
-                } else if (rb_high_discounted.isChecked()) {
-                    gift_order = "2";
-                } else if (rb_brand_names.isChecked()) {
-                    gift_order = "3";
-                } else {
-                    gift_order = "";
-                }
-
-                /*    if (!isEmpty(gift_category_id) && !isEmpty(gift_type)) {*/
-                if (!isEmpty(gift_category_id) || !isEmpty(gift_type) || !isEmpty(gift_order)) {
-                    filter_array = 1;
-                    drawer.closeDrawer(GravityCompat.END);
-                    setupViewPager(viewPager);
-                    tabLayout.setupWithViewPager(viewPager);
-                    createTabIcons();
-
-                } else {
-
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.Please_Select_atleast_one_filter_category_from_above), Toast.LENGTH_SHORT).show();
-                }
-
+                callFilterAPI();
             }
         });
 
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flowLayout.removeAllViews();
-                chk_e_gift.setChecked(false);
-                chk_p_gift.setChecked(false);
-                rb_m_popular.setChecked(false);
-                rb_high_discounted.setChecked(false);
-                rb_brand_names.setChecked(false);
-                gift_order = "";
-                gift_category_id = "";
-                gift_type = "";
-                arrayList.clear();
-                filter_array = 0;
-                drawer.closeDrawer(GravityCompat.END);
-                setupViewPager(viewPager);
-                tabLayout.setupWithViewPager(viewPager);
-                createTabIcons();
+                removeFilter();
             }
         });
 
@@ -627,6 +576,72 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
+    }
+
+    public void removeFilter() {
+        flowLayout.removeAllViews();
+        chk_e_gift.setChecked(false);
+        chk_p_gift.setChecked(false);
+        rb_m_popular.setChecked(false);
+        rb_high_discounted.setChecked(false);
+        rb_brand_names.setChecked(false);
+        gift_order = "";
+        gift_category_id = "";
+        gift_type = "";
+        filter_array = 0;
+        drawer.closeDrawer(GravityCompat.END);
+        buyTabFragment.callBuyVoucherListAPI();
+    }
+
+    public void callFilterAPI() {
+        gift_category_id = "";
+        if (category_classification_array != null) {
+            for (int i = 0; i < category_classification_array.size(); i++) {
+                int pos = cat_arrayList_name.indexOf(category_classification_array.get(i));
+                gift_category_id = gift_category_id + cat_arrayList_id.get(pos) + ",";
+            }
+        } else {
+            gift_category_id = "";
+        }
+        try {
+            gift_category_id = gift_category_id.substring(0, gift_category_id.length() - 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (chk_e_gift.isChecked() && chk_p_gift.isChecked()) {
+            gift_type = "paper gift,electronic gift";
+        } else if (chk_e_gift.isChecked()) {
+            gift_type = "electronic gift";
+        } else if (chk_p_gift.isChecked()) {
+            gift_type = "paper gift";
+        } else {
+            gift_type = "";
+        }
+
+        if (rb_m_popular.isChecked()) {
+            gift_order = "0";
+        } else if (rb_high_discounted.isChecked()) {
+            gift_order = "2";
+        } else if (rb_brand_names.isChecked()) {
+            gift_order = "3";
+        } else {
+            gift_order = "";
+        }
+
+        /*    if (!isEmpty(gift_category_id) && !isEmpty(gift_type)) {*/
+        if (!isEmpty(gift_category_id) || !isEmpty(gift_type) || !isEmpty(gift_order)) {
+            filter_array = 1;
+            drawer.closeDrawer(GravityCompat.END);
+        /*    setupViewPager(viewPager);
+            tabLayout.setupWithViewPager(viewPager);
+            createTabIcons();*/
+            buyTabFragment.callFilterCategoriesAPI();
+
+        } else {
+
+            Toast.makeText(MainActivity.this, getResources().getString(R.string.Please_Select_atleast_one_filter_category_from_above), Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -666,7 +681,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new BuyTabFragment(), getResources().getString(R.string.Buy));
+        adapter.addFrag(buyTabFragment, getResources().getString(R.string.Buy));
        /* adapter.addFrag(new ReceivedTabFragment(), getResources().getString(R.string.Received));
         adapter.addFrag(new ReplaceTabFragment(), getResources().getString(R.string.Replace));
         //adapter.addFrag(new AuctionTabFragment(), getResources().getString(R.string.Auction));
@@ -684,7 +699,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 super.onBackPressed();
                 filter_array = 0;
                 finish();
-                arrayList = new ArrayList<>();
             } else {
                 back_flag = 0;
                 setTitle(getResources().getString(R.string.title_activity_main));

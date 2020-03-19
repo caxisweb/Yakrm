@@ -3,10 +3,10 @@
 
     <item>
 
-        <shape>
+        <shape android:shape="oval">
             <gradient android:angle="270" android:endColor="@color/colorPrimary" android:startColor="@color/colorPrimary" />
             <stroke android:width="0dp" android:color="@color/colorPrimaryDark" />
-            <corners android:radius="25dp" />
+            <corners android:radius="0dp" />
 
         </shape>
     </item>
