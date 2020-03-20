@@ -6,14 +6,23 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/img_category"
+    <LinearLayout
+        android:id="@+id/llayout_img"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
+        android:gravity="center"
         android:background="@drawable/circular_deselected_bg"
-        android:padding="10dp"
-        android:src="@mipmap/about_navigation_icon" />
+        android:padding="10dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_category"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/category_icon" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_category"

@@ -33,6 +33,7 @@ import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.Connection_Detector;
 import com.codeclinic.yakrm.Utils.ImageURL;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -57,8 +58,9 @@ public class GiftDetailsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     SessionManager sessionManager;
     Button btn_complete;
-    TextView tv_brand_name, tv_description, tv_brand_type, tv_more;
+    TextView tv_brand_name, tv_description, tv_brand_type, tv_more, tv_tab_brand_name, tv_tab_description;
     ImageView img_brand_img, img_back, img_fav, img_share;
+    LinearLayout llayout_detail_tab;
     String brand_id, token, is_fav;
     int status_expand = 0;
 
@@ -74,10 +76,18 @@ public class GiftDetailsActivity extends AppCompatActivity {
     int fav_value = 0;
     public static int complete_purchase = 0;
 
+    TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gift_details);
+
+        tabLayout = findViewById(R.id.tabLayout);
+
+        tv_tab_brand_name = findViewById(R.id.tv_tab_brand_name);
+        tv_tab_description = findViewById(R.id.tv_tab_description);
+        llayout_detail_tab = findViewById(R.id.llayout_detail_tab);
 
         tv_more = findViewById(R.id.tv_more);
         recyclerView = findViewById(R.id.recyclerView);
@@ -117,6 +127,30 @@ public class GiftDetailsActivity extends AppCompatActivity {
                 .build());
 
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    llayout_detail_tab.setVisibility(View.GONE);
+                } else {
+                    recyclerView.setVisibility(View.GONE);
+                    llayout_detail_tab.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
         if (Connection_Detector.isInternetAvailable(this)) {
             progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
             progressDialog.setIndeterminate(true);
@@ -149,18 +183,23 @@ public class GiftDetailsActivity extends AppCompatActivity {
                         if (language.equals("ar")) {
                             if (response.body().getBrand_name_arab() != null) {
                                 tv_brand_name.setText(response.body().getBrand_name_arab());
+                                tv_tab_brand_name.setText(response.body().getBrand_name_arab());
                             } else {
                                 tv_brand_name.setText(response.body().getBrandName());
+                                tv_tab_brand_name.setText(response.body().getBrandName());
                             }
                             if (response.body().getBrand_description_arab() != null) {
                                 tv_description.setText(response.body().getBrand_description_arab());
+                                tv_tab_description.setText(response.body().getBrand_description_arab());
                             } else {
-
                                 tv_description.setText(response.body().getDescription());
+                                tv_tab_description.setText(response.body().getDescription());
                             }
                         } else {
                             tv_brand_name.setText(response.body().getBrandName());
+                            tv_tab_brand_name.setText(response.body().getBrandName());
                             tv_description.setText(response.body().getDescription());
+                            tv_tab_description.setText(response.body().getDescription());
                         }
 
 

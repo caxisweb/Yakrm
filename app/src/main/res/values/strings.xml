@@ -459,5 +459,8 @@
     <string name="and_get">SAR and get</string>
     <string name="PasswordsNotMatch">The passwords not matched</string>
     <string name="SuccessfullySetNewPassword">Successfully set your new passwords, please login again</string>
+    <string name="offers">Offers</string>
+    <string name="gift_details">Details</string>
+    <string name="our_location_on_map">Our location on map</string>
 
 </resources>

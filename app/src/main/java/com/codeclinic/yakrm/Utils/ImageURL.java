@@ -8,5 +8,6 @@ public class ImageURL {
     public static String Vendor_brand_image = ImageBaseURL + "brand_images/";
     public static String Vendor_voucher_image = ImageBaseURL + "voucher_images/";
     public static String gift_video = ImageBaseURL + "gift_videos/";
+    public static String gift_category_icon = ImageBaseURL + "gift_category_icons/";
 
 }

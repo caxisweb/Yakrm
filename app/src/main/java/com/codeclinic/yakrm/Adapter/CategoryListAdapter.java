@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.codeclinic.yakrm.Models.GiftCategoryModel;
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Utils.ImageURL;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -51,12 +53,12 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         if (selectedposition != -1) {
             if (selectedposition == position) {
-                holder.img_category.setBackground(context.getDrawable(R.drawable.circular_selected_bg));
+                holder.llayout_img.setBackground(context.getDrawable(R.drawable.circular_selected_bg));
             } else {
-                holder.img_category.setBackground(context.getDrawable(R.drawable.circular_deselected_bg));
+                holder.llayout_img.setBackground(context.getDrawable(R.drawable.circular_deselected_bg));
             }
         } else {
-            holder.img_category.setBackground(context.getDrawable(R.drawable.circular_deselected_bg));
+            holder.llayout_img.setBackground(context.getDrawable(R.drawable.circular_deselected_bg));
         }
 
 
@@ -75,6 +77,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             }
         });
 
+        Picasso.with(context).load(ImageURL.gift_category_icon + arrayList.get(position).getGift_category_icon()).error(context.getDrawable(R.drawable.category_icon)).into(holder.img_category);
 
     }
 
@@ -93,12 +96,13 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        LinearLayout llayout_category;
+        LinearLayout llayout_category, llayout_img;
         ImageView img_category;
         TextView tv_category;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
+            llayout_img = itemView.findViewById(R.id.llayout_img);
             llayout_category = itemView.findViewById(R.id.llayout_category);
             tv_category = itemView.findViewById(R.id.tv_category);
             img_category = itemView.findViewById(R.id.img_category);

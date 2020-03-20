@@ -413,6 +413,9 @@
     <string name="and_get"> ريال و احصل على</string>
     <string name="PasswordsNotMatch">كلمة السر ليست متطابقة </string>
     <string name="SuccessfullySetNewPassword">لقد تم تغير كلمة السر بنجاح من فضلك حاول الدخول مرة اخري </string>
+    <string name="offers">العروض</string>
+    <string name="gift_details">تفاصيل</string>
+    <string name="our_location_on_map">موقعنا على الخريطة</string>
 
 
 </resources>
