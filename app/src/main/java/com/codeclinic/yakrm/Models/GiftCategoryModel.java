@@ -16,6 +16,9 @@ public class GiftCategoryModel {
     @SerializedName("gift_category_icon")
     @Expose
     private String gift_category_icon;
+    @SerializedName("gift_category_banner")
+    @Expose
+    private String gift_category_banner;
 
     public String getId() {
         return id;
@@ -37,11 +40,15 @@ public class GiftCategoryModel {
         return arabGiftCategoryName;
     }
 
+    public String getGift_category_icon() {
+        return gift_category_icon;
+    }
+
     public void setArabGiftCategoryName(String arabGiftCategoryName) {
         this.arabGiftCategoryName = arabGiftCategoryName;
     }
 
-    public String getGift_category_icon() {
-        return gift_category_icon;
+    public String getGift_category_banner() {
+        return gift_category_banner;
     }
 }

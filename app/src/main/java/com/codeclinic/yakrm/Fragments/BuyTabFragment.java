@@ -34,7 +34,9 @@ import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.Connection_Detector;
 import com.codeclinic.yakrm.Utils.GridSpacingItemDecoration;
+import com.codeclinic.yakrm.Utils.ImageURL;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.squareup.picasso.Picasso;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
@@ -54,6 +56,7 @@ import static com.codeclinic.yakrm.Activities.MainActivity.category_classificati
 
 
 /**
+ *
  */
 public class BuyTabFragment extends Fragment {
 
@@ -69,6 +72,7 @@ public class BuyTabFragment extends Fragment {
     SessionManager sessionManager;
     String login_flag = "0";
     JSONObject jsonObject = new JSONObject();
+    ImageView imgBanner;
 
     CarouselView carouselView;
     int[] sampleImages = {R.drawable.demo_img_1, R.drawable.demo_img_1, R.drawable.demo_img_1};
@@ -80,7 +84,7 @@ public class BuyTabFragment extends Fragment {
     ImageListener imageListener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-            imageView.setImageResource(sampleImages[position]);
+            Picasso.with(getActivity()).load(ImageURL.gift_category_banner + categoryArrayList.get(position).getGift_category_banner()).error(getActivity().getResources().getDrawable(R.drawable.card_details_item_background)).into(imageView);
         }
     };
 
@@ -91,6 +95,9 @@ public class BuyTabFragment extends Fragment {
         setRetainInstance(true);
         sessionManager = new SessionManager(getActivity());
         layout_filter = view.findViewById(R.id.layout_filter);
+
+        imgBanner = view.findViewById(R.id.imgBanner);
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerViewCategory = view.findViewById(R.id.recyclerViewCategory);
         recyclerViewCategory.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
@@ -98,9 +105,7 @@ public class BuyTabFragment extends Fragment {
         apiService = RestClass.getClient().create(API.class);
 
         carouselView = view.findViewById(R.id.carouselView);
-        carouselView.setPageCount(sampleImages.length);
 
-        carouselView.setImageListener(imageListener);
 
         progressDialog = new ProgressDialog(getActivity());
         if (sessionManager.isLoggedIn()) {
@@ -158,7 +163,6 @@ public class BuyTabFragment extends Fragment {
                     category_classification_array.clear();
                     if (categoryArrayList.size() == 0) {
                         categoryArrayList = (ArrayList<GiftCategoryModel>) response.body().getGiftCategory();
-
                         recyclerViewCategory.setAdapter(new CategoryListAdapter(response.body().getGiftCategory(), getActivity(), recyclerViewCategory, new CategoryListAdapter.itemClickListener() {
                             @SuppressLint("NewApi")
                             @Override
@@ -171,6 +175,8 @@ public class BuyTabFragment extends Fragment {
                                     category_classification_array.clear();
                                     ((MainActivity) getActivity()).removeFilter();
                                 }
+
+                                Picasso.with(getActivity()).load(ImageURL.gift_category_banner + categoryArrayList.get(position).getGift_category_banner()).error(getActivity().getResources().getDrawable(R.drawable.card_details_item_background)).into(imgBanner);
                             }
                         }));
 
