@@ -171,12 +171,14 @@ public class BuyTabFragment extends Fragment {
                                     category_classification_array.clear();
                                     category_classification_array.add(categoryArrayList.get(position).getGiftCategoryName());
                                     ((MainActivity) getActivity()).callFilterAPI();
+                                    imgBanner.setVisibility(View.VISIBLE);
+                                    Picasso.with(getActivity()).load(ImageURL.gift_category_banner + categoryArrayList.get(position).getGift_category_banner()).error(getActivity().getResources().getDrawable(R.drawable.card_details_item_background)).into(imgBanner);
                                 } else {
                                     category_classification_array.clear();
                                     ((MainActivity) getActivity()).removeFilter();
+                                    imgBanner.setVisibility(View.GONE);
                                 }
 
-                                Picasso.with(getActivity()).load(ImageURL.gift_category_banner + categoryArrayList.get(position).getGift_category_banner()).error(getActivity().getResources().getDrawable(R.drawable.card_details_item_background)).into(imgBanner);
                             }
                         }));
 

@@ -29,7 +29,8 @@
             android:id="@+id/imgBanner"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:visibility="gone" />
 
         <com.synnapps.carouselview.CarouselView
             android:id="@+id/carouselView"
