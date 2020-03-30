@@ -3,6 +3,8 @@ package com.codeclinic.yakrm.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class GiftCategoryModel {
     @SerializedName("id")
     @Expose
@@ -19,6 +21,9 @@ public class GiftCategoryModel {
     @SerializedName("gift_category_banner")
     @Expose
     private String gift_category_banner;
+    @SerializedName("gift_category_banners")
+    @Expose
+    private List<GiftCategoryBannersModel> giftCategoryBanners = null;
 
     public String getId() {
         return id;
@@ -50,5 +55,9 @@ public class GiftCategoryModel {
 
     public String getGift_category_banner() {
         return gift_category_banner;
+    }
+
+    public List<GiftCategoryBannersModel> getGiftCategoryBanners() {
+        return giftCategoryBanners;
     }
 }

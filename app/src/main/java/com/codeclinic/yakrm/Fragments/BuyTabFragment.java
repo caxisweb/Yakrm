@@ -1,17 +1,23 @@
 package com.codeclinic.yakrm.Fragments;
 
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.view.GravityCompat;
@@ -19,20 +25,25 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.codeclinic.yakrm.Activities.MainActivity;
 import com.codeclinic.yakrm.Adapter.BuyTabListAdapter;
 import com.codeclinic.yakrm.Adapter.CategoryListAdapter;
 import com.codeclinic.yakrm.Adapter.FilterListAdapter;
+import com.codeclinic.yakrm.Adapter.SlidingImage_Adapter;
 import com.codeclinic.yakrm.Models.AllVoucherListItemModel;
 import com.codeclinic.yakrm.Models.AllVouchersListModel;
 import com.codeclinic.yakrm.Models.FilterListItemModel;
 import com.codeclinic.yakrm.Models.FilterListModel;
+import com.codeclinic.yakrm.Models.GiftCategoryBannersModel;
 import com.codeclinic.yakrm.Models.GiftCategoryModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.Connection_Detector;
+import com.codeclinic.yakrm.Utils.CubeOutRotationTransformation;
+import com.codeclinic.yakrm.Utils.FixedSpeedScroller;
 import com.codeclinic.yakrm.Utils.GridSpacingItemDecoration;
 import com.codeclinic.yakrm.Utils.ImageURL;
 import com.codeclinic.yakrm.Utils.SessionManager;
@@ -43,8 +54,11 @@ import com.synnapps.carouselview.ImageListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,6 +78,7 @@ public class BuyTabFragment extends Fragment {
     BuyTabListAdapter buyTabListAdapter;
     FilterListAdapter filterListAdapter;
     ArrayList<GiftCategoryModel> categoryArrayList = new ArrayList<>();
+    final Integer[] IMAGES = {R.drawable.demo_img_1, R.drawable.demo_img_1, R.drawable.demo_img_1, R.drawable.demo_img_1};
     List<AllVoucherListItemModel> arrayList = new ArrayList<>();
     List<FilterListItemModel> arrayList_filter = new ArrayList<>();
     API apiService;
@@ -73,9 +88,18 @@ public class BuyTabFragment extends Fragment {
     String login_flag = "0";
     JSONObject jsonObject = new JSONObject();
     ImageView imgBanner;
+    List<GiftCategoryBannersModel> giftCategoryBannerArrayList = new ArrayList<>();
+    RelativeLayout rl_pager;
+    private LinearLayout dotsLayout;
+    private TextView[] dots;
+    private int[] layouts;
+    private ViewPager mPager;
+    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
 
     CarouselView carouselView;
     int[] sampleImages = {R.drawable.demo_img_1, R.drawable.demo_img_1, R.drawable.demo_img_1};
+    private int current_Page;
+    private int currentPage = 0;
 
     public BuyTabFragment() {
         // Required empty public constructor
@@ -87,6 +111,24 @@ public class BuyTabFragment extends Fragment {
             Picasso.with(getActivity()).load(ImageURL.gift_category_banner + categoryArrayList.get(position).getGift_category_banner()).error(getActivity().getResources().getDrawable(R.drawable.card_details_item_background)).into(imageView);
         }
     };
+    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+
+        @Override
+        public void onPageSelected(int position) {
+            currentPage = position;
+            addBottomDots();
+
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,8 +137,27 @@ public class BuyTabFragment extends Fragment {
         setRetainInstance(true);
         sessionManager = new SessionManager(getActivity());
         layout_filter = view.findViewById(R.id.layout_filter);
+        dotsLayout = view.findViewById(R.id.layoutDots);
+        for (int i = 0; i < IMAGES.length; i++)
+            ImagesArray.add(IMAGES[i]);
+
+        mPager = view.findViewById(R.id.image_pager);
+        mPager.setPageTransformer(true, new CubeOutRotationTransformation());
+        mPager.addOnPageChangeListener(viewPagerPageChangeListener);
+        try {
+            Field mScroller;
+            mScroller = ViewPager.class.getDeclaredField("mScroller");
+            mScroller.setAccessible(true);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(mPager.getContext());
+            //scroller.setFixedDuration(5000);
+            mScroller.set(mPager, scroller);
+        } catch (NoSuchFieldException e) {
+        } catch (IllegalArgumentException e) {
+        } catch (IllegalAccessException e) {
+        }
 
         imgBanner = view.findViewById(R.id.imgBanner);
+        rl_pager = view.findViewById(R.id.rl_pager);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerViewCategory = view.findViewById(R.id.recyclerViewCategory);
@@ -137,6 +198,87 @@ public class BuyTabFragment extends Fragment {
         return view;
     }
 
+    private void addBottomDots() {
+        dots = new TextView[giftCategoryBannerArrayList.size()];
+
+        int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
+        int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
+
+        dotsLayout.removeAllViews();
+        for (int i = 0; i < dots.length; i++) {
+            dots[i] = new TextView(getActivity());
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(35);
+            dots[i].setTextColor(colorsInactive[currentPage]);
+            dotsLayout.addView(dots[i]);
+        }
+
+        if (dots.length > 0)
+            dots[currentPage].setTextColor(colorsActive[currentPage]);
+
+    }
+
+    private void animatePagerTransition(final boolean forward) {
+
+        ValueAnimator animator = ValueAnimator.ofInt(0, mPager.getWidth() - (forward ? mPager.getPaddingLeft() : mPager.getPaddingRight()));
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mPager.endFakeDrag();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                mPager.endFakeDrag();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+
+        animator.setInterpolator(new AccelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            private int oldDragPosition = 0;
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int dragPosition = (Integer) animation.getAnimatedValue();
+                int dragOffset = dragPosition - oldDragPosition;
+                oldDragPosition = dragPosition;
+                mPager.fakeDragBy(dragOffset * (forward ? -1 : 1));
+            }
+        });
+
+        animator.setDuration(5000);
+        mPager.beginFakeDrag();
+        animator.start();
+    }
+
+    private void setTimer() {
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == giftCategoryBannerArrayList.size()) {
+                    currentPage = 0;
+                }
+                mPager.setCurrentItem(currentPage++, false);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 3000, 3000);
+    }
+
     public void callBuyVoucherListAPI() {
         progressDialog.show();
         JSONObject jsonObject = new JSONObject();
@@ -148,7 +290,7 @@ public class BuyTabFragment extends Fragment {
         Call<AllVouchersListModel> allVouchersListModelCall = apiService.ALL_VOUCHERS_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
         allVouchersListModelCall.enqueue(new Callback<AllVouchersListModel>() {
             @Override
-            public void onResponse(Call<AllVouchersListModel> call, Response<AllVouchersListModel> response) {
+            public void onResponse(Call<AllVouchersListModel> call, final Response<AllVouchersListModel> response) {
                 progressDialog.dismiss();
                 int status = response.body().getStatus();
                 if (status == 1) {
@@ -163,6 +305,14 @@ public class BuyTabFragment extends Fragment {
                     category_classification_array.clear();
                     if (categoryArrayList.size() == 0) {
                         categoryArrayList = (ArrayList<GiftCategoryModel>) response.body().getGiftCategory();
+                        giftCategoryBannerArrayList = response.body().getGiftCategory().get(0).getGiftCategoryBanners();
+                        if (giftCategoryBannerArrayList.size() == 0) {
+                            rl_pager.setVisibility(View.GONE);
+                        }
+                        currentPage = 0;
+                        addBottomDots();
+                        setTimer();
+                        mPager.setAdapter(new SlidingImage_Adapter(getActivity(), response.body().getGiftCategory().get(0).getGiftCategoryBanners()));
                         recyclerViewCategory.setAdapter(new CategoryListAdapter(response.body().getGiftCategory(), getActivity(), recyclerViewCategory, new CategoryListAdapter.itemClickListener() {
                             @SuppressLint("NewApi")
                             @Override
@@ -171,12 +321,28 @@ public class BuyTabFragment extends Fragment {
                                     category_classification_array.clear();
                                     category_classification_array.add(categoryArrayList.get(position).getGiftCategoryName());
                                     ((MainActivity) getActivity()).callFilterAPI();
-                                    imgBanner.setVisibility(View.VISIBLE);
-                                    Picasso.with(getActivity()).load(ImageURL.gift_category_banner + categoryArrayList.get(position).getGift_category_banner()).error(getActivity().getResources().getDrawable(R.drawable.card_details_item_background)).into(imgBanner);
+                                    //imgBanner.setVisibility(View.VISIBLE);
+                                    //Picasso.with(getActivity()).load(ImageURL.gift_category_banner + categoryArrayList.get(position).getGift_category_banner()).error(getActivity().getResources().getDrawable(R.drawable.card_details_item_background)).into(imgBanner);
+                                    giftCategoryBannerArrayList = response.body().getGiftCategory().get(position).getGiftCategoryBanners();
+                                    currentPage = 0;
+                                    addBottomDots();
+                                    rl_pager.setVisibility(View.VISIBLE);
+                                    if (giftCategoryBannerArrayList.size() == 0) {
+                                        rl_pager.setVisibility(View.GONE);
+                                    }
+                                    mPager.setAdapter(new SlidingImage_Adapter(getActivity(), response.body().getGiftCategory().get(position).getGiftCategoryBanners()));
                                 } else {
                                     category_classification_array.clear();
                                     ((MainActivity) getActivity()).removeFilter();
-                                    imgBanner.setVisibility(View.GONE);
+                                    //imgBanner.setVisibility(View.GONE);
+                                    mPager.setAdapter(new SlidingImage_Adapter(getActivity(), response.body().getGiftCategory().get(0).getGiftCategoryBanners()));
+                                    giftCategoryBannerArrayList = response.body().getGiftCategory().get(0).getGiftCategoryBanners();
+                                    currentPage = 0;
+                                    addBottomDots();
+                                    rl_pager.setVisibility(View.VISIBLE);
+                                    if (giftCategoryBannerArrayList.size() == 0) {
+                                        rl_pager.setVisibility(View.GONE);
+                                    }
                                 }
 
                             }
