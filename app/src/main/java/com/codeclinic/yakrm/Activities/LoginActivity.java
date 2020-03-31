@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
                                     Toast.makeText(LoginActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "بيانات الدخول غير صحيحة", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }

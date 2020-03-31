@@ -10,6 +10,9 @@ public class LoginModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("arab_message")
+    @Expose
+    private String arab_message;
     @SerializedName("token")
     @Expose
     private String token;
@@ -73,6 +76,10 @@ public class LoginModel {
 
     public String getMessage() {
         return message;
+    }
+
+    public String getArab_message() {
+        return arab_message;
     }
 
     public void setMessage(String message) {
