@@ -43,7 +43,6 @@ import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.Connection_Detector;
 import com.codeclinic.yakrm.Utils.CubeOutRotationTransformation;
-import com.codeclinic.yakrm.Utils.FixedSpeedScroller;
 import com.codeclinic.yakrm.Utils.GridSpacingItemDecoration;
 import com.codeclinic.yakrm.Utils.ImageURL;
 import com.codeclinic.yakrm.Utils.SessionManager;
@@ -54,7 +53,6 @@ import com.synnapps.carouselview.ImageListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -144,17 +142,6 @@ public class BuyTabFragment extends Fragment {
         mPager = view.findViewById(R.id.image_pager);
         mPager.setPageTransformer(true, new CubeOutRotationTransformation());
         mPager.addOnPageChangeListener(viewPagerPageChangeListener);
-        try {
-            Field mScroller;
-            mScroller = ViewPager.class.getDeclaredField("mScroller");
-            mScroller.setAccessible(true);
-            FixedSpeedScroller scroller = new FixedSpeedScroller(mPager.getContext());
-            //scroller.setFixedDuration(5000);
-            mScroller.set(mPager, scroller);
-        } catch (NoSuchFieldException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
-        }
 
         imgBanner = view.findViewById(R.id.imgBanner);
         rl_pager = view.findViewById(R.id.rl_pager);
@@ -426,6 +413,7 @@ public class BuyTabFragment extends Fragment {
                     boolean includeEdge = false;
                     recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
                     recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                    recyclerView.setNestedScrollingEnabled(false);
                     buyTabListAdapter = new BuyTabListAdapter(arrayList, getActivity());
                     recyclerViewCategory.setNestedScrollingEnabled(false);
                     recyclerView.setAdapter(buyTabListAdapter);

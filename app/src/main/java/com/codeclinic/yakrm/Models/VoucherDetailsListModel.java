@@ -34,6 +34,15 @@ public class VoucherDetailsListModel {
     @SerializedName("is_favourite")
     @Expose
     private String isFavourite;
+    @SerializedName("address")
+    @Expose
+    private String address;
+    @SerializedName("latitude")
+    @Expose
+    private String latitude;
+    @SerializedName("longitude")
+    @Expose
+    private String longitude;
     @SerializedName("data")
     @Expose
     private List<VoucherDetailsListItemModel> data = null;
@@ -104,6 +113,18 @@ public class VoucherDetailsListModel {
 
     public void setIsFavourite(String isFavourite) {
         this.isFavourite = isFavourite;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
     }
 
     public List<VoucherDetailsListItemModel> getData() {

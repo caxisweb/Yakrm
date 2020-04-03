@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -42,11 +43,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.text.TextUtils.isEmpty;
 
 public class GiftDetailsActivity extends AppCompatActivity {
 
@@ -57,8 +61,8 @@ public class GiftDetailsActivity extends AppCompatActivity {
     API apiService;
     ProgressDialog progressDialog;
     SessionManager sessionManager;
-    Button btn_complete;
-    TextView tv_brand_name, tv_description, tv_brand_type, tv_more, tv_tab_brand_name, tv_tab_description;
+    Button btn_complete, btn_location;
+    TextView tv_address, tv_brand_name, tv_description, tv_brand_type, tv_more, tv_tab_brand_name, tv_tab_description;
     ImageView img_brand_img, img_back, img_fav, img_share;
     LinearLayout llayout_detail_tab;
     String brand_id, token, is_fav;
@@ -75,6 +79,8 @@ public class GiftDetailsActivity extends AppCompatActivity {
     AlertDialog alertDialog;
     int fav_value = 0;
     public static int complete_purchase = 0;
+    String address;
+    double latitude = 0.0, longitude = 0.0;
 
     TabLayout tabLayout;
 
@@ -101,7 +107,9 @@ public class GiftDetailsActivity extends AppCompatActivity {
         img_brand_img = findViewById(R.id.img_brand_img);
         btn_complete = findViewById(R.id.btn_complete);
         bottom_layout = findViewById(R.id.bottom_layout);
+        btn_location = findViewById(R.id.btn_location);
 
+        tv_address = findViewById(R.id.tv_address);
         tv_brand_name = findViewById(R.id.tv_brand_name);
         tv_description = findViewById(R.id.tv_description);
         tv_brand_type = findViewById(R.id.tv_brand_type);
@@ -150,6 +158,17 @@ public class GiftDetailsActivity extends AppCompatActivity {
             }
         });
 
+        btn_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (latitude != 0.0) {
+                    String uri = String.format(Locale.ENGLISH, "geo:%f,%f", latitude, longitude);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    startActivity(intent);
+                }
+            }
+        });
+
 
         if (Connection_Detector.isInternetAvailable(this)) {
             progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
@@ -195,13 +214,21 @@ public class GiftDetailsActivity extends AppCompatActivity {
                                 tv_description.setText(response.body().getDescription());
                                 tv_tab_description.setText(response.body().getDescription());
                             }
+
                         } else {
                             tv_brand_name.setText(response.body().getBrandName());
                             tv_tab_brand_name.setText(response.body().getBrandName());
                             tv_description.setText(response.body().getDescription());
                             tv_tab_description.setText(response.body().getDescription());
                         }
-
+                        address = response.body().getAddress();
+                        if (response.body().getLatitude() != null) {
+                            latitude = Double.parseDouble(response.body().getLatitude());
+                            longitude = Double.parseDouble(response.body().getLongitude());
+                        }
+                        if (!isEmpty(address)) {
+                            tv_address.setText(address);
+                        }
 
                         arrayList = response.body().getData();
                         for (int j = 0; j < arrayList.size(); j++) {
