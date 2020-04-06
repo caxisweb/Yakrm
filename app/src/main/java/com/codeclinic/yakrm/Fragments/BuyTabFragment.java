@@ -94,6 +94,11 @@ public class BuyTabFragment extends Fragment {
     private ViewPager mPager;
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
 
+    Handler handler;
+    Runnable Update;
+    Timer swipeTimer;
+    TimerTask task;
+
     CarouselView carouselView;
     int[] sampleImages = {R.drawable.demo_img_1, R.drawable.demo_img_1, R.drawable.demo_img_1};
     private int current_Page;
@@ -248,22 +253,55 @@ public class BuyTabFragment extends Fragment {
     }
 
     private void setTimer() {
-        final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            public void run() {
-                if (currentPage == giftCategoryBannerArrayList.size()) {
-                    currentPage = 0;
+        try {
+            handler = new Handler();
+            Update = new Runnable() {
+                public void run() {
+                    if (currentPage == giftCategoryBannerArrayList.size()) {
+                        currentPage = 0;
+                    }
+                    mPager.setCurrentItem(currentPage++, false);
                 }
-                mPager.setCurrentItem(currentPage++, false);
-            }
-        };
-        Timer swipeTimer = new Timer();
-        swipeTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(Update);
-            }
-        }, 3000, 3000);
+            };
+
+            swipeTimer = new Timer();
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(Update);
+                }
+            };
+            scheduleTimerTask();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void scheduleTimerTask() {
+        swipeTimer.schedule(task, 3000, 3000);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (swipeTimer != null) {
+            scheduleTimerTask();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        swipeTimer.cancel();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(Update);
+        handler = null;
+        Update = null;
+        swipeTimer.cancel();
     }
 
     public void callBuyVoucherListAPI() {

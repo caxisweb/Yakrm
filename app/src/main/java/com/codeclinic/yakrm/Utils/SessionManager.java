@@ -187,7 +187,7 @@ public class SessionManager {
 
         // Staring Login Activity
         _context.startActivity(i);
-        ((Activity) _context).finish();
+        ((Activity) _context).finishAffinity();
     }
 
     public void clearsession() {
