@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -96,9 +97,10 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        LinearLayout llayout_category, llayout_img;
+        LinearLayout llayout_img;
         ImageView img_category;
         TextView tv_category;
+        RelativeLayout llayout_category;
 
         public Holder(@NonNull View itemView) {
             super(itemView);

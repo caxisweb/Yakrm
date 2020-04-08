@@ -264,13 +264,6 @@ public class BuyTabFragment extends Fragment {
                 }
             };
 
-            swipeTimer = new Timer();
-            task = new TimerTask() {
-                @Override
-                public void run() {
-                    handler.post(Update);
-                }
-            };
             scheduleTimerTask();
         } catch (Exception e) {
             e.printStackTrace();
@@ -278,6 +271,13 @@ public class BuyTabFragment extends Fragment {
     }
 
     private void scheduleTimerTask() {
+        swipeTimer = new Timer();
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        };
         swipeTimer.schedule(task, 3000, 3000);
     }
 
@@ -293,6 +293,7 @@ public class BuyTabFragment extends Fragment {
     public void onPause() {
         super.onPause();
         swipeTimer.cancel();
+        task.cancel();
     }
 
     @Override
@@ -331,9 +332,7 @@ public class BuyTabFragment extends Fragment {
                     if (categoryArrayList.size() == 0) {
                         categoryArrayList = (ArrayList<GiftCategoryModel>) response.body().getGiftCategory();
                         giftCategoryBannerArrayList = response.body().getGiftCategory().get(0).getGiftCategoryBanners();
-                        if (giftCategoryBannerArrayList.size() == 0) {
-                            rl_pager.setVisibility(View.GONE);
-                        }
+                        rl_pager.setVisibility(View.GONE);
                         currentPage = 0;
                         addBottomDots();
                         setTimer();
@@ -364,7 +363,7 @@ public class BuyTabFragment extends Fragment {
                                     giftCategoryBannerArrayList = response.body().getGiftCategory().get(0).getGiftCategoryBanners();
                                     currentPage = 0;
                                     addBottomDots();
-                                    rl_pager.setVisibility(View.VISIBLE);
+                                    rl_pager.setVisibility(View.GONE);
                                     if (giftCategoryBannerArrayList.size() == 0) {
                                         rl_pager.setVisibility(View.GONE);
                                     }

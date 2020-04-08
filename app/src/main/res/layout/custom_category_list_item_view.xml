@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/llayout_category"
-    android:layout_width="100dp"
+    android:layout_width="90dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <LinearLayout
         android:id="@+id/llayout_img"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:gravity="center"
         android:background="@drawable/circular_deselected_bg"
-        android:padding="10dp">
+        android:gravity="center"
+        android:padding="5dp">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/img_category"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:adjustViewBounds="true"
             android:src="@drawable/category_icon" />
 
@@ -28,6 +29,8 @@
         android:id="@+id/tv_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/llayout_img"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:gravity="center"
@@ -36,4 +39,4 @@
         android:textColor="@color/black"
         android:textSize="16dp" />
 
-</LinearLayout>
+</RelativeLayout>
