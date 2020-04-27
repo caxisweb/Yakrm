@@ -22,7 +22,7 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -31,7 +31,7 @@
                     android:id="@+id/tv_order_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_weight="1"
                     android:text="Order Id : 1005"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14dp"
@@ -41,7 +41,6 @@
                     android:id="@+id/tv_order_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:background="@drawable/button_color_blue_round"
                     android:padding="5dp"
                     android:paddingLeft="15dp"
@@ -50,7 +49,7 @@
                     android:textColor="@color/white"
                     android:textSize="12dp" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

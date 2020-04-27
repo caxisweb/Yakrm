@@ -44,7 +44,7 @@ public class MyOrderAdepter extends RecyclerView.Adapter<MyOrderAdepter.Holder> 
 
         holder.tv_order_id.setText(context.getString(R.string.order_id)+" : "+myorderlist.get(i).getId());
         holder.tv_order_status.setText(context.getString(R.string.pending));
-        //holder.tv_product_count.setText("Prod");
+        holder.tv_product_count.setText(context.getString(R.string.product)+" : "+myorderlist.get(i).getTotal_product());
         holder.tv_home_address.setText(myorderlist.get(i).getUserAddress());
 
         holder.btn_detail.setOnClickListener(new View.OnClickListener() {

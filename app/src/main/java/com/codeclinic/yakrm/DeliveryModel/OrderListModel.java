@@ -31,7 +31,10 @@ public class OrderListModel {
     private String phone;
     @SerializedName("product_title")
     @Expose
-    private Object productTitle;
+    private String productTitle;
+    @SerializedName("total_products")
+    @Expose
+    private String total_product;
 
     public String getId() {
         return id;
@@ -97,11 +100,19 @@ public class OrderListModel {
         this.phone = phone;
     }
 
-    public Object getProductTitle() {
+    public String getProductTitle() {
         return productTitle;
     }
 
-    public void setProductTitle(Object productTitle) {
+    public void setProductTitle(String productTitle) {
         this.productTitle = productTitle;
+    }
+
+    public String getTotal_product() {
+        return total_product;
+    }
+
+    public void setTotal_product(String total_product) {
+        this.total_product = total_product;
     }
 }
