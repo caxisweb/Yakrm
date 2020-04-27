@@ -164,8 +164,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="e62e36" />
-                            <entry key="outputName" value="ic_payment" />
-                            <entry key="sourceFile" value="E:\Android Project Doc\ykram\delivery\receipt.svg" />
+                            <entry key="outputName" value="ic_notes" />
+                            <entry key="sourceFile" value="E:\Android Project Doc\ykram\delivery\edit.svg" />
                           </map>
                         </option>
                       </PersistentState>

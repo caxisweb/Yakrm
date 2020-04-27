@@ -500,6 +500,7 @@
     <string name="payment">Payment</string>
     <string name="select_what_you_want">Select What you want</string>
     <string name="driver_detail">Driver Detail</string>
+    <string name="additional_notes">Additional Notes</string>
 
     <string-array name="tab">
         <item>Place Order</item>

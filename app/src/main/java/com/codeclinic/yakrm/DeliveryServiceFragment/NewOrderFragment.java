@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.codeclinic.yakrm.Activities.LoginActivity;
 import com.codeclinic.yakrm.DeliveryModel.PlaceOrderModel;
@@ -59,16 +60,16 @@ public class NewOrderFragment extends Fragment {
 
     CardView btn_addproduct, btn_home_address, btn_shop_address;
     LinearLayout lv_productlist,lv_order;
-    EditText edt_pname, edt_pqty;
+    EditText edt_pname, edt_pqty,edt_notes;
     TextView tv_home_address, tv_shop_address;
 
     ArrayList<String> product_name = new ArrayList<>();
     ArrayList<String> product_qty = new ArrayList<>();
 
-    String str_home_address;
+    String str_home_address="null";
     double str_home_lat=0, str_home_long=0;
 
-    String str_store_address;
+    String str_store_address="non";
     double str_store_lat=0, str_store_long=0;
 
     @Nullable
@@ -89,6 +90,7 @@ public class NewOrderFragment extends Fragment {
 
         edt_pname = mainView.findViewById(R.id.edt_product);
         edt_pqty = mainView.findViewById(R.id.edt_quantity);
+        edt_notes = mainView.findViewById(R.id.edt_notes);
 
         tv_home_address = mainView.findViewById(R.id.tv_home_address);
         tv_shop_address = mainView.findViewById(R.id.tv_shop_address);
@@ -189,7 +191,7 @@ public class NewOrderFragment extends Fragment {
 
                 if(product_name.size()==0){
                     Toast.makeText(getActivity(),"Please Add Product",Toast.LENGTH_LONG).show();
-                }else if(str_home_address.equals("")){
+                }else if(str_home_lat==0){
                     Toast.makeText(getActivity(),"Please select Delivery address",Toast.LENGTH_LONG).show();
                 }else{
 
@@ -231,7 +233,19 @@ public class NewOrderFragment extends Fragment {
                                 progressDialog.dismiss();
 
                                 if(response.body().getStatus().equals("1")){
+
                                     Toast.makeText(getActivity(),response.body().getMessage(),Toast.LENGTH_LONG).show();
+                                    tv_home_address.setText("");
+                                    tv_shop_address.setText("");
+                                    lv_productlist.removeAllViews();
+                                    edt_notes.setText("");
+                                    str_home_address="null";
+                                    str_store_address="null";
+                                    str_home_lat=0;
+                                    str_home_long=0;
+                                    str_store_lat=0;
+                                    str_store_long=0;
+
                                 }else{
                                     Toast.makeText(getActivity(),response.body().getMessage(),Toast.LENGTH_LONG).show();
                                 }
