@@ -1,1 +1,1 @@
-include ':app', ':Cardlibrary', ':camerafragment', ':k4l-video-trimmer'
+include ':app', ':Cardlibrary', ':camerafragment', ':k4l-video-trimmer', ':leku'

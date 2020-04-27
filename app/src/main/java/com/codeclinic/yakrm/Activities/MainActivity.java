@@ -5,9 +5,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -117,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         rl_buy = findViewById(R.id.rl_buy);
         llayout_recieved = findViewById(R.id.llayout_recieved);
         llayout_replace = findViewById(R.id.llayout_replace);
@@ -135,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager.setOffscreenPageLimit(1);
 
         tabLayout = findViewById(R.id.tablayout);
-
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
@@ -509,12 +509,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 sessionManager.putLanguage("Language", language_name);
                 Locale locale = new Locale(language_name);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-                finish();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                Resources resources = getResources();
+                Configuration configuration = resources.getConfiguration();
+                DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+                    configuration.setLocale(locale);
+                } else{
+                    configuration.locale=locale;
+                }
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
+                    getApplicationContext().createConfigurationContext(configuration);
+                } else {
+                    resources.updateConfiguration(configuration,displayMetrics);
+                }
 
             }
         });
@@ -551,6 +559,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (getIntent().hasExtra("view_pos")) {
             viewPager.setCurrentItem(Integer.parseInt(getIntent().getStringExtra("view_pos")));
         }
+
         tabLayout.setupWithViewPager(viewPager);
         createTabIcons();
         navigationView2.setNavigationItemSelectedListener(this);

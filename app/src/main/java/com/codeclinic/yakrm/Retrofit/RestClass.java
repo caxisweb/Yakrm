@@ -21,6 +21,9 @@ public class RestClass {
     private static final String SALESMAN_BASE_URL = "http://test.yakrm.com/api_salesmen/";
     private static Retrofit retrofit_salesman = null;
 
+    public static final String Delivery_BASE_URL = "http://test.yakrm.com/apis/v1/";//http://www.codeclinic.in/demo/yakrm/api/ http://yakrm.com/api/
+    private static Retrofit retrofit_delivery = null;
+
     public static Retrofit getSalesmanClient() {
         if (retrofit_salesman == null) {
             retrofit_salesman = new Retrofit.Builder()
@@ -47,6 +50,25 @@ public class RestClass {
                     .build();
         }
         return retrofit;
+    }
+
+    public static Retrofit getClientDelivery() {
+
+        OkHttpClient httpClient = new OkHttpClient.Builder().connectTimeout(40, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
+
+        if (retrofit_delivery == null) {
+
+            retrofit_delivery = new Retrofit.Builder()
+                    .client(httpClient)
+                    .baseUrl(Delivery_BASE_URL)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit_delivery;
     }
 
 }

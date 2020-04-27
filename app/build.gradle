@@ -5,10 +5,13 @@ buildscript {
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.31.2'
+        //classpath 'io.fabric.tools:gradle:1.30.0'
     }
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -35,6 +38,20 @@ android {
     }
     productFlavors {
     }
+}
+
+detekt {
+    version = "1.0.0.RC7-3"
+    profile("main") {
+        input = "$projectDir/src/main/java"
+        config = "config/detekt/detekt-config.yml"
+        output = "$projectDir/build/reports/detekt/detekt.xml"
+        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    }
+}
+
+ktlint {
+    reporters = ["PLAIN", "CHECKSTYLE"]
 }
 
 dependencies {
@@ -78,7 +95,14 @@ dependencies {
     implementation project(':camerafragment')
     implementation project(':k4l-video-trimmer')
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+    //implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+
+    implementation project(':leku')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //maps
+    implementation 'com.google.android.gms:play-services-maps:11.4.2'
+    implementation 'com.google.android.gms:play-services-location:11.4.2'
 }
 apply plugin: 'com.google.gms.google-services'
 //inforaamitsolutions

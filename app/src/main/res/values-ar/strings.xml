@@ -417,5 +417,45 @@
     <string name="gift_details">تفاصيل</string>
     <string name="our_location_on_map">موقعنا على الخريطة</string>
 
+    <!--Delivery service-->
+    <string name="welcome_to_yakrm_delivery_service">أهلا بك في تطبيق يكرم للتوصيل </string>
+    <string name="delivery_service">خدمة التوصيل</string>
+    <string name="delivery_service_description">نوفر لك خدمة التوصيل لأي طلب من أي مكان اذا تبي تطلب من (سوبرماركت أو مطعم أو صيدلية او توصل طلب من مكان لمكان) خلك في البيت مرتاح واحنا نجيك</string>
+    <string name="delivery">توصيل</string>
+    <string name="discount_voucher">قسائم الخصومات</string>
+    <string name="voucher_service_description">احصل على قسائم الخصومات لتحصل على الكثير من التخفيضات أثناء التسوق</string>
+    <string name="vouchers">قسائم الخصومات</string>
+    <string name="enter_product_name">ادخل اسم المنتج و تفاصيله</string>
+    <string name="qty">الكمية</string>
+    <string name="add">إضافة</string>
+    <string name="product">المنتج</string>
+    <string name="product_name">اسم المنتج</string>
+    <string name="quantity">الكمية</string>
+    <string name="delivery_address">عنوان التوصيل</string>
+    <string name="change_address">تغير العنوان</string>
+    <string name="shop_address">عنوان المحل</string>
+    <string name="select_store">اختر المتجر</string>
+    <string name="place_order">مكان الطلب</string>
+
+    <string name="order_id">Order Id</string>
+    <string name="view_detail">View Detail</string>
+    <string name="pending">Pending</string>
+    <string name="accept">Accept</string>
+    <string name="confirm">Confirm</string>
+    <string name="delivered">Delivered</string>
+    <string name="order_detail">Order Detail</string>
+    <string name="payment_amount">Payment Amount</string>
+    <string name="product_cost">Product cost :</string>
+    <string name="service_tax">Service Tax :</string>
+    <string name="delivery_charge">Delivery Charge :</string>
+    <string name="deliveryboy_name">Name</string>
+    <string name="contact">Contact</string>
+    <string name="payment">Payment</string>
+    <string name="select_what_you_want">Select What you want</string>
+
+    <string-array name="tab">
+        <item>Place Order</item>
+        <item>My Orders</item>
+    </string-array>
 
 </resources>

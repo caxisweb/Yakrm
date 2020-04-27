@@ -1,5 +1,8 @@
 package com.codeclinic.yakrm.Retrofit;
 
+import com.codeclinic.yakrm.DeliveryModel.OrderDetailResponseModel;
+import com.codeclinic.yakrm.DeliveryModel.OrderlistResponseModel;
+import com.codeclinic.yakrm.DeliveryModel.PlaceOrderModel;
 import com.codeclinic.yakrm.Models.AboutApplicationModel;
 import com.codeclinic.yakrm.Models.ActiveVoucherListModel;
 import com.codeclinic.yakrm.Models.AddCardDetailsModel;
@@ -239,4 +242,17 @@ public interface API {
     Call<ReplaceGiftVoucherModel> REPLACE_GIFT_VOUCHER_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
 
+    //Delivery services api
+
+    @Headers("Content-Type: application/json")
+    @POST("users/orders/create")
+    Call<PlaceOrderModel> placeOrder(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @GET("users/orders/my_orders")
+    Call<OrderlistResponseModel> GetOrderList(@Header("Authorization") String header);
+
+    @Headers("Content-Type: application/json")
+    @POST("users/orders/detail")
+    Call<OrderDetailResponseModel> OrderDetail(@Header("Authorization") String header, @Body String Body);
 }

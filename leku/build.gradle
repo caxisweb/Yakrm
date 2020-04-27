@@ -1,0 +1,257 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'twitter-gradle-plugin'
+apply plugin: "org.jlleitschuh.gradle.ktlint"
+
+def versionMajor = getVersionMajor()
+def versionMinor = getVersionMinor()
+def versionPatch = getVersionPatch()
+
+group = 'com.schibstedspain.android'
+version = "${versionMajor}.${versionMinor}.${versionPatch}"
+
+android {
+  compileSdkVersion 28
+  resourcePrefix 'leku_'
+
+  defaultConfig {
+    minSdkVersion 16
+    //noinspection OldTargetApi
+    targetSdkVersion 28
+    versionName version
+    multiDexEnabled true
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    consumerProguardFiles 'lib-proguard-rules.txt'
+    vectorDrawables.useSupportLibrary = true
+  }
+
+  flavorDimensions 'tier'
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  dexOptions {
+    preDexLibraries "true" != System.getenv("TRAVIS")
+  }
+  packagingOptions {
+    exclude 'protobuf.meta'
+  }
+  lintOptions {
+    disable 'ObsoleteLintCustomCheck'
+  }
+}
+
+detekt {
+  version = "1.0.0.RC7-3"
+  profile("main") {
+    input = "$projectDir/src/main/java"
+    config = "config/detekt/detekt-config.yml"
+    output = "$projectDir/build/reports/detekt/detekt.xml"
+    filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+  }
+}
+
+ktlint {
+  reporters = ["PLAIN", "CHECKSTYLE"]
+}
+
+configurations.all {
+  // This is a workaround for the issue (remove when androidx exits alpha libraries):
+  // https://stackoverflow.com/questions/37347326/errorconflict-with-dependency-com-google-code-findbugsjsr305
+  exclude group: 'com.google.code.findbugs', module: 'jsr305'
+  exclude group: 'com.google.guava', module: 'listenablefuture'
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+  implementation "androidx.appcompat:appcompat:1.1.0"
+  implementation "com.google.android.material:material:1.2.0-alpha01"
+
+  def playServicesVersion = '16.0.0'
+  implementation ("com.google.android.gms:play-services-maps:$playServicesVersion") {
+	  exclude group: "com.android.support"
+  }
+  implementation ("com.google.android.gms:play-services-location:$playServicesVersion") {
+	  exclude group: "com.android.support"
+  }
+
+  implementation ("com.google.android.libraries.places:places-compat:2.0.0") {
+    exclude group: "com.android.support"
+  }
+
+  implementation "com.google.maps:google-maps-services:0.2.9"
+
+  implementation 'pl.charmas.android:android-reactive-location2:2.1@aar'
+
+  implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
+  implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+  implementation 'nl.littlerobots.rxlint:rxlint:1.7.4'
+
+
+  def espressoVersion = '3.1.0-alpha4'
+  androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+  androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+
+  def supportTestVersion = '1.1.0-alpha4'
+  androidTestImplementation "androidx.test:runner:$supportTestVersion"
+  androidTestImplementation "androidx.test:rules:$supportTestVersion"
+  androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
+  androidTestImplementation 'org.mockito:mockito-core:2.28.2'
+
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+task androidJavadocs(type: Javadoc) {
+	source = android.sourceSets.main.java.srcDirs
+	classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+	android.libraryVariants.all { variant ->
+		if (variant.name == 'release') {
+			owner.classpath += variant.javaCompile.classpath
+		}
+	}
+	exclude '**/R.html', '**/R.*.html', '**/index.html', '**/*.kt'
+}
+
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+	classifier = 'javadoc'
+	from androidJavadocs.destinationDir
+}
+
+task androidSourcesJar(type: Jar) {
+	classifier = 'sources'
+	from android.sourceSets.main.java.srcDirs
+}
+
+
+publishing {
+  publications {
+    Production(MavenPublication) {
+      groupId 'com.schibstedspain.android'
+      artifactId 'leku'
+      version "${versionMajor}.${versionMinor}.${versionPatch}"
+
+      pom.withXml {
+        def dependenciesNode = asNode().appendNode('dependencies')
+
+        configurations.implementation.allDependencies.each {
+          if (it.name != 'unspecified') {
+            def dependencyNode = dependenciesNode.appendNode('dependency')
+            dependencyNode.appendNode('groupId', it.group)
+            dependencyNode.appendNode('artifactId', it.name)
+            dependencyNode.appendNode('version', it.version)
+          }
+        }
+
+	    // List all "compile" dependencies (for old Gradle)
+	    configurations.compile.getDependencies().each { dep -> addDependency(dep, "compile") }
+	    // List all "api" dependencies (for new Gradle) as "compile" dependencies
+	    configurations.api.getDependencies().each { dep -> addDependency(dep, "compile") }
+	    // List all "implementation" dependencies (for new Gradle) as "runtime" dependencies
+	    configurations.implementation.getAllDependencies().each { dep ->
+		  try {
+		    addDependency(dep, "runtime")
+		  } catch(Exception ignored) {
+		  }
+		}
+      }
+
+	  artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+	  artifact androidJavadocsJar
+	  artifact androidSourcesJar
+    }
+  }
+}
+
+bintray {
+  user = project.hasProperty('BINTRAY_USER') ? project.property('BINTRAY_USER') : System.getenv('BINTRAY_USER')
+  key = project.hasProperty('BINTRAY_KEY') ? project.property('BINTRAY_KEY') : System.getenv('BINTRAY_KEY')
+  publications = ['Production']
+  configurations = ['archives']
+
+  pkg {
+    repo = 'maven'
+    name = 'leku'
+    userOrg = 'schibstedspain'
+    description = "Location picker component for Android. It returns a latitude,longitude and an address based on the location picked in the LocationPickerActivity provided."
+    publish = true
+    dryRun = false
+    publicDownloadNumbers = true
+    licenses = ['Apache-2.0']
+    vcsUrl = 'https://github.com/AdevintaSpain/Leku.git'
+    version {
+      name = "${versionMajor}.${versionMinor}.${versionPatch}"
+      desc = "Location picker component for Android. It returns a latitude,longitude and an address based on the location picked in the LocationPickerActivity provided."
+      released = new Date()
+      vcsTag = "${versionMajor}.${versionMinor}.${versionPatch}"
+    }
+  }
+}
+
+twitterPlugin {
+  consumerKey = System.getenv()['TWITTER_API_KEY']
+  consumerSecret = System.getenv()['TWITTER_API_SECRET']
+  accessToken = System.getenv()['TWITTER_ACCESS_TOKEN']
+  accessTokenSecret = System.getenv()['TWITTER_ACCESS_TOKEN_SECRET']
+  message = "New Leku version ${versionMajor}.${versionMinor}.${versionPatch} available for download. Check out the details at https://github.com/SchibstedSpain/Leku @SchibstedEng #Android #library #AndroidDev"
+}
+
+task sourcesJar(type: Jar) {
+	from android.sourceSets.main.java.srcDirs
+	classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+	excludes = ['**/*.kt']
+	source = android.sourceSets.main.java.srcDirs
+	classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+artifacts {
+	archives javadocJar
+	archives sourcesJar
+}
+
+def getVersionMajor() {
+/*  def content = file('../version.properties')
+
+  Properties properties = new Properties()
+  InputStream is = new ByteArrayInputStream(content.getBytes())
+  properties.load(is)
+
+  return properties['MAJOR'].toInteger()*/
+}
+
+def getVersionMinor() {
+/*  def content = file('../version.properties')
+
+  Properties properties = new Properties()
+  InputStream is = new ByteArrayInputStream(content.getBytes())
+  properties.load(is)
+
+  return properties['MINOR'].toInteger()*/
+}
+
+def getVersionPatch() {
+/*  def content = file('../version.properties')
+
+  Properties properties = new Properties()
+  InputStream is = new ByteArrayInputStream(content.getBytes())
+  properties.load(is)
+
+  return properties['PATCH'].toInteger()*/
+}

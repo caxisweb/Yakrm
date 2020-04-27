@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.codeclinic.yakrm.DeliveryServiceFragment.NewOrderFragment;
 import com.codeclinic.yakrm.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 
 
 /**
@@ -41,7 +43,7 @@ public class AuctionTabFragment extends Fragment {
         @SuppressLint({"NewApi", "LocalSuppress"}) FragmentManager fragmentManager = getChildFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        /*tabLayout.setOnTabSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tabLayout.getSelectedTabPosition() == 0) {
@@ -54,6 +56,42 @@ public class AuctionTabFragment extends Fragment {
                     fragment = new MyVouchersAuctionFragment();
                     @SuppressLint({"NewApi", "LocalSuppress"}) FragmentManager fragmentManager = getChildFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });*/
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+
+                    Fragment fragment = null;
+                    fragment = new OtherAuctionsFragment();
+                    @SuppressLint({"NewApi", "LocalSuppress"}) FragmentManager fragmentManager = getChildFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+
+                } else if (tab.getPosition() == 1) {
+
+                    Fragment fragment = null;
+                    fragment = new MyVouchersAuctionFragment();
+                    @SuppressLint({"NewApi", "LocalSuppress"}) FragmentManager fragmentManager = getChildFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+                } else if (tab.getPosition() == 2) {
+
+                    /*Fragment fragment = new Appointment_Fragment();
+                    FragmentManager fragmentManager=getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();*/
+
                 }
             }
 

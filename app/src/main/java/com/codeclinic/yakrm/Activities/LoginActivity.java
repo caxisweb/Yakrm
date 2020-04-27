@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (response.body().getUser_type().equals("salesmen")) {
                                     startActivity(new Intent(LoginActivity.this, UploadVouchersActivity.class));
                                 } else {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    startActivity(new Intent(LoginActivity.this, SelectAppModeActivity.class));
                                 }
                                 finish();
                             } else {
