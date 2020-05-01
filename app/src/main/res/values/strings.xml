@@ -501,6 +501,8 @@
     <string name="select_what_you_want">Select What you want</string>
     <string name="driver_detail">Driver Detail</string>
     <string name="additional_notes">Additional Notes</string>
+    <string name="delivery_boy_not_assigned_yet">Delivery Boy not Assigned Yet</string>
+    <string name="price_not_added_by_delivery_boy">Price not Added By Delivery boy</string>
 
     <string-array name="tab">
         <item>Place Order</item>

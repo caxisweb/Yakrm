@@ -1,10 +1,23 @@
 package com.codeclinic.yakrm.DeliveryServiceFragment;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.se.omapi.Session;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +31,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.codeclinic.yakrm.Activities.LoginActivity;
+import com.codeclinic.yakrm.DeliveryModel.ImageUploadModel;
 import com.codeclinic.yakrm.DeliveryModel.PlaceOrderModel;
+import com.codeclinic.yakrm.DeliveryService.OrderDetailActivity;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
@@ -33,8 +50,15 @@ import com.schibstedspain.leku.LocationPickerActivity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,25 +82,38 @@ public class NewOrderFragment extends Fragment {
     private int MAP_BUTTON_REQUEST_CODE = 1;
     private int MAP_LOCATION_OPTION = 1;//1 for Pickup and 2 for Destination
 
-    CardView btn_addproduct, btn_home_address, btn_shop_address;
+    private final int CAMERA_IMAGE = 1;
+    private final int PICK_IMAGE_GALLERY = 3;
+    Uri selectedImage;
+    File sourceFile;
+    boolean value;
+
+    CardView btn_addproduct, btn_home_address, btn_shop_address,btn_upload_photo,card_image;
     LinearLayout lv_productlist,lv_order;
     EditText edt_pname, edt_pqty,edt_notes;
-    TextView tv_home_address, tv_shop_address;
+    EditText tv_home_address, tv_shop_address;
+    ImageView img_product,img_delete;
 
     ArrayList<String> product_name = new ArrayList<>();
     ArrayList<String> product_qty = new ArrayList<>();
 
+    String order_id;
+
     String str_home_address="null";
     double str_home_lat=0, str_home_long=0;
-
+    String str_notes;
     String str_store_address="non";
     double str_store_lat=0, str_store_long=0;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mainView = inflater.inflate(R.layout.new_order_fragment, null);
+
+        StrictMode.VmPolicy.Builder builder1 = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder1.build());
 
         sessionManager=new SessionManager(getActivity());
         progressDialog = new ProgressDialog(getActivity());
@@ -85,8 +122,13 @@ public class NewOrderFragment extends Fragment {
         lv_productlist = mainView.findViewById(R.id.lv_productlist);
 
         btn_addproduct = mainView.findViewById(R.id.btn_add_product);
+        btn_upload_photo = mainView.findViewById(R.id.btn_upload_pic);
         btn_home_address = mainView.findViewById(R.id.btn_home_address);
         btn_shop_address = mainView.findViewById(R.id.btn_shop_address);
+
+        card_image = mainView.findViewById(R.id.card_image);
+        img_product=mainView.findViewById(R.id.img_product);
+        img_delete=mainView.findViewById(R.id.img_delete);
 
         edt_pname = mainView.findViewById(R.id.edt_product);
         edt_pqty = mainView.findViewById(R.id.edt_quantity);
@@ -157,7 +199,21 @@ public class NewOrderFragment extends Fragment {
 
         });
 
+        btn_upload_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectImage();
+            }
+        });
 
+        img_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                card_image.setVisibility(View.GONE);
+                sourceFile=null;
+            }
+        });
 
         btn_home_address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +244,10 @@ public class NewOrderFragment extends Fragment {
         lv_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                str_notes=edt_notes.getText().toString().trim();
+                str_home_address=tv_home_address.getText().toString().trim();
+                str_store_address=tv_shop_address.getText().toString().trim();
 
                 if(product_name.size()==0){
                     Toast.makeText(getActivity(),"Please Add Product",Toast.LENGTH_LONG).show();
@@ -222,6 +282,7 @@ public class NewOrderFragment extends Fragment {
                         }
 
                         data.put("order_detail",productlist);
+                        data.put("notes",str_notes);
 
                         Log.i("order_data",data.toString());
 
@@ -230,29 +291,44 @@ public class NewOrderFragment extends Fragment {
                             @Override
                             public void onResponse(Call<PlaceOrderModel> call, Response<PlaceOrderModel> response) {
 
-                                progressDialog.dismiss();
-
                                 if(response.body().getStatus().equals("1")){
 
-                                    Toast.makeText(getActivity(),response.body().getMessage(),Toast.LENGTH_LONG).show();
-                                    tv_home_address.setText("");
-                                    tv_shop_address.setText("");
-                                    lv_productlist.removeAllViews();
-                                    edt_notes.setText("");
-                                    str_home_address="null";
-                                    str_store_address="null";
-                                    str_home_lat=0;
-                                    str_home_long=0;
-                                    str_store_lat=0;
-                                    str_store_long=0;
+                                    if(sourceFile==null) {
+
+                                        progressDialog.dismiss();
+
+                                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                                        tv_home_address.setText("");
+                                        tv_shop_address.setText("");
+                                        lv_productlist.removeAllViews();
+                                        edt_notes.setText("");
+                                        str_home_address = "null";
+                                        str_store_address = "null";
+                                        str_home_lat = 0;
+                                        str_home_long = 0;
+                                        str_store_lat = 0;
+                                        str_store_long = 0;
+
+                                        Intent i_detail = new Intent(getActivity(), OrderDetailActivity.class);
+                                        i_detail.putExtra("order_id", response.body().getOrder_id());
+                                        startActivity(i_detail);
+
+                                    }else{
+
+                                        order_id=response.body().getOrder_id();
+                                        callImageUpload();
+                                    }
 
                                 }else{
+                                    progressDialog.dismiss();
                                     Toast.makeText(getActivity(),response.body().getMessage(),Toast.LENGTH_LONG).show();
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<PlaceOrderModel> call, Throwable t) {
+                                progressDialog.dismiss();
                                 Toast.makeText(getActivity(),"server error",Toast.LENGTH_LONG).show();
                             }
                         });
@@ -279,6 +355,74 @@ public class NewOrderFragment extends Fragment {
         startActivityForResult(locationPickerIntent, MAP_BUTTON_REQUEST_CODE);
     }
 
+    private void selectImage() {
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Add Photo!!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+                    if (isPermissionGranted()) {
+                        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/RapidVets/";
+                        File newdir = new File(dir);
+                        newdir.mkdirs();
+                        String file = dir + DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString() + ".jpg";
+                        File newfile = new File(file);
+                        try {
+                            newfile.createNewFile();
+                        } catch (IOException ignored) {
+                        }
+                        selectedImage = Uri.fromFile(newfile);
+                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, selectedImage);
+                        startActivityForResult(cameraIntent, CAMERA_IMAGE);
+                    } else {
+                        Toast.makeText(getActivity(), "Permission needed to access Camera", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else if (options[item].equals("Choose from Gallery")) {
+                    if (isPermissionGranted()) {
+                        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        photoPickerIntent.setType("image/*");
+                        startActivityForResult(photoPickerIntent, PICK_IMAGE_GALLERY);
+                    } else {
+                        Toast.makeText(getActivity(), "Permission needed to access Gallery", Toast.LENGTH_SHORT).show();
+                    }
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    public boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                value = true;
+            } else {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"}, 200);
+                value = false;
+            }
+        } else {
+            value = true;
+        }
+        return value;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 200) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                selectImage();
+            } else {
+                Toast.makeText(getActivity(), "You have to allow all the permissions to access content from camera and gallery", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -288,8 +432,10 @@ public class NewOrderFragment extends Fragment {
 
                 if (MAP_LOCATION_OPTION == 1) {
                     str_home_lat = data.getDoubleExtra(LATITUDE, 0.0);
+                    tv_home_address.setEnabled(true);
                 } else {
                     str_store_lat = data.getDoubleExtra(LATITUDE, 0.0);
+                    tv_shop_address.setEnabled(true);
                 }
 
 
@@ -300,24 +446,15 @@ public class NewOrderFragment extends Fragment {
                 }
 
                 String address = data.getStringExtra(LOCATION_ADDRESS);
-
-                Log.d("ADDRESS****", address);
-
                 String postalcode = data.getStringExtra(ZIPCODE);
-
-                Log.d("POSTALCODE****", postalcode);
 
                 Bundle bundle = data.getBundleExtra(TRANSITION_BUNDLE);
 
-                Log.d("BUNDLE TEXT****", bundle.getString("test"));
-
                 String timeZoneId = data.getStringExtra(TIME_ZONE_ID);
                 if (timeZoneId != null) {
-                    Log.d("TIME ZONE ID****", timeZoneId);
                 }
                 String timeZoneDisplayName = data.getStringExtra(TIME_ZONE_DISPLAY_NAME);
                 if (timeZoneDisplayName != null) {
-                    Log.d("TIME ZONE NAME****", timeZoneDisplayName);
                 }
                 if (MAP_LOCATION_OPTION == 1) {
                     str_home_address = address;
@@ -326,12 +463,129 @@ public class NewOrderFragment extends Fragment {
                     str_store_address = address;
                     tv_shop_address.setText(address);
                 }
+            } else {
+
+                if (requestCode == PICK_IMAGE_GALLERY) {
+                    selectedImage = data.getData();
+                    sourceFile = new File(getPath(selectedImage));
+                } else if (requestCode == CAMERA_IMAGE) {
+                    sourceFile = new File(selectedImage.getPath());
+                }
+
+                InputStream in = null;
+
+                try {
+
+                    final int IMAGE_MAX_SIZE = 1200000; // 1.2MP
+                    in = getActivity().getContentResolver().openInputStream(selectedImage);
+                    // Decode image size
+                    BitmapFactory.Options o = new BitmapFactory.Options();
+                    o.inJustDecodeBounds = true;
+                    BitmapFactory.decodeStream(in, null, o);
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    int scale = 1;
+                    while ((o.outWidth * o.outHeight) * (1 / Math.pow(scale, 2)) >
+                            IMAGE_MAX_SIZE) {
+                        scale++;
+                    }
+                    Bitmap b = null;
+                    in = getActivity().getContentResolver().openInputStream(selectedImage);
+                    if (scale > 1) {
+                        scale--;
+                        // scale to max possible inSampleSize that still yields an image
+                        // larger than target
+                        o = new BitmapFactory.Options();
+                        o.inSampleSize = scale;
+                        b = BitmapFactory.decodeStream(in, null, o);
+
+                        // resize to desired dimensions
+                        int height = b.getHeight();
+                        int width = b.getWidth();
+
+                        double y = Math.sqrt(IMAGE_MAX_SIZE
+                                / (((double) width) / height));
+                        double x = (y / height) * width;
+
+                        Bitmap scaledBitmap = Bitmap.createScaledBitmap(b, (int) x,
+                                (int) y, true);
+                        b.recycle();
+                        b = scaledBitmap;
+
+                        System.gc();
+                    } else {
+                        b = BitmapFactory.decodeStream(in);
+                    }
+                    in.close();
+
+                    card_image.setVisibility(View.VISIBLE);
+                    img_product.setImageBitmap(b);
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Log.d("RESULT****", "CANCELLED");
+            }
+        }
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
+        getActivity().startManagingCursor(cursor);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    public void callImageUpload() {
+
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), sourceFile);
+        RequestBody order_id1 = RequestBody.create(MediaType.parse("text/plain"), order_id);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("order_image", sourceFile.getName(), reqFile);
+
+        Call<ImageUploadModel> uploadModelCall = apiService.uploadProduct(sessionManager.getUserDetails().get(SessionManager.User_Token),order_id1, body);
+        uploadModelCall.enqueue(new Callback<ImageUploadModel>() {
+            @Override
+            public void onResponse(Call<ImageUploadModel> call, Response<ImageUploadModel> response) {
+
+                progressDialog.dismiss();
+
+                if (response.body().getStatus().equals("1")) {
+
+                    tv_home_address.setText("");
+                    tv_shop_address.setText("");
+                    lv_productlist.removeAllViews();
+                    edt_notes.setText("");
+                    str_home_address = "null";
+                    str_store_address = "null";
+                    str_home_lat = 0;
+                    str_home_long = 0;
+                    str_store_lat = 0;
+                    str_store_long = 0;
+
+                    Intent i_detail = new Intent(getActivity(), OrderDetailActivity.class);
+                    i_detail.putExtra("order_id", order_id);
+                    startActivity(i_detail);
+
+                } else {
+
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
             }
 
-
-        }
-        if (resultCode == Activity.RESULT_CANCELED) {
-            Log.d("RESULT****", "CANCELLED");
-        }
+            @Override
+            public void onFailure(Call<ImageUploadModel> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Server Error Please Try Again!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

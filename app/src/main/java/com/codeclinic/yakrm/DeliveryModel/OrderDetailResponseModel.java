@@ -16,6 +16,9 @@ public class OrderDetailResponseModel {
     @SerializedName("id")
     @Expose
     private String id;
+    @SerializedName("order_status")
+    @Expose
+    private String order_status;
     @SerializedName("user_id")
     @Expose
     private String userId;
@@ -40,6 +43,12 @@ public class OrderDetailResponseModel {
     @SerializedName("price")
     @Expose
     private String price;
+    @SerializedName("order_image")
+    @Expose
+    private String order_image;
+    @SerializedName("notes")
+    @Expose
+    private String notes;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -81,6 +90,14 @@ public class OrderDetailResponseModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(String order_status) {
+        this.order_status = order_status;
     }
 
     public String getUserId() {
@@ -185,6 +202,22 @@ public class OrderDetailResponseModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getOrder_image() {
+        return order_image;
+    }
+
+    public void setOrder_image(String order_image) {
+        this.order_image = order_image;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public List<ProductListModel> getOrderDetail() {

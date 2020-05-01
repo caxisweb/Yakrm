@@ -97,12 +97,16 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     //implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
 
-    implementation project(':leku')
+    //implementation project(':leku')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //maps
     implementation 'com.google.android.gms:play-services-maps:11.4.2'
     implementation 'com.google.android.gms:play-services-location:11.4.2'
+
+    implementation 'com.schibstedspain.android:leku:6.4.0'
+    //implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+    //implementation 'id.zelory:compressor:2.1.0'
 }
 apply plugin: 'com.google.gms.google-services'
 //inforaamitsolutions

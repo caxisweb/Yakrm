@@ -10,5 +10,5 @@ public class ImageURL {
     public static String gift_video = ImageBaseURL + "gift_videos/";
     public static String gift_category_icon = ImageBaseURL + "gift_category_icons/";
     public static String gift_category_banner = ImageBaseURL + "gift_category_banners/";
-
+    public static String produtList = ImageBaseURL+"order_images/";
 }

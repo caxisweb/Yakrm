@@ -11,6 +11,9 @@ public class OrderListModel {
     @SerializedName("user_id")
     @Expose
     private String userId;
+    @SerializedName("order_status")
+    @Expose
+    private String order_status;
     @SerializedName("user_address")
     @Expose
     private String userAddress;
@@ -106,6 +109,14 @@ public class OrderListModel {
 
     public void setProductTitle(String productTitle) {
         this.productTitle = productTitle;
+    }
+
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(String order_status) {
+        this.order_status = order_status;
     }
 
     public String getTotal_product() {

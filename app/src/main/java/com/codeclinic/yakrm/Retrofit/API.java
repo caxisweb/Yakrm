@@ -1,5 +1,6 @@
 package com.codeclinic.yakrm.Retrofit;
 
+import com.codeclinic.yakrm.DeliveryModel.ImageUploadModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderDetailResponseModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderlistResponseModel;
 import com.codeclinic.yakrm.DeliveryModel.PlaceOrderModel;
@@ -255,4 +256,8 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("users/orders/detail")
     Call<OrderDetailResponseModel> OrderDetail(@Header("Authorization") String header, @Body String Body);
+
+    @Multipart
+    @POST("users/orders/update_order_image")
+    Call<ImageUploadModel> uploadProduct(@Header("Authorization") String header,@Part("order_id") RequestBody order_id, @Part MultipartBody.Part image);
 }

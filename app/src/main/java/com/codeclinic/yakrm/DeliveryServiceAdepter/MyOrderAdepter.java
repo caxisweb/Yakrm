@@ -43,7 +43,13 @@ public class MyOrderAdepter extends RecyclerView.Adapter<MyOrderAdepter.Holder> 
     public void onBindViewHolder(@NonNull Holder holder, final int i) {
 
         holder.tv_order_id.setText(context.getString(R.string.order_id)+" : "+myorderlist.get(i).getId());
-        holder.tv_order_status.setText(context.getString(R.string.pending));
+
+        if(myorderlist.get(i).getOrder_status().equals("1")) {
+            holder.tv_order_status.setText(context.getString(R.string.pending));
+        }else{
+            holder.tv_order_status.setText(context.getString(R.string.accept));
+        }
+
         holder.tv_product_count.setText(context.getString(R.string.product)+" : "+myorderlist.get(i).getTotal_product());
         holder.tv_home_address.setText(myorderlist.get(i).getUserAddress());
 
