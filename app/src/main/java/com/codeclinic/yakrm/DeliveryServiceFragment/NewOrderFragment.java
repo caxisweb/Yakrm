@@ -119,6 +119,8 @@ public class NewOrderFragment extends Fragment {
         progressDialog = new ProgressDialog(getActivity());
         apiService = RestClass.getClientDelivery().create(API.class);
 
+        Log.i("token",sessionManager.getUserDetails().get(SessionManager.User_Token));
+
         lv_productlist = mainView.findViewById(R.id.lv_productlist);
 
         btn_addproduct = mainView.findViewById(R.id.btn_add_product);
