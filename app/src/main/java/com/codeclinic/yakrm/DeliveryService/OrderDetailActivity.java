@@ -37,6 +37,9 @@ public class OrderDetailActivity extends AppCompatActivity {
     API apiService;
 
     String order_id;
+    double service_charg_amount;
+    double total_amount;
+
     CardView card_image;
     TextView tv_order_id,tv_order_status,tv_product_count,tv_home_address,tv_store_address,tv_notes;
     TextView tv_product_cost,tv_servicetax,tv_delivery_charge;
@@ -125,7 +128,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                             tv_order_status.setText(getString(R.string.accept));
                         }
 
-                        if(!response.body().getNotes().equals("null")){
+                        if(response.body().getNotes()!=null){
                             tv_notes.setText(response.body().getNotes());
                         }
 
@@ -147,7 +150,9 @@ public class OrderDetailActivity extends AppCompatActivity {
                             tv_product_cost.setText("0"+ getString(R.string.Sr));
                         }else {
                             tv_payment_status.setVisibility(View.GONE);
+                            tv_delivery_charge.setText(response.body().getOrder_charge()+getString(R.string.Sr));
                             tv_product_cost.setText(response.body().getPrice()+ getString(R.string.Sr));
+                            tv_servicetax.setText(response.body().getService_charge()+ getString(R.string.Sr));
                         }
 
                         if(response.body().getOrder_status().equals("1")){

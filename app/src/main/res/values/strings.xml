@@ -503,6 +503,10 @@
     <string name="additional_notes">Additional Notes</string>
     <string name="delivery_boy_not_assigned_yet">Delivery Boy not Assigned Yet</string>
     <string name="price_not_added_by_delivery_boy">Price not Added By Delivery boy</string>
+    <string name="intro_two_title">Fast delivery</string>
+    <string name="introtwo_desc">Order now and get the fastest delivery</string>
+    <string name="intro_three_title">Order anything</string>
+    <string name="intro_three_desc">We commit to bring any products you want</string>
 
     <string-array name="tab">
         <item>Place Order</item>

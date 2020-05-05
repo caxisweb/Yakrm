@@ -43,6 +43,12 @@ public class OrderDetailResponseModel {
     @SerializedName("price")
     @Expose
     private String price;
+    @SerializedName("service_charge")
+    @Expose
+    private String service_charge;
+    @SerializedName("order_charge")
+    @Expose
+    private String order_charge;
     @SerializedName("order_image")
     @Expose
     private String order_image;
@@ -162,6 +168,22 @@ public class OrderDetailResponseModel {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getService_charge() {
+        return service_charge;
+    }
+
+    public void setService_charge(String service_charge) {
+        this.service_charge = service_charge;
+    }
+
+    public String getOrder_charge() {
+        return order_charge;
+    }
+
+    public void setOrder_charge(String order_charge) {
+        this.order_charge = order_charge;
     }
 
     public String getCreatedAt() {

@@ -102,7 +102,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        layouts = new int[]{R.layout.intro_screen1};
+        layouts = new int[]{R.layout.intro_screen1,R.layout.intro_screen2,R.layout.intro_screen3};
 
         //addBottomDots(0);
 
@@ -112,7 +112,7 @@ public class StartActivity extends AppCompatActivity {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StartActivity.this, MainActivity.class));
+                startActivity(new Intent(StartActivity.this, SelectAppModeActivity.class));
                 finish();
             }
         });

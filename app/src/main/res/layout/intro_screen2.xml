@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/buying_gift_cards"
+        android:text="@string/intro_two_title"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18dp"
         android:textStyle="bold" />
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/buying_gift_cards_with_competitive_prices"
+        android:text="@string/introtwo_desc"
         android:textColor="@color/black"
         android:textSize="18dp" />
 

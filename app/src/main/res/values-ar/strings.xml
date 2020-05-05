@@ -418,7 +418,7 @@
     <string name="our_location_on_map">موقعنا على الخريطة</string>
 
     <!--Delivery service-->
-    <string name="welcome_to_yakrm_delivery_service">أهلا بك في تطبيق يكرم للتوصيل </string>
+    <string name="welcome_to_yakrm_delivery_service">أهلا بك في تطبيق يكرم</string>
     <string name="delivery_service">خدمة التوصيل</string>
     <string name="delivery_service_description">نوفر لك خدمة التوصيل لأي طلب من أي مكان اذا تبي تطلب من (سوبرماركت أو مطعم أو صيدلية او توصل طلب من مكان لمكان) خلك في البيت مرتاح واحنا نجيك</string>
     <string name="delivery">توصيل</string>
@@ -456,6 +456,10 @@
     <string name="additional_notes">ملاحظات اضافية</string>
     <string name="delivery_boy_not_assigned_yet">Delivery Boy not Assigned Yet</string>
     <string name="price_not_added_by_delivery_boy">Price not Added By Delivery boy</string>
+    <string name="intro_two_title">توصيل سريع</string>
+    <string name="introtwo_desc">نوفر لك توصيل سريع من اي مكان واي زمان</string>
+    <string name="intro_three_title">اطلب اي شي</string>
+    <string name="intro_three_desc">نجيب طلبك وش ماكان نوعه</string>
 
     <string-array name="tab">
         <item>اطلب الأن</item>
