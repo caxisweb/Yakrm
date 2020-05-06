@@ -507,6 +507,7 @@
     <string name="introtwo_desc">Order now and get the fastest delivery</string>
     <string name="intro_three_title">Order anything</string>
     <string name="intro_three_desc">We commit to bring any products you want</string>
+    <string name="complete_payment">Complete Order Payment</string>
 
     <string-array name="tab">
         <item>Place Order</item>

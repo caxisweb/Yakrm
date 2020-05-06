@@ -38,6 +38,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.codeclinic.yakrm.Activities.AboutApplicationActivity;
 import com.codeclinic.yakrm.Activities.CartActivity;
+import com.codeclinic.yakrm.Activities.EnterCardDetailsActivity;
 import com.codeclinic.yakrm.Activities.ExcahangeInstructionsActivity;
 import com.codeclinic.yakrm.Activities.FavouritesActivity;
 import com.codeclinic.yakrm.Activities.LoginActivity;
@@ -221,6 +222,7 @@ public class DeliveryMain extends AppCompatActivity {
         View header1 = navigationView.getHeaderView(0);
         LinearLayout llayout_main_page = header1.findViewById(R.id.llayout_main_page);
         LinearLayout layout_personal_account = header1.findViewById(R.id.layout_personal_account);
+        LinearLayout llayout_payment_method = header1.findViewById(R.id.llayout_payment_method);
         LinearLayout llayout_support_contact = header1.findViewById(R.id.llayout_support_contact);
         LinearLayout llayout_about_app = header1.findViewById(R.id.llayout_about_app);
         LinearLayout llayout_instruction_conditions = header1.findViewById(R.id.llayout_instruction_conditions);
@@ -268,6 +270,24 @@ public class DeliveryMain extends AppCompatActivity {
                 } else {
                     startActivity(new Intent(DeliveryMain.this, StartActivity.class));
                 }
+            }
+        });
+
+        llayout_payment_method.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                /*tabLayout.setVisibility(View.VISIBLE);
+                if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
+                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
+                    setTitle(getResources().getString(R.string.title_activity_main));
+                }*/
+                if (sessionManager.isLoggedIn()) {
+                    startActivity(new Intent(DeliveryMain.this, EnterCardDetailsActivity.class));
+                } else {
+                    startActivity(new Intent(DeliveryMain.this, StartActivity.class));
+                }
+
             }
         });
 

@@ -79,9 +79,39 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/layout"
-                android:visibility="gone" />
+                android:background="@color/layout" />
 
+            <LinearLayout
+                android:id="@+id/llayout_payment_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/payment_method_navigation_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/Payment_Methods"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/layout" />
 
             <LinearLayout
                 android:id="@+id/llayout_support_contact"

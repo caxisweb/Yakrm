@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/intro_icon" />
+        android:src="@drawable/intro_banner_3" />
 
     <TextView
         android:layout_width="match_parent"

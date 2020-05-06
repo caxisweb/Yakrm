@@ -40,7 +40,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/lv_order"
+        android:layout_above="@+id/lv_footer"
         android:layout_below="@+id/lv_header">
 
         <LinearLayout
@@ -497,7 +497,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:padding="10dp"
+                    android:padding="7dp"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/circle_background"
                     android:src="@drawable/ic_delivery_boy"/>
@@ -568,7 +568,7 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/lv_order"
+        android:id="@+id/lv_footer"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:orientation="horizontal"
@@ -581,19 +581,55 @@
             android:layout_weight="1"
             android:textColor="@color/white"
             android:textSize="14dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimary"
             android:text="Chat with" />
 
-        <Button
-            android:id="@+id/btn_payment"
+        <LinearLayout
+            android:id="@+id/lv_paynow"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:textSize="14dp"
-            android:background="@color/colorPrimary"
-            android:text="@string/payment" />
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/tv_total_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:text="Total Cost 200 SAR"
+                android:textColor="@color/white"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_payment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/payment"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="12dp" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
     </LinearLayout>
 

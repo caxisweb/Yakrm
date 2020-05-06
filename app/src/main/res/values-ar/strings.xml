@@ -460,6 +460,7 @@
     <string name="introtwo_desc">نوفر لك توصيل سريع من اي مكان واي زمان</string>
     <string name="intro_three_title">اطلب اي شي</string>
     <string name="intro_three_desc">نجيب طلبك وش ماكان نوعه</string>
+    <string name="complete_payment">Complete Order Payment</string>
 
     <string-array name="tab">
         <item>اطلب الأن</item>

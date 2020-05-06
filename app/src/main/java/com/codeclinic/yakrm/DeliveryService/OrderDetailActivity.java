@@ -1,10 +1,12 @@
 package com.codeclinic.yakrm.DeliveryService;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.codeclinic.yakrm.Activities.CartActivity;
+import com.codeclinic.yakrm.Activities.CompletingPurchasingActivity;
 import com.codeclinic.yakrm.DeliveryModel.OrderDetailResponseModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
@@ -35,17 +39,19 @@ public class OrderDetailActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     SessionManager sessionManager;
     API apiService;
+    LayoutInflater inflater;
 
     String order_id;
-    double service_charg_amount;
     double total_amount;
 
-    CardView card_image;
+    CardView card_image,btn_payment;
     TextView tv_order_id,tv_order_status,tv_product_count,tv_home_address,tv_store_address,tv_notes;
     TextView tv_product_cost,tv_servicetax,tv_delivery_charge;
     TextView tv_delivery_boy,tv_delivery_contact;
     TextView tv_payment_status,tv_deliveryboy_status;
-    LinearLayout lv_productlist;
+    TextView tv_total_cost;
+    LinearLayout lv_productlist,lv_paynow,lv_footer;
+    Button btn_chat;
     ImageView img_product;
     ImageView img_back;
 
@@ -72,7 +78,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
         progressDialog = new ProgressDialog(this);
         apiService = RestClass.getClientDelivery().create(API.class);
-        final LayoutInflater inflater = LayoutInflater.from(this);
+        inflater = LayoutInflater.from(this);
 
         Log.i("token",sessionManager.getUserDetails().get(SessionManager.User_Token));
 
@@ -82,7 +88,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         tv_home_address=findViewById(R.id.tv_home_address);
         tv_store_address=findViewById(R.id.tv_store_address);
         tv_notes=findViewById(R.id.tv_notes);
-
+        tv_total_cost=findViewById(R.id.tv_total_cost);
         tv_product_cost=findViewById(R.id.tv_product_cost);
         tv_servicetax=findViewById(R.id.tv_service_tax);
         tv_delivery_charge=findViewById(R.id.tv_delivery_charge);
@@ -93,10 +99,33 @@ public class OrderDetailActivity extends AppCompatActivity {
         tv_payment_status=findViewById(R.id.tv_payment_status);
         tv_deliveryboy_status=findViewById(R.id.tv_deliveryboy_status);
 
+        btn_payment=findViewById(R.id.btn_payment);
+        btn_chat=findViewById(R.id.btn_chat);
+
         lv_productlist=findViewById(R.id.lv_productlist);
+        lv_paynow=findViewById(R.id.lv_paynow);
+        lv_footer=findViewById(R.id.lv_footer);
 
         card_image = findViewById(R.id.card_image);
         img_product=findViewById(R.id.img_product);
+
+
+        btn_payment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(OrderDetailActivity.this, CompletePaymentActivity.class);
+                intent.putExtra("price", String.valueOf("1"));
+                intent.putExtra("order_id", order_id);
+                startActivity(intent);
+            }
+        });
+
+
+        getOrderDetail();
+    }
+
+    void getOrderDetail(){
 
         progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
         progressDialog.setIndeterminate(true);
@@ -148,20 +177,40 @@ public class OrderDetailActivity extends AppCompatActivity {
                         if(response.body().getPrice().equals("0")){
                             tv_payment_status.setVisibility(View.VISIBLE);
                             tv_product_cost.setText("0"+ getString(R.string.Sr));
+                            lv_paynow.setVisibility(View.GONE);
                         }else {
+
+                            lv_paynow.setVisibility(View.VISIBLE);
                             tv_payment_status.setVisibility(View.GONE);
                             tv_delivery_charge.setText(response.body().getOrder_charge()+getString(R.string.Sr));
                             tv_product_cost.setText(response.body().getPrice()+ getString(R.string.Sr));
                             tv_servicetax.setText(response.body().getService_charge()+ getString(R.string.Sr));
+                            total_amount=Double.parseDouble(response.body().getPrice())+Double.parseDouble(response.body().getService_charge())+Double.parseDouble(response.body().getOrder_charge());
+                            tv_total_cost.setText("Total Cost "+total_amount +getString(R.string.Sr));
+                            btn_payment.setVisibility(View.VISIBLE);
                         }
 
                         if(response.body().getOrder_status().equals("1")){
+
                             tv_deliveryboy_status.setVisibility(View.VISIBLE);
                             tv_delivery_boy.setVisibility(View.GONE);
                             tv_delivery_contact.setVisibility(View.GONE);
-                        }else {
+                            lv_paynow.setVisibility(View.VISIBLE);
+                            lv_footer.setVisibility(View.GONE);
+
+                        }else if(response.body().getPrice().equals("5")){
+
+                            btn_payment.setVisibility(View.GONE);
+                            btn_chat.setVisibility(View.GONE);
+                            lv_footer.setVisibility(View.VISIBLE);
+                        }
+                        else {
+
+                            lv_footer.setVisibility(View.VISIBLE);
+                            tv_deliveryboy_status.setVisibility(View.GONE);
                             tv_delivery_boy.setText(getString(R.string.name) + " : " + response.body().getName());
                             tv_delivery_contact.setText(getString(R.string.contact) + " : " + response.body().getPhone());
+                            btn_chat.setVisibility(View.VISIBLE);
                         }
 
                         Log.i("image",ImageURL.produtList +response.body().getOrder_image());

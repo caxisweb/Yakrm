@@ -1,5 +1,6 @@
 package com.codeclinic.yakrm.Retrofit;
 
+import com.codeclinic.yakrm.DeliveryModel.DeliverOrderPaymentTransectionModel;
 import com.codeclinic.yakrm.DeliveryModel.ImageUploadModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderDetailResponseModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderlistResponseModel;
@@ -168,7 +169,6 @@ public interface API {
     @POST("remove_card_of_users")
     Call<RemoveCardModel> REMOVE_CARD_MODEL_CALL(@Header("Authorization") String header, @Body String Body);
 
-
     @Headers("Content-Type: application/json")
     @POST("paymentstatus")
     Call<PaymentStatusModel> PAYMENT_STATUS_MODEL_CALL(@Body String Body);
@@ -260,4 +260,8 @@ public interface API {
     @Multipart
     @POST("users/orders/update_order_image")
     Call<ImageUploadModel> uploadProduct(@Header("Authorization") String header,@Part("order_id") RequestBody order_id, @Part MultipartBody.Part image);
+
+    @Headers("Content-Type: application/json")
+    @POST("users/orders/payment")
+    Call<DeliverOrderPaymentTransectionModel> DELIVERY_ORDER_PAYMENT_CALL(@Header("Authorization") String header, @Body String Body);
 }
