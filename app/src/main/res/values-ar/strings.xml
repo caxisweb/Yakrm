@@ -439,8 +439,6 @@
 
     <string name="order_id">رقم الطلب</string>
     <string name="view_detail">عرض التفاصيل</string>
-    <string name="pending">في الإنتظار</string>
-    <string name="accept">قبول</string>
     <string name="confirm">تأكيد</string>
     <string name="delivered">تم التوصيل</string>
     <string name="order_detail">تفاصيل الطلب</string>
@@ -461,6 +459,10 @@
     <string name="intro_three_title">اطلب اي شي</string>
     <string name="intro_three_desc">نجيب طلبك وش ماكان نوعه</string>
     <string name="complete_payment">Complete Order Payment</string>
+
+    <string name="pending">في الإنتظار</string>
+    <string name="accept">قبول</string>
+    <string name="complete">Complete</string>
 
     <string-array name="tab">
         <item>اطلب الأن</item>

@@ -1,6 +1,7 @@
 package com.codeclinic.yakrm.DeliveryService;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
@@ -11,7 +12,6 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,13 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.codeclinic.yakrm.Activities.EnterCardDetailsActivity;
 import com.codeclinic.yakrm.Activities.ExchangeAddBalanceActivity;
-import com.codeclinic.yakrm.Activities.ExchangeVoucherActivity;
 import com.codeclinic.yakrm.Activities.MainActivity;
 import com.codeclinic.yakrm.Activities.VoucherDetailActivity;
 import com.codeclinic.yakrm.Adapter.SavedCardListAdapter;
@@ -39,7 +37,6 @@ import com.codeclinic.yakrm.Models.GetCardListModel;
 import com.codeclinic.yakrm.Models.GetCheckoutIDModel;
 import com.codeclinic.yakrm.Models.PaymentStatusModel;
 import com.codeclinic.yakrm.Models.PaymentTransactionModel;
-import com.codeclinic.yakrm.Models.ReplaceGiftVoucherModel;
 import com.codeclinic.yakrm.Models.ReplaceVoucherModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
@@ -65,7 +62,6 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -79,7 +75,7 @@ import static com.codeclinic.yakrm.Activities.VoucherDetailActivity.voucher_id;
 public class CompletePaymentActivity extends BasePaymentActivity implements ITransactionListener {
 
     public static String card_ID;
-   // CardView main_pay_cardview, succesful_cardview, error_cardview;
+    // CardView main_pay_cardview, succesful_cardview, error_cardview;
     Button btn_cmplt_pay;
     LinearLayout scrollview_pay;
     LinearLayout payment_layout;
@@ -136,7 +132,7 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
             img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
         }
         scrollview_pay = findViewById(R.id.scrollview_pay);
-       // btn_cmplt_pay = findViewById(R.id.btn_cmplt_pay);
+        // btn_cmplt_pay = findViewById(R.id.btn_cmplt_pay);
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -146,7 +142,7 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
         recyclerView.setNestedScrollingEnabled(false);
 
         apiService = RestClass.getClient().create(API.class);
-        deliveryApi=RestClass.getClientDelivery().create(API.class);
+        deliveryApi = RestClass.getClientDelivery().create(API.class);
 
         sessionManager = new SessionManager(this);
         //succesful_cardview = findViewById(R.id.succesful_cardview);
@@ -196,6 +192,10 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
 
     public void getAllcardList() {
         Log.i("token_session", sessionManager.getUserDetails().get(SessionManager.User_Token));
+        progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         Call<GetCardListModel> getCardListModelCall = apiService.GET_CARD_LIST_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token));
         getCardListModelCall.enqueue(new Callback<GetCardListModel>() {
@@ -204,6 +204,8 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
                 String status = response.body().getStatus();
 
                 if (status.equals("1")) {
+
+                    progressDialog.dismiss();
 
                     arrayList = response.body().getData();
                     recyclerView.setAdapter(new SavedCardListAdapter(arrayList, CompletePaymentActivity.this, apiInterface, progressDialog, sessionManager, price, new SavedCardListAdapter.OnItemClickListener() {
@@ -297,6 +299,7 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
 
             @Override
             public void onFailure(Call<GetCardListModel> call, Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(CompletePaymentActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
             }
         });
@@ -527,12 +530,19 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
 
     public void callSimplePurcahaseVoucher() {
 
+        progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         Call<DeliverOrderPaymentTransectionModel> paymentTransactionModelCall = deliveryApi.DELIVERY_ORDER_PAYMENT_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
         paymentTransactionModelCall.enqueue(new Callback<DeliverOrderPaymentTransectionModel>() {
             @Override
             public void onResponse(Call<DeliverOrderPaymentTransectionModel> call, Response<DeliverOrderPaymentTransectionModel> response) {
                 Log.i("main_message", response.body().getMessage());
+
                 String status = response.body().getStatus();
+
                 progressDialog.dismiss();
 
                 if (status.equals("1")) {
@@ -540,6 +550,9 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
                     scrollview_pay.setVisibility(View.GONE);
                     Toast.makeText(CompletePaymentActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     //startActivity(new Intent(CompletePaymentActivity.this, MainActivity.class));
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("order_id",order_id);
+                    setResult(Activity.RESULT_OK,returnIntent);
                     finish();
 
                 } else {
@@ -559,94 +572,29 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
         });
     }
 
-    public void CallReplaceGiftVoucher() {
-
-        Call<ReplaceGiftVoucherModel> replaceGiftVoucherModelCall = apiService.REPLACE_GIFT_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), replace_gift_voucher.toString());
-
-        replaceGiftVoucherModelCall.enqueue(new Callback<ReplaceGiftVoucherModel>() {
-            @Override
-            public void onResponse(Call<ReplaceGiftVoucherModel> call, Response<ReplaceGiftVoucherModel> response) {
-                progressDialog.dismiss();
-                if (response.isSuccessful()) {
-                    String status = response.body().getStatus();
-                    if (status.equals("1")) {
-                        sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
-                        finishAffinity();
-                        startActivity(new Intent(CompletePaymentActivity.this, MainActivity.class));
-
-                    } else {
-                        Toast.makeText(CompletePaymentActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(CompletePaymentActivity.this, "Please Try Again!!!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ReplaceGiftVoucherModel> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(CompletePaymentActivity.this, "Please Try Again!!!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    public void callReplaceVoucher() {
-        Call<ReplaceVoucherModel> replaceVoucherModelCall = apiService.REPLACE_VOUCHER_MODEL_CALL(sessionManager.getUserDetails().get(SessionManager.User_Token), jsonObject.toString());
-        replaceVoucherModelCall.enqueue(new Callback<ReplaceVoucherModel>() {
-            @Override
-            public void onResponse(Call<ReplaceVoucherModel> call, Response<ReplaceVoucherModel> response) {
-                Log.i("response_main", response.body().getStatus());
-                progressDialog.dismiss();
-                String status = response.body().getStatus();
-                if (status.equals("1")) {
-                    sessionManager.createLoginSession(sessionManager.getUserDetails().get(SessionManager.User_Token), sessionManager.getUserDetails().get(SessionManager.User_ID), sessionManager.getUserDetails().get(SessionManager.User_Name), sessionManager.getUserDetails().get(SessionManager.User_Email), sessionManager.getUserDetails().get(SessionManager.USER_MOBILE), sessionManager.getUserDetails().get(SessionManager.USER_COUNTRY_ID), sessionManager.getUserDetails().get(SessionManager.USER_Profile), response.body().getWallet(), sessionManager.getUserDetails().get(SessionManager.UserType));
-                    finishAffinity();
-                    startActivity(new Intent(CompletePaymentActivity.this, MainActivity.class));
-
-                    Toast.makeText(CompletePaymentActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(CompletePaymentActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ReplaceVoucherModel> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(CompletePaymentActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     private void getpaystatus() {
 
-        JSONObject jobj = new JSONObject();
         try {
-            //jobj.put("checkout_id", resourcePath);
+
+            JSONObject jobj = new JSONObject();
             jobj.put("checkout_id", checkoutId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        Call<PaymentStatusModel> paymentStatusModelCall = apiService.PAYMENT_STATUS_MODEL_CALL(jobj.toString());
-        paymentStatusModelCall.enqueue(new Callback<PaymentStatusModel>() {
-            @Override
-            public void onResponse(Call<PaymentStatusModel> call, Response<PaymentStatusModel> response) {
+            Call<PaymentStatusModel> paymentStatusModelCall = apiService.PAYMENT_STATUS_MODEL_CALL(jobj.toString());
+            paymentStatusModelCall.enqueue(new Callback<PaymentStatusModel>() {
+                @Override
+                public void onResponse(Call<PaymentStatusModel> call, Response<PaymentStatusModel> response) {
           /*      Log.i("response", response.body().getResult().getCode());
-
                 Toast.makeText(getApplicationContext(), response.body().getDescriptor(), Toast.LENGTH_LONG).show();*/
-                if (response.body().getResult().getCode().equals("000.000.000")) {
+                    progressDialog.dismiss();
 
-                    progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
-                    progressDialog.setIndeterminate(true);
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
+                    if (response.body().getResult().getCode().equals("000.000.000")) {
+
 
                         try {
 
                             jsonObject.put("transaction_id", response.body().getId());
                             jsonObject.put("card_id", card_ID);
-                            jsonObject.put("order_id",order_id);
+                            jsonObject.put("order_id", order_id);
 
                             callSimplePurcahaseVoucher();
 
@@ -655,17 +603,35 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
                         }
 
 
-                } else {
-                    showErrorDialog(response.body().getResult().getDescription());
+
+                    } else {
+                        //showErrorDialog(response.body().getResult().getDescription());
+
+                        try {
+
+                            jsonObject.put("transaction_id", response.body().getId());
+                            jsonObject.put("card_id", card_ID);
+                            jsonObject.put("order_id", order_id);
+
+                            callSimplePurcahaseVoucher();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<PaymentStatusModel> call, Throwable t) {
-                Toast.makeText(CompletePaymentActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onFailure(Call<PaymentStatusModel> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(CompletePaymentActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                }
 
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void testPurchase() {
@@ -752,7 +718,6 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
                         e.printStackTrace();
                     }
 
-                    CallReplaceGiftVoucher();
                 } else {
                     try {
                         jsonObject.put("replace_active_voucher_id", voucher_id);

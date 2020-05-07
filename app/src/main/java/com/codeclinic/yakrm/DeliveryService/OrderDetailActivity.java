@@ -1,5 +1,6 @@
 package com.codeclinic.yakrm.DeliveryService;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     TextView tv_delivery_boy,tv_delivery_contact;
     TextView tv_payment_status,tv_deliveryboy_status;
     TextView tv_total_cost;
-    LinearLayout lv_productlist,lv_paynow,lv_footer;
+    LinearLayout lv_productlist,lv_paynow,lv_footer,lv_payment_status;
     Button btn_chat;
     ImageView img_product;
     ImageView img_back;
@@ -104,6 +105,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         lv_productlist=findViewById(R.id.lv_productlist);
         lv_paynow=findViewById(R.id.lv_paynow);
+        lv_payment_status=findViewById(R.id.lv_payment_status);
         lv_footer=findViewById(R.id.lv_footer);
 
         card_image = findViewById(R.id.card_image);
@@ -117,7 +119,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(OrderDetailActivity.this, CompletePaymentActivity.class);
                 intent.putExtra("price", String.valueOf("1"));
                 intent.putExtra("order_id", order_id);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -151,12 +153,6 @@ public class OrderDetailActivity extends AppCompatActivity {
                         tv_home_address.setText(response.body().getUserAddress());
                         tv_store_address.setText(response.body().getShopAddress());
 
-                        if(response.body().getOrder_status().equals("1")){
-                            tv_order_status.setText(getString(R.string.pending));
-                        }else{
-                            tv_order_status.setText(getString(R.string.accept));
-                        }
-
                         if(response.body().getNotes()!=null){
                             tv_notes.setText(response.body().getNotes());
                         }
@@ -175,6 +171,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                         }
 
                         if(response.body().getPrice().equals("0")){
+                            tv_order_status.setText(getString(R.string.pending));
                             tv_payment_status.setVisibility(View.VISIBLE);
                             tv_product_cost.setText("0"+ getString(R.string.Sr));
                             lv_paynow.setVisibility(View.GONE);
@@ -198,19 +195,30 @@ public class OrderDetailActivity extends AppCompatActivity {
                             lv_paynow.setVisibility(View.VISIBLE);
                             lv_footer.setVisibility(View.GONE);
 
-                        }else if(response.body().getPrice().equals("5")){
+                        }else if(response.body().getOrder_status().equals("5")){
 
+                            tv_order_status.setText(getString(R.string.complete));
                             btn_payment.setVisibility(View.GONE);
                             btn_chat.setVisibility(View.GONE);
-                            lv_footer.setVisibility(View.VISIBLE);
-                        }
-                        else {
+                            lv_footer.setVisibility(View.GONE);
+                            lv_payment_status.setVisibility(View.GONE);
 
+                        } else {
+
+                            tv_order_status.setText(getString(R.string.accept));
                             lv_footer.setVisibility(View.VISIBLE);
                             tv_deliveryboy_status.setVisibility(View.GONE);
                             tv_delivery_boy.setText(getString(R.string.name) + " : " + response.body().getName());
                             tv_delivery_contact.setText(getString(R.string.contact) + " : " + response.body().getPhone());
                             btn_chat.setVisibility(View.VISIBLE);
+
+                            if(response.body().getIs_payment_complete().equals("1")){
+                                btn_payment.setVisibility(View.GONE);
+                                lv_payment_status.setVisibility(View.VISIBLE);
+                            }else{
+                                btn_payment.setVisibility(View.VISIBLE);
+                                lv_payment_status.setVisibility(View.GONE);
+                            }
                         }
 
                         Log.i("image",ImageURL.produtList +response.body().getOrder_image());
@@ -238,4 +246,18 @@ public class OrderDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1){
+            if (resultCode == RESULT_OK) {
+                order_id = data.getStringExtra("order_id");
+                getOrderDetail();
+            }
+        }
+    }
+
 }

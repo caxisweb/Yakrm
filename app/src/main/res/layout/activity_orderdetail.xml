@@ -40,7 +40,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/lv_footer"
+        android:layout_above="@+id/lv_payment_status"
         android:layout_below="@+id/lv_header">
 
         <LinearLayout
@@ -568,16 +568,35 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/lv_payment_status"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_above="@+id/lv_footer"
+        android:background="@color/toast_color">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment Done Sucessfully"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/lv_footer"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/btn_chat"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/white"
             android:textSize="14dp"
@@ -587,7 +606,7 @@
         <LinearLayout
             android:id="@+id/lv_paynow"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:gravity="center"
             android:background="@color/colorAccent"

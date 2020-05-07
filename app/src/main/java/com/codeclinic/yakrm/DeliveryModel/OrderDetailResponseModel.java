@@ -55,6 +55,9 @@ public class OrderDetailResponseModel {
     @SerializedName("notes")
     @Expose
     private String notes;
+    @SerializedName("is_payment_complete")
+    @Expose
+    private String is_payment_complete ;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -240,6 +243,14 @@ public class OrderDetailResponseModel {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public String getIs_payment_complete() {
+        return is_payment_complete;
+    }
+
+    public void setIs_payment_complete(String is_payment_complete) {
+        this.is_payment_complete = is_payment_complete;
     }
 
     public List<ProductListModel> getOrderDetail() {
