@@ -19,6 +19,7 @@ import androidx.cardview.widget.CardView;
 
 import com.codeclinic.yakrm.Activities.CartActivity;
 import com.codeclinic.yakrm.Activities.CompletingPurchasingActivity;
+import com.codeclinic.yakrm.DeliveryModel.OrderCancelModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderDetailResponseModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
@@ -52,7 +53,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     TextView tv_payment_status,tv_deliveryboy_status;
     TextView tv_total_cost;
     LinearLayout lv_productlist,lv_paynow,lv_footer,lv_payment_status;
-    Button btn_chat;
+    Button btn_chat,btn_cancel;
     ImageView img_product;
     ImageView img_back;
 
@@ -102,6 +103,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         btn_payment=findViewById(R.id.btn_payment);
         btn_chat=findViewById(R.id.btn_chat);
+        btn_cancel=findViewById(R.id.btn_cancle);
 
         lv_productlist=findViewById(R.id.lv_productlist);
         lv_paynow=findViewById(R.id.lv_paynow);
@@ -123,6 +125,14 @@ public class OrderDetailActivity extends AppCompatActivity {
             }
         });
 
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                callOrderCancle();
+            }
+        });
 
         getOrderDetail();
     }
@@ -183,29 +193,47 @@ public class OrderDetailActivity extends AppCompatActivity {
                             tv_product_cost.setText(response.body().getPrice()+ getString(R.string.Sr));
                             tv_servicetax.setText(response.body().getService_charge()+ getString(R.string.Sr));
                             total_amount=Double.parseDouble(response.body().getPrice())+Double.parseDouble(response.body().getService_charge())+Double.parseDouble(response.body().getOrder_charge());
-                            tv_total_cost.setText("Total Cost "+total_amount +getString(R.string.Sr));
+                            tv_total_cost.setText(getString(R.string.total_cost)+" "+total_amount +getString(R.string.Sr));
                             btn_payment.setVisibility(View.VISIBLE);
                         }
 
                         if(response.body().getOrder_status().equals("1")){
 
+                            tv_order_status.setText(getString(R.string.pending));
                             tv_deliveryboy_status.setVisibility(View.VISIBLE);
                             tv_delivery_boy.setVisibility(View.GONE);
                             tv_delivery_contact.setVisibility(View.GONE);
-                            lv_paynow.setVisibility(View.VISIBLE);
-                            lv_footer.setVisibility(View.GONE);
+                            lv_paynow.setVisibility(View.GONE);
+                            btn_chat.setVisibility(View.GONE);
+                            btn_cancel.setVisibility(View.VISIBLE);
 
                         }else if(response.body().getOrder_status().equals("5")){
 
-                            tv_order_status.setText(getString(R.string.complete));
+                            tv_order_status.setText(getString(R.string.delivered));
+                            tv_deliveryboy_status.setVisibility(View.GONE);
+                            tv_delivery_boy.setText(getString(R.string.name) + " : " + response.body().getName());
+                            tv_delivery_contact.setText(getString(R.string.contact) + " : " + response.body().getPhone());
+                            lv_paynow.setVisibility(View.VISIBLE);
+                            btn_cancel.setVisibility(View.GONE);
                             btn_payment.setVisibility(View.GONE);
-                            btn_chat.setVisibility(View.GONE);
-                            lv_footer.setVisibility(View.GONE);
                             lv_payment_status.setVisibility(View.GONE);
+
+                        }else if(response.body().getOrder_status().equals("6")){
+
+                            tv_order_status.setText(getString(R.string.cancel));
+                            tv_deliveryboy_status.setVisibility(View.GONE);
+                            tv_delivery_boy.setText(getString(R.string.name) + " : " + response.body().getName());
+                            tv_delivery_contact.setText(getString(R.string.contact) + " : " + response.body().getPhone());
+                            lv_footer.setVisibility(View.GONE);
 
                         } else {
 
-                            tv_order_status.setText(getString(R.string.accept));
+                            if(response.body().getOrder_status().equals("4")) {
+                                tv_order_status.setText(getString(R.string.dispatch));
+                            }else{
+                                tv_order_status.setText(getString(R.string.accept));
+                            }
+
                             lv_footer.setVisibility(View.VISIBLE);
                             tv_deliveryboy_status.setVisibility(View.GONE);
                             tv_delivery_boy.setText(getString(R.string.name) + " : " + response.body().getName());
@@ -247,6 +275,46 @@ public class OrderDetailActivity extends AppCompatActivity {
         }
     }
 
+    void callOrderCancle(){
+
+        try {
+
+            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+            JSONObject data=new JSONObject();
+            data.put("order_id",order_id);
+
+            Call<OrderCancelModel> orderStatusChange=apiService.ORDER_CANCLE(sessionManager.getUserDetails().get(SessionManager.User_Token),data.toString());
+            orderStatusChange.enqueue(new Callback<OrderCancelModel>() {
+                @Override
+                public void onResponse(Call<OrderCancelModel> call, Response<OrderCancelModel> response) {
+
+                    progressDialog.dismiss();
+
+                    if(response.body().getStatus().equals("1")){
+                        finish();
+                        Toast.makeText(OrderDetailActivity.this,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(OrderDetailActivity.this,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<OrderCancelModel> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(OrderDetailActivity.this,"server error",Toast.LENGTH_LONG).show();
+                }
+            });
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

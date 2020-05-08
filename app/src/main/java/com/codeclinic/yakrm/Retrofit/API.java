@@ -2,6 +2,7 @@ package com.codeclinic.yakrm.Retrofit;
 
 import com.codeclinic.yakrm.DeliveryModel.DeliverOrderPaymentTransectionModel;
 import com.codeclinic.yakrm.DeliveryModel.ImageUploadModel;
+import com.codeclinic.yakrm.DeliveryModel.OrderCancelModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderDetailResponseModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderlistResponseModel;
 import com.codeclinic.yakrm.DeliveryModel.PlaceOrderModel;
@@ -264,4 +265,8 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("users/orders/payment")
     Call<DeliverOrderPaymentTransectionModel> DELIVERY_ORDER_PAYMENT_CALL(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @POST("users/orders/cancel_order")
+    Call<OrderCancelModel> ORDER_CANCLE(@Header("Authorization") String header, @Body String Body);
 }

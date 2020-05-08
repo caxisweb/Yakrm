@@ -579,7 +579,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Payment Done Sucessfully"
+            android:text="@string/payment_done_sucessfully"
             android:textColor="@color/white"
             android:textSize="14dp"
             android:textStyle="bold"/>
@@ -594,14 +594,27 @@
         android:layout_alignParentBottom="true">
 
         <Button
+            android:id="@+id/btn_cancle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:visibility="gone"
+            android:background="@color/colorPrimary"
+            android:text="@string/cancel" />
+
+        <Button
             android:id="@+id/btn_chat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="@color/white"
             android:textSize="14dp"
+            android:visibility="gone"
             android:background="@color/colorPrimary"
-            android:text="Chat with" />
+            android:text="@string/chat_with" />
+
 
         <LinearLayout
             android:id="@+id/lv_paynow"

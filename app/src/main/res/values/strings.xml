@@ -487,7 +487,6 @@
     <string name="order_id">Order Id</string>
     <string name="view_detail">View Detail</string>
     <string name="confirm">Confirm</string>
-    <string name="delivered">Delivered</string>
     <string name="order_detail">Order Detail</string>
     <string name="payment_amount">Payment Amount</string>
     <string name="product_cost">Product cost :</string>
@@ -506,10 +505,13 @@
     <string name="intro_three_title">Order anything</string>
     <string name="intro_three_desc">We commit to bring any products you want</string>
     <string name="complete_payment">Complete Order Payment</string>
-
+    <string name="total_cost">Total Cost</string>
     <string name="pending">Pending</string>
     <string name="accept">Accept</string>
-    <string name="complete">Complete</string>
+    <string name="delivered">Delivered</string>
+    <string name="payment_done_sucessfully">Payment Done Sucessfully</string>
+    <string name="dispatch">Dispatch</string>
+    <string name="chat_with">Chat with</string>
 
     <string-array name="tab">
         <item>Place Order</item>

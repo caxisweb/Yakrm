@@ -605,9 +605,10 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
 
 
                     } else {
-                        //showErrorDialog(response.body().getResult().getDescription());
 
-                        try {
+                        showErrorDialog(response.body().getResult().getDescription());
+
+                        /*try {
 
                             jsonObject.put("transaction_id", response.body().getId());
                             jsonObject.put("card_id", card_ID);
@@ -617,7 +618,7 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }
+                        }*/
 
                     }
                 }
