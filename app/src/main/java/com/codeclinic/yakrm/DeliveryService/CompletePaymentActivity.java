@@ -480,7 +480,6 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
             case CheckoutActivity.RESULT_OK:
                 //transaction completed
                 Transaction transaction = data.getParcelableExtra(CheckoutActivity.CHECKOUT_RESULT_TRANSACTION);
-
                 //resource path if needed
                 String resourcePath = data.getStringExtra(CheckoutActivity.CHECKOUT_RESULT_RESOURCE_PATH);
 

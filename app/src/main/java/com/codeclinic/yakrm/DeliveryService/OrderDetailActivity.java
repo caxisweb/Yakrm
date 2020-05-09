@@ -1,8 +1,14 @@
 package com.codeclinic.yakrm.DeliveryService;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +22,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.codeclinic.yakrm.Activities.CartActivity;
 import com.codeclinic.yakrm.Activities.CompletingPurchasingActivity;
@@ -41,9 +49,14 @@ public class OrderDetailActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     SessionManager sessionManager;
     API apiService;
+    AlertDialog.Builder dialogBuilder;
+    AlertDialog alertDialog;
+
+    boolean value;
+
     LayoutInflater inflater;
 
-    String order_id;
+    String order_id,deliver_contact;
     double total_amount;
 
     CardView card_image,btn_payment;
@@ -70,6 +83,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         if (language.equals("ar")) {
             img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
         }
+
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,6 +145,21 @@ public class OrderDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 callOrderCancle();
+            }
+        });
+
+        tv_delivery_contact.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onClick(View view) {
+
+                if(isPermissionGranted()) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:"+deliver_contact));
+                    startActivity(callIntent);
+                }else{
+                    Toast.makeText(OrderDetailActivity.this, "Permission needed to Call Phone", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -244,10 +273,49 @@ public class OrderDetailActivity extends AppCompatActivity {
                                 btn_payment.setVisibility(View.GONE);
                                 lv_payment_status.setVisibility(View.VISIBLE);
                             }else{
+
                                 btn_payment.setVisibility(View.VISIBLE);
                                 lv_payment_status.setVisibility(View.GONE);
+
+                                final LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                                dialogBuilder = new AlertDialog.Builder(OrderDetailActivity.this);
+
+                                final View dialogView = inflater.inflate(R.layout.delivery_payment_popup, null);
+
+                                TextView tv_total_cost=dialogView.findViewById(R.id.tv_total_cost);
+                                CardView btn_paynow=dialogView.findViewById(R.id.btn_paynow);
+                                CardView btn_cancel=dialogView.findViewById(R.id.btn_cancle);
+
+                                tv_total_cost.setText(total_amount+getString(R.string.Sr));
+
+                                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
+
+                                btn_paynow.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+
+                                        alertDialog.dismiss();
+                                        Intent intent = new Intent(OrderDetailActivity.this, CompletePaymentActivity.class);
+                                        intent.putExtra("price", String.valueOf("1"));
+                                        intent.putExtra("order_id", order_id);
+                                        startActivityForResult(intent,1);
+                                    }
+                                });
+
+                                dialogBuilder.setView(dialogView);
+                                dialogBuilder.setCancelable(false);
+
+                                alertDialog = dialogBuilder.create();
+                                alertDialog.show();
                             }
                         }
+
+                        deliver_contact=response.body().getPhone();
 
                         Log.i("image",ImageURL.produtList +response.body().getOrder_image());
 
@@ -328,4 +396,17 @@ public class OrderDetailActivity extends AppCompatActivity {
         }
     }
 
+    public boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(OrderDetailActivity.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED ) {
+                value = true;
+            } else {
+                ActivityCompat.requestPermissions(OrderDetailActivity.this, new String[]{"android.permission.CALL_PHONE"}, 200);
+                value = false;
+            }
+        } else {
+            value = true;
+        }
+        return value;
+    }
 }

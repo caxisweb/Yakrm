@@ -196,9 +196,20 @@ public class DeliveryMain extends AppCompatActivity {
 
                 } else if (tab.getPosition() == 1) {
 
-                    Fragment fragment = new MyOrderFragment();
-                    FragmentManager fragmentManager=getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
+                    if(sessionManager.isLoggedIn()) {
+
+                        Fragment fragment = new MyOrderFragment();
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
+
+                    }else{
+
+                        Toast.makeText(getApplicationContext(),"Please Login",Toast.LENGTH_LONG).show();
+                        Intent i_login=new Intent(DeliveryMain.this,LoginActivity.class);
+                        startActivity(i_login);
+                        finish();
+
+                    }
 
                 }
             }
@@ -339,6 +350,7 @@ public class DeliveryMain extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             drawer.closeDrawer(GravityCompat.START);
+
                             if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
                                 findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                                 setTitle(getResources().getString(R.string.title_activity_main));

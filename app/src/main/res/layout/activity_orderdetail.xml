@@ -549,6 +549,7 @@
                         android:id="@+id/tv_delivery_boy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:textSize="14dp"
                         android:text="@string/deliveryboy_name"/>
 
@@ -557,6 +558,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
+                        android:padding="5dp"
                         android:textSize="14dp"
                         android:text="@string/contact"/>
 

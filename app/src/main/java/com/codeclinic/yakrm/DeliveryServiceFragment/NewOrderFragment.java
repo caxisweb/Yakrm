@@ -39,6 +39,7 @@ import androidx.fragment.app.FragmentManager;
 import com.codeclinic.yakrm.Activities.LoginActivity;
 import com.codeclinic.yakrm.DeliveryModel.ImageUploadModel;
 import com.codeclinic.yakrm.DeliveryModel.PlaceOrderModel;
+import com.codeclinic.yakrm.DeliveryService.DeliveryMain;
 import com.codeclinic.yakrm.DeliveryService.OrderDetailActivity;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
@@ -119,7 +120,7 @@ public class NewOrderFragment extends Fragment {
         progressDialog = new ProgressDialog(getActivity());
         apiService = RestClass.getClientDelivery().create(API.class);
 
-        Log.i("token",sessionManager.getUserDetails().get(SessionManager.User_Token));
+//        Log.i("token",sessionManager.getUserDetails().get(SessionManager.User_Token));
 
         lv_productlist = mainView.findViewById(R.id.lv_productlist);
 
@@ -247,99 +248,107 @@ public class NewOrderFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                str_notes=edt_notes.getText().toString().trim();
-                str_home_address=tv_home_address.getText().toString().trim();
-                str_store_address=tv_shop_address.getText().toString().trim();
+                if(sessionManager.isLoggedIn()) {
 
-                if(product_name.size()==0){
-                    Toast.makeText(getActivity(),"Please Add Product",Toast.LENGTH_LONG).show();
-                }else if(str_home_lat==0){
-                    Toast.makeText(getActivity(),"Please select Delivery address",Toast.LENGTH_LONG).show();
+                    str_notes = edt_notes.getText().toString().trim();
+                    str_home_address = tv_home_address.getText().toString().trim();
+                    str_store_address = tv_shop_address.getText().toString().trim();
+
+                    if (product_name.size() == 0) {
+                        Toast.makeText(getActivity(), "Please Add Product", Toast.LENGTH_LONG).show();
+                    } else if (str_home_lat == 0) {
+                        Toast.makeText(getActivity(), "Please select Delivery address", Toast.LENGTH_LONG).show();
+                    } else {
+
+                        try {
+
+                            progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setCancelable(false);
+                            progressDialog.show();
+
+                            JSONObject data = new JSONObject();
+                            data.put("user_address", str_home_address);
+                            data.put("user_latitude", str_home_lat);
+                            data.put("user_longitude", str_home_long);
+
+                            data.put("shop_address", str_store_address);
+                            data.put("shop_latitude", str_store_lat);
+                            data.put("shop_longitude", str_store_long);
+
+                            JSONArray productlist = new JSONArray();
+
+                            for (int i = 0; i < product_name.size(); i++) {
+
+                                JSONObject products = new JSONObject();
+                                products.put("product_title", product_name.get(i));
+                                products.put("quantity", product_qty.get(i));
+                                productlist.put(products);
+                            }
+
+                            data.put("order_detail", productlist);
+                            data.put("notes", str_notes);
+
+                            Log.i("order_data", data.toString());
+
+                            Call<PlaceOrderModel> placeOrder = apiService.placeOrder(sessionManager.getUserDetails().get(SessionManager.User_Token), data.toString());
+                            placeOrder.enqueue(new Callback<PlaceOrderModel>() {
+                                @Override
+                                public void onResponse(Call<PlaceOrderModel> call, Response<PlaceOrderModel> response) {
+
+                                    if (response.body().getStatus().equals("1")) {
+
+                                        if (sourceFile == null) {
+
+                                            progressDialog.dismiss();
+
+                                            Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+
+                                            tv_home_address.setText("");
+                                            tv_shop_address.setText("");
+                                            lv_productlist.removeAllViews();
+                                            edt_notes.setText("");
+                                            str_home_address = "null";
+                                            str_store_address = "null";
+                                            str_home_lat = 0;
+                                            str_home_long = 0;
+                                            str_store_lat = 0;
+                                            str_store_long = 0;
+
+                                            Intent i_detail = new Intent(getActivity(), OrderDetailActivity.class);
+                                            i_detail.putExtra("order_id", response.body().getOrder_id());
+                                            startActivity(i_detail);
+
+                                        } else {
+
+                                            order_id = response.body().getOrder_id();
+                                            callImageUpload();
+                                        }
+
+                                    } else {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<PlaceOrderModel> call, Throwable t) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getActivity(), "server error", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }else{
 
-                    try {
-
-                        progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-
-                        JSONObject data=new JSONObject();
-                        data.put("user_address",str_home_address);
-                        data.put("user_latitude",str_home_lat);
-                        data.put("user_longitude",str_home_long);
-
-                        data.put("shop_address",str_store_address);
-                        data.put("shop_latitude",str_store_lat);
-                        data.put("shop_longitude",str_store_long);
-
-                        JSONArray productlist = new JSONArray();
-
-                        for(int i=0;i<product_name.size();i++){
-
-                            JSONObject products=new JSONObject();
-                            products.put("product_title",product_name.get(i));
-                            products.put("quantity",product_qty.get(i));
-                            productlist.put(products);
-                        }
-
-                        data.put("order_detail",productlist);
-                        data.put("notes",str_notes);
-
-                        Log.i("order_data",data.toString());
-
-                        Call<PlaceOrderModel> placeOrder=apiService.placeOrder(sessionManager.getUserDetails().get(SessionManager.User_Token),data.toString());
-                        placeOrder.enqueue(new Callback<PlaceOrderModel>() {
-                            @Override
-                            public void onResponse(Call<PlaceOrderModel> call, Response<PlaceOrderModel> response) {
-
-                                if(response.body().getStatus().equals("1")){
-
-                                    if(sourceFile==null) {
-
-                                        progressDialog.dismiss();
-
-                                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-
-                                        tv_home_address.setText("");
-                                        tv_shop_address.setText("");
-                                        lv_productlist.removeAllViews();
-                                        edt_notes.setText("");
-                                        str_home_address = "null";
-                                        str_store_address = "null";
-                                        str_home_lat = 0;
-                                        str_home_long = 0;
-                                        str_store_lat = 0;
-                                        str_store_long = 0;
-
-                                        Intent i_detail = new Intent(getActivity(), OrderDetailActivity.class);
-                                        i_detail.putExtra("order_id", response.body().getOrder_id());
-                                        startActivity(i_detail);
-
-                                    }else{
-
-                                        order_id=response.body().getOrder_id();
-                                        callImageUpload();
-                                    }
-
-                                }else{
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getActivity(),response.body().getMessage(),Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<PlaceOrderModel> call, Throwable t) {
-                                progressDialog.dismiss();
-                                Toast.makeText(getActivity(),"server error",Toast.LENGTH_LONG).show();
-                            }
-                        });
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+                    Toast.makeText(getActivity(),"Please Login",Toast.LENGTH_LONG).show();
+                    Intent i_login=new Intent(getActivity(),LoginActivity.class);
+                    startActivity(i_login);
+                    getActivity().finish();
                 }
-
             }
         });
 
