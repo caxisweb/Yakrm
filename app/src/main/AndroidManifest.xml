@@ -253,6 +253,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDuio1SeutMjrH3YpZux-J7ahjolmQohrM" />
 
+        <activity
+            android:name=".ChatModule.CustomerChatActivity"
+            android:theme="@style/No_action_bar" />
+
     </application>
 
 </manifest>

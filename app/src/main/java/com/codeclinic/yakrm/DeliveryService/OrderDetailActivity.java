@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 
 import com.codeclinic.yakrm.Activities.CartActivity;
 import com.codeclinic.yakrm.Activities.CompletingPurchasingActivity;
+import com.codeclinic.yakrm.ChatModule.CustomerChatActivity;
 import com.codeclinic.yakrm.DeliveryModel.OrderCancelModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderDetailResponseModel;
 import com.codeclinic.yakrm.R;
@@ -56,7 +57,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     LayoutInflater inflater;
 
-    String order_id,deliver_contact;
+    String order_id,deliver_contact,deliver_boy_name;
     double total_amount;
 
     CardView card_image,btn_payment;
@@ -160,6 +161,23 @@ public class OrderDetailActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(OrderDetailActivity.this, "Permission needed to Call Phone", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btn_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bundle b = new Bundle();
+                Intent intent = new Intent(OrderDetailActivity.this, CustomerChatActivity.class);
+                b.putString("orderID", order_id);
+                b.putString("customerID", sessionManager.getUserDetails().get(SessionManager.USER_MOBILE));
+                b.putString("driverID", sessionManager.getUserDetails().get(SessionManager.USER_MOBILE));
+                b.putString("driverName", sessionManager.getUserDetails().get(SessionManager.User_Name));
+                b.putString("customerName", tv_delivery_boy.getText().toString());
+                b.putString("type", "1");
+                intent.putExtras(b);
+                startActivity(intent);
             }
         });
 
@@ -316,6 +334,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                         }
 
                         deliver_contact=response.body().getPhone();
+                        deliver_boy_name=response.body().getPhone();
 
                         Log.i("image",ImageURL.produtList +response.body().getOrder_image());
 
