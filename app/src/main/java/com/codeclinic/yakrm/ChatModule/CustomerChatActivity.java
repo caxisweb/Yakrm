@@ -184,7 +184,7 @@ public class CustomerChatActivity extends AppCompatActivity {
             lp2.gravity = Gravity.LEFT;
             lp2.rightMargin = 50;
             textView.setBackgroundResource(R.drawable.blue_round_border_bg);
-            textView.setTextColor(getResources().getColor(R.color.black));
+            textView.setTextColor(getResources().getColor(R.color.white));
         }
         lp2.topMargin = 20;
         lp2.bottomMargin = 20;
@@ -215,13 +215,9 @@ public class CustomerChatActivity extends AppCompatActivity {
                     type = getIntent().getStringExtra("type");
 
                     data.put("message", message);
-                    if (type.equals("1")) {
-                        data.put("recieverName", driverName);
-                        data.put("senderName", customerName);
-                    } else {
-                        data.put("recieverName", customerName);
-                        data.put("senderName", driverName);
-                    }
+                    data.put("recieverName", driverName);
+                    data.put("senderName", sessionManager.getUserDetails().get(SessionManager.User_Name));
+
                     data.put("customerName", customerName);
                     data.put("driverName", driverName);
                     data.put("orderID", orderID);
@@ -273,7 +269,7 @@ public class CustomerChatActivity extends AppCompatActivity {
             Request request = new Request.Builder()
                     .url(FCM_MESSAGE_URL)
                     .post(body)
-                    .addHeader("Authorization", "key=AIzaSyBBl-OBtWkYOqsk-5Fd5kJOIClN0RqErAM")
+                    .addHeader("Authorization", "key=AIzaSyBYSolO428exrywVHtiafM_nG-Skgbaa6k")
                     .build();
             response = mClient.newCall(request).execute();
         } catch (IOException e) {

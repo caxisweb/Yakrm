@@ -93,11 +93,8 @@
             android:theme="@style/No_action_bar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <data android:scheme="livemosab" />
-
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
@@ -107,16 +104,15 @@
             android:name=".DeliveryService.CompletePaymentActivity"
             android:launchMode="singleTask"
             android:theme="@style/No_action_bar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <data android:scheme="livemosab" />
-
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
+
         </activity>
 
         <activity
@@ -209,6 +205,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <receiver
             android:name=".Utils.CheckoutBroadcastReceiver"
             android:exported="false">

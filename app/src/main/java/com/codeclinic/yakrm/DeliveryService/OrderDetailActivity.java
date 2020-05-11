@@ -57,7 +57,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     LayoutInflater inflater;
 
-    String order_id,deliver_contact,deliver_boy_name;
+    String order_id,deliver_contact,deliver_boy_name,notification_token;
     double total_amount;
 
     CardView card_image,btn_payment;
@@ -175,6 +175,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                 b.putString("driverID", sessionManager.getUserDetails().get(SessionManager.USER_MOBILE));
                 b.putString("driverName", sessionManager.getUserDetails().get(SessionManager.User_Name));
                 b.putString("customerName", tv_delivery_boy.getText().toString());
+                b.putString("token", notification_token);
                 b.putString("type", "1");
                 intent.putExtras(b);
                 startActivity(intent);
@@ -335,6 +336,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
                         deliver_contact=response.body().getPhone();
                         deliver_boy_name=response.body().getPhone();
+                        notification_token=response.body().getNotification_token();
 
                         Log.i("image",ImageURL.produtList +response.body().getOrder_image());
 

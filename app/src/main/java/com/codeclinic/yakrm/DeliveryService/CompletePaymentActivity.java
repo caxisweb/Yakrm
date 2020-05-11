@@ -191,6 +191,7 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
     }
 
     public void getAllcardList() {
+
         Log.i("token_session", sessionManager.getUserDetails().get(SessionManager.User_Token));
         progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
         progressDialog.setIndeterminate(true);
