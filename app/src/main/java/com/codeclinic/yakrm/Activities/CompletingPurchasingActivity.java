@@ -602,7 +602,6 @@ CompletingPurchasingActivity extends BasePaymentActivity implements ITransaction
 
     private PaymentParams createPaymentParams(String checkoutId) throws PaymentException {
 
-
         return new CardPaymentParams(
                 checkoutId,
                 Constants.Config.CARD_BRAND,
