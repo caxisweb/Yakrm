@@ -18,6 +18,7 @@ import androidx.core.app.NotificationCompat;
 import com.codeclinic.yakrm.Activities.CustomActivity;
 import com.codeclinic.yakrm.Activities.NotificationsActivity;
 import com.codeclinic.yakrm.ChatModule.CustomerChatActivity;
+import com.codeclinic.yakrm.DeliveryService.OrderDetailActivity;
 import com.codeclinic.yakrm.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -34,7 +35,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "FirebaseMessageService";
     Bitmap bitmap;
-    String order_id, user_name, noti_type, user_type, str_title, message;
+    String user_name, noti_type, user_type, str_title, message;
     String channelId = "channel-01";
     String channelName = "Channel Name";
     int importance = NotificationManager.IMPORTANCE_HIGH;
@@ -59,18 +60,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //
 
         sessionManager = new SessionManager(this);
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        Log.i(TAG, "From: " + remoteMessage.getFrom());
 
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.app_logo);
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Log.i(TAG, "Message data payload: " + remoteMessage.getData());
             //message = remoteMessage.getData().toString();
         }
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            Log.i(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             message = remoteMessage.getNotification().getBody();
+
         } else if(remoteMessage.getData().get("noti_for").equals("chat")){
 
             notiFor = remoteMessage.getData().get("noti_for");
@@ -89,11 +91,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             notification_type = remoteMessage.getData().get("noti_type");
             //item_delivery_id = remoteMessage.getData().get("item_delivery_id");
+        }else if(remoteMessage.getData().get("noti_for").equals("order")){
+
+            str_title = remoteMessage.getData().get("subject");
+            message = remoteMessage.getData().get("description");
+            orderID= remoteMessage.getData().get("order_id");
+            notiFor=remoteMessage.getData().get("noti_for");
+
         } else {
+
             str_title = remoteMessage.getData().get("subject");
             message = remoteMessage.getData().get("description");
 
         }
+
         Notification(message,notiFor);
     }
 
@@ -142,7 +153,44 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                 notificationManager.notify(m, notificationBuilder.build());
 
-            }else {
+            }else if(notificationFor.equals("order")){
+
+                Intent intent = new Intent(this, OrderDetailActivity.class);
+                intent.putExtra("order_id", orderID);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                try {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        @SuppressLint("WrongConstant") NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
+                        mChannel.enableLights(true);
+                        mChannel.setLightColor(Color.RED);
+                        mChannel.enableVibration(true);
+                        mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                        mChannel.setShowBadge(false);
+                        notificationManager.createNotificationChannel(mChannel);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                        .setLargeIcon(bitmap)/*Notification icon image*/
+                        .setContentTitle(str_title)
+                        .setChannelId(channelId)
+                        .setSmallIcon(R.drawable.app_logo)
+                        .setContentText(messageBody)
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(pendingIntent);
+
+                int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
+
+                notificationManager.notify(m, notificationBuilder.build());
+
+            } else {
 
                 Intent intent = new Intent(this, NotificationsActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

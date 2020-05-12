@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -231,6 +232,8 @@ public class CustomerChatActivity extends AppCompatActivity {
                     root.put("notification", notification);
                     root.put("data", data);
                     root.put("to", token);
+
+                    Log.i("chatmsg",root.toString());
 
                     String result = postToFCM(root.toString());
 
