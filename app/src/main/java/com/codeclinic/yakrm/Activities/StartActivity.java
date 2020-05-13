@@ -2,12 +2,8 @@ package com.codeclinic.yakrm.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +16,10 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Utils.CommonMethods;
 import com.codeclinic.yakrm.Utils.SessionManager;
-
-import java.util.Locale;
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 
 
 public class StartActivity extends AppCompatActivity {
@@ -139,7 +136,13 @@ public class StartActivity extends AppCompatActivity {
                 }
 
                 sessionManager.putLanguage("Language", language_name);
-                Locale locale = new Locale(language_name);
+                if (language_name.equals("ar")) {
+                    LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
+                } else {
+                    LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
+                }
+                ActivityRecreationHelper.recreate(StartActivity.this, true);
+     /*           Locale locale = new Locale(language_name);
                 Resources resources = getResources();
                 Configuration configuration = resources.getConfiguration();
                 DisplayMetrics displayMetrics = resources.getDisplayMetrics();
@@ -153,12 +156,29 @@ public class StartActivity extends AppCompatActivity {
                 } else {
                     resources.updateConfiguration(configuration,displayMetrics);
                 }
-
                 finish();
-                startActivity(new Intent(getApplicationContext(), StartActivity.class));
+                startActivity(new Intent(getApplicationContext(), StartActivity.class));*/
             }
         });
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActivityRecreationHelper.onResume(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityRecreationHelper.onDestroy(this);
+        super.onDestroy();
     }
 
 

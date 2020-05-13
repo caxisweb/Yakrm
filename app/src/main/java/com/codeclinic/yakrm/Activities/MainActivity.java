@@ -5,11 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -508,7 +506,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     language_name = "en";
                 }
                 sessionManager.putLanguage("Language", language_name);
-                Locale locale = new Locale(language_name);
+         /*       Locale locale = new Locale(language_name);
 
                 Resources resources = getResources();
                 Configuration configuration = resources.getConfiguration();
@@ -522,7 +520,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     getApplicationContext().createConfigurationContext(configuration);
                 } else {
                     resources.updateConfiguration(configuration,displayMetrics);
-                }
+                }*/
+                languageChanged(language_name);
 
             }
         });
@@ -688,13 +687,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void languageChanged(String lang) {
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        createConfigurationContext(config);
+
+        Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //finishAffinity();
+        startActivity(i);
+
+
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(buyTabFragment, getResources().getString(R.string.Buy));
-       /* adapter.addFrag(new ReceivedTabFragment(), getResources().getString(R.string.Received));
-        adapter.addFrag(new ReplaceTabFragment(), getResources().getString(R.string.Replace));
-        //adapter.addFrag(new AuctionTabFragment(), getResources().getString(R.string.Auction));
-        adapter.addFrag(new MyWalletTabFragment(), getResources().getString(R.string.My_Wallet));*/
         viewPager.setAdapter(adapter);
     }
 

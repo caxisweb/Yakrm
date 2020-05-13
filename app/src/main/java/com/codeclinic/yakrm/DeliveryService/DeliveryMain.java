@@ -2,23 +2,16 @@ package com.codeclinic.yakrm.DeliveryService;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,15 +30,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.codeclinic.yakrm.Activities.AboutApplicationActivity;
-import com.codeclinic.yakrm.Activities.CartActivity;
 import com.codeclinic.yakrm.Activities.EnterCardDetailsActivity;
 import com.codeclinic.yakrm.Activities.ExcahangeInstructionsActivity;
-import com.codeclinic.yakrm.Activities.FavouritesActivity;
 import com.codeclinic.yakrm.Activities.LoginActivity;
-import com.codeclinic.yakrm.Activities.MainActivity;
 import com.codeclinic.yakrm.Activities.NotificationsActivity;
 import com.codeclinic.yakrm.Activities.PersonalDataActivity;
-import com.codeclinic.yakrm.Activities.SearchedVoucherActivity;
 import com.codeclinic.yakrm.Activities.StartActivity;
 import com.codeclinic.yakrm.BuildConfig;
 import com.codeclinic.yakrm.DeliveryServiceFragment.MyOrderFragment;
@@ -53,11 +42,12 @@ import com.codeclinic.yakrm.DeliveryServiceFragment.NewOrderFragment;
 import com.codeclinic.yakrm.Fragments.SupportContactFragment;
 import com.codeclinic.yakrm.LocalNotification.NotificationHelper;
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Utils.CommonMethods;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.Locale;
 
 public class DeliveryMain extends AppCompatActivity {
 
@@ -68,7 +58,7 @@ public class DeliveryMain extends AppCompatActivity {
 
     private TabLayout tabLayout;
 
-    private String tabTitles[];
+    private String[] tabTitles;
     private int[] tabimageResId = {R.drawable.ic_tab_new_order, R.drawable.ic_cart};
 
     @Override
@@ -79,7 +69,7 @@ public class DeliveryMain extends AppCompatActivity {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        sessionManager=new SessionManager(this);
+        sessionManager = new SessionManager(this);
 
         drawer = findViewById(R.id.drawer_layout);
         main_content = findViewById(R.id.main_content);
@@ -179,7 +169,7 @@ public class DeliveryMain extends AppCompatActivity {
             }
         });
 
-        for(int i=0;i<tabTitles.length;i++){
+        for (int i = 0; i < tabTitles.length; i++) {
 
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(getTabView(i));
@@ -191,21 +181,21 @@ public class DeliveryMain extends AppCompatActivity {
                 if (tab.getPosition() == 0) {
 
                     Fragment fragment = new NewOrderFragment();
-                    FragmentManager fragmentManager=getSupportFragmentManager();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
 
                 } else if (tab.getPosition() == 1) {
 
-                    if(sessionManager.isLoggedIn()) {
+                    if (sessionManager.isLoggedIn()) {
 
                         Fragment fragment = new MyOrderFragment();
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
 
-                    }else{
+                    } else {
 
-                        Toast.makeText(getApplicationContext(),"Please Login",Toast.LENGTH_LONG).show();
-                        Intent i_login=new Intent(DeliveryMain.this,LoginActivity.class);
+                        Toast.makeText(getApplicationContext(), "Please Login", Toast.LENGTH_LONG).show();
+                        Intent i_login = new Intent(DeliveryMain.this, LoginActivity.class);
                         startActivity(i_login);
                         finish();
 
@@ -226,7 +216,7 @@ public class DeliveryMain extends AppCompatActivity {
         });
 
         Fragment fragment = new NewOrderFragment();
-        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -258,9 +248,9 @@ public class DeliveryMain extends AppCompatActivity {
                     findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                     setTitle(getResources().getString(R.string.title_activity_main));
                 } else {*/
-                    Fragment fragment = new NewOrderFragment();
-                    FragmentManager fragmentManager=getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
+                Fragment fragment = new NewOrderFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
                 //}
 
 
@@ -403,7 +393,15 @@ public class DeliveryMain extends AppCompatActivity {
                 }
                 sessionManager.putLanguage("Language", language_name);
 
-                Locale locale = new Locale(language_name);
+                if (language_name.equals("ar")) {
+                    LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
+                } else {
+                    LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
+                }
+                ActivityRecreationHelper.recreate(DeliveryMain.this, true);
+
+
+                /*Locale locale = new Locale(language_name);
 
                 Resources resources = getResources();
                 Configuration configuration = resources.getConfiguration();
@@ -420,7 +418,7 @@ public class DeliveryMain extends AppCompatActivity {
                 }
 
                 finish();
-                startActivity(new Intent(getApplicationContext(), DeliveryMain.class));
+                startActivity(new Intent(getApplicationContext(), DeliveryMain.class));*/
 
             }
         });
@@ -438,6 +436,25 @@ public class DeliveryMain extends AppCompatActivity {
             setTitle(getString(R.string.delivery_main_title));
         }
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActivityRecreationHelper.onResume(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityRecreationHelper.onDestroy(this);
+        super.onDestroy();
+    }
+
 
     private void doShareLink() {
         String shareMessage = "Let me recommend you this application";
@@ -462,9 +479,9 @@ public class DeliveryMain extends AppCompatActivity {
     public View getTabView(int position) {
         // Given you have a custom layout in `res/layout/custom_tab.xml` with a TextView and ImageView
         View v = LayoutInflater.from(DeliveryMain.this).inflate(R.layout.custome_tab_view, null);
-        TextView tv_tab_title = (TextView) v.findViewById(R.id.tv_tab_title);
+        TextView tv_tab_title = v.findViewById(R.id.tv_tab_title);
         tv_tab_title.setText(tabTitles[position]);
-        ImageView img = (ImageView) v.findViewById(R.id.img_tab_icon);
+        ImageView img = v.findViewById(R.id.img_tab_icon);
         img.setImageResource(tabimageResId[position]);
         return v;
     }
@@ -507,14 +524,14 @@ public class DeliveryMain extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-         if (id == R.id.action_notification) {
+        if (id == R.id.action_notification) {
             if (sessionManager.isLoggedIn()) {
                 startActivity(new Intent(DeliveryMain.this, NotificationsActivity.class));
             } else {
                 startActivity(new Intent(DeliveryMain.this, StartActivity.class));
             }
             return true;
-        }  else if (id == R.id.action_user) {
+        } else if (id == R.id.action_user) {
             if (sessionManager.isLoggedIn()) {
                 startActivity(new Intent(DeliveryMain.this, PersonalDataActivity.class));
             } else {
@@ -526,8 +543,4 @@ public class DeliveryMain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }

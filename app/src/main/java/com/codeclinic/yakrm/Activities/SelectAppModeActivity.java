@@ -1,12 +1,9 @@
 package com.codeclinic.yakrm.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,16 +14,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.codeclinic.yakrm.DeliveryService.DeliveryMain;
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Utils.CommonMethods;
 import com.codeclinic.yakrm.Utils.SessionManager;
-
-import java.util.Locale;
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 
 public class SelectAppModeActivity extends AppCompatActivity {
 
     SessionManager sessionManager;
 
-    Button btn_voucher,btn_delivery;
-    TextView tv_english,tv_arbic;
+    Button btn_voucher, btn_delivery;
+    TextView tv_english, tv_arbic;
     ImageView img_back;
 
     @SuppressLint({"ResourceAsColor", "NewApi"})
@@ -35,9 +33,9 @@ public class SelectAppModeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appmode_selection);
 
-        sessionManager=new SessionManager(this);
+        sessionManager = new SessionManager(this);
 
-        img_back=findViewById(R.id.img_back);
+        img_back = findViewById(R.id.img_back);
 
         String language = String.valueOf(getResources().getConfiguration().locale);
         if (language.equals("ar")) {
@@ -51,11 +49,11 @@ public class SelectAppModeActivity extends AppCompatActivity {
             }
         });
 
-        btn_delivery=findViewById(R.id.btn_delivery);
-        btn_voucher=findViewById(R.id.btn_voucher);
+        btn_delivery = findViewById(R.id.btn_delivery);
+        btn_voucher = findViewById(R.id.btn_voucher);
 
-        tv_english=findViewById(R.id.tv_english);
-        tv_arbic=findViewById(R.id.tv_arbic);
+        tv_english = findViewById(R.id.tv_english);
+        tv_arbic = findViewById(R.id.tv_arbic);
 
         btn_delivery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,23 +83,9 @@ public class SelectAppModeActivity extends AppCompatActivity {
                 tv_arbic.setTextColor(getApplicationContext().getColor(R.color.colorPrimary));
 
                 sessionManager.putLanguage("Language", "en");
-                Locale locale = new Locale("en");
-                Resources resources = getResources();
-                Configuration configuration = resources.getConfiguration();
-                DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-                    configuration.setLocale(locale);
-                } else{
-                    configuration.locale=locale;
-                }
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
-                    getApplicationContext().createConfigurationContext(configuration);
-                } else {
-                    resources.updateConfiguration(configuration,displayMetrics);
-                }
 
-                finish();
-                startActivity(new Intent(getApplicationContext(), SelectAppModeActivity.class));
+                LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
+                ActivityRecreationHelper.recreate(SelectAppModeActivity.this, true);
             }
         });
 
@@ -117,27 +101,8 @@ public class SelectAppModeActivity extends AppCompatActivity {
                 tv_english.setTextColor(getApplicationContext().getColor(R.color.colorPrimary));
 
                 sessionManager.putLanguage("Language", "ar");
-                Locale locale = new Locale("ar");
-                Resources resources = getResources();
-                Configuration configuration = resources.getConfiguration();
-                DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-                    configuration.setLocale(locale);
-                } else{
-                    configuration.locale=locale;
-                }
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
-                    getApplicationContext().createConfigurationContext(configuration);
-                } else {
-                    resources.updateConfiguration(configuration,displayMetrics);
-                }
-                /*Locale locale = new Locale("ar");
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());*/
-                finish();
-                startActivity(new Intent(getApplicationContext(), SelectAppModeActivity.class));
+                LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
+                ActivityRecreationHelper.recreate(SelectAppModeActivity.this, true);
             }
         });
 
@@ -150,7 +115,7 @@ public class SelectAppModeActivity extends AppCompatActivity {
             tv_english.setBackgroundColor(getApplicationContext().getColor(R.color.white));
             tv_english.setTextColor(getApplicationContext().getColor(R.color.colorPrimary));
 
-        }else{
+        } else {
 
             tv_arbic.setBackgroundColor(getApplicationContext().getColor(R.color.white));
             tv_arbic.setTextColor(getApplicationContext().getColor(R.color.colorPrimary));
@@ -158,5 +123,23 @@ public class SelectAppModeActivity extends AppCompatActivity {
             tv_english.setBackgroundColor(getApplicationContext().getColor(R.color.colorPrimary));
             tv_english.setTextColor(getApplicationContext().getColor(R.color.white));
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActivityRecreationHelper.onResume(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityRecreationHelper.onDestroy(this);
+        super.onDestroy();
     }
 }
