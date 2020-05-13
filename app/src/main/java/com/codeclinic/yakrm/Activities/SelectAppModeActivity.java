@@ -99,11 +99,6 @@ public class SelectAppModeActivity extends AppCompatActivity {
                 } else {
                     resources.updateConfiguration(configuration,displayMetrics);
                 }
-                /*Locale locale = new Locale("en");
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());*/
 
                 finish();
                 startActivity(new Intent(getApplicationContext(), SelectAppModeActivity.class));

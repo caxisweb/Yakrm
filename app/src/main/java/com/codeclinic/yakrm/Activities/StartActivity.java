@@ -3,8 +3,11 @@ package com.codeclinic.yakrm.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,14 +137,25 @@ public class StartActivity extends AppCompatActivity {
                 } else {
                     language_name = "en";
                 }
+
                 sessionManager.putLanguage("Language", language_name);
                 Locale locale = new Locale(language_name);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+                Resources resources = getResources();
+                Configuration configuration = resources.getConfiguration();
+                DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+                    configuration.setLocale(locale);
+                } else{
+                    configuration.locale=locale;
+                }
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
+                    getApplicationContext().createConfigurationContext(configuration);
+                } else {
+                    resources.updateConfiguration(configuration,displayMetrics);
+                }
 
-                recreate();
+                finish();
+                startActivity(new Intent(getApplicationContext(), StartActivity.class));
             }
         });
 
