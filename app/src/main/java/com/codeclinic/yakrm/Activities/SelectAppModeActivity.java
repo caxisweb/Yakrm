@@ -3,7 +3,11 @@ package com.codeclinic.yakrm.Activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +22,8 @@ import com.codeclinic.yakrm.Utils.CommonMethods;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.franmontiel.localechanger.LocaleChanger;
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
+
+import java.util.Locale;
 
 public class SelectAppModeActivity extends AppCompatActivity {
 
@@ -38,6 +44,7 @@ public class SelectAppModeActivity extends AppCompatActivity {
         img_back = findViewById(R.id.img_back);
 
         String language = String.valueOf(getResources().getConfiguration().locale);
+
         if (language.equals("ar")) {
             img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
         }
@@ -84,8 +91,31 @@ public class SelectAppModeActivity extends AppCompatActivity {
 
                 sessionManager.putLanguage("Language", "en");
 
-                LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
-                ActivityRecreationHelper.recreate(SelectAppModeActivity.this, true);
+                if (Build.VERSION.SDK_INT >25) {
+                    LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
+                    ActivityRecreationHelper.recreate(SelectAppModeActivity.this, true);
+                }else{
+
+                    Locale locale = new Locale("en");
+
+                    Resources resources = getResources();
+                    Configuration configuration = resources.getConfiguration();
+                    DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+                        configuration.setLocale(locale);
+                    } else{
+                        configuration.locale=locale;
+                    }
+
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
+                        getApplicationContext().createConfigurationContext(configuration);
+                    } else {
+                        resources.updateConfiguration(configuration,displayMetrics);
+                    }
+
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), SelectAppModeActivity.class));
+                }
             }
         });
 
@@ -101,8 +131,31 @@ public class SelectAppModeActivity extends AppCompatActivity {
                 tv_english.setTextColor(getApplicationContext().getColor(R.color.colorPrimary));
 
                 sessionManager.putLanguage("Language", "ar");
-                LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
-                ActivityRecreationHelper.recreate(SelectAppModeActivity.this, true);
+                if (Build.VERSION.SDK_INT >25) {
+                    LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
+                    ActivityRecreationHelper.recreate(SelectAppModeActivity.this, true);
+                }else{
+
+                    Locale locale = new Locale("ar");
+
+                    Resources resources = getResources();
+                    Configuration configuration = resources.getConfiguration();
+                    DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+                        configuration.setLocale(locale);
+                    } else{
+                        configuration.locale=locale;
+                    }
+
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
+                        getApplicationContext().createConfigurationContext(configuration);
+                    } else {
+                        resources.updateConfiguration(configuration,displayMetrics);
+                    }
+
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), SelectAppModeActivity.class));
+                }
             }
         });
 

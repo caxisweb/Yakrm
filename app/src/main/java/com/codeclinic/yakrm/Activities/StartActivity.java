@@ -2,8 +2,12 @@ package com.codeclinic.yakrm.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +24,8 @@ import com.codeclinic.yakrm.Utils.CommonMethods;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.franmontiel.localechanger.LocaleChanger;
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
+
+import java.util.Locale;
 
 
 public class StartActivity extends AppCompatActivity {
@@ -102,7 +108,7 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        layouts = new int[]{R.layout.intro_screen1,R.layout.intro_screen2,R.layout.intro_screen3};
+        layouts = new int[]{R.layout.intro_screen1, R.layout.intro_screen2, R.layout.intro_screen3};
 
         //addBottomDots(0);
 
@@ -128,6 +134,7 @@ public class StartActivity extends AppCompatActivity {
         tv_language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String language_name = "";
                 if (tv_language.getText().equals("النسخة العربية")) {
                     language_name = "ar";
@@ -136,28 +143,36 @@ public class StartActivity extends AppCompatActivity {
                 }
 
                 sessionManager.putLanguage("Language", language_name);
-                if (language_name.equals("ar")) {
-                    LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
+
+                if (Build.VERSION.SDK_INT > 25) {
+
+                    if (language_name.equals("ar")) {
+                        LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
+                    } else {
+                        LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
+                    }
+
+                    ActivityRecreationHelper.recreate(StartActivity.this, true);
+
                 } else {
-                    LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
+
+                    Locale locale = new Locale(language_name);
+                    Resources resources = getResources();
+                    Configuration configuration = resources.getConfiguration();
+                    DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        configuration.setLocale(locale);
+                    } else {
+                        configuration.locale = locale;
+                    }
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+                        getApplicationContext().createConfigurationContext(configuration);
+                    } else {
+                        resources.updateConfiguration(configuration, displayMetrics);
+                    }
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), StartActivity.class));
                 }
-                ActivityRecreationHelper.recreate(StartActivity.this, true);
-     /*           Locale locale = new Locale(language_name);
-                Resources resources = getResources();
-                Configuration configuration = resources.getConfiguration();
-                DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-                    configuration.setLocale(locale);
-                } else{
-                    configuration.locale=locale;
-                }
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
-                    getApplicationContext().createConfigurationContext(configuration);
-                } else {
-                    resources.updateConfiguration(configuration,displayMetrics);
-                }
-                finish();
-                startActivity(new Intent(getApplicationContext(), StartActivity.class));*/
             }
         });
 

@@ -5,9 +5,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +51,8 @@ import com.franmontiel.localechanger.LocaleChanger;
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Locale;
 
 public class DeliveryMain extends AppCompatActivity {
 
@@ -393,32 +398,37 @@ public class DeliveryMain extends AppCompatActivity {
                 }
                 sessionManager.putLanguage("Language", language_name);
 
-                if (language_name.equals("ar")) {
-                    LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
-                } else {
-                    LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
+                if (Build.VERSION.SDK_INT > 25) {
+                    if (language_name.equals("ar")) {
+                        LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
+                    } else {
+                        LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
+                    }
+                    ActivityRecreationHelper.recreate(DeliveryMain.this, true);
+                }else{
+
+                    Locale locale = new Locale(language_name);
+
+                    Resources resources = getResources();
+                    Configuration configuration = resources.getConfiguration();
+                    DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+                        configuration.setLocale(locale);
+                    } else{
+                        configuration.locale=locale;
+                    }
+
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
+                        getApplicationContext().createConfigurationContext(configuration);
+                    } else {
+                        resources.updateConfiguration(configuration,displayMetrics);
+                    }
+
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), DeliveryMain.class));
                 }
-                ActivityRecreationHelper.recreate(DeliveryMain.this, true);
 
-
-                /*Locale locale = new Locale(language_name);
-
-                Resources resources = getResources();
-                Configuration configuration = resources.getConfiguration();
-                DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-                    configuration.setLocale(locale);
-                } else{
-                    configuration.locale=locale;
-                }
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
-                    getApplicationContext().createConfigurationContext(configuration);
-                } else {
-                    resources.updateConfiguration(configuration,displayMetrics);
-                }
-
-                finish();
-                startActivity(new Intent(getApplicationContext(), DeliveryMain.class));*/
+                /**/
 
             }
         });
