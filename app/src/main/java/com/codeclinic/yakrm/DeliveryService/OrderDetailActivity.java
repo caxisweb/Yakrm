@@ -229,7 +229,10 @@ public class OrderDetailActivity extends AppCompatActivity {
                             tv_order_status.setText(getString(R.string.pending));
                             tv_payment_status.setVisibility(View.VISIBLE);
                             tv_product_cost.setText("0" + getString(R.string.Sr));
+                            tv_delivery_charge.setText(response.body().getOrder_charge() + getString(R.string.Sr));
+                            tv_servicetax.setText(response.body().getService_charge() + getString(R.string.Sr));
                             lv_paynow.setVisibility(View.GONE);
+
                         } else {
 
                             lv_paynow.setVisibility(View.VISIBLE);

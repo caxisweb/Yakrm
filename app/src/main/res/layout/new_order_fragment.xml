@@ -130,7 +130,7 @@
                         android:layout_gravity="center"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:text="Upload Photo"
+                        android:text="@string/upload_photo"
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         android:textSize="12dp" />
