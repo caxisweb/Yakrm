@@ -3,6 +3,7 @@ package com.codeclinic.yakrm.Activities;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.Connection_Detector;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -173,9 +176,22 @@ public class UploadVouchersActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        ActivityRecreationHelper.onResume(this);
         if (str_scanned.equals("1")) {
             str_scanned = "0";
             Toast.makeText(this, getResources().getString(R.string.VoucherScannedSuccessfully), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityRecreationHelper.onDestroy(this);
+        super.onDestroy();
     }
 }

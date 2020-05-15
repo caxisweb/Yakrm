@@ -2,12 +2,15 @@ package com.codeclinic.yakrm.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -40,6 +43,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.codeclinic.yakrm.BuildConfig;
+import com.codeclinic.yakrm.DeliveryService.DeliveryMain;
 import com.codeclinic.yakrm.Fragments.BuyTabFragment;
 import com.codeclinic.yakrm.Fragments.SupportContactFragment;
 import com.codeclinic.yakrm.LocalNotification.NotificationHelper;
@@ -47,7 +51,10 @@ import com.codeclinic.yakrm.Models.AllVouchersListModel;
 import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
+import com.codeclinic.yakrm.Utils.CommonMethods;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.nex3z.flowlayout.FlowLayout;
@@ -506,22 +513,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     language_name = "en";
                 }
                 sessionManager.putLanguage("Language", language_name);
-         /*       Locale locale = new Locale(language_name);
-
-                Resources resources = getResources();
-                Configuration configuration = resources.getConfiguration();
-                DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-                    configuration.setLocale(locale);
-                } else{
-                    configuration.locale=locale;
-                }
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
-                    getApplicationContext().createConfigurationContext(configuration);
+                if (Build.VERSION.SDK_INT > 25) {
+                    if (language_name.equals("ar")) {
+                        LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
+                    } else {
+                        LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
+                    }
+                    ActivityRecreationHelper.recreate(MainActivity.this, true);
                 } else {
-                    resources.updateConfiguration(configuration,displayMetrics);
-                }*/
-                languageChanged(language_name);
+
+                    Locale locale = new Locale(language_name);
+
+                    Resources resources = getResources();
+                    Configuration configuration = resources.getConfiguration();
+                    DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        configuration.setLocale(locale);
+                    } else {
+                        configuration.locale = locale;
+                    }
+
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+                        getApplicationContext().createConfigurationContext(configuration);
+                    } else {
+                        resources.updateConfiguration(configuration, displayMetrics);
+                    }
+
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), DeliveryMain.class));
+                }
 
             }
         });
@@ -687,27 +707,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void languageChanged(String lang) {
-
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        createConfigurationContext(config);
-
-        Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //finishAffinity();
-        startActivity(i);
-
-
-    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(buyTabFragment, getResources().getString(R.string.Buy));
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityRecreationHelper.onDestroy(this);
+        super.onDestroy();
     }
 
     @Override
@@ -925,6 +941,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        ActivityRecreationHelper.onResume(this);
         if (sessionManager.isLoggedIn()) {
             JSONObject jsonObject = new JSONObject();
             try {

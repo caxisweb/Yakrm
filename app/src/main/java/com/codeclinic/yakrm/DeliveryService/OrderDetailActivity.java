@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -32,6 +33,8 @@ import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.ImageURL;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -131,7 +134,7 @@ public class OrderDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(OrderDetailActivity.this, CompletePaymentActivity.class);
-                intent.putExtra("price", String.valueOf("1"));
+                intent.putExtra("price", "1");
                 intent.putExtra("order_id", order_id);
                 startActivityForResult(intent, 1);
             }
@@ -182,6 +185,24 @@ public class OrderDetailActivity extends AppCompatActivity {
         getOrderDetail();
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActivityRecreationHelper.onResume(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityRecreationHelper.onDestroy(this);
+        super.onDestroy();
+    }
+
     void getOrderDetail() {
 
         progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
@@ -216,8 +237,8 @@ public class OrderDetailActivity extends AppCompatActivity {
 
                             View custLayout = inflater.inflate(R.layout.custome_myproductlist_view, null, false);
 
-                            TextView tv_product = (TextView) custLayout.findViewById(R.id.tv_productname);
-                            TextView tv_qty = (TextView) custLayout.findViewById(R.id.tv_qty);
+                            TextView tv_product = custLayout.findViewById(R.id.tv_productname);
+                            TextView tv_qty = custLayout.findViewById(R.id.tv_qty);
 
                             tv_product.setText(response.body().getOrderDetail().get(i).getProductTitle());
                             tv_qty.setText(response.body().getOrderDetail().get(i).getQuantity());
@@ -331,7 +352,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
                                             alertDialog.dismiss();
                                             Intent intent = new Intent(OrderDetailActivity.this, CompletePaymentActivity.class);
-                                            intent.putExtra("price", String.valueOf("1"));
+                                            intent.putExtra("price", "1");
                                             intent.putExtra("order_id", order_id);
                                             startActivityForResult(intent, 1);
                                         }

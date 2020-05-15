@@ -1,5 +1,6 @@
 package com.codeclinic.yakrm.Activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.codeclinic.yakrm.Adapter.VoucherWillEndAdapter;
 import com.codeclinic.yakrm.R;
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 
 import java.util.ArrayList;
 
@@ -50,5 +53,23 @@ public class VoucherWillEndActivity extends AppCompatActivity {
 
         voucherWillEndAdapter = new VoucherWillEndAdapter(arrayList, this);
         recyclerView.setAdapter(voucherWillEndAdapter);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActivityRecreationHelper.onResume(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityRecreationHelper.onDestroy(this);
+        super.onDestroy();
     }
 }

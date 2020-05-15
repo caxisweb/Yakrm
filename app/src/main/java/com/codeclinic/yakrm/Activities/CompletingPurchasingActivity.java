@@ -39,6 +39,8 @@ import com.codeclinic.yakrm.R;
 import com.codeclinic.yakrm.Retrofit.API;
 import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.SessionManager;
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 import com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity;
 import com.oppwa.mobile.connect.exception.PaymentError;
 import com.oppwa.mobile.connect.exception.PaymentException;
@@ -117,6 +119,19 @@ CompletingPurchasingActivity extends BasePaymentActivity implements ITransaction
             binder = null;
         }
     };
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        ActivityRecreationHelper.onDestroy(this);
+        super.onDestroy();
+    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -783,6 +798,7 @@ CompletingPurchasingActivity extends BasePaymentActivity implements ITransaction
     @Override
     protected void onResume() {
         super.onResume();
+        ActivityRecreationHelper.onResume(this);
         getAllcardList();
     }
 

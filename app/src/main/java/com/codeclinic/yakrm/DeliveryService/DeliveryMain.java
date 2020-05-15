@@ -405,23 +405,23 @@ public class DeliveryMain extends AppCompatActivity {
                         LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
                     }
                     ActivityRecreationHelper.recreate(DeliveryMain.this, true);
-                }else{
+                } else {
 
                     Locale locale = new Locale(language_name);
 
                     Resources resources = getResources();
                     Configuration configuration = resources.getConfiguration();
                     DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                         configuration.setLocale(locale);
-                    } else{
-                        configuration.locale=locale;
+                    } else {
+                        configuration.locale = locale;
                     }
 
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N){
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
                         getApplicationContext().createConfigurationContext(configuration);
                     } else {
-                        resources.updateConfiguration(configuration,displayMetrics);
+                        resources.updateConfiguration(configuration, displayMetrics);
                     }
 
                     finish();
