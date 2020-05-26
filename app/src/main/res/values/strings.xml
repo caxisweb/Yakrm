@@ -513,7 +513,7 @@
     <string name="dispatch">Dispatch</string>
     <string name="chat_with">Chat with</string>
     <string name="upload_photo">Upload Photo</string>
-    <string name="cancel_order">Cancel</string>
+    <string name="cancle_order">Cancel</string>
 
     <string-array name="tab">
         <item>Place Order</item>

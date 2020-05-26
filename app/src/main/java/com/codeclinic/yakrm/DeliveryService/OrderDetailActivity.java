@@ -18,13 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.codeclinic.yakrm.ChatModule.CustomerChatActivity;
 import com.codeclinic.yakrm.DeliveryModel.OrderCancelModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderDetailResponseModel;
@@ -36,13 +34,10 @@ import com.codeclinic.yakrm.Utils.SessionManager;
 import com.franmontiel.localechanger.LocaleChanger;
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONObject;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 import static android.text.TextUtils.isEmpty;
 
 public class OrderDetailActivity extends AppCompatActivity {
@@ -80,7 +75,9 @@ public class OrderDetailActivity extends AppCompatActivity {
         order_id = b.getString("order_id");
 
         img_back = findViewById(R.id.img_back);
+
         String language = String.valueOf(getResources().getConfiguration().locale);
+
         if (language.equals("ar")) {
             img_back.setImageDrawable(getResources().getDrawable(R.drawable.back_right_img));
         }
@@ -134,12 +131,11 @@ public class OrderDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(OrderDetailActivity.this, CompletePaymentActivity.class);
-                intent.putExtra("price", "1");
+                intent.putExtra("price", String.valueOf(total_amount));
                 intent.putExtra("order_id", order_id);
                 startActivityForResult(intent, 1);
             }
         });
-
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,6 +243,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                         }
 
                         if (response.body().getPrice().equals("0")) {
+
                             tv_order_status.setText(getString(R.string.pending));
                             tv_payment_status.setVisibility(View.VISIBLE);
                             tv_product_cost.setText("0" + getString(R.string.Sr));
@@ -318,6 +315,7 @@ public class OrderDetailActivity extends AppCompatActivity {
                             btn_chat.setVisibility(View.VISIBLE);
 
                             if (response.body().getIs_payment_complete().equals("1")) {
+
                                 btn_payment.setVisibility(View.GONE);
                                 lv_payment_status.setVisibility(View.VISIBLE);
 

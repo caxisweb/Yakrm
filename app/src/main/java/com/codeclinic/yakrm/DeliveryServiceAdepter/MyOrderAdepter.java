@@ -51,7 +51,7 @@ public class MyOrderAdepter extends RecyclerView.Adapter<MyOrderAdepter.Holder> 
         } else if(myorderlist.get(i).getOrder_status().equals("5")){
             holder.tv_order_status.setText(context.getString(R.string.delivered));
         } else if(myorderlist.get(i).getOrder_status().equals("6")){
-            holder.tv_order_status.setText(context.getString(R.string.cancel_order));
+            holder.tv_order_status.setText(context.getString(R.string.cancle_order));
         } else{
             holder.tv_order_status.setText(context.getString(R.string.accept));
         }
