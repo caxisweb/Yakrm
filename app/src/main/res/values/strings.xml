@@ -503,7 +503,7 @@
     <string name="intro_two_title">Fast delivery</string>
     <string name="introtwo_desc">Order now and get the fastest delivery</string>
     <string name="intro_three_title">Order anything</string>
-    <string name="intro_three_desc">We commit to bring any products you want</string>
+    <string name="intro_three_desc">if you want to buy product from specific store please select the store and add store address</string>
     <string name="complete_payment">Complete Order Payment</string>
     <string name="total_cost">Total Cost</string>
     <string name="pending">Pending</string>
@@ -514,6 +514,7 @@
     <string name="chat_with">Chat with</string>
     <string name="upload_photo">Upload Photo</string>
     <string name="cancle_order">Cancel</string>
+    <string name="you_need_to_pay_this">You need to Pay this amount for Prosed your order after payment Delivery Man Pikup your order</string>
 
     <string-array name="tab">
         <item>Place Order</item>

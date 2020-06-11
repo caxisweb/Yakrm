@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -146,7 +147,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setSmallIcon(R.drawable.app_logo)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
+                        .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                         .setContentIntent(pendingIntent);
 
                 int m = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);

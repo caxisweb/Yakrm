@@ -46,7 +46,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/leku_strong_grey"
                 android:padding="5dp"
-                android:text="You need to Pay this amount for Prosed your order after payment Delivery Man Pikup your order"
+                android:text="@string/you_need_to_pay_this"
                 android:textSize="12dp"/>
 
             <LinearLayout

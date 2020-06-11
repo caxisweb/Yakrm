@@ -481,7 +481,7 @@ public class NewAccountActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             if (response.body().getStatus().equals("1")) {
                                 sessionManager.createLoginSession(response.body().getToken(), response.body().getUserId(), response.body().getName(), response.body().getEmail(), response.body().getPhone(), response.body().getCountryId(), response.body().getUserProfile(), "0", "users");//else salesmen
-                                startActivity(new Intent(NewAccountActivity.this, MainActivity.class));
+                                startActivity(new Intent(NewAccountActivity.this, SelectAppModeActivity.class));
                                 finish();
                                 Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
