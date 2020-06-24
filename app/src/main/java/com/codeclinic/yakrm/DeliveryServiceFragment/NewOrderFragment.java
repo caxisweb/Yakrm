@@ -38,6 +38,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.codeclinic.yakrm.Activities.LoginActivity;
 import com.codeclinic.yakrm.DeliveryModel.ImageUploadModel;
+import com.codeclinic.yakrm.DeliveryModel.NotificationCountModel;
 import com.codeclinic.yakrm.DeliveryModel.PlaceOrderModel;
 import com.codeclinic.yakrm.DeliveryService.DeliveryMain;
 import com.codeclinic.yakrm.DeliveryService.OrderDetailActivity;
@@ -64,6 +65,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.codeclinic.yakrm.DeliveryService.DeliveryMain.textnotificationCount;
 import static com.schibstedspain.leku.LocationPickerActivityKt.LATITUDE;
 import static com.schibstedspain.leku.LocationPickerActivityKt.LOCATION_ADDRESS;
 import static com.schibstedspain.leku.LocationPickerActivityKt.LONGITUDE;
@@ -352,6 +354,8 @@ public class NewOrderFragment extends Fragment {
             }
         });
 
+        getNotificationCount();
+
         return mainView;
     }
 
@@ -596,6 +600,30 @@ public class NewOrderFragment extends Fragment {
             public void onFailure(Call<ImageUploadModel> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getActivity(), "Server Error Please Try Again!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    void getNotificationCount(){
+
+        Log.i("user_Token",sessionManager.getUserDetails().get(SessionManager.User_Token));
+        Call<NotificationCountModel> getOrderList=apiService.NOTIFICATION_COUNT(sessionManager.getUserDetails().get(SessionManager.User_Token));
+        getOrderList.enqueue(new Callback<NotificationCountModel>() {
+            @Override
+            public void onResponse(Call<NotificationCountModel> call, Response<NotificationCountModel> response) {
+
+
+                if(response.body().getStatus().equals("1")){
+                    textnotificationCount.setText(String.valueOf(response.body().getTotalNoti()));
+                }else{
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<NotificationCountModel> call, Throwable t) {
+
             }
         });
     }

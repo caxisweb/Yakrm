@@ -457,7 +457,6 @@ public class DeliveryMain extends AppCompatActivity {
             setTitle(getString(R.string.delivery_main_title));
         }
 
-        getNotificationCount();
     }
 
     @Override
@@ -567,27 +566,4 @@ public class DeliveryMain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void getNotificationCount(){
-
-        Log.i("user_Token",sessionManager.getUserDetails().get(SessionManager.User_Token));
-        Call<NotificationCountModel> getOrderList=apiService.NOTIFICATION_COUNT(sessionManager.getUserDetails().get(SessionManager.User_Token));
-        getOrderList.enqueue(new Callback<NotificationCountModel>() {
-            @Override
-            public void onResponse(Call<NotificationCountModel> call, Response<NotificationCountModel> response) {
-
-
-                if(response.body().getStatus().equals("1")){
-                        textnotificationCount.setText(String.valueOf(response.body().getTotalNoti()));
-                }else{
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<NotificationCountModel> call, Throwable t) {
-
-            }
-        });
-    }
 }
