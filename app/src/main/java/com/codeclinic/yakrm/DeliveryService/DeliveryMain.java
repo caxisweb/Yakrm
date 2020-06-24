@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,11 +41,16 @@ import com.codeclinic.yakrm.Activities.NotificationsActivity;
 import com.codeclinic.yakrm.Activities.PersonalDataActivity;
 import com.codeclinic.yakrm.Activities.StartActivity;
 import com.codeclinic.yakrm.BuildConfig;
+import com.codeclinic.yakrm.DeliveryModel.NotificationCountModel;
+import com.codeclinic.yakrm.DeliveryModel.OrderlistResponseModel;
+import com.codeclinic.yakrm.DeliveryServiceAdepter.MyOrderAdepter;
 import com.codeclinic.yakrm.DeliveryServiceFragment.MyOrderFragment;
 import com.codeclinic.yakrm.DeliveryServiceFragment.NewOrderFragment;
 import com.codeclinic.yakrm.Fragments.SupportContactFragment;
 import com.codeclinic.yakrm.LocalNotification.NotificationHelper;
 import com.codeclinic.yakrm.R;
+import com.codeclinic.yakrm.Retrofit.API;
+import com.codeclinic.yakrm.Retrofit.RestClass;
 import com.codeclinic.yakrm.Utils.CommonMethods;
 import com.codeclinic.yakrm.Utils.SessionManager;
 import com.franmontiel.localechanger.LocaleChanger;
@@ -54,15 +60,19 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DeliveryMain extends AppCompatActivity {
 
     public static DrawerLayout drawer;
     SessionManager sessionManager;
     CoordinatorLayout main_content;
     Drawable drawable;
-
+    public static TextView textnotificationCount;
     private TabLayout tabLayout;
-
+    API apiService;
     private String[] tabTitles;
     private int[] tabimageResId = {R.drawable.ic_tab_new_order, R.drawable.ic_cart};
 
@@ -75,6 +85,7 @@ public class DeliveryMain extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         sessionManager = new SessionManager(this);
+        apiService = RestClass.getClientDelivery().create(API.class);
 
         drawer = findViewById(R.id.drawer_layout);
         main_content = findViewById(R.id.main_content);
@@ -445,6 +456,8 @@ public class DeliveryMain extends AppCompatActivity {
         } else {
             setTitle(getString(R.string.delivery_main_title));
         }
+
+        getNotificationCount();
     }
 
     @Override
@@ -507,6 +520,7 @@ public class DeliveryMain extends AppCompatActivity {
             final MenuItem menuItem5 = menu.findItem(R.id.action_user);
 
             View actionView3 = MenuItemCompat.getActionView(menuItem3);
+            textnotificationCount = actionView3.findViewById(R.id.noti_badge);
             View actionView5 = MenuItemCompat.getActionView(menuItem5);
 
             actionView3.setOnClickListener(new View.OnClickListener() {
@@ -553,4 +567,27 @@ public class DeliveryMain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    void getNotificationCount(){
+
+        Log.i("user_Token",sessionManager.getUserDetails().get(SessionManager.User_Token));
+        Call<NotificationCountModel> getOrderList=apiService.NOTIFICATION_COUNT(sessionManager.getUserDetails().get(SessionManager.User_Token));
+        getOrderList.enqueue(new Callback<NotificationCountModel>() {
+            @Override
+            public void onResponse(Call<NotificationCountModel> call, Response<NotificationCountModel> response) {
+
+
+                if(response.body().getStatus().equals("1")){
+                        textnotificationCount.setText(String.valueOf(response.body().getTotalNoti()));
+                }else{
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<NotificationCountModel> call, Throwable t) {
+
+            }
+        });
+    }
 }

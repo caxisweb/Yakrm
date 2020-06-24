@@ -2,6 +2,7 @@ package com.codeclinic.yakrm.Retrofit;
 
 import com.codeclinic.yakrm.DeliveryModel.DeliverOrderPaymentTransectionModel;
 import com.codeclinic.yakrm.DeliveryModel.ImageUploadModel;
+import com.codeclinic.yakrm.DeliveryModel.NotificationCountModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderCancelModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderDetailResponseModel;
 import com.codeclinic.yakrm.DeliveryModel.OrderlistResponseModel;
@@ -269,4 +270,8 @@ public interface API {
     @Headers("Content-Type: application/json")
     @POST("users/orders/cancel_order")
     Call<OrderCancelModel> ORDER_CANCLE(@Header("Authorization") String header, @Body String Body);
+
+    @Headers("Content-Type: application/json")
+    @GET("users/notification/get_total_today_noti")
+    Call<NotificationCountModel> NOTIFICATION_COUNT(@Header("Authorization") String header);
 }

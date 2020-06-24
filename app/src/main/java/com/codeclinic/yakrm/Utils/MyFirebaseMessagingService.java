@@ -147,6 +147,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setSmallIcon(R.drawable.app_logo)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
+                        .setOngoing(true)
                         .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                         .setContentIntent(pendingIntent);
 
@@ -184,6 +185,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setSmallIcon(R.drawable.app_logo)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
+                        .setOngoing(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
 
@@ -219,6 +221,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setSmallIcon(R.drawable.app_logo)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
+                        .setOngoing(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
 

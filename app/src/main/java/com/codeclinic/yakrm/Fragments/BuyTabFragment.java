@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -310,6 +311,7 @@ public class BuyTabFragment extends Fragment {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("is_login", login_flag);
+            Log.i("token",sessionManager.getUserDetails().get(SessionManager.User_Token));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -330,48 +332,50 @@ public class BuyTabFragment extends Fragment {
                     cat_arrayList_name.clear();
                     category_classification_array.clear();
                     if (categoryArrayList.size() == 0) {
+
                         categoryArrayList = (ArrayList<GiftCategoryModel>) response.body().getGiftCategory();
                         giftCategoryBannerArrayList = response.body().getGiftCategory().get(0).getGiftCategoryBanners();
-                        rl_pager.setVisibility(View.GONE);
-                        currentPage = 0;
-                        addBottomDots();
-                        setTimer();
-                        mPager.setAdapter(new SlidingImage_Adapter(getActivity(), response.body().getGiftCategory().get(0).getGiftCategoryBanners()));
-                        recyclerViewCategory.setAdapter(new CategoryListAdapter(response.body().getGiftCategory(), getActivity(), recyclerViewCategory, new CategoryListAdapter.itemClickListener() {
-                            @SuppressLint("NewApi")
-                            @Override
-                            public void itemClick(final int position) {
-                                if (position != -1) {
-                                    category_classification_array.clear();
-                                    category_classification_array.add(categoryArrayList.get(position).getGiftCategoryName());
-                                    ((MainActivity) getActivity()).callFilterAPI();
-                                    //imgBanner.setVisibility(View.VISIBLE);
-                                    //Picasso.with(getActivity()).load(ImageURL.gift_category_banner + categoryArrayList.get(position).getGift_category_banner()).error(getActivity().getResources().getDrawable(R.drawable.card_details_item_background)).into(imgBanner);
-                                    giftCategoryBannerArrayList = response.body().getGiftCategory().get(position).getGiftCategoryBanners();
-                                    currentPage = 0;
-                                    addBottomDots();
-                                    rl_pager.setVisibility(View.VISIBLE);
-                                    if (giftCategoryBannerArrayList.size() == 0) {
+                        if(giftCategoryBannerArrayList.size()>0) {
+                            rl_pager.setVisibility(View.GONE);
+                            currentPage = 0;
+                            addBottomDots();
+                            setTimer();
+                            mPager.setAdapter(new SlidingImage_Adapter(getActivity(), response.body().getGiftCategory().get(0).getGiftCategoryBanners()));
+                            recyclerViewCategory.setAdapter(new CategoryListAdapter(response.body().getGiftCategory(), getActivity(), recyclerViewCategory, new CategoryListAdapter.itemClickListener() {
+                                @SuppressLint("NewApi")
+                                @Override
+                                public void itemClick(final int position) {
+                                    if (position != -1) {
+                                        category_classification_array.clear();
+                                        category_classification_array.add(categoryArrayList.get(position).getGiftCategoryName());
+                                        ((MainActivity) getActivity()).callFilterAPI();
+                                        //imgBanner.setVisibility(View.VISIBLE);
+                                        //Picasso.with(getActivity()).load(ImageURL.gift_category_banner + categoryArrayList.get(position).getGift_category_banner()).error(getActivity().getResources().getDrawable(R.drawable.card_details_item_background)).into(imgBanner);
+                                        giftCategoryBannerArrayList = response.body().getGiftCategory().get(position).getGiftCategoryBanners();
+                                        currentPage = 0;
+                                        addBottomDots();
+                                        rl_pager.setVisibility(View.VISIBLE);
+                                        if (giftCategoryBannerArrayList.size() == 0) {
+                                            rl_pager.setVisibility(View.GONE);
+                                        }
+                                        mPager.setAdapter(new SlidingImage_Adapter(getActivity(), response.body().getGiftCategory().get(position).getGiftCategoryBanners()));
+                                    } else {
+                                        category_classification_array.clear();
+                                        ((MainActivity) getActivity()).removeFilter();
+                                        //imgBanner.setVisibility(View.GONE);
+                                        mPager.setAdapter(new SlidingImage_Adapter(getActivity(), response.body().getGiftCategory().get(0).getGiftCategoryBanners()));
+                                        giftCategoryBannerArrayList = response.body().getGiftCategory().get(0).getGiftCategoryBanners();
+                                        currentPage = 0;
+                                        addBottomDots();
                                         rl_pager.setVisibility(View.GONE);
+                                        if (giftCategoryBannerArrayList.size() == 0) {
+                                            rl_pager.setVisibility(View.GONE);
+                                        }
                                     }
-                                    mPager.setAdapter(new SlidingImage_Adapter(getActivity(), response.body().getGiftCategory().get(position).getGiftCategoryBanners()));
-                                } else {
-                                    category_classification_array.clear();
-                                    ((MainActivity) getActivity()).removeFilter();
-                                    //imgBanner.setVisibility(View.GONE);
-                                    mPager.setAdapter(new SlidingImage_Adapter(getActivity(), response.body().getGiftCategory().get(0).getGiftCategoryBanners()));
-                                    giftCategoryBannerArrayList = response.body().getGiftCategory().get(0).getGiftCategoryBanners();
-                                    currentPage = 0;
-                                    addBottomDots();
-                                    rl_pager.setVisibility(View.GONE);
-                                    if (giftCategoryBannerArrayList.size() == 0) {
-                                        rl_pager.setVisibility(View.GONE);
-                                    }
+
                                 }
-
-                            }
-                        }));
-
+                            }));
+                        }
                         MainActivity.btn = new Button[categoryArrayList.size()];
                         for (int i = 0; i < categoryArrayList.size(); i++) {
                             MainActivity.btn[i] = new Button(getActivity());
