@@ -354,7 +354,9 @@ public class NewOrderFragment extends Fragment {
             }
         });
 
-        getNotificationCount();
+        if(sessionManager.isLoggedIn()) {
+            getNotificationCount();
+        }
 
         return mainView;
     }
@@ -606,7 +608,7 @@ public class NewOrderFragment extends Fragment {
 
     void getNotificationCount(){
 
-        Log.i("user_Token",sessionManager.getUserDetails().get(SessionManager.User_Token));
+//        Log.i("user_Token",sessionManager.getUserDetails().get(SessionManager.User_Token));
         Call<NotificationCountModel> getOrderList=apiService.NOTIFICATION_COUNT(sessionManager.getUserDetails().get(SessionManager.User_Token));
         getOrderList.enqueue(new Callback<NotificationCountModel>() {
             @Override
