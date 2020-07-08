@@ -142,7 +142,7 @@ public class StartActivity extends AppCompatActivity {
                     language_name = "en";
                 }
 
-                sessionManager.putLanguage("Language", language_name);
+                sessionManager.putLanguage("Langauage", language_name);
 
                 if (Build.VERSION.SDK_INT > 25) {
 

@@ -515,7 +515,9 @@
     <string name="upload_photo">Upload Photo</string>
     <string name="cancle_order">Cancel</string>
     <string name="you_need_to_pay_this">You need to Pay this amount for Prosed your order after payment Delivery Man Pikup your order</string>
-
+    <string name="enter_your_notes_here">Enter your notes here</string>
+    <string name="quantity_error">please enter qunatity</string>
+    <string name="delivery_address_error">please select delivery address</string>
     <string-array name="tab">
         <item>Place Order</item>
         <item>My Orders</item>

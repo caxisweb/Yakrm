@@ -551,8 +551,13 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
                 if (status.equals("1")) {
 
                     scrollview_pay.setVisibility(View.GONE);
-                    Toast.makeText(CompletePaymentActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    //startActivity(new Intent(CompletePaymentActivity.this, MainActivity.class));
+
+                    if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                        Toast.makeText(CompletePaymentActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(CompletePaymentActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                    }
+
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("order_id",order_id);
                     setResult(Activity.RESULT_OK,returnIntent);
@@ -561,7 +566,11 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
                 } else {
                     scrollview_pay.setVisibility(View.GONE);
                     //error_cardview.setVisibility(View.VISIBLE);
-                    Toast.makeText(CompletePaymentActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                        Toast.makeText(CompletePaymentActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(CompletePaymentActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

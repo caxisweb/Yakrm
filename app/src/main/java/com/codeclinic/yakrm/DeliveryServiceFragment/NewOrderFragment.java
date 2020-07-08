@@ -156,7 +156,7 @@ public class NewOrderFragment extends Fragment {
                     if (name.equals("")) {
                         edt_pname.setError("Please enter Product name");
                     } else if (qty.equals("")) {
-                        edt_pqty.setError("Please enter Quantity");
+                        edt_pqty.setError(getActivity().getString(R.string.quantity_error));
                     } else if (qty.equals("0")) {
                         edt_pqty.setError("0 Quantity is not acceptable");
                     } else {
@@ -259,7 +259,7 @@ public class NewOrderFragment extends Fragment {
                     if (product_name.size() == 0) {
                         Toast.makeText(getActivity(), "Please Add Product", Toast.LENGTH_LONG).show();
                     } else if (str_home_lat == 0) {
-                        Toast.makeText(getActivity(), "Please select Delivery address", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), getActivity().getString(R.string.delivery_address_error), Toast.LENGTH_LONG).show();
                     } else {
 
                         try {
@@ -329,7 +329,11 @@ public class NewOrderFragment extends Fragment {
 
                                     } else {
                                         progressDialog.dismiss();
-                                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                        if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                                            Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(getActivity(), response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 }
 

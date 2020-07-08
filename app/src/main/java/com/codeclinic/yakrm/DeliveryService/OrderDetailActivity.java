@@ -382,7 +382,11 @@ public class OrderDetailActivity extends AppCompatActivity {
                         }
 
                     } else {
-                        Toast.makeText(OrderDetailActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                            Toast.makeText(OrderDetailActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(OrderDetailActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 
@@ -419,9 +423,17 @@ public class OrderDetailActivity extends AppCompatActivity {
 
                     if (response.body().getStatus().equals("1")) {
                         finish();
-                        Toast.makeText(OrderDetailActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                            Toast.makeText(OrderDetailActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(OrderDetailActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(OrderDetailActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                            Toast.makeText(OrderDetailActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(OrderDetailActivity.this, response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                 }

@@ -89,7 +89,7 @@ public class SelectAppModeActivity extends AppCompatActivity {
                 tv_arbic.setBackgroundColor(getApplicationContext().getColor(R.color.white));
                 tv_arbic.setTextColor(getApplicationContext().getColor(R.color.colorPrimary));
 
-                sessionManager.putLanguage("Language", "en");
+                sessionManager.putLanguage("Langauage", "en");
 
                 if (Build.VERSION.SDK_INT >25) {
                     LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(0));
@@ -130,7 +130,7 @@ public class SelectAppModeActivity extends AppCompatActivity {
                 tv_english.setBackgroundColor(getApplicationContext().getColor(R.color.white));
                 tv_english.setTextColor(getApplicationContext().getColor(R.color.colorPrimary));
 
-                sessionManager.putLanguage("Language", "ar");
+                sessionManager.putLanguage("Langauage", "ar");
                 if (Build.VERSION.SDK_INT >25) {
                     LocaleChanger.setLocale(CommonMethods.SUPPORTED_LOCALES.get(1));
                     ActivityRecreationHelper.recreate(SelectAppModeActivity.this, true);

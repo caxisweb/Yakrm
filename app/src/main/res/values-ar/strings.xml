@@ -96,7 +96,7 @@
 
     <string name="Value">القيمة </string>
     <string name="discount">توفير </string>
-    <string name="pay">ادفع </string>
+    <string name="pay">ادفع  </string>
     <string name="Added_to_the_buying_basket_successfully">تمت الإضافة لسلة الشراء بنجاح</string>
 
     <string name="Zero_SR">0 ريال</string>
@@ -438,6 +438,10 @@
     <string name="select_store">اختر المتجر</string>
     <string name="place_order">أطلب الآن</string>
 
+    <string name="message_successful_payment">The payment was successful</string>
+    <string name="message_unsuccessful_payment">"The payment was unsuccessful"</string>
+    <string name="message_payment_confirmation">سيتم تنفيذ دفع %1$s %2$sريال سعودي</string>
+
     <string name="order_id">رقم الطلب</string>
     <string name="view_detail">عرض التفاصيل</string>
     <string name="confirm">تأكيد</string>
@@ -457,7 +461,7 @@
     <string name="intro_two_title">توصيل سريع</string>
     <string name="introtwo_desc">نوفر لك توصيل سريع من اي مكان واي زمان</string>
     <string name="intro_three_title">اطلب اي شي</string>
-    <string name="intro_three_desc">اذا كنت ترغب الشراء من متجر معين يرجي تحديد المتجر و اختيار العنوان </string>
+    <string name="intro_three_desc">اذا كنت ترغب الشراء من متجر معين يرجي تحديد المتجر و اختيار العنوان  </string>
     <string name="complete_payment">إكمال دفع  قيمة الطلب</string>
     <string name="total_cost">التكلفة الإجمالية</string>
     <string name="pending">في الإنتظار</string>
@@ -468,7 +472,11 @@
     <string name="chat_with">الدردشة مع</string>
     <string name="upload_photo">إرفاق صورة</string>
     <string name="cancle_order">الغاء</string>
-    <string name="you_need_to_pay_this">تحتاج إلى دفع هذا المبلغ للمضي قدمًا في طلبك بعد استلام مندوب التوصيل  لاستلام طلبك</string>
+    <string name="you_need_to_pay_this">تحتاج دفع هذا المبلغ لتاكيد طلبك</string>
+    <string name="enter_your_notes_here">اضف ملاحظاتك هنا</string>
+
+    <string name="quantity_error">من  فضلك ادخل الكمية</string>
+    <string name="delivery_address_error">من فضللك عنوان التوصيل</string>
 
     <string-array name="tab">
         <item>اطلب الأن</item>

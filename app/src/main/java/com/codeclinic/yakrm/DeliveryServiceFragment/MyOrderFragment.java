@@ -80,7 +80,11 @@ public class MyOrderFragment extends Fragment {
                     rc_orderlist.setAdapter(adepter);
 
                 }else{
-                    Toast.makeText(getActivity(),response.body().getMessage(),Toast.LENGTH_LONG).show();
+                    if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                        Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }

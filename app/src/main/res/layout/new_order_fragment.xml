@@ -416,7 +416,7 @@
                         android:textSize="14dp"
                         android:enabled="false"
                         android:background="@color/white"
-                        android:hint="if you want to buy Product from specific store please select the store and add store address" />
+                        android:hint="@string/intro_three_desc" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -475,7 +475,7 @@
                         android:textSize="14dp"
                         android:inputType="textCapWords|textMultiLine"
                         android:background="@color/white"
-                        android:hint="Enter your notes here" />
+                        android:hint="@string/enter_your_notes_here" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

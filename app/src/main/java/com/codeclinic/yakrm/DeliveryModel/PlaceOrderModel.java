@@ -11,6 +11,9 @@ public class PlaceOrderModel {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("arab_message")
+    @Expose
+    private String arab_message;
     @SerializedName("order_id")
     @Expose
     private String order_id;
@@ -37,5 +40,13 @@ public class PlaceOrderModel {
 
     public void setOrder_id(String order_id) {
         this.order_id = order_id;
+    }
+
+    public String getArab_message() {
+        return arab_message;
+    }
+
+    public void setArab_message(String arab_message) {
+        this.arab_message = arab_message;
     }
 }
