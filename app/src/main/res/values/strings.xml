@@ -518,6 +518,7 @@
     <string name="enter_your_notes_here">Enter your notes here</string>
     <string name="quantity_error">please enter qunatity</string>
     <string name="delivery_address_error">please select delivery address</string>
+    <string name="add_your_address_on_map">Add your address On map</string>
     <string-array name="tab">
         <item>Place Order</item>
         <item>My Orders</item>

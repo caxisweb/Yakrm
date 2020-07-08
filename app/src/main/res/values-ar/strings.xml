@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Yakrm</string>
+    <string name="app_name">يكرم</string>
     <string name="title_activity_main">الأساسية</string>
     <string name="startadventure">ابدأ المغامرة</string>
     <string name="Signup">سجل</string>
@@ -477,6 +477,7 @@
 
     <string name="quantity_error">من  فضلك ادخل الكمية</string>
     <string name="delivery_address_error">من فضللك عنوان التوصيل</string>
+    <string name="add_your_address_on_map">من فضللك عنوان التوصيل</string>
 
     <string-array name="tab">
         <item>اطلب الأن</item>

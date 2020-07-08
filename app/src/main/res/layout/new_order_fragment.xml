@@ -333,7 +333,7 @@
                             android:inputType="textMultiLine|textCapWords"
                             android:enabled="false"
                             android:background="@color/white"
-                            android:hint="Add your address On map"/>
+                            android:hint="@string/add_your_address_on_map"/>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

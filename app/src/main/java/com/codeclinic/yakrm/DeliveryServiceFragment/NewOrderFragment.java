@@ -304,7 +304,11 @@ public class NewOrderFragment extends Fragment {
 
                                             progressDialog.dismiss();
 
-                                            Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                            if (sessionManager.getLanguage("Langauage", "en").equals("en")) {
+                                                Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getActivity(), response.body().getArab_message(), Toast.LENGTH_SHORT).show();
+                                            }
 
                                             tv_home_address.setText("");
                                             tv_shop_address.setText("");
