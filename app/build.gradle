@@ -110,6 +110,10 @@ dependencies {
     //implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     //implementation 'id.zelory:compressor:2.1.0'
     implementation 'com.github.franmontiel:LocaleChanger:0.9.2'
+
+    implementation 'com.adjust.sdk:adjust-android:4.22.0'
+    implementation 'com.android.installreferrer:installreferrer:2.1'
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
 }
 apply plugin: 'com.google.gms.google-services'
 //inforaamitsolutions
