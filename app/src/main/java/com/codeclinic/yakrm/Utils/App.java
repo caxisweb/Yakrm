@@ -18,8 +18,8 @@ public class App extends Application {
         LocaleChanger.initialize(getApplicationContext(), SUPPORTED_LOCALES);
 
         String appToken = "dczclrbzx4w0";
-        String environment = AdjustConfig.ENVIRONMENT_SANDBOX;
-        //String environment = AdjustConfig.ENVIRONMENT_PRODUCTION;
+        //String environment = AdjustConfig.ENVIRONMENT_SANDBOX;
+        String environment = AdjustConfig.ENVIRONMENT_PRODUCTION;
         AdjustConfig config = new AdjustConfig(this, appToken, environment);
         Adjust.onCreate(config);
 

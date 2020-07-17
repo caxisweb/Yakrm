@@ -473,7 +473,7 @@
     <string name="upload_photo">إرفاق صورة</string>
     <string name="cancle_order">الغاء</string>
     <string name="you_need_to_pay_this">تحتاج دفع هذا المبلغ لتاكيد طلبك</string>
-    <string name="enter_your_notes_here">اضف ملاحظاتك هنا</string>
+    <string name="enter_your_notes_here">من فضلك ادخل اسم المتجر</string>
 
     <string name="quantity_error">من  فضلك ادخل الكمية</string>
     <string name="delivery_address_error">من فضللك عنوان التوصيل</string>
