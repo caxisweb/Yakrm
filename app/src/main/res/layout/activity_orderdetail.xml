@@ -609,7 +609,7 @@
             android:textSize="14dp"
             android:visibility="gone"
             android:background="@color/colorPrimary"
-            android:text="@string/cancel" />
+            android:text="@string/cancle_order" />
 
         <Button
             android:id="@+id/btn_chat"

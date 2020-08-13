@@ -353,7 +353,7 @@
     <string name="No_Internet_Connection">تحقق من الاتصال بالانترنت </string>
     <string name="Take_Photo">التقط صورة</string>
     <string name="Choose_from_Gallery">اختار صورة من معرض الصور </string>
-    <string name="Cancel"> الغاء</string>
+    <string name="Cancel"> ملغاة </string>
     <string name="Add_Photo">أضف صورة </string>
 
     <string name="PleaseEnterCardHolderName">من فضلك ادخل اسم صاحب البطاقة</string>
@@ -471,7 +471,8 @@
     <string name="dispatch">يتم ارسال الطلب</string>
     <string name="chat_with">الدردشة مع</string>
     <string name="upload_photo">إرفاق صورة</string>
-    <string name="cancle_order">الغاء</string>
+    <string name="cancle_order">ملغا</string>
+    <string name="cancle_order_status">ملغاة </string>
     <string name="you_need_to_pay_this">تحتاج دفع هذا المبلغ لتاكيد طلبك</string>
     <string name="enter_your_notes_here">من فضلك ادخل اسم المتجر</string>
 

@@ -514,6 +514,7 @@
     <string name="chat_with">Chat with</string>
     <string name="upload_photo">Upload Photo</string>
     <string name="cancle_order">Cancel</string>
+    <string name="cancle_order_status">Canceled</string>
     <string name="you_need_to_pay_this">You need to Pay this amount for Prosed your order after payment Delivery Man Pikup your order</string>
     <string name="enter_your_notes_here">please enter the name of the store</string>
     <string name="quantity_error">please enter qunatity</string>
