@@ -279,14 +279,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
-                llayout_tab.setVisibility(View.VISIBLE);
+                /*llayout_tab.setVisibility(View.VISIBLE);
                 if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
                     findViewById(R.id.frame_contaner).setVisibility(View.GONE);
                     setTitle(getResources().getString(R.string.title_activity_main));
                 } else {
                     viewPager.setCurrentItem(0);
-                }
+                }*/
 
+                finish();
 
             }
         });

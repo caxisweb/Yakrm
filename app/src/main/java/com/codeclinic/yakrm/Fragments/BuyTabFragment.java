@@ -293,17 +293,29 @@ public class BuyTabFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        swipeTimer.cancel();
-        task.cancel();
+        try {
+            swipeTimer.cancel();
+            task.cancel();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacks(Update);
-        handler = null;
-        Update = null;
-        swipeTimer.cancel();
+        try {
+
+            handler.removeCallbacks(Update);
+            handler = null;
+            Update = null;
+            swipeTimer.cancel();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public void callBuyVoucherListAPI() {

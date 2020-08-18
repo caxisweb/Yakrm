@@ -260,15 +260,12 @@ public class DeliveryMain extends AppCompatActivity {
             public void onClick(View v) {
                 drawer.closeDrawer(GravityCompat.START);
                 tabLayout.setVisibility(View.VISIBLE);
-                /*if (findViewById(R.id.frame_contaner).getVisibility() == View.VISIBLE) {
-                    findViewById(R.id.frame_contaner).setVisibility(View.GONE);
-                    setTitle(getResources().getString(R.string.title_activity_main));
-                } else {*/
-                Fragment fragment = new NewOrderFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();
-                //}
 
+                /*Fragment fragment = new NewOrderFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.frame_contaner, fragment).commit();*/
+
+                finish();
 
             }
         });
