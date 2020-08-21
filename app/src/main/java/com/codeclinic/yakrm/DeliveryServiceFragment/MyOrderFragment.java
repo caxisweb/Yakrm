@@ -60,6 +60,13 @@ public class MyOrderFragment extends Fragment {
         rc_orderlist.setHasFixedSize(true);
         rc_orderlist.setNestedScrollingEnabled(true);
 
+
+        getOrderList();
+
+        return mainView;
+    }
+
+    void getOrderList(){
         progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
@@ -96,9 +103,11 @@ public class MyOrderFragment extends Fragment {
                 Toast.makeText(getActivity(),"server error",Toast.LENGTH_LONG).show();
             }
         });
-
-
-        return mainView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getOrderList();
+    }
 }

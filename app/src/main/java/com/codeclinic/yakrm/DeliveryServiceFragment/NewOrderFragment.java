@@ -264,6 +264,8 @@ public class NewOrderFragment extends Fragment {
 
                         try {
 
+                            lv_order.setEnabled(false);
+
                             progressDialog.setMessage(getResources().getString(R.string.Please_Wait));
                             progressDialog.setIndeterminate(true);
                             progressDialog.setCancelable(false);
@@ -297,6 +299,8 @@ public class NewOrderFragment extends Fragment {
                             placeOrder.enqueue(new Callback<PlaceOrderModel>() {
                                 @Override
                                 public void onResponse(Call<PlaceOrderModel> call, Response<PlaceOrderModel> response) {
+
+                                    lv_order.setEnabled(true);
 
                                     if (response.body().getStatus().equals("1")) {
 
@@ -344,6 +348,7 @@ public class NewOrderFragment extends Fragment {
                                 @Override
                                 public void onFailure(Call<PlaceOrderModel> call, Throwable t) {
                                     progressDialog.dismiss();
+                                    lv_order.setEnabled(true);
                                     Toast.makeText(getActivity(), "server error", Toast.LENGTH_LONG).show();
                                 }
                             });
