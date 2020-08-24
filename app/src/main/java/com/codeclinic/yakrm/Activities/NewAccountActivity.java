@@ -23,6 +23,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.adjust.sdk.Adjust;
+import com.adjust.sdk.AdjustEvent;
 import com.codeclinic.yakrm.Models.CountryListItemModel;
 import com.codeclinic.yakrm.Models.CountryListModel;
 import com.codeclinic.yakrm.Models.RegistrationModel;
@@ -483,6 +485,10 @@ public class NewAccountActivity extends AppCompatActivity {
                                 sessionManager.createLoginSession(response.body().getToken(), response.body().getUserId(), response.body().getName(), response.body().getEmail(), response.body().getPhone(), response.body().getCountryId(), response.body().getUserProfile(), "0", "users");//else salesmen
                                 startActivity(new Intent(NewAccountActivity.this, SelectAppModeActivity.class));
                                 finish();
+
+                                AdjustEvent adjustEvent = new AdjustEvent("e47c27");
+                                Adjust.trackEvent(adjustEvent);
+
                                 Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(NewAccountActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

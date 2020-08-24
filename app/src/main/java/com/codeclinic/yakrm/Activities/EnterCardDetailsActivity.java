@@ -18,6 +18,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adjust.sdk.Adjust;
+import com.adjust.sdk.AdjustEvent;
 import com.codeclinic.yakrm.Adapter.StoredCardListAdapter;
 import com.codeclinic.yakrm.Models.AddCardDetailsModel;
 import com.codeclinic.yakrm.Models.GetCardListItemModel;
@@ -274,6 +276,8 @@ public class EnterCardDetailsActivity extends AppCompatActivity implements View.
                                             Toast.makeText(EnterCardDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
 
+                                        AdjustEvent adjustEvent = new AdjustEvent("el44w6");
+                                        Adjust.trackEvent(adjustEvent);
                                         finish();
                                     } else {
                                         Toast.makeText(EnterCardDetailsActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();

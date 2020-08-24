@@ -36,6 +36,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.adjust.sdk.Adjust;
+import com.adjust.sdk.AdjustConfig;
+import com.adjust.sdk.AdjustEvent;
 import com.codeclinic.yakrm.Activities.LoginActivity;
 import com.codeclinic.yakrm.DeliveryModel.ImageUploadModel;
 import com.codeclinic.yakrm.DeliveryModel.NotificationCountModel;
@@ -328,6 +331,9 @@ public class NewOrderFragment extends Fragment {
                                             Intent i_detail = new Intent(getActivity(), OrderDetailActivity.class);
                                             i_detail.putExtra("order_id", response.body().getOrder_id());
                                             startActivity(i_detail);
+
+                                            AdjustEvent adjustEvent = new AdjustEvent("9xr9qh");
+                                            Adjust.trackEvent(adjustEvent);
 
                                         } else {
 

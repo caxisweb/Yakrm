@@ -23,6 +23,8 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adjust.sdk.Adjust;
+import com.adjust.sdk.AdjustEvent;
 import com.codeclinic.yakrm.Activities.EnterCardDetailsActivity;
 import com.codeclinic.yakrm.Activities.ExchangeAddBalanceActivity;
 import com.codeclinic.yakrm.Activities.MainActivity;
@@ -562,6 +564,9 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
                     returnIntent.putExtra("order_id",order_id);
                     setResult(Activity.RESULT_OK,returnIntent);
                     finish();
+
+                    AdjustEvent adjustEvent = new AdjustEvent("x3nwg3");
+                    Adjust.trackEvent(adjustEvent);
 
                 } else {
                     scrollview_pay.setVisibility(View.GONE);
