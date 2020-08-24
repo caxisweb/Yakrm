@@ -257,6 +257,16 @@
             android:name=".ChatModule.CustomerChatActivity"
             android:theme="@style/No_action_bar" />
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.codeclinic.yakrm.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
     </application>
 
 </manifest>
