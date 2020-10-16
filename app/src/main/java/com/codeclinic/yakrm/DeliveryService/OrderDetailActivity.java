@@ -350,7 +350,8 @@ public class OrderDetailActivity extends AppCompatActivity {
 
                                             alertDialog.dismiss();
                                             Intent intent = new Intent(OrderDetailActivity.this, CompletePaymentActivity.class);
-                                            intent.putExtra("price", "1");
+                                            Log.i("total_amount",total_amount+"");
+                                            intent.putExtra("price", String.valueOf(total_amount));
                                             intent.putExtra("order_id", order_id);
                                             startActivityForResult(intent, 1);
                                         }

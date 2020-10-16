@@ -98,7 +98,7 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
     ProgressDialog progressDialog;
     double price;
     List<GetCardListItemModel> arrayList = new ArrayList<>();
-    String card_holder_name, card_expiry_date, card_cvv, card_no, flag_cart = "1", main_price;
+    String card_holder_name, card_expiry_date, card_cvv, card_no, flag_cart = "1", main_price,card_type;
     String[] card_date;
     double transaction_main_price;
     String ptVisa = "^4[0-9]{6,}$";
@@ -161,7 +161,7 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
         main_price = getIntent().getStringExtra("price");
 
         total_price = getIntent().getStringExtra("price");
-        price = Double.parseDouble(total_price);
+        price = Double.parseDouble(main_price);
 
         double t_price = price;
         tv_sc_total_price.setText(String.format("%.2f", t_price) + getResources().getString(R.string.SR_currency));
@@ -232,6 +232,12 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
                                     card_date = card_expiry_date.split("/");
                                     card_date[0] = card_date[0].trim();
                                     card_no = item.getCardNumber();
+                                    if(item.getPaymentMethod().equals("3")){
+                                        card_type="VISA";
+                                    }else{
+                                        card_type="MADA";
+                                    }
+                                    Log.i("pay_method",item.getPaymentMethod());
 
                                     transaction_main_price = price;
                                     JSONObject jobj = new JSONObject();
@@ -252,6 +258,7 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
                                         }
                                     }
 
+                                    Log.i("request",jobj.toString());
 
                                     Call<GetCheckoutIDModel> getCheckoutIDModelCall = apiService.GET_CHECKOUT_ID_MODEL_CALL(jobj.toString());
                                     getCheckoutIDModelCall.enqueue(new Callback<GetCheckoutIDModel>() {
@@ -264,7 +271,7 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
                                             } else if (card_no.matches(ptMasterCard)) {
                                                 checkcredit = "MASTER";
                                             } else {
-                                                checkcredit = "VISA";
+                                                checkcredit = "MADA";
                                             }
 
                                             try {
@@ -351,7 +358,7 @@ public class CompletePaymentActivity extends BasePaymentActivity implements ITra
 
         return new CardPaymentParams(
                 checkoutId,
-                Constants.Config.CARD_BRAND,
+                card_type,
                 card_no,
                 card_holder_name,
                 card_date[0],
